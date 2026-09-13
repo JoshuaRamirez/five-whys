@@ -37,15 +37,18 @@ a check command.
 
 ## Output
 
-1. Plan before writing: settle your first level's reasons and how each will
+1. If the problem or context names local files or paths, Read the most relevant
+   ones briefly first, so your reasons rest on evidence rather than guesses.
+2. Plan before writing: settle your first level's reasons and how each will
    branch, then generate the rest.
-2. Write the whole fragment with one Write call to the exact path given, as
+3. Write the whole fragment with one Write call to the exact path given, as
    valid JSON in the shape shown. Every `whys` list has exactly the stated
    count; the deepest reasons have no `whys` key.
-3. Run the check command exactly as given. If it reports errors, repair the
+4. Run the check command exactly as given. If it reports errors, repair the
    named items with Edit (ids such as `3.1.2` are positions inside your
-   fragment) and check again. Stop after 3 fix cycles.
-4. Reply with one line: `OK <path>`, or `FAILED <path>: <first error>`.
+   fragment) and check again. Stop after 3 fix cycles. Warnings printed after
+   `OK` never block; fix them with Edit when that doesn't mean rewriting.
+5. Reply with one line: `OK <path>`, or `FAILED <path>: <first error>`.
 
 Don't analyze, rank, summarize or choose among the reasons. The script adds
 mechanical hygiene flags afterwards; interpretation belongs to the user.

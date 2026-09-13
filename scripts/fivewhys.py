@@ -11,7 +11,7 @@ levels beneath it. This script owns everything deterministic:
   status    report done, missing and stuck fragments
   check     validate one fragment against its expected shape
   assemble  merge fragments into five-whys.json plus index.md and hygiene.json
-  show      print a subtree (with its ancestor chain) or the top levels of a tree
+  show      print a subtree, the top levels, or a random sample, with ancestor chains
 
 Run metadata lives in <run>/run.json and fragments in <run>/fragments/.
 Nothing here ranks, prunes or summarizes reasons; hygiene flags are mechanical.
@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import random
 import re
 import sys
 from collections import Counter, defaultdict
@@ -199,7 +200,9 @@ def check_command(fragment: Path, breadth: int, levels: int) -> str:
 def output_section(fragment: Path, breadth: int, levels: int, top_note: str = "") -> list[str]:
     return [
         "",
-        f"That is {reasons(breadth, levels)} reasons. Write them as JSON to:",
+        f"That is {reasons(breadth, levels)} reasons, roughly {reasons(breadth, levels) * OUTPUT_TOKENS_PER_REASON:,} "
+        "output tokens with the JSON. That size is expected: keep every reason a full, specific sentence.",
+        "Write them as JSON to:",
         str(fragment),
         "",
         f"Shape (every whys list has exactly {breadth} items{top_note}; assumptions is optional):",
@@ -353,6 +356,9 @@ def cmd_init(args) -> None:
         run = run.with_name(f"{stamp}-{slug}-{suffix}")
         suffix += 1
     (run / "fragments").mkdir(parents=True)
+    ignore = Path(args.base) / ".gitignore"
+    if not ignore.exists():  # problem statements and reasons can be sensitive
+        ignore.write_text("# Five Whys runs can hold sensitive details; keep them out of git.\n*\n", encoding="utf-8")
 
     meta = {
         "schema": SCHEMA,
@@ -400,6 +406,12 @@ def cmd_plan(args) -> None:
     for task in wave:
         task["attempt"] = attempts.get(task["id"], 0) + 1
         task["model"] = model
+        # Full prompts go to files so the orchestrating session only carries short pointers.
+        prompt_file = run / "prompts" / f"{task['id']}.md"
+        prompt_file.parent.mkdir(exist_ok=True)
+        prompt_file.write_text(task["prompt"] + "\n", encoding="utf-8")
+        task["prompt_file"] = str(prompt_file)
+        task["prompt"] = f"Read {prompt_file} and carry out the Five Whys task it describes, exactly as written."
     if args.record and wave:
         for task in wave:
             attempts[task["id"]] = task["attempt"]
@@ -442,13 +454,23 @@ def cmd_status(args) -> None:
 
 
 def cmd_check(args) -> None:
-    _, _, errors = load_fragment(Path(args.fragment), args.breadth, args.depth)
+    whys, _, errors = load_fragment(Path(args.fragment), args.breadth, args.depth)
     if errors:
         print("\n".join(errors[:25]))
         if len(errors) > 25:
             print(f"... and {len(errors) - 25} more errors")
         sys.exit(1)
     print("OK")
+    flags = hygiene([{"id": i, "depth": d, "parent": p, "reason": n["reason"].strip()} for i, d, p, n in walk(whys)])
+    warnings = [f"warning: items {', '.join(ids)} repeat the same text" for ids in flags["exact_duplicates"]]
+    warnings += [f"warning: items {f['a']} and {f['b']} are near-duplicates (similarity {f['similarity']})"
+                 for f in flags["near_duplicates"]]
+    warnings += [f"warning: item {f['id']} restates item {f['of']}"
+                 for f in flags["restates_parent"] + flags["restates_ancestor"]]
+    warnings += [f"warning: item {f['id']} has {f['words']} words; aim for about 20" for f in flags["over_length"]]
+    if warnings:
+        print("\n".join(warnings[:25]))
+        print("Warnings never block. Fix them with Edit when that doesn't mean rewriting the fragment.")
 
 
 def emit(nodes, prefix: str, depth: int, max_depth: int, out: list[str]) -> None:
@@ -572,6 +594,22 @@ def cmd_show(args) -> None:
     if path.is_dir():
         path = path / "five-whys.json"
     nodes = json.loads(path.read_text(encoding="utf-8"))["whys"]
+    if args.sample:
+        chains = []
+
+        def collect(level_nodes, chain):
+            for node in level_nodes:
+                chains.append(chain + [node])
+                collect(node.get("whys", []), chain + [node])
+
+        collect(nodes, [])
+        for k, chain in enumerate(random.Random(args.seed).sample(chains, min(args.sample, len(chains)))):
+            if k:
+                print()
+            for ancestor in chain[:-1]:
+                print(f"^ {ancestor['id']}  {ancestor['reason']}")
+            print(f"{chain[-1]['id']}  {chain[-1]['reason']}")
+        return
     if args.id:
         chain = []
         try:
@@ -635,6 +673,8 @@ def main() -> None:
     p.add_argument("tree", help="five-whys.json, or the run directory holding it")
     p.add_argument("--id", help="dotted node id to show, preceded by its ancestor chain")
     p.add_argument("--levels", type=int, help="levels to print, counting the shown node (default: all)")
+    p.add_argument("--sample", type=int, help="print N randomly chosen reasons, each with its ancestor chain")
+    p.add_argument("--seed", type=int, help="random seed for --sample, for repeatable spot checks")
     p.set_defaults(func=cmd_show)
 
     args = parser.parse_args()

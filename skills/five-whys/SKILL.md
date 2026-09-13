@@ -8,7 +8,7 @@ description: >-
   cause tree", or runs /five-whys with a problem statement. Supports a cheap
   --smoke rehearsal and --model choice. Generates the tree only; analysis is
   left to the user.
-argument-hint: "[--smoke] [--model sonnet|opus|haiku] [--breadth N --depth N] [--yes] <problem statement>"
+argument-hint: "[--smoke] [--model sonnet|opus|haiku] [--breadth N --depth N] [--yes] [--resume <run-dir>] <problem statement>"
 ---
 
 # Five Whys (5 x 5 x 5 x 5 x 5)
@@ -42,6 +42,7 @@ Leading options in `$ARGUMENTS`; everything after them is the problem statement.
 | `--model X` | `--model X` |
 | `--breadth N`, `--depth N` | same flags |
 | `--yes` | nothing; skips the questions in Steps 1 and 3 |
+| `--resume <run-dir>` | nothing; skip straight to Step 4 for that run directory |
 
 If there is no problem statement, ask for it and stop.
 
@@ -79,7 +80,7 @@ Repeat:
    per task, all in parallel:
    - `subagent_type`: the plan's `agent` value (`five-whys:why-expander`)
    - `description`: `five whys <task id>`
-   - `prompt`: the task's `prompt`, verbatim
+   - `prompt`: the task's `prompt`, verbatim (a short pointer to the full prompt file)
    - `model`: the task's `model`, only when it is not null
 
    `tasks` never exceeds the concurrency cap (20 by default); ids in `waiting`
@@ -100,7 +101,7 @@ Report in two to four lines: the `file` path, `present_reasons`/`total_reasons`,
 
 ## Resuming, subsets and partial trees
 
-- An interrupted run resumes by repeating Step 4 on the same run directory;
+- `--resume <run-dir>` continues an interrupted run by repeating Step 4;
   `plan` skips fragments that already validate.
 - `plan <run> --only 2.3,4.1` dispatches chosen branches. Assemble the result
   with `assemble <run> --partial`, which marks missing branches in the tree.
@@ -112,5 +113,6 @@ directory first, then read `five-whys.json` **whole** before drawing any
 conclusion: page through it with Read in consecutive 400-line windows (`offset`
 1, 401, 801, ...) until the final `]}` line; much larger windows exceed Read's
 token limit. For one branch, `python3 "$S" show <run> --id <id>` prints it with
-its ancestors. `hygiene.json` lists mechanical flags; treat them as leads for
+its ancestors, and `python3 "$S" show <run> --sample 10` prints random reasons
+with their ancestors for spot checks. `hygiene.json` lists mechanical flags; treat them as leads for
 the user's analysis, not as judgments.

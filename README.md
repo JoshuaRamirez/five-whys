@@ -30,6 +30,7 @@ It never ranks, prunes, summarizes or picks root causes. Analysis is up to you.
 | `--model sonnet\|opus\|haiku` | Run the expander agents on that model instead of your session's model. |
 | `--breadth N --depth N` | Any complete shape, for example `--breadth 4 --depth 3`. |
 | `--yes` | Skip the context question and the cost confirmation. |
+| `--resume <run-dir>` | Continue an interrupted run; fragments that already validate are skipped. |
 
 If the problem statement is thin, the skill asks once for specifics (the
 system, the symptoms, what has been tried) and puts them in every agent prompt.
@@ -61,6 +62,9 @@ Each run lives in `.five-whys/<timestamp>-<slug>/`:
 | `hygiene.json` | Mechanical flags: exact duplicates, near-duplicates, reasons restating a parent or ancestor, over-long reasons |
 | `run.json` | Shape, model, dispatch attempts, timing, output size |
 | `fragments/` | Raw agent output |
+| `prompts/` | The full prompt each agent was dispatched with |
+
+`.five-whys/.gitignore` keeps runs out of git, since problem statements can be sensitive.
 
 An excerpt from the self-run:
 
@@ -85,6 +89,8 @@ density). `show --id <id>` prints a single branch with its ancestors.
 
 - **`check` (enforced):** every fragment is valid JSON with exactly the right
   number of reasons at every level. Agents repair and re-check, at most 3 times.
+  After `OK`, `check` also prints non-blocking warnings (repeated text,
+  restatements, over-long reasons) that agents fix when it is cheap.
 - **`hygiene.json` (advisory):** word-overlap heuristics from the standard
   library. They catch copies and close rewordings, miss paraphrases that use
   different words, and sometimes flag legitimately similar siblings. Flags
@@ -103,7 +109,8 @@ density). `show --id <id>` prints a single branch with its ancestors.
 
 ## Resuming, subsets and partial trees
 
-- Re-running `plan` on an interrupted run skips fragments that already validate.
+- `/five-whys --resume <run-dir>` continues an interrupted run; `plan` skips
+  fragments that already validate.
   A task that fails 3 dispatches is reported as stuck.
 - `plan --only 2.3,4.1` dispatches selected branches.
 - `assemble --partial` writes a valid tree with missing branches marked.
@@ -117,11 +124,12 @@ density). `show --id <id>` prints a single branch with its ancestors.
 | `init` (problem on stdin) | Create a run: `--preset`, `--breadth`, `--depth`, `--split`, `--model`, `--max-parallel`, `--context-file` |
 | `plan <run>` | Next wave of missing fragments with prompts; `--record` counts attempts; `--only` selects branches |
 | `status <run>` | Done, missing and stuck fragments |
-| `check <fragment> --breadth N --depth N` | Validate one fragment |
+| `check <fragment> --breadth N --depth N` | Validate one fragment; warnings never block |
 | `assemble <run>` | Write `five-whys.json`, `index.md`, `hygiene.json`; `--partial` allows missing branches |
-| `show <tree-or-run>` | Print a subtree (`--id`) or the top levels (`--levels`) |
+| `show <tree-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`) |
 
-Tests: `python3 -m unittest discover tests`
+Tests: `python3 -m unittest discover tests`. Eval: `claude plugin eval . --allow-tools Bash Write Edit --runs 1`.
+Release steps: [RELEASING.md](RELEASING.md).
 
 ## Design decisions
 

@@ -68,6 +68,9 @@ class RunCase(unittest.TestCase):
     def read(self, path) -> dict:
         return json.loads(Path(path).read_text())
 
+    def prompt(self, task) -> str:
+        return Path(task["prompt_file"]).read_text()
+
     def fill_root(self, run_dir, breadth, split) -> dict:
         data = fragment(breadth, split, "root")
         self.write(run_dir / "fragments" / "root.json", data)
@@ -106,10 +109,23 @@ class InitTests(RunCase):
         context = self.base / "context.md"
         context.write_text("Kubernetes cluster, deploys via Argo CD.")
         run_dir, _ = self.init("--context-file", context)
-        self.assertIn("Argo CD", self.plan(run_dir)["tasks"][0]["prompt"])
+        self.assertIn("Argo CD", self.prompt(self.plan(run_dir)["tasks"][0]))
+
+    def test_run_base_is_gitignored(self):
+        self.init("--preset", "smoke")
+        self.assertIn("*", (self.base / ".gitignore").read_text().splitlines())
 
 
 class PlanTests(RunCase):
+    def test_dispatch_prompt_points_at_full_prompt_file(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        task = self.plan(run_dir)["tasks"][0]
+        self.assertLess(len(task["prompt"]), 300)
+        self.assertIn(task["prompt_file"], task["prompt"])
+        text = self.prompt(task)
+        self.assertIn("Write them as JSON to:", text)
+        self.assertIn("output tokens with the JSON", text)
+
     def test_root_first_then_capped_waves(self):
         run_dir, _ = self.init("--preset", "smoke", "--max-parallel", "2")
         first = self.plan(run_dir)
@@ -134,7 +150,7 @@ class PlanTests(RunCase):
     def test_branch_prompt_lists_other_reasons_but_not_its_own_chain(self):
         run_dir, _ = self.init("--preset", "smoke")
         root = self.fill_root(run_dir, 3, 1)
-        prompt = next(t["prompt"] for t in self.plan(run_dir)["tasks"] if t["id"] == "2")
+        prompt = self.prompt(next(t for t in self.plan(run_dir)["tasks"] if t["id"] == "2"))
         self.assertIn(f"- 1: {root['whys'][0]['reason']}", prompt)
         self.assertIn(f"- 3: {root['whys'][2]['reason']}", prompt)
         self.assertNotIn("- 2: ", prompt)
@@ -162,7 +178,7 @@ class PlanTests(RunCase):
                                           "created": "2026-09-13T14:07:31-07:00", "branching": 5, "depth": 5})
         plan = self.plan(run_dir)
         self.assertEqual(plan["tasks"][0]["id"], "root")
-        self.assertIn("--breadth 5 --depth 2", plan["tasks"][0]["prompt"])
+        self.assertIn("--breadth 5 --depth 2", self.prompt(plan["tasks"][0]))
 
 
 class CheckTests(RunCase):
@@ -189,6 +205,13 @@ class CheckTests(RunCase):
         out = self.check(data, 2, 1).stdout
         self.assertIn("item 1: deepest reasons must not have whys", out)
         self.assertIn("assumptions: must be a list of strings", out)
+
+    def test_warnings_do_not_block(self):
+        data = fragment(3, 2, "x")
+        data["whys"][0]["whys"][1]["reason"] = data["whys"][0]["whys"][0]["reason"]
+        proc = self.check(data, 3, 2)
+        self.assertEqual((proc.returncode, proc.stdout.splitlines()[0]), (0, "OK"))
+        self.assertIn("warning: items 1.1, 1.2 repeat the same text", proc.stdout)
 
 
 class AssembleTests(RunCase):
@@ -285,6 +308,15 @@ class StatusAndShowTests(RunCase):
         self.assertEqual(lines[0], f"^ 2  {root['whys'][1]['reason']}")
         self.assertEqual(len(lines), 2)
         self.assertEqual(len(run("show", run_dir, "--levels", "1").stdout.splitlines()), 3)
+
+    def test_show_sample_is_repeatable_with_seed(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        self.fill_root(run_dir, 3, 1)
+        self.fill_branches(run_dir, 3, 2)
+        run("assemble", run_dir)
+        first = run("show", run_dir, "--sample", "3", "--seed", "7").stdout
+        self.assertEqual(first, run("show", run_dir, "--sample", "3", "--seed", "7").stdout)
+        self.assertEqual(len(first.strip().split("\n\n")), 3)
 
 
 if __name__ == "__main__":
