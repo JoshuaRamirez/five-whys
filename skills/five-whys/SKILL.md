@@ -3,10 +3,12 @@ name: five-whys
 description: >-
   Run an exhaustive Five Whys root-cause expansion: ask "why?" five levels deep
   with five reasons at every step (5x5x5x5x5 = 3,905 reasons) and write the
-  full tree to a single JSON file. Use when the user says "five whys",
-  "5 whys", "why tree", "exhaustive root cause tree", or runs /five-whys with a
-  problem statement. Generates the tree only; analysis is left to the user.
-argument-hint: <problem statement>
+  full tree to a single JSON file, plus an index and mechanical hygiene flags.
+  Use when the user says "five whys", "5 whys", "why tree", "exhaustive root
+  cause tree", or runs /five-whys with a problem statement. Supports a cheap
+  --smoke rehearsal and --model choice. Generates the tree only; analysis is
+  left to the user.
+argument-hint: "[--smoke] [--model sonnet|opus|haiku] [--breadth N --depth N] [--yes] <problem statement>"
 ---
 
 # Five Whys (5 x 5 x 5 x 5 x 5)
@@ -21,66 +23,94 @@ Build the complete why-tree for the problem in `$ARGUMENTS`:
 | 4     | Why <level-3 reason>? (each)   | 625     |
 | 5     | Why <level-4 reason>? (each)   | 3,125   |
 
-Total: 3,905 reasons in one JSON file.
+`S="${CLAUDE_PLUGIN_ROOT}/scripts/fivewhys.py"` decides what runs, validates
+every fragment and assembles the output. Don't generate reasons yourself, and
+don't hand-edit fragments.
 
-The work is split into 26 agent tasks: 1 root task (levels 1-2), then 25 branch
-tasks (levels 3-5 under each level-2 reason). The script
-`${CLAUDE_PLUGIN_ROOT}/scripts/fivewhys.py` decides what runs, validates every
-fragment, and assembles the output. Don't generate reasons yourself, and don't
-hand-edit fragments.
+**What this plugin does not do.** It never ranks, prunes, summarizes or picks
+root causes; analysis belongs to the user. It does compute mechanical aids:
+hygiene flags (duplicates, restatements, over-long reasons), an index of the
+top levels and measurements. Report those as facts, not verdicts.
 
-## Step 1: Get the problem
+## Step 1: Read the invocation
 
-If `$ARGUMENTS` is empty, ask the user for the problem statement and stop until
-they answer. Otherwise use it verbatim.
+Leading options in `$ARGUMENTS`; everything after them is the problem statement.
+
+| Option | Pass to `init` |
+|--------|----------------|
+| `--smoke` | `--preset smoke` (3 wide x 3 deep, 39 reasons, 4 agents) |
+| `--model X` | `--model X` |
+| `--breadth N`, `--depth N` | same flags |
+| `--yes` | nothing; skips the questions in Steps 1 and 3 |
+
+If there is no problem statement, ask for it and stop.
+
+If the statement is thin (a short sentence with no specifics about the system,
+the symptoms or what has been tried) and `--yes` is absent, ask the user once,
+in one message, for those specifics, then stop. Treat the reply as context.
 
 ## Step 2: Create the run
 
+If you have context, write it verbatim to `.five-whys/context.md`, then:
+
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/scripts/fivewhys.py" init <<'FIVE_WHYS_PROBLEM'
+python3 "$S" init [options] [--context-file .five-whys/context.md] <<'FIVE_WHYS_PROBLEM'
 <problem statement>
 FIVE_WHYS_PROBLEM
 ```
 
-It prints the run directory (under `.five-whys/` in the current working
-directory). Tell the user in one line that the run has started and roughly
-26 agents will be dispatched.
+It prints JSON with `run`, `shape`, `model` and `estimate`.
 
-## Step 3: Dispatch until ready
+## Step 3: Confirm full-size runs
+
+If `estimate.agents` is more than 5 and `--yes` was not given, tell the user in
+one line: agents, reasons, `estimate.agent_tokens` and `estimate.output_tokens`
+(an estimate scaled from a measured run), and ask whether to proceed. Stop until
+they answer. Mention `--smoke` as the cheap alternative.
+
+## Step 4: Dispatch wave by wave
 
 Repeat:
 
-1. Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/fivewhys.py" plan <run-dir>`.
-2. If `state` is `ready`, go to Step 4.
-3. Otherwise, dispatch the tasks in `tasks` in a single message, one Agent
-   call per task, all in parallel, **at most 20 per message**. Claude Code
-   caps concurrent subagents at 20 by default, and calls over the cap are
-   refused.
+1. Run `python3 "$S" plan <run> --record`.
+2. If `state` is `ready`, go to Step 5. If `state` is `stuck`, stop and report
+   each stuck id with its first error; offer `python3 "$S" assemble <run> --partial`.
+3. Otherwise dispatch every task in `tasks` in a single message, one Agent call
+   per task, all in parallel:
    - `subagent_type`: the plan's `agent` value (`five-whys:why-expander`)
    - `description`: `five whys <task id>`
    - `prompt`: the task's `prompt`, verbatim
-4. When all of them have returned, loop back to 1. The next plan re-lists only
-   the fragments that are still missing or invalid, including any tasks left
-   over from the cap.
+   - `model`: the task's `model`, only when it is not null
 
-Round one is the root task alone. The 25 branch tasks follow in two rounds
-(20, then 5). If a task that was actually dispatched is still listed after
-three rounds, stop and report its `errors` to the user instead of looping.
+   `tasks` never exceeds the concurrency cap (20 by default); ids in `waiting`
+   go out in later waves.
+4. When all of them have returned, run `python3 "$S" status <run>` and tell the
+   user one line: `<done>/<total> fragments`. Loop back to 1.
 
-## Step 4: Assemble
+## Step 5: Assemble
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/scripts/fivewhys.py" assemble <run-dir>
+python3 "$S" assemble <run>
 ```
 
-Report the output path, `total_reasons`, and `approx_tokens` in two or three
-lines. Do **not** read, summarize, or analyze the tree unless the user asks.
-What to do with it is the user's call.
+Report in two to four lines: the `file` path, `present_reasons`/`total_reasons`,
+`approx_tokens`, and the hygiene counts as plain counts (for example
+"hygiene flags: 2 exact duplicates, 14 near-duplicates, 0 restatements"). Do
+**not** read, summarize or analyze the tree unless the user asks.
 
-## Loading a finished tree into context
+## Resuming, subsets and partial trees
 
-When the user asks to load or analyze a `five-whys.json`, read it **whole**
-before drawing any conclusion. The file puts one reason per line, so page
-through it with the Read tool in consecutive 400-line windows
-(`offset` 1, 401, 801, ...) until you reach the final `]}` line. The header
-line explains how ids map to the tree.
+- An interrupted run resumes by repeating Step 4 on the same run directory;
+  `plan` skips fragments that already validate.
+- `plan <run> --only 2.3,4.1` dispatches chosen branches. Assemble the result
+  with `assemble <run> --partial`, which marks missing branches in the tree.
+
+## Loading a finished tree
+
+When the user asks to load or analyze a tree, read `index.md` in the run
+directory first, then read `five-whys.json` **whole** before drawing any
+conclusion: page through it with Read in consecutive 400-line windows (`offset`
+1, 401, 801, ...) until the final `]}` line; much larger windows exceed Read's
+token limit. For one branch, `python3 "$S" show <run> --id <id>` prints it with
+its ancestors. `hygiene.json` lists mechanical flags; treat them as leads for
+the user's analysis, not as judgments.
