@@ -52,17 +52,20 @@ Repeat:
 
 1. Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/fivewhys.py" plan <run-dir>`.
 2. If `state` is `ready`, go to Step 4.
-3. Otherwise, dispatch **every** task in `tasks` in a single message, one
-   Agent call per task, all in parallel:
+3. Otherwise, dispatch the tasks in `tasks` in a single message, one Agent
+   call per task, all in parallel, **at most 20 per message**. Claude Code
+   caps concurrent subagents at 20 by default, and calls over the cap are
+   refused.
    - `subagent_type`: the plan's `agent` value (`five-whys:why-expander`)
    - `description`: `five whys <task id>`
    - `prompt`: the task's `prompt`, verbatim
 4. When all of them have returned, loop back to 1. The next plan re-lists only
-   the fragments that are still missing or invalid.
+   the fragments that are still missing or invalid, including any tasks left
+   over from the cap.
 
-Round one is the root task alone. Round two is the 25 branch tasks. If the same
-task id is still listed after three dispatch rounds, stop and report its
-`errors` to the user instead of looping.
+Round one is the root task alone. The 25 branch tasks follow in two rounds
+(20, then 5). If a task that was actually dispatched is still listed after
+three rounds, stop and report its `errors` to the user instead of looping.
 
 ## Step 4: Assemble
 

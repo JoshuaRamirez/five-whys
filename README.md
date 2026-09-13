@@ -30,7 +30,10 @@ directory, then fans the work out to sub-agents:
 | Round | Agents | Produces                                         |
 |-------|--------|--------------------------------------------------|
 | 1     | 1      | levels 1-2 (30 reasons)                          |
-| 2     | 25     | levels 3-5 under each level-2 reason (155 each)  |
+| 2-3   | 20 + 5 | levels 3-5 under each level-2 reason (155 each)  |
+
+Branch rounds are capped at 20 agents because Claude Code runs at most 20
+subagents at once by default.
 
 Every fragment is shape-checked (exactly 5 reasons per node, exactly 5 levels).
 Invalid or missing fragments are re-dispatched on their own, so an interrupted
