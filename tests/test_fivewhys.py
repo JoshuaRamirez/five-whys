@@ -163,6 +163,13 @@ class PlanTests(RunCase):
         inherited, _ = self.init("--preset", "smoke")
         self.assertIsNone(self.plan(inherited)["tasks"][0]["model"])
 
+    def test_root_and_branch_models_can_differ(self):
+        run_dir, out = self.init("--preset", "smoke", "--model", "opus", "--branch-model", "sonnet")
+        self.assertEqual((out["root_model"], out["branch_model"]), ("opus", "sonnet"))
+        self.assertEqual(self.plan(run_dir)["tasks"][0]["model"], "opus")
+        self.fill_root(run_dir, 3, 1)
+        self.assertEqual({t["model"] for t in self.plan(run_dir)["tasks"]}, {"sonnet"})
+
     def test_recorded_attempts_mark_task_stuck(self):
         run_dir, _ = self.init("--preset", "smoke")
         for _ in range(3):
@@ -298,6 +305,16 @@ class StatusAndShowTests(RunCase):
         self.fill_root(run_dir, 3, 1)
         status = json.loads(run("status", run_dir).stdout)
         self.assertEqual((status["done"], status["total"], status["missing"]), (1, 4, ["1", "2", "3"]))
+
+    def test_checks_inside_a_run_are_logged_per_fragment(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        root = run_dir / "fragments" / "root.json"
+        self.write(root, {"whys": []})
+        run("check", root, "--breadth", 3, "--depth", 1, ok=False)
+        self.fill_root(run_dir, 3, 1)
+        run("check", root, "--breadth", 3, "--depth", 1)
+        status = json.loads(run("status", run_dir).stdout)
+        self.assertEqual(status["checks"], {"root.json": {"checks": 2, "failed": 1}})
 
     def test_show_prints_ancestors_and_limits_levels(self):
         run_dir, _ = self.init("--preset", "smoke")

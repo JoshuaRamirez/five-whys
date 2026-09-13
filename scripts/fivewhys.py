@@ -139,6 +139,8 @@ def read_run(run: Path) -> dict:
     meta = json.loads(path.read_text(encoding="utf-8"))
     meta.setdefault("shape", {"breadth": 5, "depth": 5, "split": 2})  # v0.1 runs
     meta.setdefault("model", "inherit")
+    meta.setdefault("root_model", meta["model"])
+    meta.setdefault("branch_model", meta["model"])
     meta.setdefault("max_parallel", MAX_PARALLEL)
     meta.setdefault("attempts", {})
     return meta
@@ -366,6 +368,8 @@ def cmd_init(args) -> None:
         "created": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
         "shape": {"breadth": breadth, "depth": depth, "split": split},
         "model": args.model,
+        "root_model": args.root_model or args.model,
+        "branch_model": args.branch_model or args.model,
         "max_parallel": args.max_parallel,
         "attempts": {},
     }
@@ -373,6 +377,7 @@ def cmd_init(args) -> None:
         meta["context"] = context
     write_run(run, meta)
     print(json.dumps({"run": str(run), "shape": meta["shape"], "model": args.model,
+                      "root_model": meta["root_model"], "branch_model": meta["branch_model"],
                       "estimate": estimate(breadth, depth, split)}, indent=2))
 
 
@@ -402,10 +407,10 @@ def cmd_plan(args) -> None:
     ready = [t for t in pending if attempts.get(t["id"], 0) < MAX_ATTEMPTS]
     stuck = [t for t in pending if attempts.get(t["id"], 0) >= MAX_ATTEMPTS]
     wave = ready[: meta["max_parallel"]]
-    model = None if meta["model"] == "inherit" else meta["model"]
     for task in wave:
         task["attempt"] = attempts.get(task["id"], 0) + 1
-        task["model"] = model
+        tier = meta["root_model"] if task["id"] == "root" else meta["branch_model"]
+        task["model"] = None if tier == "inherit" else tier
         # Full prompts go to files so the orchestrating session only carries short pointers.
         prompt_file = run / "prompts" / f"{task['id']}.md"
         prompt_file.parent.mkdir(exist_ok=True)
@@ -448,14 +453,40 @@ def cmd_status(args) -> None:
         "total": total,
         "missing": missing,
         "stuck": [m for m in missing if meta["attempts"].get(m, 0) >= MAX_ATTEMPTS],
+        "checks": read_checks(run),
         "assembled": (run / "five-whys.json").exists(),
         "estimate": estimate(breadth, depth, split),
     }, indent=2))
 
 
+def log_check(fragment: Path, errors: int, warnings: int) -> None:
+    # Only fragments inside a run directory are logged, so repair cycles are countable.
+    folder = fragment.resolve().parent
+    if folder.name != "fragments" or not (folder.parent / "run.json").exists():
+        return
+    entry = {"fragment": fragment.name, "at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
+             "ok": errors == 0, "errors": errors, "warnings": warnings}
+    with open(folder.parent / "check-log.jsonl", "a", encoding="utf-8") as log:
+        log.write(json.dumps(entry) + "\n")
+
+
+def read_checks(run: Path) -> dict:
+    checks = {}
+    log = run / "check-log.jsonl"
+    if log.exists():
+        for line in log.read_text(encoding="utf-8").splitlines():
+            entry = json.loads(line)
+            item = checks.setdefault(entry["fragment"], {"checks": 0, "failed": 0})
+            item["checks"] += 1
+            item["failed"] += 0 if entry["ok"] else 1
+    return checks
+
+
 def cmd_check(args) -> None:
-    whys, _, errors = load_fragment(Path(args.fragment), args.breadth, args.depth)
+    fragment = Path(args.fragment)
+    whys, _, errors = load_fragment(fragment, args.breadth, args.depth)
     if errors:
+        log_check(fragment, len(errors), 0)
         print("\n".join(errors[:25]))
         if len(errors) > 25:
             print(f"... and {len(errors) - 25} more errors")
@@ -468,6 +499,7 @@ def cmd_check(args) -> None:
     warnings += [f"warning: item {f['id']} restates item {f['of']}"
                  for f in flags["restates_parent"] + flags["restates_ancestor"]]
     warnings += [f"warning: item {f['id']} has {f['words']} words; aim for about 20" for f in flags["over_length"]]
+    log_check(fragment, 0, len(warnings))
     if warnings:
         print("\n".join(warnings[:25]))
         print("Warnings never block. Fix them with Edit when that doesn't mean rewriting the fragment.")
@@ -538,6 +570,8 @@ def cmd_assemble(args) -> None:
         "depth": depth,
         "split": split,
         "model": meta["model"],
+        "root_model": meta["root_model"],
+        "branch_model": meta["branch_model"],
         "total_reasons": reasons(breadth, depth),
         "present_reasons": len(flat),
         "complete": not missing,
@@ -570,9 +604,11 @@ def cmd_assemble(args) -> None:
     flags = hygiene(flat)
     (run / "hygiene.json").write_text(json.dumps(flags, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
+    checks = read_checks(run)
+    totals = {"runs": sum(c["checks"] for c in checks.values()), "failed": sum(c["failed"] for c in checks.values())}
     size = out.stat().st_size
     meta.update({"assembled": header["assembled"], "duration_seconds": duration,
-                 "output": {"bytes": size, "approx_tokens": size // 4, "lines": len(lines), "complete": not missing}})
+                 "output": {"bytes": size, "approx_tokens": size // 4, "lines": len(lines), "complete": not missing}, "checks": totals})
     write_run(run, meta)
     print(json.dumps({
         "file": str(out),
@@ -586,6 +622,7 @@ def cmd_assemble(args) -> None:
         "approx_tokens": size // 4,
         "duration_seconds": duration,
         "hygiene_counts": flags["counts"],
+        "checks": totals,
     }, indent=2))
 
 
@@ -644,6 +681,8 @@ def main() -> None:
     p.add_argument("--depth", type=int, help="levels of why (overrides the preset)")
     p.add_argument("--split", type=int, help="levels written by the root agent (default: depth // 2)")
     p.add_argument("--model", choices=MODELS, default="inherit", help="model for the expander agents")
+    p.add_argument("--root-model", choices=MODELS, help="model for the root task (default: --model)")
+    p.add_argument("--branch-model", choices=MODELS, help="model for branch tasks (default: --model)")
     p.add_argument("--max-parallel", type=int, default=MAX_PARALLEL, help="largest dispatch wave")
     p.add_argument("--context-file", help="file of user-supplied context included in every prompt")
     p.set_defaults(func=cmd_init)

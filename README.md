@@ -63,6 +63,7 @@ Each run lives in `.five-whys/<timestamp>-<slug>/`:
 | `run.json` | Shape, model, dispatch attempts, timing, output size |
 | `fragments/` | Raw agent output |
 | `prompts/` | The full prompt each agent was dispatched with |
+| `check-log.jsonl` | Every check an agent ran, so repair cycles are countable |
 
 `.five-whys/.gitignore` keeps runs out of git, since problem statements can be sensitive.
 
@@ -105,6 +106,7 @@ density). `show --id <id>` prints a single branch with its ancestors.
 - Deep levels drift toward systemic causes. Agents are told to stay specific and
   state their assumptions, which reduces generic reasons but doesn't prevent them.
 - How much a cheaper model changes reason quality is unmeasured.
+- Whether reading the whole tree beats reading it branch by branch hasn't been compared.
 - A full run spends a large share of subscription quota in a short burst.
 
 ## Resuming, subsets and partial trees
@@ -121,15 +123,15 @@ density). `show --id <id>` prints a single branch with its ancestors.
 
 | Command | Does |
 |---------|------|
-| `init` (problem on stdin) | Create a run: `--preset`, `--breadth`, `--depth`, `--split`, `--model`, `--max-parallel`, `--context-file` |
+| `init` (problem on stdin) | Create a run: `--preset`, `--breadth`, `--depth`, `--split`, `--model`, `--root-model`, `--branch-model`, `--max-parallel`, `--context-file` |
 | `plan <run>` | Next wave of missing fragments with prompts; `--record` counts attempts; `--only` selects branches |
-| `status <run>` | Done, missing and stuck fragments |
+| `status <run>` | Done, missing and stuck fragments, and check cycles per fragment |
 | `check <fragment> --breadth N --depth N` | Validate one fragment; warnings never block |
 | `assemble <run>` | Write `five-whys.json`, `index.md`, `hygiene.json`; `--partial` allows missing branches |
 | `show <tree-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`) |
 
 Tests: `python3 -m unittest discover tests`. Eval: `claude plugin eval . --allow-tools Bash Write Edit --runs 1`.
-Release steps: [RELEASING.md](RELEASING.md).
+CI runs the unit tests on every push. Release steps: [RELEASING.md](RELEASING.md).
 
 ## Design decisions
 
