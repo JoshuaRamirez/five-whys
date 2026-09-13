@@ -48,3 +48,19 @@ Per-code counts are in `summary.md`.
   that it had no git repository or that `plan` couldn't resume.
 - An X-HIST or X-ENV reason may be accurate; it just implies no further change
   to the plugin.
+
+## Verifying v0.2.0
+
+- **Unit tests:** 35 pass (`python3 -m unittest discover tests`); `claude plugin validate` passes.
+- **Real smoke run (2026-09-13):** `--preset smoke` on "Our nightly database backup
+  job silently skipped three runs this month, and nobody noticed until a restore was
+  needed." 4 real agents; 39 of 39 reasons; every fragment passed its first check
+  (`check-log.jsonl`: 3 checks, 0 failures); 0 hygiene flags; agents stated 10
+  assumptions across the fragments.
+- **Read in full.** The reasons name concrete mechanisms from the scenario (an
+  empty lock file created with `touch`, exit status 0 on the skip path, alerts that
+  see only exit codes, split ownership between teams) rather than stock causes.
+  One cross-branch overlap got past the hygiene heuristic: 2.3 and 3.1.2 both put
+  the gap down to split ownership between the database and platform teams. That
+  is the known limitation about deep causes converging.
+- **Not yet done:** a full 5x5 run on v0.2.0, and `claude plugin eval`.

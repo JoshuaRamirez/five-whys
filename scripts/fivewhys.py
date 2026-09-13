@@ -593,8 +593,9 @@ def cmd_assemble(args) -> None:
     out.write_text(text, encoding="utf-8")
 
     index = ["# Five Whys index", "", f"Problem: {meta['problem']}", ""]
+    span = "Level 1" if split == 1 else f"Levels 1-{split}"
     if split < depth:
-        index += [f"Levels 1-{split} of {depth}. Each level-{split} reason heads a branch of "
+        index += [f"{span} of {depth}. Each level-{split} reason heads a branch of "
                   f"{reasons(breadth, depth - split)} deeper reasons. Print one branch with:", "",
                   "```", f"python3 {SCRIPT} show {run} --id <id>", "```", ""]
     index += [f"{'  ' * (r['depth'] - 1)}- {r['id']} {r['reason']}" + (" (branch missing)" if r["id"] in missing else "")
