@@ -9,6 +9,7 @@ into agent-sized fragments; this script owns everything deterministic:
   plan      list the fragments still missing, with a ready-to-dispatch prompt each
   check     validate one fragment file against its expected shape
   assemble  validate every fragment and write the final five-whys.json
+  show      print a subtree (with its ancestor chain) or the top levels of a tree
 
 Fragments:
   fragments/root.json         levels 1..ROOT_DEPTH
@@ -286,6 +287,33 @@ def cmd_assemble(args) -> None:
     }, indent=2))
 
 
+def cmd_show(args) -> None:
+    path = Path(args.tree)
+    if path.is_dir():
+        path = path / "five-whys.json"
+    nodes = json.loads(path.read_text(encoding="utf-8"))["whys"]
+    if args.id:
+        chain = []
+        try:
+            for step in args.id.split("."):
+                node = nodes[int(step) - 1]
+                chain.append(node)
+                nodes = node.get("whys", [])
+        except (ValueError, IndexError):
+            sys.exit(f"show: no node with id {args.id}")
+        for ancestor in chain[:-1]:
+            print(f"^ {ancestor['id']}  {ancestor['reason']}")
+        nodes = [chain[-1]]
+
+    def walk(level_nodes, remaining):
+        for node in level_nodes:
+            print(f"{'  ' * (node['depth'] - 1)}{node['id']}  {node['reason']}")
+            if remaining != 1:
+                walk(node.get("whys", []), remaining - 1)
+
+    walk(nodes, args.levels or 0)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -306,6 +334,12 @@ def main() -> None:
     p = sub.add_parser("assemble", help="write the final five-whys.json")
     p.add_argument("run")
     p.set_defaults(func=cmd_assemble)
+
+    p = sub.add_parser("show", help="print a subtree or the top levels of an assembled tree")
+    p.add_argument("tree", help="five-whys.json, or the run directory holding it")
+    p.add_argument("--id", help="dotted node id to show, preceded by its ancestor chain")
+    p.add_argument("--levels", type=int, help="levels to print, counting the shown node (default: all)")
+    p.set_defaults(func=cmd_show)
 
     args = parser.parse_args()
     args.func(args)
