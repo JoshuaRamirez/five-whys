@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "1.5.1",
+   "d": "X-DONE",
+   "note": "Committed fix: the skill now dispatches at most 20 agents per round (20 then 5), not all 25 at once."
+  },
+  {
+   "id": "1.5.1.1",
+   "d": "X-DONE",
+   "note": "Skill Step 3 now caps each dispatch message at 20 agents after the real run hit the concurrency cap."
+  },
+  {
+   "id": "1.5.1.1.1",
+   "d": "X-HIST",
+   "note": "Past speed-first assumption; the cap was hit, fixed, and script-level waves come via IMP-03."
+  },
+  {
+   "id": "1.5.1.1.2",
+   "d": "X-ENV",
+   "note": "Claude Code enforces a default 20-subagent cap that plugins cannot configure; the skill now respects it."
+  },
+  {
+   "id": "1.5.1.1.3",
+   "d": "X-HIST",
+   "note": "Past testing gap; the full 26-agent run on 2026-09-13 exposed the cap and prompted the fix."
+  },
+  {
+   "id": "1.5.1.1.4",
+   "d": "X-HIST",
+   "note": "Origin of the fan-out pattern; nothing further to change beyond the committed cap and IMP-03 waves."
+  },
+  {
+   "id": "1.5.1.1.5",
+   "d": "IMP-03",
+   "note": "The skill already loops plan rounds; plan-emitted waves make batching script-driven, not extra prompt logic."
+  },
+  {
+   "id": "1.5.1.2",
+   "d": "IMP-12",
+   "note": "Plan re-lists missing fragments each round, but attempts are not recorded; IMP-12 adds attempt counts and stuck reporting."
+  },
+  {
+   "id": "1.5.1.2.1",
+   "d": "X-FALSE",
+   "note": "Retries come from plan validating fragment files on disk each round, not from the model noticing failures."
+  },
+  {
+   "id": "1.5.1.2.2",
+   "d": "X-FALSE",
+   "note": "plan emits the dispatch task list with ready prompts, so the script does drive dispatch decisions."
+  },
+  {
+   "id": "1.5.1.2.3",
+   "d": "IMP-14",
+   "note": "README will document the concurrency cap, known limitations and failure behavior for users and maintainers."
+  },
+  {
+   "id": "1.5.1.2.4",
+   "d": "X-HIST",
+   "note": "Past scoping choice; retry via re-plan exists and attempt tracking is IMP-12."
+  },
+  {
+   "id": "1.5.1.2.5",
+   "d": "X-FALSE",
+   "note": "Every plan call lists missing or invalid fragments with their errors, well before assembly."
+  },
+  {
+   "id": "1.5.1.3",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth parameterizes the shape so branch count and load can be scaled down."
+  },
+  {
+   "id": "1.5.1.3.1",
+   "d": "IMP-01",
+   "note": "The postponed configurable breadth and depth is exactly the parameterized-shape improvement."
+  },
+  {
+   "id": "1.5.1.3.2",
+   "d": "IMP-01",
+   "note": "Validator and plan will read the shape from run.json instead of the BRANCHING/DEPTH constants."
+  },
+  {
+   "id": "1.5.1.3.3",
+   "d": "IMP-01",
+   "note": "The 5x5 default stays per user requirement, but the shape becomes configurable for other runs."
+  },
+  {
+   "id": "1.5.1.3.4",
+   "d": "IMP-02",
+   "note": "init --preset smoke provides the 3-wide by 3-deep trial mode for tight quotas."
+  },
+  {
+   "id": "1.5.1.3.5",
+   "d": "IMP-01",
+   "note": "IMP-01 derives the root/branch split from the configured shape rather than the hand-set ROOT_DEPTH."
+  },
+  {
+   "id": "1.5.1.4",
+   "d": "IMP-19",
+   "note": "assemble --partial lets a run yield a valid tree with missing-branch markers instead of waiting on stragglers."
+  },
+  {
+   "id": "1.5.1.4.1",
+   "d": "IMP-19",
+   "note": "Partial assembly removes the all-fragments requirement for producing output."
+  },
+  {
+   "id": "1.5.1.4.2",
+   "d": "IMP-08",
+   "note": "Targeted Edit repairs and a fix-loop cap shorten slow check-and-fix cycles in branch agents."
+  },
+  {
+   "id": "1.5.1.4.3",
+   "d": "IMP-19",
+   "note": "Directly the missing partial-assembly mode."
+  },
+  {
+   "id": "1.5.1.4.4",
+   "d": "X-ENV",
+   "note": "Host timeout tuning belongs to Claude Code; the measured full run finished in about 7 minutes."
+  },
+  {
+   "id": "1.5.1.4.5",
+   "d": "X-ENV",
+   "note": "Throttling behavior of the model service is outside the plugin's control."
+  },
+  {
+   "id": "1.5.1.5",
+   "d": "X-HIST",
+   "note": "Past mental model; the real run corrected it and dispatch is now capped at 20."
+  },
+  {
+   "id": "1.5.1.5.1",
+   "d": "X-HIST",
+   "note": "Author background explanation; the cap fix and IMP-03 waves cover the actionable part."
+  },
+  {
+   "id": "1.5.1.5.2",
+   "d": "X-HIST",
+   "note": "Rationale for parallelism, still valid: the full run took about 7 minutes; no change implied."
+  },
+  {
+   "id": "1.5.1.5.3",
+   "d": "X-ENV",
+   "note": "How Claude Code markets parallel sub-agents is an ecosystem fact."
+  },
+  {
+   "id": "1.5.1.5.4",
+   "d": "IMP-05",
+   "note": "A cost and size preview with confirmation makes the hidden per-agent cost visible before dispatch."
+  },
+  {
+   "id": "1.5.1.5.5",
+   "d": "IMP-10",
+   "note": "Recording counts, bytes, tokens and duration in output makes runtime resource use a reviewed quantity."
+  },
+  {
+   "id": "1.5.2",
+   "d": "IMP-04",
+   "note": "init --model lets users pick a cheaper model instead of always inheriting the session model."
+  },
+  {
+   "id": "1.5.2.1",
+   "d": "IMP-04",
+   "note": "The model: inherit frontmatter is replaced by a per-run model choice passed as the Agent override."
+  },
+  {
+   "id": "1.5.2.1.1",
+   "d": "IMP-04",
+   "note": "The unrevisited inherit default is addressed by explicit model selection recorded in run.json."
+  },
+  {
+   "id": "1.5.2.1.2",
+   "d": "IMP-04",
+   "note": "IMP-04 docs explain the model quality/cost trade-off so users choose knowingly."
+  },
+  {
+   "id": "1.5.2.1.3",
+   "d": "X-HIST",
+   "note": "Past quality worry; IMP-04 leaves the choice to the user rather than forcing a cheaper model."
+  },
+  {
+   "id": "1.5.2.1.4",
+   "d": "X-HIST",
+   "note": "Familiarity explanation; the actionable part is IMP-04."
+  },
+  {
+   "id": "1.5.2.1.5",
+   "d": "IMP-04",
+   "note": "Passing an explicit model override stops premium session configuration flowing into every child agent."
+  },
+  {
+   "id": "1.5.2.2",
+   "d": "X-ENV",
+   "note": "Per-model throughput limits are set by the provider, not the plugin."
+  },
+  {
+   "id": "1.5.2.2.1",
+   "d": "X-ENV",
+   "note": "Provider capacity rationing is outside the plugin's control."
+  },
+  {
+   "id": "1.5.2.2.2",
+   "d": "X-ENV",
+   "note": "Shared subscription usage pools are a platform billing fact."
+  },
+  {
+   "id": "1.5.2.2.3",
+   "d": "IMP-03",
+   "note": "Waves bounded by a concurrency cap limit instantaneous demand while keeping total work unchanged."
+  },
+  {
+   "id": "1.5.2.2.4",
+   "d": "X-ENV",
+   "note": "Per-account limits shared with other sessions are a platform fact."
+  },
+  {
+   "id": "1.5.2.2.5",
+   "d": "IMP-05",
+   "note": "Plugins cannot read headroom, but IMP-05 previews expected tokens and confirms before a full run."
+  },
+  {
+   "id": "1.5.2.3",
+   "d": "R-05",
+   "note": "Token-level prompt deduplication or cache engineering is declined; each isolated agent needs the problem and rules."
+  },
+  {
+   "id": "1.5.2.3.1",
+   "d": "X-ENV",
+   "note": "Prompt-cache sharing between sub-agents is controlled by Claude Code and the API."
+  },
+  {
+   "id": "1.5.2.3.2",
+   "d": "X-FALSE",
+   "note": "The problem statement is about 118 user-supplied words, modest next to generated output and agent overhead."
+  },
+  {
+   "id": "1.5.2.3.3",
+   "d": "IMP-08",
+   "note": "NEW reconciled: rewritten agent file holds no counts; generated prompts own the shape."
+  },
+  {
+   "id": "1.5.2.3.4",
+   "d": "R-05",
+   "note": "Prompt compression engineering is declined; the user's problem is passed verbatim and the ancestor chain is two lines."
+  },
+  {
+   "id": "1.5.2.3.5",
+   "d": "R-07",
+   "note": "Shared context between agents is declined; IMP-07 adds only the cheap level-1/2 digest."
+  },
+  {
+   "id": "1.5.2.4",
+   "d": "R-04",
+   "note": "155 reasons per branch follows from the user's complete 5x5x5x5x5 requirement; smaller shapes exist via IMP-01/02."
+  },
+  {
+   "id": "1.5.2.4.1",
+   "d": "X-ENV",
+   "note": "Output token pricing and speed are model platform facts."
+  },
+  {
+   "id": "1.5.2.4.2",
+   "d": "IMP-01",
+   "note": "The root/branch split will be derived from shape, allowing a different per-agent volume distribution."
+  },
+  {
+   "id": "1.5.2.4.3",
+   "d": "R-07",
+   "note": "A separate leaf stage would serialize generation behind branch output, which the catalog declines."
+  },
+  {
+   "id": "1.5.2.4.4",
+   "d": "R-08",
+   "note": "NEW reconciled: line-per-reason fragments declined; JSON fragments proved reliable in the real run."
+  },
+  {
+   "id": "1.5.2.4.5",
+   "d": "R-04",
+   "note": "Total reason count is fixed by the user's complete-tree requirement; capping it is declined."
+  },
+  {
+   "id": "1.5.2.5",
+   "d": "IMP-05",
+   "note": "init and plan will report agent, reason and token estimates before dispatch."
+  },
+  {
+   "id": "1.5.2.5.1",
+   "d": "IMP-05",
+   "note": "The skill will confirm with the user before dispatching a full-size run."
+  },
+  {
+   "id": "1.5.2.5.2",
+   "d": "X-ENV",
+   "note": "No plugin-facing quota API exists in Claude Code."
+  },
+  {
+   "id": "1.5.2.5.3",
+   "d": "X-HIST",
+   "note": "Past assumption about users; the preview and confirmation in IMP-05 cover it."
+  },
+  {
+   "id": "1.5.2.5.4",
+   "d": "IMP-05",
+   "note": "Estimates will use measured figures from the real run (about 1.2M tokens, 128k output)."
+  },
+  {
+   "id": "1.5.2.5.5",
+   "d": "IMP-14",
+   "note": "README will document measured cost, time, the concurrency cap and known limitations."
+  },
+  {
+   "id": "1.5.3",
+   "d": "X-ENV",
+   "note": "Claude Code's interactive session design is a platform fact outside the plugin."
+  },
+  {
+   "id": "1.5.3.1",
+   "d": "X-FALSE",
+   "note": "The measured full 26-agent run completed in about 7 minutes without hitting time ceilings."
+  },
+  {
+   "id": "1.5.3.1.1",
+   "d": "X-ENV",
+   "note": "Host timeout policy is Claude Code's design choice."
+  },
+  {
+   "id": "1.5.3.1.2",
+   "d": "X-ENV",
+   "note": "Plugins cannot configure host timeouts; that is a platform constraint."
+  },
+  {
+   "id": "1.5.3.1.3",
+   "d": "IMP-08",
+   "note": "Targeted Edit repairs and a fix-loop cap bound check-and-fix time per agent."
+  },
+  {
+   "id": "1.5.3.1.4",
+   "d": "IMP-10",
+   "note": "Duration from creation to assembly will be recorded; the real run already measured about 7 minutes."
+  },
+  {
+   "id": "1.5.3.1.5",
+   "d": "IMP-13",
+   "note": "A status subcommand and per-wave progress reports give a visible signal during slow calls."
+  },
+  {
+   "id": "1.5.3.2",
+   "d": "X-ENV",
+   "note": "Laptop sleep and network loss killing local processes is environmental; fragments already on disk survive."
+  },
+  {
+   "id": "1.5.3.2.1",
+   "d": "X-ENV",
+   "note": "Sub-agents running inside the local CLI process is how Claude Code works."
+  },
+  {
+   "id": "1.5.3.2.2",
+   "d": "X-ENV",
+   "note": "Users stepping away is user behavior, not plugin behavior; resume by re-running plan exists."
+  },
+  {
+   "id": "1.5.3.2.3",
+   "d": "IMP-14",
+   "note": "Known-limitations documentation will advise keeping the session alive and explain re-running plan to resume."
+  },
+  {
+   "id": "1.5.3.2.4",
+   "d": "R-05",
+   "note": "Durable remote job infrastructure is declined; file-based resume covers interruptions."
+  },
+  {
+   "id": "1.5.3.2.5",
+   "d": "X-ENV",
+   "note": "Operating system power management is outside the plugin's control."
+  },
+  {
+   "id": "1.5.3.3",
+   "d": "X-DONE",
+   "note": "plan skips fragments that exist and validate, and run.json stores the problem, so re-running plan resumes."
+  },
+  {
+   "id": "1.5.3.3.1",
+   "d": "X-FALSE",
+   "note": "Run state lives on disk in the run directory (run.json and fragments), not in the conversation."
+  },
+  {
+   "id": "1.5.3.3.2",
+   "d": "X-DONE",
+   "note": "Resume exists regardless: re-running plan re-lists only missing or invalid fragments."
+  },
+  {
+   "id": "1.5.3.3.3",
+   "d": "X-FALSE",
+   "note": "Skill Step 3 loops plan, which re-lists only fragments still missing or invalid."
+  },
+  {
+   "id": "1.5.3.3.4",
+   "d": "X-FALSE",
+   "note": "A full real run completed on 2026-09-13 with 26 agents and 3,905 reasons."
+  },
+  {
+   "id": "1.5.3.3.5",
+   "d": "R-05",
+   "note": "Durable job tracking infrastructure is declined; file-based fragments already give resumability."
+  },
+  {
+   "id": "1.5.3.4",
+   "d": "X-FALSE",
+   "note": "Agents reply with one line each and progress is re-derived from disk, so compaction cannot lose run state."
+  },
+  {
+   "id": "1.5.3.4.1",
+   "d": "X-ENV",
+   "note": "Notification token cost per returned agent is set by Claude Code."
+  },
+  {
+   "id": "1.5.3.4.2",
+   "d": "X-ENV",
+   "note": "Model instruction adherence is outside plugin control; state is on disk so verbose replies do no harm."
+  },
+  {
+   "id": "1.5.3.4.3",
+   "d": "X-DONE",
+   "note": "plan recomputes remaining tasks from fragment files each round, so orchestrator memory is not needed."
+  },
+  {
+   "id": "1.5.3.4.4",
+   "d": "IMP-24",
+   "note": "NEW reconciled: plan writes prompt files and dispatches short pointers."
+  },
+  {
+   "id": "1.5.3.4.5",
+   "d": "X-ENV",
+   "note": "Pre-existing session load is the user's environment; the plugin cannot free that headroom."
+  },
+  {
+   "id": "1.5.3.5",
+   "d": "IMP-13",
+   "note": "A status subcommand and per-wave progress reports make slow runs distinguishable from hung ones."
+  },
+  {
+   "id": "1.5.3.5.1",
+   "d": "X-ENV",
+   "note": "Background agents reporting only on completion is Claude Code behavior."
+  },
+  {
+   "id": "1.5.3.5.2",
+   "d": "IMP-13",
+   "note": "The skill will report done/total fragments after each wave."
+  },
+  {
+   "id": "1.5.3.5.3",
+   "d": "IMP-13",
+   "note": "Visible progress counts reduce interruptions of runs that merely look stuck."
+  },
+  {
+   "id": "1.5.3.5.4",
+   "d": "X-ENV",
+   "note": "The multi-agent display is Claude Code's interface, not the plugin's."
+  },
+  {
+   "id": "1.5.3.5.5",
+   "d": "IMP-13",
+   "note": "Progress reporting becomes a core status subcommand and skill step."
+  },
+  {
+   "id": "1.5.4",
+   "d": "X-ENV",
+   "note": "Account rate-limit thresholds are not exposed by the platform."
+  },
+  {
+   "id": "1.5.4.1",
+   "d": "X-ENV",
+   "note": "How plans express limits is Anthropic's pricing design."
+  },
+  {
+   "id": "1.5.4.1.1",
+   "d": "X-ENV",
+   "note": "Subscription quota abstraction is a provider pricing choice."
+  },
+  {
+   "id": "1.5.4.1.2",
+   "d": "X-ENV",
+   "note": "Changing, unpublished limits are a provider policy fact."
+  },
+  {
+   "id": "1.5.4.1.3",
+   "d": "X-ENV",
+   "note": "Usage window accounting across parent and sub-agents is platform behavior."
+  },
+  {
+   "id": "1.5.4.1.4",
+   "d": "X-ENV",
+   "note": "After-the-fact cap reporting is platform behavior; IMP-05 predicts job size instead."
+  },
+  {
+   "id": "1.5.4.1.5",
+   "d": "X-ENV",
+   "note": "Availability of test accounts with stable limits is an ecosystem fact."
+  },
+  {
+   "id": "1.5.4.2",
+   "d": "IMP-10",
+   "note": "Assembled header and run.json will record counts, bytes, tokens, duration and dispatch attempts."
+  },
+  {
+   "id": "1.5.4.2.1",
+   "d": "IMP-10",
+   "note": "run.json and header will gain duration, size and attempt metadata alongside fragments."
+  },
+  {
+   "id": "1.5.4.2.2",
+   "d": "X-HIST",
+   "note": "Past exploratory trials; measurement going forward is IMP-10."
+  },
+  {
+   "id": "1.5.4.2.3",
+   "d": "X-ENV",
+   "note": "Sub-agent token extraction from transcripts depends on Claude Code's transcript format."
+  },
+  {
+   "id": "1.5.4.2.4",
+   "d": "X-HIST",
+   "note": "Past sequencing judgment; instrumentation is now IMP-10."
+  },
+  {
+   "id": "1.5.4.2.5",
+   "d": "R-05",
+   "note": "Wiring a telemetry backend is declined heavy infrastructure; file-based measurement (IMP-10) instead."
+  },
+  {
+   "id": "1.5.4.3",
+   "d": "X-ENV",
+   "note": "How rate-limit errors surface to sub-agents and parents is Claude Code behavior."
+  },
+  {
+   "id": "1.5.4.3.1",
+   "d": "X-ENV",
+   "note": "Error code propagation from agents to parent is controlled by the platform."
+  },
+  {
+   "id": "1.5.4.3.2",
+   "d": "X-ENV",
+   "note": "Throttling manifesting as slowness is service behavior outside the plugin."
+  },
+  {
+   "id": "1.5.4.3.3",
+   "d": "X-ENV",
+   "note": "Automatic client retries are implemented by Claude Code, not the plugin."
+  },
+  {
+   "id": "1.5.4.3.4",
+   "d": "X-ENV",
+   "note": "Orchestrator visibility into timeout versus rate-limit causes is a platform limitation."
+  },
+  {
+   "id": "1.5.4.3.5",
+   "d": "IMP-12",
+   "note": "The reply already carries FAILED with first error; IMP-12 formalizes failure semantics and stuck reporting."
+  },
+  {
+   "id": "1.5.4.4",
+   "d": "IMP-03",
+   "note": "Waves sized to a configurable concurrency cap (default 20) let users on different tiers pace runs."
+  },
+  {
+   "id": "1.5.4.4.1",
+   "d": "X-ENV",
+   "note": "Throughput differences across plan tiers are provider facts."
+  },
+  {
+   "id": "1.5.4.4.2",
+   "d": "X-ENV",
+   "note": "Claude Code exposes no tier detection to plugins."
+  },
+  {
+   "id": "1.5.4.4.3",
+   "d": "IMP-03",
+   "note": "A configurable wave size avoids hard-coding the lowest-tier pace for everyone."
+  },
+  {
+   "id": "1.5.4.4.4",
+   "d": "X-ENV",
+   "note": "No quota or capacity API exists to probe; fixed configurable waves (IMP-03) are the feasible substitute."
+  },
+  {
+   "id": "1.5.4.4.5",
+   "d": "R-06",
+   "note": "Studying users' environments is user research, out of scope for plugin changes."
+  },
+  {
+   "id": "1.5.4.5",
+   "d": "IMP-02",
+   "note": "The smoke preset gives cheap rehearsal runs instead of spending quota on full attempts."
+  },
+  {
+   "id": "1.5.4.5.1",
+   "d": "IMP-02",
+   "note": "A 3x3 smoke preset and plan --only subset dispatch avoid consuming a full window per attempt."
+  },
+  {
+   "id": "1.5.4.5.2",
+   "d": "IMP-19",
+   "note": "Partial assembly turns interrupted attempts into usable output; valid fragments already persist for resume."
+  },
+  {
+   "id": "1.5.4.5.3",
+   "d": "IMP-02",
+   "note": "Smoke preset and subset dispatch provide a cheap stand-in for rehearsing orchestration."
+  },
+  {
+   "id": "1.5.4.5.4",
+   "d": "X-HIST",
+   "note": "Personal budget psychology; cheap rehearsal is covered by IMP-02."
+  },
+  {
+   "id": "1.5.4.5.5",
+   "d": "X-HIST",
+   "note": "Author's competing daily usage explains past caution; nothing further in the plugin."
+  },
+  {
+   "id": "1.5.5",
+   "d": "IMP-03",
+   "note": "Plan-emitted waves move pacing from prose instructions into deterministic script output."
+  },
+  {
+   "id": "1.5.5.1",
+   "d": "IMP-03",
+   "note": "Pre-grouped waves from plan leave the model no batching decision to reinterpret."
+  },
+  {
+   "id": "1.5.5.1.1",
+   "d": "X-ENV",
+   "note": "Runtime tool-call grouping being model-decided is how Claude Code agents work."
+  },
+  {
+   "id": "1.5.5.1.2",
+   "d": "IMP-03",
+   "note": "Encoding waves in plan output replaces reliance on one rule's salience in the 86-line skill."
+  },
+  {
+   "id": "1.5.5.1.3",
+   "d": "X-ENV",
+   "note": "Instruction-following differences across model versions are outside plugin control."
+  },
+  {
+   "id": "1.5.5.1.4",
+   "d": "IMP-18",
+   "note": "An eval running a smoke-preset run end to end exercises actual orchestrator dispatch."
+  },
+  {
+   "id": "1.5.5.1.5",
+   "d": "X-ENV",
+   "note": "Claude Code's system guidance favoring concurrent agents is a platform fact."
+  },
+  {
+   "id": "1.5.5.2",
+   "d": "X-ENV",
+   "note": "Scripts cannot spawn Claude Code sub-agents; that is a platform constraint."
+  },
+  {
+   "id": "1.5.5.2.1",
+   "d": "X-ENV",
+   "note": "Agent spawning exposed only as a model tool is Claude Code's design."
+  },
+  {
+   "id": "1.5.5.2.2",
+   "d": "R-02",
+   "note": "Driving the Agent SDK from the script needs API keys and network calls, which the catalog declines."
+  },
+  {
+   "id": "1.5.5.2.3",
+   "d": "R-02",
+   "note": "Headless CLI dispatch from the script adds network-calling model runs to a stdlib offline script; declined."
+  },
+  {
+   "id": "1.5.5.2.4",
+   "d": "X-HIST",
+   "note": "Deliberate single-session simplicity choice; still the intended design."
+  },
+  {
+   "id": "1.5.5.2.5",
+   "d": "X-HIST",
+   "note": "Author unfamiliarity explanation; pacing is covered by plan waves in IMP-03."
+  },
+  {
+   "id": "1.5.5.3",
+   "d": "X-FALSE",
+   "note": "plan checks fragments on disk each round and assemble validates all, independent of the model reading replies."
+  },
+  {
+   "id": "1.5.5.3.1",
+   "d": "X-DONE",
+   "note": "The model need not track results: plan re-derives remaining tasks from files every round."
+  },
+  {
+   "id": "1.5.5.3.2",
+   "d": "IMP-12",
+   "note": "FAILED replies and attempt counts get explicit semantics: record attempts, report tasks stuck past 3."
+  },
+  {
+   "id": "1.5.5.3.3",
+   "d": "X-FALSE",
+   "note": "assemble validates every fragment and refuses to write output if any is missing or invalid."
+  },
+  {
+   "id": "1.5.5.3.4",
+   "d": "IMP-12",
+   "note": "The skill's three-round rule becomes per-task attempt counts recorded by the script."
+  },
+  {
+   "id": "1.5.5.3.5",
+   "d": "IMP-12",
+   "note": "Failure semantics (attempts, stuck tasks, capped fix loops) extend handling beyond the happy path."
+  },
+  {
+   "id": "1.5.5.4",
+   "d": "IMP-03",
+   "note": "plan will group tasks into waves no larger than the concurrency cap."
+  },
+  {
+   "id": "1.5.5.4.1",
+   "d": "IMP-03",
+   "note": "Directly the missing wave grouping in plan output."
+  },
+  {
+   "id": "1.5.5.4.2",
+   "d": "X-HIST",
+   "note": "Past schema simplicity choice; wave grouping is IMP-03."
+  },
+  {
+   "id": "1.5.5.4.3",
+   "d": "IMP-03",
+   "note": "Pacing becomes an explicit design goal through wave metadata in plan."
+  },
+  {
+   "id": "1.5.5.4.4",
+   "d": "X-ENV",
+   "note": "How models interpret task lists is model behavior; IMP-03 structures the list instead."
+  },
+  {
+   "id": "1.5.5.4.5",
+   "d": "IMP-03",
+   "note": "Waves subdivide the branch phase into cap-sized groups."
+  },
+  {
+   "id": "1.5.5.5",
+   "d": "IMP-18",
+   "note": "A plugin eval exercising a smoke-preset run makes orchestration behavior testable before real runs."
+  },
+  {
+   "id": "1.5.5.5.1",
+   "d": "IMP-11",
+   "note": "Unit tests will cover waves, failure attempts and partial assembly paths without live agents."
+  },
+  {
+   "id": "1.5.5.5.2",
+   "d": "IMP-18",
+   "note": "Adds an evals/ case for claude plugin eval."
+  },
+  {
+   "id": "1.5.5.5.3",
+   "d": "X-ENV",
+   "note": "Model nondeterminism is outside plugin control; live-model CI is declined under R-05."
+  },
+  {
+   "id": "1.5.5.5.4",
+   "d": "X-ENV",
+   "note": "Agent tool mockability is a Claude Code limitation."
+  },
+  {
+   "id": "1.5.5.5.5",
+   "d": "X-FALSE",
+   "note": "v0.1.0 has no tests at all, even for the validator; IMP-11 adds them."
+  }
+ ]
+}

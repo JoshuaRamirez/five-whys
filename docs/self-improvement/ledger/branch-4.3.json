@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "4.3.1",
+   "d": "IMP-09",
+   "note": "Consumption gets designed: show subtrees, index.md of levels 1-2, and branch-by-branch loading guidance."
+  },
+  {
+   "id": "4.3.1.1",
+   "d": "X-HIST",
+   "note": "Explains where v0.1.0 design effort went; consumption tooling itself is covered by IMP-09."
+  },
+  {
+   "id": "4.3.1.1.1",
+   "d": "X-HIST",
+   "note": "Builder motivation behind the fan-out focus; nothing further to change in the plugin."
+  },
+  {
+   "id": "4.3.1.1.2",
+   "d": "X-HIST",
+   "note": "Past prioritization of blocking agent-limit problems; the concurrency cap fix is already committed."
+  },
+  {
+   "id": "4.3.1.1.3",
+   "d": "X-ENV",
+   "note": "A fact about ecosystem plugin examples, which this plugin cannot change."
+  },
+  {
+   "id": "4.3.1.1.4",
+   "d": "IMP-09",
+   "note": "Post-assembly consumption becomes active work: show, index.md and loading guidance extend success past assembly."
+  },
+  {
+   "id": "4.3.1.1.5",
+   "d": "IMP-05",
+   "note": "Cost and size preview presents scale as a cost the user confirms, not a headline achievement."
+  },
+  {
+   "id": "4.3.1.2",
+   "d": "IMP-09",
+   "note": "Loading guidance and index.md define the post-assembly journey: scan levels 1-2, then page chosen branches."
+  },
+  {
+   "id": "4.3.1.2.1",
+   "d": "IMP-14",
+   "note": "README gains design decisions, known limitations and measured costs, recording requirements beyond shape."
+  },
+  {
+   "id": "4.3.1.2.2",
+   "d": "IMP-14",
+   "note": "Honest documentation makes intent explicit for users other than the author."
+  },
+  {
+   "id": "4.3.1.2.3",
+   "d": "IMP-15",
+   "note": "Principle clarification allows mechanical reading aids while keeping interpretation with the user."
+  },
+  {
+   "id": "4.3.1.2.4",
+   "d": "R-01",
+   "note": "A plugin-side post-listing analysis workflow is declined; analysis stays with the user."
+  },
+  {
+   "id": "4.3.1.2.5",
+   "d": "X-DONE",
+   "note": "Tracing one branch is now supported: show --id prints a subtree with its ancestor chain."
+  },
+  {
+   "id": "4.3.1.3",
+   "d": "IMP-06",
+   "note": "Hygiene report adds quality signals beyond a structurally valid file, without ranking or summarizing."
+  },
+  {
+   "id": "4.3.1.3.1",
+   "d": "IMP-06",
+   "note": "Hygiene report flags duplicates, restatements and over-length reasons, so done means more than counts and nesting."
+  },
+  {
+   "id": "4.3.1.3.2",
+   "d": "R-06",
+   "note": "Scheduling human usefulness reviewers is an organizational remedy, not a plugin change."
+  },
+  {
+   "id": "4.3.1.3.3",
+   "d": "IMP-18",
+   "note": "Eval suite exercises a smoke run end to end; findability itself is supported by IMP-09 navigation."
+  },
+  {
+   "id": "4.3.1.3.4",
+   "d": "X-HIST",
+   "note": "Release-pressure motivation behind v0.1.0; actionable consumption gaps are covered by IMP-09."
+  },
+  {
+   "id": "4.3.1.3.5",
+   "d": "X-HIST",
+   "note": "Version-label psychology; nothing further to change beyond improvements already cataloged."
+  },
+  {
+   "id": "4.3.1.4",
+   "d": "R-06",
+   "note": "Recruiting consumer-role reviewers before implementation is a social remedy outside the plugin."
+  },
+  {
+   "id": "4.3.1.4.1",
+   "d": "X-HIST",
+   "note": "Solo development context explains v0.1.0; no plugin artifact change follows."
+  },
+  {
+   "id": "4.3.1.4.2",
+   "d": "X-ENV",
+   "note": "Model tendency to accept stated framing in conversation is outside the plugin's control."
+  },
+  {
+   "id": "4.3.1.4.3",
+   "d": "R-06",
+   "note": "Recruiting target users for research is out of scope as an organizational remedy."
+  },
+  {
+   "id": "4.3.1.4.4",
+   "d": "X-ENV",
+   "note": "Marketplace lack of pre-release feedback channels is an ecosystem fact."
+  },
+  {
+   "id": "4.3.1.4.5",
+   "d": "IMP-09",
+   "note": "Human and model reading paths get explicit tooling: show, index.md and branch-wise loading guidance."
+  },
+  {
+   "id": "4.3.1.5",
+   "d": "IMP-14",
+   "note": "README records generation-only as a deliberate design decision alongside navigation aids."
+  },
+  {
+   "id": "4.3.1.5.1",
+   "d": "X-HIST",
+   "note": "Author's prior tooling background; no further plugin change follows."
+  },
+  {
+   "id": "4.3.1.5.2",
+   "d": "X-HIST",
+   "note": "Explains preference for batch design; stateless file tools already cover exploration needs."
+  },
+  {
+   "id": "4.3.1.5.3",
+   "d": "IMP-09",
+   "note": "Assembly also writes index.md and the skill gives branch-wise loading guidance, so the run ends usable."
+  },
+  {
+   "id": "4.3.1.5.4",
+   "d": "R-05",
+   "note": "Stateful interactive session infrastructure is declined; stateless show over the file covers follow-up."
+  },
+  {
+   "id": "4.3.1.5.5",
+   "d": "X-HIST",
+   "note": "Risk-aversion psychology when shipping v0.1.0; nothing actionable remains."
+  },
+  {
+   "id": "4.3.2",
+   "d": "IMP-09",
+   "note": "Loading guidance pages branch by branch instead of loading about 150k tokens at once."
+  },
+  {
+   "id": "4.3.2.1",
+   "d": "IMP-14",
+   "note": "README documents known limitations, including that whole-file loading strains comprehension."
+  },
+  {
+   "id": "4.3.2.1.1",
+   "d": "X-ENV",
+   "note": "Vendor marketing emphasis on context size is outside the plugin's control."
+  },
+  {
+   "id": "4.3.2.1.2",
+   "d": "X-ENV",
+   "note": "Attention degradation at long context is a model property, not a plugin fact."
+  },
+  {
+   "id": "4.3.2.1.3",
+   "d": "X-ENV",
+   "note": "Benchmark design and its transfer to synthesis tasks is an industry fact."
+  },
+  {
+   "id": "4.3.2.1.4",
+   "d": "X-HIST",
+   "note": "Author's earlier codebase-loading experience shaped expectations; nothing further to change."
+  },
+  {
+   "id": "4.3.2.1.5",
+   "d": "IMP-10",
+   "note": "Recording bytes, per-level counts and approximate tokens makes silent comprehension cost visible."
+  },
+  {
+   "id": "4.3.2.2",
+   "d": "IMP-09",
+   "note": "Partial reading via show and index.md avoids burying thousands of uniform reasons mid-context."
+  },
+  {
+   "id": "4.3.2.2.1",
+   "d": "IMP-08",
+   "note": "Specificity-grounded agent instructions reduce generic, similarly phrased reasons, giving more distinctive anchors."
+  },
+  {
+   "id": "4.3.2.2.2",
+   "d": "X-ENV",
+   "note": "Scattered long-context research and plugin guidance are ecosystem facts."
+  },
+  {
+   "id": "4.3.2.2.3",
+   "d": "R-10",
+   "note": "NEW reconciled: loading-strategy experiment deferred; noted as a known limitation."
+  },
+  {
+   "id": "4.3.2.2.4",
+   "d": "X-ENV",
+   "note": "How long-context degradation manifests in model output is a model property."
+  },
+  {
+   "id": "4.3.2.2.5",
+   "d": "X-HIST",
+   "note": "Author's human-skimming mental model; branch-wise loading is covered by IMP-09."
+  },
+  {
+   "id": "4.3.2.3",
+   "d": "IMP-06",
+   "note": "Hygiene report surfaces cross-branch duplicates and near-duplicates without whole-context loading."
+  },
+  {
+   "id": "4.3.2.3.1",
+   "d": "R-01",
+   "note": "Plugin-generated branch summaries for aggregation are declined; hygiene flags are the mechanical substitute."
+  },
+  {
+   "id": "4.3.2.3.2",
+   "d": "IMP-06",
+   "note": "hygiene.json is the precomputed cross-tree index of duplicate and near-duplicate reasons."
+  },
+  {
+   "id": "4.3.2.3.3",
+   "d": "IMP-09",
+   "note": "Branch-by-branch loading guidance lets users run map-reduce style passes themselves."
+  },
+  {
+   "id": "4.3.2.3.4",
+   "d": "X-HIST",
+   "note": "Intuitive belief about holistic input; actionable parts covered by IMP-06 and IMP-09."
+  },
+  {
+   "id": "4.3.2.3.5",
+   "d": "IMP-06",
+   "note": "Hygiene report flags exact and near duplicates, so deduplication no longer requires reading everything."
+  },
+  {
+   "id": "4.3.2.4",
+   "d": "IMP-05",
+   "note": "Cost and size preview reports token estimates before dispatch, surfacing downstream budget consequences."
+  },
+  {
+   "id": "4.3.2.4.1",
+   "d": "IMP-05",
+   "note": "init and plan report measured token estimates, making session costs visible at run time."
+  },
+  {
+   "id": "4.3.2.4.2",
+   "d": "X-ENV",
+   "note": "Claude Code's automatic compaction behavior is outside the plugin's control."
+  },
+  {
+   "id": "4.3.2.4.3",
+   "d": "X-HIST",
+   "note": "Author's subscription plan perception; no plugin artifact change follows."
+  },
+  {
+   "id": "4.3.2.4.4",
+   "d": "IMP-10",
+   "note": "Recorded bytes, approximate tokens and per-level counts give a measured basis for analysis budgets."
+  },
+  {
+   "id": "4.3.2.4.5",
+   "d": "IMP-09",
+   "note": "Paging branches on demand avoids carrying a 150k-token prefix through every follow-up turn."
+  },
+  {
+   "id": "4.3.2.5",
+   "d": "IMP-09",
+   "note": "Explicit loading guidance tells the model to select branches rather than expecting selective skimming."
+  },
+  {
+   "id": "4.3.2.5.1",
+   "d": "X-HIST",
+   "note": "Designer's human scrolling experience shaped the format; nothing further to change."
+  },
+  {
+   "id": "4.3.2.5.2",
+   "d": "X-ENV",
+   "note": "That models process everything loaded is a model property."
+  },
+  {
+   "id": "4.3.2.5.3",
+   "d": "X-ENV",
+   "note": "Anthropomorphic industry language about agents reading is outside plugin control."
+  },
+  {
+   "id": "4.3.2.5.4",
+   "d": "IMP-17",
+   "note": "This self-improvement pass consumes the real tree with models branch by branch, recorded as dogfooding evidence."
+  },
+  {
+   "id": "4.3.2.5.5",
+   "d": "X-ENV",
+   "note": "Tool documentation gaps about long-input processing are ecosystem facts."
+  },
+  {
+   "id": "4.3.3",
+   "d": "IMP-09",
+   "note": "Navigation is now in scope: show exists; index.md and branch paging guidance complete it."
+  },
+  {
+   "id": "4.3.3.1",
+   "d": "X-DONE",
+   "note": "Selection syntax is designed: show takes a dotted --id and --levels, already committed."
+  },
+  {
+   "id": "4.3.3.1.1",
+   "d": "X-DONE",
+   "note": "Resolved by choosing dotted path ids plus a --levels depth limit in show."
+  },
+  {
+   "id": "4.3.3.1.2",
+   "d": "X-HIST",
+   "note": "Compatibility worry explains past hesitation; the show interface now exists."
+  },
+  {
+   "id": "4.3.3.1.3",
+   "d": "X-ENV",
+   "note": "Absence of a Claude Code convention for plugin query commands is an ecosystem fact."
+  },
+  {
+   "id": "4.3.3.1.4",
+   "d": "X-DONE",
+   "note": "Dotted ids are now public addresses: documented in the assembled header and accepted by show --id."
+  },
+  {
+   "id": "4.3.3.1.5",
+   "d": "IMP-17",
+   "note": "The real run and this recorded self-improvement pass supply the usage data for the query surface."
+  },
+  {
+   "id": "4.3.3.2",
+   "d": "X-FALSE",
+   "note": "Paging needs no cursor: stable dotted ids let stateless show --id fetch any subtree."
+  },
+  {
+   "id": "4.3.3.2.1",
+   "d": "X-HIST",
+   "note": "Single-shot stateless subcommands remain intentional; no session state is needed."
+  },
+  {
+   "id": "4.3.3.2.2",
+   "d": "X-DONE",
+   "note": "Node ids serve as position, so show --id needs no cursor state anywhere."
+  },
+  {
+   "id": "4.3.3.2.3",
+   "d": "IMP-09",
+   "note": "Loading guidance pages by branch subtree rather than 400-line windows that split siblings."
+  },
+  {
+   "id": "4.3.3.2.4",
+   "d": "IMP-11",
+   "note": "Stdlib unittest suite covers show and other subcommands, supplying the missing tests."
+  },
+  {
+   "id": "4.3.3.2.5",
+   "d": "X-HIST",
+   "note": "Stateless design choice during iteration remains sound; nothing further to change."
+  },
+  {
+   "id": "4.3.3.3",
+   "d": "R-05",
+   "note": "An MCP server or retrieval infrastructure is declined; file-based show and index.md cover the need."
+  },
+  {
+   "id": "4.3.3.3.1",
+   "d": "R-05",
+   "note": "MCP server process management is heavy infrastructure the catalog declines."
+  },
+  {
+   "id": "4.3.3.3.2",
+   "d": "X-ENV",
+   "note": "Plugin MCP connection reliability is a Claude Code platform fact."
+  },
+  {
+   "id": "4.3.3.3.3",
+   "d": "R-05",
+   "note": "A second server component is declined as heavy infrastructure; the script stays single."
+  },
+  {
+   "id": "4.3.3.3.4",
+   "d": "IMP-14",
+   "note": "README records the stdlib-only, dependency-free design decision explicitly."
+  },
+  {
+   "id": "4.3.3.3.5",
+   "d": "R-05",
+   "note": "Adding a server is declined; lightweight file-based navigation covers retrieval."
+  },
+  {
+   "id": "4.3.3.4",
+   "d": "X-HIST",
+   "note": "Timeboxing motivation for v0.1.0; retrieval tooling is now cataloged under IMP-09."
+  },
+  {
+   "id": "4.3.3.4.1",
+   "d": "X-HIST",
+   "note": "General builder behavior explaining release order; nothing further to change."
+  },
+  {
+   "id": "4.3.3.4.2",
+   "d": "X-DONE",
+   "note": "The fan-out risk is retired: a full 26-agent, 3,905-reason run completed on 2026-09-13."
+  },
+  {
+   "id": "4.3.3.4.3",
+   "d": "X-HIST",
+   "note": "Explains which features were cut; the cut retrieval work is now cataloged."
+  },
+  {
+   "id": "4.3.3.4.4",
+   "d": "IMP-17",
+   "note": "The catalog and ledger in docs/self-improvement act as the follow-up roadmap and changelog."
+  },
+  {
+   "id": "4.3.3.4.5",
+   "d": "X-DONE",
+   "note": "Retrieval tooling was built: the show subcommand is committed and small."
+  },
+  {
+   "id": "4.3.3.5",
+   "d": "IMP-09",
+   "note": "Dedicated navigation and branch-wise loading guidance replace relying on raw Read of the whole file."
+  },
+  {
+   "id": "4.3.3.5.1",
+   "d": "X-ENV",
+   "note": "Standard plugin advice to reuse built-in tools is ecosystem guidance."
+  },
+  {
+   "id": "4.3.3.5.2",
+   "d": "X-HIST",
+   "note": "Design-by-default dynamics of v0.1.0; nothing further actionable."
+  },
+  {
+   "id": "4.3.3.5.3",
+   "d": "IMP-09",
+   "note": "Loading guidance replaces line-offset windows with subtree paging via show --id."
+  },
+  {
+   "id": "4.3.3.5.4",
+   "d": "X-HIST",
+   "note": "Time-pressure appeal of zero-code solutions; show now exists anyway."
+  },
+  {
+   "id": "4.3.3.5.5",
+   "d": "X-DONE",
+   "note": "A dedicated subtree view now exists: show prints a node with ancestors and chosen levels."
+  },
+  {
+   "id": "4.3.4",
+   "d": "X-FALSE",
+   "note": "emit writes one reason per line so the file pages cleanly; assembly merges parsed nested fragments in memory."
+  },
+  {
+   "id": "4.3.4.1",
+   "d": "X-FALSE",
+   "note": "Fragments are not concatenated; assemble parses each, grafts it into the root tree, then renders lines."
+  },
+  {
+   "id": "4.3.4.1.1",
+   "d": "X-FALSE",
+   "note": "assemble does tree-merging: it walks dotted ids and attaches each branch's whys to its node."
+  },
+  {
+   "id": "4.3.4.1.2",
+   "d": "X-FALSE",
+   "note": "Merge correctness is verified by validate() shape checks and a json.loads guard, not line counts."
+  },
+  {
+   "id": "4.3.4.1.3",
+   "d": "X-HIST",
+   "note": "Past risk perception about assembly; the format rationale premise is otherwise untrue."
+  },
+  {
+   "id": "4.3.4.1.4",
+   "d": "X-FALSE",
+   "note": "Output stays nested JSON; only its line layout places one reason per line."
+  },
+  {
+   "id": "4.3.4.1.5",
+   "d": "X-DONE",
+   "note": "A second consumer now exists: the show subcommand reads the assembled format."
+  },
+  {
+   "id": "4.3.4.2",
+   "d": "IMP-09",
+   "note": "assemble writes index.md of levels 1-2, giving a summary layer for selective reading."
+  },
+  {
+   "id": "4.3.4.2.1",
+   "d": "R-01",
+   "note": "Model-generated branch summaries are declined as plugin-side synthesis; index.md lists reasons verbatim."
+  },
+  {
+   "id": "4.3.4.2.2",
+   "d": "IMP-09",
+   "note": "An explicit index.md and branch-wise guidance make the index useful once whole reading is dropped."
+  },
+  {
+   "id": "4.3.4.2.3",
+   "d": "R-01",
+   "note": "Tagging reasons with themes is interpretation the plugin declines; analysis stays with the user."
+  },
+  {
+   "id": "4.3.4.2.4",
+   "d": "IMP-09",
+   "note": "index.md makes levels 1-2 the explicit index; show --levels 2 already prints them."
+  },
+  {
+   "id": "4.3.4.2.5",
+   "d": "X-ENV",
+   "note": "Scarcity of drill-down patterns in plugin outputs is an ecosystem fact."
+  },
+  {
+   "id": "4.3.4.3",
+   "d": "R-05",
+   "note": "A queryable database store is declined; the single JSON plus show and index.md stay."
+  },
+  {
+   "id": "4.3.4.3.1",
+   "d": "X-HIST",
+   "note": "Single-file delivery is the user's explicit requirement and remains; nothing to change."
+  },
+  {
+   "id": "4.3.4.3.2",
+   "d": "R-05",
+   "note": "SQLite or database stores are declined heavy infrastructure; stdlib file tools instead."
+  },
+  {
+   "id": "4.3.4.3.3",
+   "d": "X-FALSE",
+   "note": "Per-branch files already exist: fragments/branch-<id>.json, each validated for completeness by plan and assemble."
+  },
+  {
+   "id": "4.3.4.3.4",
+   "d": "IMP-09",
+   "note": "Branch-wise loading guidance gives per-branch reading paths instead of treating branch content as scratch."
+  },
+  {
+   "id": "4.3.4.3.5",
+   "d": "X-HIST",
+   "note": "One-artifact delivery mirrors the user requirement; navigation aids are covered by IMP-09."
+  },
+  {
+   "id": "4.3.4.4",
+   "d": "IMP-09",
+   "note": "Machine-friendly selective loading is added via show, index.md and branch-wise guidance."
+  },
+  {
+   "id": "4.3.4.4.1",
+   "d": "X-HIST",
+   "note": "Author's by-eye inspection during development; nothing further to change."
+  },
+  {
+   "id": "4.3.4.4.2",
+   "d": "X-HIST",
+   "note": "Editor tidiness appeal of the layout; the layout also serves grep and paging."
+  },
+  {
+   "id": "4.3.4.4.3",
+   "d": "X-HIST",
+   "note": "Past salience of the editor view; model retrieval is now addressed by IMP-09."
+  },
+  {
+   "id": "4.3.4.4.4",
+   "d": "IMP-09",
+   "note": "Loading guidance will show targeted retrieval, going beyond occasional grep lookups."
+  },
+  {
+   "id": "4.3.4.4.5",
+   "d": "IMP-09",
+   "note": "index.md and show give model-oriented partial views alongside the human-readable file."
+  },
+  {
+   "id": "4.3.4.5",
+   "d": "IMP-17",
+   "note": "The self-improvement tree, catalog and ledger reopen foundational choices with recorded reasons."
+  },
+  {
+   "id": "4.3.4.5.1",
+   "d": "X-FALSE",
+   "note": "check validates fragment shape only; just emit in assemble depends on the output line layout."
+  },
+  {
+   "id": "4.3.4.5.2",
+   "d": "X-FALSE",
+   "note": "Prompt templates reference the fragment shape example, not the assembled output layout."
+  },
+  {
+   "id": "4.3.4.5.3",
+   "d": "IMP-17",
+   "note": "This recorded self-improvement pass serves as the design review checkpoint reopening foundational choices."
+  },
+  {
+   "id": "4.3.4.5.4",
+   "d": "X-FALSE",
+   "note": "Fragments are independent of output layout; assemble re-renders from fragments, so layout changes invalidate nothing."
+  },
+  {
+   "id": "4.3.4.5.5",
+   "d": "X-HIST",
+   "note": "Sunk-cost psychology; format purpose is reconsidered in this self-improvement pass."
+  },
+  {
+   "id": "4.3.5",
+   "d": "IMP-09",
+   "note": "Skill loading guidance switches from whole-file reads to branch-wise querying with show."
+  },
+  {
+   "id": "4.3.5.1",
+   "d": "X-ENV",
+   "note": "Read being agents' dominant ingestion tool is a Claude Code platform fact."
+  },
+  {
+   "id": "4.3.5.1.1",
+   "d": "X-ENV",
+   "note": "Common skill-authoring convention across the ecosystem; outside this plugin's control."
+  },
+  {
+   "id": "4.3.5.1.2",
+   "d": "X-ENV",
+   "note": "Model training on read-then-edit workflows is outside the plugin's control."
+  },
+  {
+   "id": "4.3.5.1.3",
+   "d": "X-ENV",
+   "note": "Read tool's lack of structural filtering is a platform fact."
+  },
+  {
+   "id": "4.3.5.1.4",
+   "d": "IMP-09",
+   "note": "The skill will include deliberate instructions to select slices with show instead of whole reads."
+  },
+  {
+   "id": "4.3.5.1.5",
+   "d": "X-ENV",
+   "note": "Models defaulting to the most obvious tool is model behavior."
+  },
+  {
+   "id": "4.3.5.2",
+   "d": "X-ENV",
+   "note": "Skill authoring guidance content belongs to the Claude Code ecosystem."
+  },
+  {
+   "id": "4.3.5.2.1",
+   "d": "X-ENV",
+   "note": "Scope of official progressive-disclosure guidance is an ecosystem fact."
+  },
+  {
+   "id": "4.3.5.2.2",
+   "d": "X-ENV",
+   "note": "Example plugins producing small artifacts is an ecosystem fact."
+  },
+  {
+   "id": "4.3.5.2.3",
+   "d": "X-ENV",
+   "note": "Cultural association of retrieval with vector databases is outside plugin control."
+  },
+  {
+   "id": "4.3.5.2.4",
+   "d": "X-ENV",
+   "note": "Claude Code documentation lacking size thresholds is outside the plugin's control."
+  },
+  {
+   "id": "4.3.5.2.5",
+   "d": "X-HIST",
+   "note": "Author copied existing skill structures; nothing further beyond IMP-09 guidance."
+  },
+  {
+   "id": "4.3.5.3",
+   "d": "X-HIST",
+   "note": "Author's small-file experience shaped the whole-load assumption; no further artifact change."
+  },
+  {
+   "id": "4.3.5.3.1",
+   "d": "X-ENV",
+   "note": "Typical code and doc file sizes are general ecosystem facts."
+  },
+  {
+   "id": "4.3.5.3.2",
+   "d": "X-HIST",
+   "note": "Intuition from past successes; nothing actionable beyond IMP-09."
+  },
+  {
+   "id": "4.3.5.3.3",
+   "d": "X-HIST",
+   "note": "Absence of prior pain explains missing counter-habit; no artifact change."
+  },
+  {
+   "id": "4.3.5.3.4",
+   "d": "X-ENV",
+   "note": "Generated datasets being newer territory is an industry fact."
+  },
+  {
+   "id": "4.3.5.3.5",
+   "d": "X-HIST",
+   "note": "Habits formed under earlier context limits; nothing further to change."
+  },
+  {
+   "id": "4.3.5.4",
+   "d": "IMP-09",
+   "note": "Loading guidance shows branch-wise retrieval as the way to hold the data, not a one-shot load."
+  },
+  {
+   "id": "4.3.5.4.1",
+   "d": "X-ENV",
+   "note": "Chat interfaces framing context as working memory is a platform property."
+  },
+  {
+   "id": "4.3.5.4.2",
+   "d": "IMP-09",
+   "note": "show --id fetches a whole branch with ancestors in one call, keeping round trips few."
+  },
+  {
+   "id": "4.3.5.4.3",
+   "d": "X-ENV",
+   "note": "User judgments of responsiveness are outside the plugin's control."
+  },
+  {
+   "id": "4.3.5.4.4",
+   "d": "X-ENV",
+   "note": "Models needing context or tools to reason over data is a model property."
+  },
+  {
+   "id": "4.3.5.4.5",
+   "d": "X-ENV",
+   "note": "How transcripts display loaded data is a Claude Code UI fact."
+  },
+  {
+   "id": "4.3.5.5",
+   "d": "IMP-09",
+   "note": "Loading guidance frames the output as queryable data and demonstrates targeted retrieval."
+  },
+  {
+   "id": "4.3.5.5.1",
+   "d": "X-ENV",
+   "note": "Grep habits tied to codebases are general agent and developer behavior."
+  },
+  {
+   "id": "4.3.5.5.2",
+   "d": "IMP-14",
+   "note": "README will present the output as structured data with navigation, not a report to load whole."
+  },
+  {
+   "id": "4.3.5.5.3",
+   "d": "X-ENV",
+   "note": "Cultural reading norms for documents are outside the plugin's control."
+  },
+  {
+   "id": "4.3.5.5.4",
+   "d": "IMP-09",
+   "note": "Loading guidance will include example commands retrieving branches by id."
+  },
+  {
+   "id": "4.3.5.5.5",
+   "d": "X-DONE",
+   "note": "show --id prints the requested node preceded by its full ancestor chain, preserving meaning."
+  }
+ ]
+}

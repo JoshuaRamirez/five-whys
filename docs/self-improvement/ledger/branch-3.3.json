@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "3.3.1",
+   "d": "IMP-08",
+   "note": "Convergence on shared generic roots is countered by grounding agents in the problem's specifics instead of universal constraints."
+  },
+  {
+   "id": "3.3.1.1",
+   "d": "X-HIST",
+   "note": "Scarce author time, attention and budget explain how v0.1.0 came to be; nothing further to change in the artifact."
+  },
+  {
+   "id": "3.3.1.1.1",
+   "d": "R-06",
+   "note": "Remedy is recruiting reviewers or testers, a social change outside the plugin."
+  },
+  {
+   "id": "3.3.1.1.2",
+   "d": "X-HIST",
+   "note": "Competing paid work describes past development circumstances, not a plugin artifact to change."
+  },
+  {
+   "id": "3.3.1.1.3",
+   "d": "IMP-02",
+   "note": "A smoke preset (3x3) and subset dispatch make rehearsal runs cheap enough to experiment without full-size token cost."
+  },
+  {
+   "id": "3.3.1.1.4",
+   "d": "X-HIST",
+   "note": "Finite human attention is a general explanation of past prioritization; no plugin change follows."
+  },
+  {
+   "id": "3.3.1.1.5",
+   "d": "R-06",
+   "note": "Obtaining funding or hiring help is an organizational remedy, not a plugin change."
+  },
+  {
+   "id": "3.3.1.2",
+   "d": "IMP-11",
+   "note": "Neglected testing concentrates risk; a stdlib unittest suite supplies the missing verification activity."
+  },
+  {
+   "id": "3.3.1.2.1",
+   "d": "IMP-11",
+   "note": "A shared verification gate for every change is exactly what the unittest suite provides."
+  },
+  {
+   "id": "3.3.1.2.2",
+   "d": "IMP-11",
+   "note": "Skipped testing gate is restored by unit tests covering init, plan, check, assemble and show."
+  },
+  {
+   "id": "3.3.1.2.3",
+   "d": "X-ENV",
+   "note": "The makeup of industry process models is an ecosystem fact outside the plugin's control."
+  },
+  {
+   "id": "3.3.1.2.4",
+   "d": "IMP-14",
+   "note": "Specification gaps are closed by documenting design decisions, validation coverage and known limitations in the README."
+  },
+  {
+   "id": "3.3.1.2.5",
+   "d": "IMP-11",
+   "note": "The single shared script is the weak tool; tests covering all its subcommands harden every area at once."
+  },
+  {
+   "id": "3.3.1.3",
+   "d": "IMP-06",
+   "note": "Many-to-one convergence yields recurring causes; the hygiene report flags exact and near-duplicates across the tree."
+  },
+  {
+   "id": "3.3.1.3.1",
+   "d": "IMP-11",
+   "note": "True: fivewhys.py serves every stage; tests on that hub protect the whole pipeline."
+  },
+  {
+   "id": "3.3.1.3.2",
+   "d": "X-HIST",
+   "note": "General explanation of reuse economics; the stdlib-only script has no dependency sprawl to act on."
+  },
+  {
+   "id": "3.3.1.3.3",
+   "d": "IMP-18",
+   "note": "The missing feedback loop is supplied by an eval suite exercising a smoke run end to end."
+  },
+  {
+   "id": "3.3.1.3.4",
+   "d": "IMP-01",
+   "note": "The constraining early decision is the hard-coded 5x5 shape; parameterizing it frees downstream components."
+  },
+  {
+   "id": "3.3.1.3.5",
+   "d": "R-06",
+   "note": "Sharing responsibility means adding contributors, an organizational remedy outside the plugin."
+  },
+  {
+   "id": "3.3.1.4",
+   "d": "X-HIST",
+   "note": "Early-stage maturity explains v0.1.0's generic gaps; specific gaps are coded separately."
+  },
+  {
+   "id": "3.3.1.4.1",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13 (26 agents, 3,905 reasons), producing this self-improvement tree."
+  },
+  {
+   "id": "3.3.1.4.2",
+   "d": "IMP-12",
+   "note": "Missing hardening is addressed by failure semantics: recorded attempts, stuck-task reporting and capped agent fix loops."
+  },
+  {
+   "id": "3.3.1.4.3",
+   "d": "R-06",
+   "note": "Attracting more users to find edge cases is a social remedy, not a plugin change."
+  },
+  {
+   "id": "3.3.1.4.4",
+   "d": "X-HIST",
+   "note": "Proof-of-concept prioritization describes past release motivation; polish items are coded elsewhere."
+  },
+  {
+   "id": "3.3.1.4.5",
+   "d": "IMP-11",
+   "note": "The shared foundational gap is absent tests; the suite is the prerequisite enabling safe later improvements."
+  },
+  {
+   "id": "3.3.1.5",
+   "d": "IMP-08",
+   "note": "Methods drifting to organizational fundamentals are countered by instructions grounding reasons in problem specifics."
+  },
+  {
+   "id": "3.3.1.5.1",
+   "d": "X-ENV",
+   "note": "Toyota origin of Five Whys is a historical industry fact outside the plugin's control."
+  },
+  {
+   "id": "3.3.1.5.2",
+   "d": "X-ENV",
+   "note": "How practitioners are trained is an industry-culture fact no plugin change can alter."
+  },
+  {
+   "id": "3.3.1.5.3",
+   "d": "IMP-08",
+   "note": "Drift away from technical detail is resisted by specificity guidance and a specific-vs-generic example in agent instructions."
+  },
+  {
+   "id": "3.3.1.5.4",
+   "d": "X-ENV",
+   "note": "Content of methodology literature is an ecosystem fact outside the plugin."
+  },
+  {
+   "id": "3.3.1.5.5",
+   "d": "IMP-08",
+   "note": "Step-by-step generalization stems from the 'go deeper toward systemic causes' instruction that IMP-08 replaces with grounding."
+  },
+  {
+   "id": "3.3.2",
+   "d": "IMP-08",
+   "note": "Frequency-biased model output is steered toward problem-specific causes by revised agent instructions."
+  },
+  {
+   "id": "3.3.2.1",
+   "d": "X-ENV",
+   "note": "Training-corpus composition is a model fact outside the plugin's control."
+  },
+  {
+   "id": "3.3.2.1.1",
+   "d": "X-ENV",
+   "note": "How engineers write public failure accounts is industry culture beyond the plugin."
+  },
+  {
+   "id": "3.3.2.1.2",
+   "d": "X-ENV",
+   "note": "Web economics of generic advice content is an ecosystem fact."
+  },
+  {
+   "id": "3.3.2.1.3",
+   "d": "X-ENV",
+   "note": "Privacy of internal postmortems is an industry fact outside the plugin's reach."
+  },
+  {
+   "id": "3.3.2.1.4",
+   "d": "X-ENV",
+   "note": "Content farms repackaging listicles is an ecosystem fact no plugin change addresses."
+  },
+  {
+   "id": "3.3.2.1.5",
+   "d": "X-ENV",
+   "note": "Repetition in Agile/DevOps teaching material is outside the plugin's control."
+  },
+  {
+   "id": "3.3.2.2",
+   "d": "X-ENV",
+   "note": "Next-token prediction objectives are a model property the plugin cannot change."
+  },
+  {
+   "id": "3.3.2.2.1",
+   "d": "X-ENV",
+   "note": "Sampling temperature is not exposed to plugins through the Agent tool; model behavior fact."
+  },
+  {
+   "id": "3.3.2.2.2",
+   "d": "X-ENV",
+   "note": "Training penalties are set by model developers, not the plugin."
+  },
+  {
+   "id": "3.3.2.2.3",
+   "d": "X-ENV",
+   "note": "Likelihood training properties are a model fact outside plugin control."
+  },
+  {
+   "id": "3.3.2.2.4",
+   "d": "X-ENV",
+   "note": "Instruction-tuning rater incentives are a model-development fact."
+  },
+  {
+   "id": "3.3.2.2.5",
+   "d": "IMP-08",
+   "note": "Mid-generation drift is mitigated by outline-before-write and stated assumptions that keep specifics in view."
+  },
+  {
+   "id": "3.3.2.3",
+   "d": "IMP-16",
+   "note": "Missing project knowledge is supplied by optional context intake stored in run.json and included in every prompt."
+  },
+  {
+   "id": "3.3.2.3.1",
+   "d": "IMP-16",
+   "note": "True today: prompts carry only the problem and chain; intake adds user-supplied context to every prompt."
+  },
+  {
+   "id": "3.3.2.3.2",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13; observed data (3,905 reasons, cost, duplicates) now exists."
+  },
+  {
+   "id": "3.3.2.3.3",
+   "d": "IMP-25",
+   "note": "NEW reconciled: agents now Read local files named in problem or context first."
+  },
+  {
+   "id": "3.3.2.3.4",
+   "d": "IMP-14",
+   "note": "Author intentions become accessible when the README records design decisions, limitations and rationale."
+  },
+  {
+   "id": "3.3.2.3.5",
+   "d": "IMP-08",
+   "note": "Replaces 'assume typical context' with explicit stated assumptions, so gaps are declared rather than silently filled."
+  },
+  {
+   "id": "3.3.2.4",
+   "d": "IMP-08",
+   "note": "One-pass exhaustion is addressed by outline-before-write, spreading idea generation before the single fragment write."
+  },
+  {
+   "id": "3.3.2.4.1",
+   "d": "IMP-16",
+   "note": "A short problem description cannot support 155 causes; context intake supplies richer material per prompt."
+  },
+  {
+   "id": "3.3.2.4.2",
+   "d": "IMP-08",
+   "note": "True: one Write of the whole fragment; IMP-08 adds outline-before-write and targeted Edit repairs."
+  },
+  {
+   "id": "3.3.2.4.3",
+   "d": "IMP-08",
+   "note": "Outlining all subtrees before writing evens out effort between early and late parts of the fragment."
+  },
+  {
+   "id": "3.3.2.4.4",
+   "d": "IMP-08",
+   "note": "The outline-before-write step is the brainstorming stage; user context (IMP-16) supplies fresh material."
+  },
+  {
+   "id": "3.3.2.4.5",
+   "d": "IMP-08",
+   "note": "Stock phrasing under length pressure is countered by a specific-vs-generic example in agent instructions."
+  },
+  {
+   "id": "3.3.2.5",
+   "d": "IMP-07",
+   "note": "Identical agents repeat each other; sibling-aware prompts list causes covered elsewhere so branches diverge."
+  },
+  {
+   "id": "3.3.2.5.1",
+   "d": "IMP-04",
+   "note": "True: model is inherit; init --model lets runs choose sonnet, opus or haiku per run."
+  },
+  {
+   "id": "3.3.2.5.2",
+   "d": "IMP-07",
+   "note": "Shared guidance is offset by per-branch prompts naming the other level-1/2 reasons to avoid."
+  },
+  {
+   "id": "3.3.2.5.3",
+   "d": "IMP-07",
+   "note": "True: prompts differ only by chain; IMP-07 adds per-branch sibling digests so each prompt differs meaningfully."
+  },
+  {
+   "id": "3.3.2.5.4",
+   "d": "IMP-07",
+   "note": "Varying approach per agent is achieved through sibling-aware exclusions rather than a fixed persona rotation."
+  },
+  {
+   "id": "3.3.2.5.5",
+   "d": "IMP-06",
+   "note": "Correlated repeats across agents are surfaced by the hygiene report's cross-tree duplicate and near-duplicate flags."
+  },
+  {
+   "id": "3.3.3",
+   "d": "IMP-16",
+   "note": "Thin prompt context is enriched by optional context intake included in every generated prompt."
+  },
+  {
+   "id": "3.3.3.1",
+   "d": "IMP-16",
+   "note": "The problem statement alone is thin evidence; intake asks for key specifics and stores extra context."
+  },
+  {
+   "id": "3.3.3.1.1",
+   "d": "X-FALSE",
+   "note": "The skill passes $ARGUMENTS verbatim to init via heredoc; it does not condense the user's input."
+  },
+  {
+   "id": "3.3.3.1.2",
+   "d": "IMP-16",
+   "note": "Brief user descriptions trigger a single clarifying question for key specifics when the statement is thin."
+  },
+  {
+   "id": "3.3.3.1.3",
+   "d": "IMP-16",
+   "note": "True: no intake step exists; IMP-16 adds one clarifying ask before fan-out."
+  },
+  {
+   "id": "3.3.3.1.4",
+   "d": "IMP-05",
+   "note": "Context cost across 26 prompts is made visible by measured token estimates and confirmation before full runs."
+  },
+  {
+   "id": "3.3.3.1.5",
+   "d": "X-HIST",
+   "note": "Designer's past assumption about model knowledge; the actionable part is covered by IMP-16."
+  },
+  {
+   "id": "3.3.3.2",
+   "d": "IMP-08",
+   "note": "The 20-word cap stays for whole-context reading; specificity guidance makes each short reason carry distinguishing detail."
+  },
+  {
+   "id": "3.3.3.2.1",
+   "d": "X-HIST",
+   "note": "Past motivation for short reasons (output token size); measurement of size is covered by IMP-10."
+  },
+  {
+   "id": "3.3.3.2.2",
+   "d": "X-HIST",
+   "note": "One-line-per-reason format was chosen for paged whole reading; explains style, nothing further actionable."
+  },
+  {
+   "id": "3.3.3.2.3",
+   "d": "IMP-08",
+   "note": "Abstraction from brevity is countered by a specific-vs-generic example showing concrete short reasons."
+  },
+  {
+   "id": "3.3.3.2.4",
+   "d": "X-HIST",
+   "note": "Author's scannability priority explains past design; precision improvements are coded under IMP-08."
+  },
+  {
+   "id": "3.3.3.2.5",
+   "d": "IMP-08",
+   "note": "Explicit stated assumptions in IMP-08 give agents a place for grounding without bloating each reason."
+  },
+  {
+   "id": "3.3.3.3",
+   "d": "IMP-16",
+   "note": "Abstract ancestor chains are anchored by user context repeated in every prompt, including deepest branches."
+  },
+  {
+   "id": "3.3.3.3.1",
+   "d": "IMP-08",
+   "note": "Compounding generalization is checked by instructions requiring grounding in problem specifics at every level."
+  },
+  {
+   "id": "3.3.3.3.2",
+   "d": "IMP-08",
+   "note": "True: why-expander says lower levels move toward systemic causes; IMP-08 rewrites that guidance."
+  },
+  {
+   "id": "3.3.3.3.3",
+   "d": "IMP-08",
+   "note": "Broad parents invite organizational causes; grounding guidance steers choices toward problem-specific ones."
+  },
+  {
+   "id": "3.3.3.3.4",
+   "d": "IMP-16",
+   "note": "Context stored in run.json and included in every prompt re-injects concrete details at all depths."
+  },
+  {
+   "id": "3.3.3.3.5",
+   "d": "IMP-08",
+   "note": "The root agent uses the same why-expander instructions, so grounding guidance fixes level 1-2 generality too."
+  },
+  {
+   "id": "3.3.3.4",
+   "d": "IMP-08",
+   "note": "IMP-08 removes 'assume the most typical context' in favor of problem grounding and stated assumptions."
+  },
+  {
+   "id": "3.3.3.4.1",
+   "d": "IMP-08",
+   "note": "True: why-expander.md says assume typical context; IMP-08 replaces exactly that line."
+  },
+  {
+   "id": "3.3.3.4.2",
+   "d": "IMP-08",
+   "note": "Stereotyped default context disappears once the typical-context instruction is replaced by explicit assumptions."
+  },
+  {
+   "id": "3.3.3.4.3",
+   "d": "X-HIST",
+   "note": "Author's desire for fragment consistency explains the default; the fix is coded under IMP-08."
+  },
+  {
+   "id": "3.3.3.4.4",
+   "d": "IMP-08",
+   "note": "Grounding in problem specifics with stated assumptions encourages project-specific hypotheses."
+  },
+  {
+   "id": "3.3.3.4.5",
+   "d": "X-HIST",
+   "note": "Timing of guidance authorship is past process; the run has since happened and IMP-08 acts on it."
+  },
+  {
+   "id": "3.3.3.5",
+   "d": "IMP-25",
+   "note": "NEW reconciled: evidence-reading step added to agent instructions."
+  },
+  {
+   "id": "3.3.3.5.1",
+   "d": "IMP-25",
+   "note": "NEW reconciled: optional artifact-reading step added before writing."
+  },
+  {
+   "id": "3.3.3.5.2",
+   "d": "X-HIST",
+   "note": "Throughput-first design motivation for isolated generation; nothing further to act on beyond other codes."
+  },
+  {
+   "id": "3.3.3.5.3",
+   "d": "IMP-16",
+   "note": "Because many problems have no files, context intake stays optional and user-supplied rather than mandatory research."
+  },
+  {
+   "id": "3.3.3.5.4",
+   "d": "IMP-05",
+   "note": "Added per-agent cost is surfaced by the cost preview and confirmation before dispatch."
+  },
+  {
+   "id": "3.3.3.5.5",
+   "d": "X-HIST",
+   "note": "v0.1.0 scope decision is past process; evidence intake is covered by IMP-16."
+  },
+  {
+   "id": "3.3.4",
+   "d": "IMP-01",
+   "note": "Depth exceeding real causes is addressed by init --depth, keeping complete trees at a chosen size."
+  },
+  {
+   "id": "3.3.4.1",
+   "d": "IMP-01",
+   "note": "Fixed 5x5 shape becomes configurable breadth and depth per run, defaults unchanged."
+  },
+  {
+   "id": "3.3.4.1.1",
+   "d": "IMP-01",
+   "note": "True: BRANCHING and DEPTH are module constants; IMP-01 moves shape into init flags and run.json."
+  },
+  {
+   "id": "3.3.4.1.2",
+   "d": "X-HIST",
+   "note": "Symmetry chosen for simple validation is past design motivation; configurability is IMP-01."
+  },
+  {
+   "id": "3.3.4.1.3",
+   "d": "X-DONE",
+   "note": "The multiplied shape has now been exercised: a full 3,905-reason run completed on 2026-09-13."
+  },
+  {
+   "id": "3.3.4.1.4",
+   "d": "R-04",
+   "note": "Adaptive stopping would drop complete trees, which the user's 5x5x5x5x5 requirement rules out."
+  },
+  {
+   "id": "3.3.4.1.5",
+   "d": "R-04",
+   "note": "Ragged or variable-depth trees are declined; every tree stays complete at its configured shape."
+  },
+  {
+   "id": "3.3.4.2",
+   "d": "IMP-01",
+   "note": "Shallow real causal depth is accommodated by choosing a smaller --depth for a complete tree."
+  },
+  {
+   "id": "3.3.4.2.1",
+   "d": "IMP-08",
+   "note": "Universal truths at depth are resisted by grounding instructions requiring causes specific to the problem."
+  },
+  {
+   "id": "3.3.4.2.2",
+   "d": "IMP-01",
+   "note": "Five as rule of thumb motivates making depth a run parameter with five as default."
+  },
+  {
+   "id": "3.3.4.2.3",
+   "d": "IMP-01",
+   "note": "Small projects can pick shallower configured depth while keeping complete trees."
+  },
+  {
+   "id": "3.3.4.2.4",
+   "d": "IMP-08",
+   "note": "Collapse into shared motives is countered by guidance naming concrete decisions and stated assumptions."
+  },
+  {
+   "id": "3.3.4.2.5",
+   "d": "IMP-16",
+   "note": "Missing incentive and history information can be supplied through the context intake step."
+  },
+  {
+   "id": "3.3.4.3",
+   "d": "IMP-01",
+   "note": "Padding pressure is relieved by configurable breadth; exactly-N completeness stays per R-04."
+  },
+  {
+   "id": "3.3.4.3.1",
+   "d": "R-04",
+   "note": "True: check enforces exactly BRANCHING items; relaxing counts is declined since trees stay complete."
+  },
+  {
+   "id": "3.3.4.3.2",
+   "d": "R-04",
+   "note": "'Not applicable' slots are explicitly declined to keep every tree complete."
+  },
+  {
+   "id": "3.3.4.3.3",
+   "d": "IMP-08",
+   "note": "Quota-driven generic filler is discouraged by specific-vs-generic guidance and stated assumptions."
+  },
+  {
+   "id": "3.3.4.3.4",
+   "d": "X-HIST",
+   "note": "Author equating breadth with thoroughness is past motivation mirroring the user's stated requirement."
+  },
+  {
+   "id": "3.3.4.3.5",
+   "d": "IMP-06",
+   "note": "Filler gains visibility through non-blocking hygiene flags for duplicates and restated ancestors, without blocking."
+  },
+  {
+   "id": "3.3.4.4",
+   "d": "IMP-06",
+   "note": "Shared mechanisms phrased differently are surfaced by near-duplicate and ancestor-restatement flags."
+  },
+  {
+   "id": "3.3.4.4.1",
+   "d": "IMP-06",
+   "note": "Paraphrased overlap is caught by stdlib token-overlap near-duplicate detection discounting ancestor words."
+  },
+  {
+   "id": "3.3.4.4.2",
+   "d": "IMP-11",
+   "note": "True: no tests, evals, only shape validation; the unittest suite is the most direct verification remedy."
+  },
+  {
+   "id": "3.3.4.4.3",
+   "d": "IMP-06",
+   "note": "A canonical taxonomy would genericize reasons; overlap is instead flagged mechanically by the hygiene report."
+  },
+  {
+   "id": "3.3.4.4.4",
+   "d": "IMP-06",
+   "note": "Deliberate vocabulary variation is what near-duplicate token-overlap flags are designed to see through."
+  },
+  {
+   "id": "3.3.4.4.5",
+   "d": "IMP-08",
+   "note": "Blurry category boundaries argue for dropping the fixed cause-kind checklist, as IMP-08 does."
+  },
+  {
+   "id": "3.3.4.5",
+   "d": "IMP-06",
+   "note": "Cousin-level repeats are flagged tree-wide by the hygiene report, beyond sibling distinctness."
+  },
+  {
+   "id": "3.3.4.5.1",
+   "d": "IMP-06",
+   "note": "True: instructions require sibling distinctness only; cross-cousin duplicates get mechanical hygiene flags instead."
+  },
+  {
+   "id": "3.3.4.5.2",
+   "d": "IMP-06",
+   "note": "True: check never compares text; assemble adds a non-blocking hygiene report, keeping check shape-only (R-03)."
+  },
+  {
+   "id": "3.3.4.5.3",
+   "d": "IMP-06",
+   "note": "Stdlib token-overlap heuristics provide cross-subtree comparison without embeddings (declined by R-02)."
+  },
+  {
+   "id": "3.3.4.5.4",
+   "d": "IMP-08",
+   "note": "Outline-before-write lets one agent see all 155 planned reasons before committing them."
+  },
+  {
+   "id": "3.3.4.5.5",
+   "d": "IMP-15",
+   "note": "Principle clarification separates allowed mechanical duplicate flags from analysis, which stays with the user."
+  },
+  {
+   "id": "3.3.5",
+   "d": "IMP-08",
+   "note": "Bias toward impersonal systemic causes is countered by guidance favoring specific, grounded causes including concrete decisions."
+  },
+  {
+   "id": "3.3.5.1",
+   "d": "X-ENV",
+   "note": "Postmortem conventions are industry culture outside the plugin's control."
+  },
+  {
+   "id": "3.3.5.1.1",
+   "d": "X-ENV",
+   "note": "Spread of blameless practice from Google and Etsy is an industry-history fact."
+  },
+  {
+   "id": "3.3.5.1.2",
+   "d": "IMP-08",
+   "note": "A specific-vs-generic example can show concrete author decisions as legitimate causes."
+  },
+  {
+   "id": "3.3.5.1.3",
+   "d": "X-ENV",
+   "note": "Politeness norms absorbed in training are a model property outside plugin control."
+  },
+  {
+   "id": "3.3.5.1.4",
+   "d": "X-ENV",
+   "note": "Psychological safety guidance is industry culture, not a plugin artifact."
+  },
+  {
+   "id": "3.3.5.1.5",
+   "d": "X-ENV",
+   "note": "Analysts learning to avoid defensiveness is human psychology beyond the plugin."
+  },
+  {
+   "id": "3.3.5.2",
+   "d": "IMP-08",
+   "note": "Premature closure on systemic causes is discouraged by instructions requiring problem-specific grounding."
+  },
+  {
+   "id": "3.3.5.2.1",
+   "d": "IMP-08",
+   "note": "Unfalsifiable broad causes are contrasted with specific ones in IMP-08's specific-vs-generic example."
+  },
+  {
+   "id": "3.3.5.2.2",
+   "d": "X-ENV",
+   "note": "Closure feelings from familiar roots are human cognitive psychology outside plugin control."
+  },
+  {
+   "id": "3.3.5.2.3",
+   "d": "X-ENV",
+   "note": "Confirmation bias is a general cognitive fact no plugin change addresses."
+  },
+  {
+   "id": "3.3.5.2.4",
+   "d": "R-01",
+   "note": "Plugin-side review challenging causes is interpretation, which the user's requirement leaves to the user."
+  },
+  {
+   "id": "3.3.5.2.5",
+   "d": "X-ENV",
+   "note": "Generic roots mapping to known remedies is an industry-knowledge fact beyond the plugin."
+  },
+  {
+   "id": "3.3.5.3",
+   "d": "IMP-08",
+   "note": "Safe generic answers are discouraged by grounding guidance and a specific-vs-generic example."
+  },
+  {
+   "id": "3.3.5.3.1",
+   "d": "X-ENV",
+   "note": "Universal hindsight need for time and tests is a general truth outside plugin control."
+  },
+  {
+   "id": "3.3.5.3.2",
+   "d": "X-ENV",
+   "note": "Readers' plausibility heuristics are human behavior the plugin cannot change."
+  },
+  {
+   "id": "3.3.5.3.3",
+   "d": "IMP-08",
+   "note": "Explicit stated assumptions let agents make specific claims without asserting unverifiable facts."
+  },
+  {
+   "id": "3.3.5.3.4",
+   "d": "X-ENV",
+   "note": "Hedging from alignment training is a model property outside plugin control."
+  },
+  {
+   "id": "3.3.5.3.5",
+   "d": "X-ENV",
+   "note": "That generic answers survive review without project knowledge is a general epistemic fact."
+  },
+  {
+   "id": "3.3.5.4",
+   "d": "R-03",
+   "note": "A specificity gate in acceptance means an LLM judge in the blocking loop, declined; IMP-06 flags are non-blocking."
+  },
+  {
+   "id": "3.3.5.4.1",
+   "d": "IMP-08",
+   "note": "IMP-08 defines specificity operationally for agents through a specific-vs-generic example."
+  },
+  {
+   "id": "3.3.5.4.2",
+   "d": "X-DONE",
+   "note": "A full run completed 2026-09-13; this tree itself reports homogeneous, recurring generic causes."
+  },
+  {
+   "id": "3.3.5.4.3",
+   "d": "IMP-15",
+   "note": "Principle clarification distinguishes allowed agent self-checks for specificity from ranking or interpretation reserved for users."
+  },
+  {
+   "id": "3.3.5.4.4",
+   "d": "R-03",
+   "note": "A reliable specificity metric implies model judging in the fix loop, declined for flakiness and cost."
+  },
+  {
+   "id": "3.3.5.4.5",
+   "d": "R-06",
+   "note": "Building expert-written reference trees is a benchmark-dataset effort declined as out of scope."
+  },
+  {
+   "id": "3.3.5.5",
+   "d": "X-ENV",
+   "note": "AI tooling culture valuing volume is an ecosystem fact outside plugin control."
+  },
+  {
+   "id": "3.3.5.5.1",
+   "d": "IMP-14",
+   "note": "Honest documentation reports measured cost, limitations and a real excerpt rather than leaning on the 3,905 count."
+  },
+  {
+   "id": "3.3.5.5.2",
+   "d": "X-HIST",
+   "note": "Fan-out exists to meet the user's 3,905-reason requirement, not showcase; nothing further actionable."
+  },
+  {
+   "id": "3.3.5.5.3",
+   "d": "X-ENV",
+   "note": "Plugin ecosystem incentives for fast shipping are outside the plugin's control."
+  },
+  {
+   "id": "3.3.5.5.4",
+   "d": "IMP-05",
+   "note": "Abstract token costs become concrete through agent, reason and token estimates confirmed before full runs."
+  },
+  {
+   "id": "3.3.5.5.5",
+   "d": "IMP-14",
+   "note": "The README gains a real excerpt and measured results to demonstrate reasoning quality concretely."
+  }
+ ]
+}

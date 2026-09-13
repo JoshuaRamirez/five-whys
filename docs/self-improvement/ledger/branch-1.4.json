@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "1.4.1",
+   "d": "IMP-18",
+   "note": "Eval suite makes behavioral validation a repeatable step that no version label can excuse skipping."
+  },
+  {
+   "id": "1.4.1.1",
+   "d": "X-ENV",
+   "note": "Developer conflation of semver compatibility with quality is industry culture, not plugin behavior."
+  },
+  {
+   "id": "1.4.1.1.1",
+   "d": "X-ENV",
+   "note": "The semver specification's content is outside the plugin's control."
+  },
+  {
+   "id": "1.4.1.1.2",
+   "d": "X-ENV",
+   "note": "Package manager behavior around version ordering is an ecosystem fact."
+  },
+  {
+   "id": "1.4.1.1.3",
+   "d": "X-ENV",
+   "note": "Long-lived 0.x projects elsewhere are an ecosystem norm the plugin cannot change."
+  },
+  {
+   "id": "1.4.1.1.4",
+   "d": "X-ENV",
+   "note": "What developer culture teaches about versioning is outside the plugin's control."
+  },
+  {
+   "id": "1.4.1.1.5",
+   "d": "IMP-14",
+   "note": "README states measured runs and what validation covers, conveying verification status the version string cannot."
+  },
+  {
+   "id": "1.4.1.2",
+   "d": "X-HIST",
+   "note": "Scaffold-default version choice explains v0.1.0's origin; verification gaps are covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "1.4.1.2.1",
+   "d": "X-ENV",
+   "note": "Scaffolding tool defaults are set by the plugin-dev ecosystem, not this plugin."
+  },
+  {
+   "id": "1.4.1.2.2",
+   "d": "X-HIST",
+   "note": "Past preference for accepting defaults; no artifact change beyond covered verification work."
+  },
+  {
+   "id": "1.4.1.2.3",
+   "d": "X-ENV",
+   "note": "The plugin manifest schema and its guidance belong to Claude Code."
+  },
+  {
+   "id": "1.4.1.2.4",
+   "d": "X-HIST",
+   "note": "Early-phase prioritization explains history; nothing further actionable."
+  },
+  {
+   "id": "1.4.1.2.5",
+   "d": "X-DONE",
+   "note": "NEW reconciled: plugin.json bumped to 0.2.0 with these improvements, recorded here."
+  },
+  {
+   "id": "1.4.1.3",
+   "d": "IMP-14",
+   "note": "README documents known limitations explicitly instead of relying on 0.1.0 as an implied warning."
+  },
+  {
+   "id": "1.4.1.3.1",
+   "d": "IMP-14",
+   "note": "Users skim version strings, so limitations and measured cost belong in README text."
+  },
+  {
+   "id": "1.4.1.3.2",
+   "d": "IMP-05",
+   "note": "Cost and size preview with confirmation surfaces expectations at invocation time, where users actually are."
+  },
+  {
+   "id": "1.4.1.3.3",
+   "d": "X-HIST",
+   "note": "Author-as-first-user explains past motivation; plugin is now public, so no further change follows."
+  },
+  {
+   "id": "1.4.1.3.4",
+   "d": "X-ENV",
+   "note": "Caveat-emptor norms in open-source tooling are ecosystem culture."
+  },
+  {
+   "id": "1.4.1.3.5",
+   "d": "R-06",
+   "note": "Gathering user feedback is user research, a social remedy outside plugin changes."
+  },
+  {
+   "id": "1.4.1.4",
+   "d": "IMP-11",
+   "note": "A stdlib test suite supplies upfront proof so cheap post-release bumps are not the only safety net."
+  },
+  {
+   "id": "1.4.1.4.1",
+   "d": "X-ENV",
+   "note": "Git-based marketplace publishing without approval is how Claude Code distributes plugins."
+  },
+  {
+   "id": "1.4.1.4.2",
+   "d": "IMP-17",
+   "note": "The self-improvement record serves as a changelog explaining why each change was made."
+  },
+  {
+   "id": "1.4.1.4.3",
+   "d": "X-FALSE",
+   "note": "The plugin is public on GitHub and installable via the RedJay marketplace; others can install it."
+  },
+  {
+   "id": "1.4.1.4.4",
+   "d": "X-ENV",
+   "note": "Rapid-iteration workflow incentives are industry culture outside the plugin."
+  },
+  {
+   "id": "1.4.1.4.5",
+   "d": "X-HIST",
+   "note": "Habit from earlier plugins explains past behavior; no artifact change here."
+  },
+  {
+   "id": "1.4.1.5",
+   "d": "IMP-14",
+   "note": "README documenting a measured full run and real excerpt demonstrates function regardless of pre-1.0 status."
+  },
+  {
+   "id": "1.4.1.5.1",
+   "d": "IMP-14",
+   "note": "README already describes 3,905-reason output; it should add measured full-scale cost, time and excerpt as evidence."
+  },
+  {
+   "id": "1.4.1.5.2",
+   "d": "R-06",
+   "note": "Recruiting external users or stakeholders is an organizational remedy, not a plugin change."
+  },
+  {
+   "id": "1.4.1.5.3",
+   "d": "X-ENV",
+   "note": "Marketplace rating and review features belong to Claude Code's ecosystem."
+  },
+  {
+   "id": "1.4.1.5.4",
+   "d": "IMP-18",
+   "note": "The eval case grading shape validity and hygiene output acts as an executable definition of done."
+  },
+  {
+   "id": "1.4.1.5.5",
+   "d": "X-ENV",
+   "note": "The cultural 1.0 commitment threshold is an ecosystem norm."
+  },
+  {
+   "id": "1.4.2",
+   "d": "IMP-18",
+   "note": "Since the marketplace has no gates, the plugin supplies its own via an end-to-end smoke eval."
+  },
+  {
+   "id": "1.4.2.1",
+   "d": "X-ENV",
+   "note": "Marketplaces accepting any committed manifest is Claude Code platform design."
+  },
+  {
+   "id": "1.4.2.1.1",
+   "d": "X-ENV",
+   "note": "Marketplace friction trade-offs were Anthropic's platform decision."
+  },
+  {
+   "id": "1.4.2.1.2",
+   "d": "X-ENV",
+   "note": "Registry-side behavioral validation cost is a platform concern outside the plugin."
+  },
+  {
+   "id": "1.4.2.1.3",
+   "d": "X-ENV",
+   "note": "Git hosting lacking review infrastructure is an ecosystem fact."
+  },
+  {
+   "id": "1.4.2.1.4",
+   "d": "X-ENV",
+   "note": "Plugin system maturity and its quality-control features are platform facts."
+  },
+  {
+   "id": "1.4.2.1.5",
+   "d": "X-ENV",
+   "note": "Self-hosted marketplaces bypassing curation is platform design."
+  },
+  {
+   "id": "1.4.2.2",
+   "d": "IMP-18",
+   "note": "A claude plugin eval smoke run is the pre-release check; CI with live model runs is declined (R-05)."
+  },
+  {
+   "id": "1.4.2.2.1",
+   "d": "R-05",
+   "note": "CI with live model runs, keys and budget is heavy infrastructure the catalog declines."
+  },
+  {
+   "id": "1.4.2.2.2",
+   "d": "IMP-18",
+   "note": "The eval grades deterministic properties, shape validity and hygiene presence, not nondeterministic reason text."
+  },
+  {
+   "id": "1.4.2.2.3",
+   "d": "X-DONE",
+   "note": "The plugin is now a git repository published at github.com/JoshuaRamirez/five-whys."
+  },
+  {
+   "id": "1.4.2.2.4",
+   "d": "X-ENV",
+   "note": "Plugin template contents are controlled by plugin-dev tooling, not this plugin."
+  },
+  {
+   "id": "1.4.2.2.5",
+   "d": "X-HIST",
+   "note": "Past judgment that CI was disproportionate; testing need covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "1.4.2.3",
+   "d": "IMP-18",
+   "note": "A plugin-specific eval exercises agent output end to end, beyond structural manifest validators."
+  },
+  {
+   "id": "1.4.2.3.1",
+   "d": "IMP-06",
+   "note": "The hygiene report is the plugin's own domain-specific mechanical oracle for output quality signals."
+  },
+  {
+   "id": "1.4.2.3.2",
+   "d": "IMP-18",
+   "note": "The plugin ships its own workflow-aware eval case since generic validators cannot know it."
+  },
+  {
+   "id": "1.4.2.3.3",
+   "d": "IMP-14",
+   "note": "README states what validation does and does not cover, countering false readiness from structural checks."
+  },
+  {
+   "id": "1.4.2.3.4",
+   "d": "IMP-02",
+   "note": "Smoke preset makes real multi-agent fan-out executions cheap enough to run routinely."
+  },
+  {
+   "id": "1.4.2.3.5",
+   "d": "IMP-11",
+   "note": "The plugin ships its own stdlib unittest suite as a self-test, regardless of ecosystem convention."
+  },
+  {
+   "id": "1.4.2.4",
+   "d": "X-ENV",
+   "note": "Marketplace maturity-tier metadata is a Claude Code platform feature."
+  },
+  {
+   "id": "1.4.2.4.1",
+   "d": "X-ENV",
+   "note": "The manifest schema's minimal fields are defined by Claude Code."
+  },
+  {
+   "id": "1.4.2.4.2",
+   "d": "X-ENV",
+   "note": "Marketplace UI surfaces for badges are outside the plugin."
+  },
+  {
+   "id": "1.4.2.4.3",
+   "d": "X-ENV",
+   "note": "Ecosystem maintainers' priorities are outside the plugin's control."
+  },
+  {
+   "id": "1.4.2.4.4",
+   "d": "X-ENV",
+   "note": "npm-derived versioning conventions are ecosystem norms."
+  },
+  {
+   "id": "1.4.2.4.5",
+   "d": "X-ENV",
+   "note": "Value of self-reported tiers is a hypothetical platform-design question, not a plugin change."
+  },
+  {
+   "id": "1.4.2.5",
+   "d": "IMP-02",
+   "note": "Smoke preset gives a cheap trial run separate from publishing a full-scale release."
+  },
+  {
+   "id": "1.4.2.5.1",
+   "d": "X-ENV",
+   "note": "Plugin cache loading without staging is Claude Code install behavior."
+  },
+  {
+   "id": "1.4.2.5.2",
+   "d": "X-ENV",
+   "note": "Marketplace install flow as realistic test path is platform behavior."
+  },
+  {
+   "id": "1.4.2.5.3",
+   "d": "X-ENV",
+   "note": "Dev versus release channels would be a marketplace feature, not a plugin change."
+  },
+  {
+   "id": "1.4.2.5.4",
+   "d": "X-ENV",
+   "note": "Documentation of local-path plugin loading belongs to Claude Code docs."
+  },
+  {
+   "id": "1.4.2.5.5",
+   "d": "X-ENV",
+   "note": "Reinstall speed blurring draft and release is platform behavior."
+  },
+  {
+   "id": "1.4.3",
+   "d": "R-06",
+   "note": "Adding a human reviewer is a social remedy; automated checks (IMP-11, IMP-18) are the plugin-side substitute."
+  },
+  {
+   "id": "1.4.3.1",
+   "d": "X-HIST",
+   "note": "Side-project origin explains how v0.1.0 was built; nothing further actionable."
+  },
+  {
+   "id": "1.4.3.1.1",
+   "d": "X-HIST",
+   "note": "Author's curiosity as origin is past motivation."
+  },
+  {
+   "id": "1.4.3.1.2",
+   "d": "X-HIST",
+   "note": "Separation of employer and personal work is personal circumstance, not plugin artifact."
+  },
+  {
+   "id": "1.4.3.1.3",
+   "d": "R-06",
+   "note": "Recruiting collaborators is an organizational remedy outside plugin changes."
+  },
+  {
+   "id": "1.4.3.1.4",
+   "d": "X-HIST",
+   "note": "Fragmented evening schedules are past process circumstance."
+  },
+  {
+   "id": "1.4.3.1.5",
+   "d": "X-HIST",
+   "note": "Sole ownership speed is past process with nothing to change."
+  },
+  {
+   "id": "1.4.3.2",
+   "d": "X-ENV",
+   "note": "Assistant deference to user framing is model behavior outside the plugin."
+  },
+  {
+   "id": "1.4.3.2.1",
+   "d": "X-ENV",
+   "note": "How AI assistants are optimized is a model fact."
+  },
+  {
+   "id": "1.4.3.2.2",
+   "d": "X-HIST",
+   "note": "Past session prompts focused on building; no plugin artifact change follows."
+  },
+  {
+   "id": "1.4.3.2.3",
+   "d": "X-ENV",
+   "note": "Assistants lacking persistent stake is a model/platform fact."
+  },
+  {
+   "id": "1.4.3.2.4",
+   "d": "X-ENV",
+   "note": "Context-limit pressure on assistants is a platform/model property."
+  },
+  {
+   "id": "1.4.3.2.5",
+   "d": "X-HIST",
+   "note": "Mirrored confidence during past sessions is process history; verification now covered elsewhere."
+  },
+  {
+   "id": "1.4.3.3",
+   "d": "IMP-18",
+   "note": "The eval suite is an executable release check substituting for human reviewer scrutiny."
+  },
+  {
+   "id": "1.4.3.3.1",
+   "d": "X-HIST",
+   "note": "Checklists forming after failure is past psychology; the full run and 20-cap fix now exist."
+  },
+  {
+   "id": "1.4.3.3.2",
+   "d": "X-HIST",
+   "note": "Author's skill focus is past circumstance, not a plugin artifact."
+  },
+  {
+   "id": "1.4.3.3.3",
+   "d": "X-HIST",
+   "note": "Perceived checklist overhead was past judgment; automated checks cover the need."
+  },
+  {
+   "id": "1.4.3.3.4",
+   "d": "X-ENV",
+   "note": "Plugin-dev guidance content is maintained outside this plugin."
+  },
+  {
+   "id": "1.4.3.3.5",
+   "d": "X-ENV",
+   "note": "Personal projects' release-practice norms are general developer culture."
+  },
+  {
+   "id": "1.4.3.4",
+   "d": "IMP-11",
+   "note": "Unit tests check behavior independently of the author's mental model of the design."
+  },
+  {
+   "id": "1.4.3.4.1",
+   "d": "IMP-11",
+   "note": "Tests exercise invalid fragments and partial runs, not just the happy path the author imagines."
+  },
+  {
+   "id": "1.4.3.4.2",
+   "d": "IMP-11",
+   "note": "Unittest coverage of check verifies the validator actually matches intended fragment shapes."
+  },
+  {
+   "id": "1.4.3.4.3",
+   "d": "X-DONE",
+   "note": "A full-scale real run completed 2026-09-13 (26 agents, 3,905 reasons) and exposed the 20-agent cap."
+  },
+  {
+   "id": "1.4.3.4.4",
+   "d": "X-HIST",
+   "note": "Sunk-effort bias is past psychology with no artifact change."
+  },
+  {
+   "id": "1.4.3.4.5",
+   "d": "IMP-18",
+   "note": "The eval drives the skill cold from its instructions, standing in for an unfamiliar user."
+  },
+  {
+   "id": "1.4.3.5",
+   "d": "X-HIST",
+   "note": "Session momentum favoring release is past process; proof now exists."
+  },
+  {
+   "id": "1.4.3.5.1",
+   "d": "X-ENV",
+   "note": "Session context loss at end is Claude Code behavior."
+  },
+  {
+   "id": "1.4.3.5.2",
+   "d": "X-HIST",
+   "note": "Satisfaction-driven publishing is past psychology."
+  },
+  {
+   "id": "1.4.3.5.3",
+   "d": "X-HIST",
+   "note": "Fear of stalling is past motivation, nothing actionable."
+  },
+  {
+   "id": "1.4.3.5.4",
+   "d": "IMP-02",
+   "note": "Smoke preset (3x3) gives a quick rehearsal without waiting on a full fan-out."
+  },
+  {
+   "id": "1.4.3.5.5",
+   "d": "X-HIST",
+   "note": "Limited time that day is past circumstance."
+  },
+  {
+   "id": "1.4.4",
+   "d": "IMP-02",
+   "note": "Smoke preset provides cheap end-to-end proof, removing cost as a reason to defer."
+  },
+  {
+   "id": "1.4.4.1",
+   "d": "IMP-04",
+   "note": "Model selection lets high-volume runs use cheaper models than the inherited default."
+  },
+  {
+   "id": "1.4.4.1.1",
+   "d": "R-05",
+   "note": "Reducing repeated instruction tokens means prompt-cache engineering, which the catalog declines."
+  },
+  {
+   "id": "1.4.4.1.2",
+   "d": "IMP-04",
+   "note": "init --model allows choosing sonnet or haiku instead of the inherited, most expensive model."
+  },
+  {
+   "id": "1.4.4.1.3",
+   "d": "IMP-04",
+   "note": "Output volume is fixed by the complete-tree requirement, so per-token price via model choice is the lever."
+  },
+  {
+   "id": "1.4.4.1.4",
+   "d": "IMP-04",
+   "note": "Model is recorded in run.json and passed per task, enabling cheaper tiers for branches."
+  },
+  {
+   "id": "1.4.4.1.5",
+   "d": "IMP-08",
+   "note": "Targeted Edit repairs and a fix-loop cap replace costly full rewrites after failed checks."
+  },
+  {
+   "id": "1.4.4.2",
+   "d": "IMP-02",
+   "note": "Smoke preset makes a rehearsal run cheap enough not to feel speculative or wasteful."
+  },
+  {
+   "id": "1.4.4.2.1",
+   "d": "X-ENV",
+   "note": "Subscription usage windows are Anthropic plan policy."
+  },
+  {
+   "id": "1.4.4.2.2",
+   "d": "IMP-19",
+   "note": "Partial assembly yields a valid tree with missing-branch markers from interrupted runs."
+  },
+  {
+   "id": "1.4.4.2.3",
+   "d": "X-ENV",
+   "note": "Other projects competing for usage allowance is outside the plugin's control."
+  },
+  {
+   "id": "1.4.4.2.4",
+   "d": "IMP-05",
+   "note": "init and plan report measured token estimates before dispatch, replacing worst-case guesses."
+  },
+  {
+   "id": "1.4.4.2.5",
+   "d": "X-HIST",
+   "note": "Personal budgeting habits are past circumstance, not a plugin artifact."
+  },
+  {
+   "id": "1.4.4.3",
+   "d": "IMP-02",
+   "note": "init --preset smoke provides the missing reduced-scale proof mode."
+  },
+  {
+   "id": "1.4.4.3.1",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth replaces the hard-coded BRANCHING and DEPTH constants."
+  },
+  {
+   "id": "1.4.4.3.2",
+   "d": "X-HIST",
+   "note": "Past design order; testability work is covered by IMP-01, IMP-02 and IMP-11."
+  },
+  {
+   "id": "1.4.4.3.3",
+   "d": "IMP-02",
+   "note": "plan --only dispatches chosen branches instead of always all 25."
+  },
+  {
+   "id": "1.4.4.3.4",
+   "d": "IMP-01",
+   "note": "Shape stored in run.json and read by plan, check, assemble and prompts makes coordination automatic."
+  },
+  {
+   "id": "1.4.4.3.5",
+   "d": "X-HIST",
+   "note": "Unanticipated proof bottleneck is past foresight; nothing further actionable."
+  },
+  {
+   "id": "1.4.4.4",
+   "d": "X-FALSE",
+   "note": "The measured full run took about 7 minutes wall-clock, not a long supervised session."
+  },
+  {
+   "id": "1.4.4.4.1",
+   "d": "IMP-03",
+   "note": "plan groups tasks into waves within the 20-agent cap so throttling is handled deterministically."
+  },
+  {
+   "id": "1.4.4.4.2",
+   "d": "IMP-12",
+   "note": "Attempts recorded per task, stuck tasks reported, and agents reply FAILED with the first error."
+  },
+  {
+   "id": "1.4.4.4.3",
+   "d": "X-DONE",
+   "note": "plan skips valid fragments, so an interrupted orchestrating session resumes by re-running plan."
+  },
+  {
+   "id": "1.4.4.4.4",
+   "d": "IMP-13",
+   "note": "status subcommand and per-wave progress reports make background runs visible."
+  },
+  {
+   "id": "1.4.4.4.5",
+   "d": "IMP-04",
+   "note": "Choosing a faster model tier shortens per-branch generation of 155 reasons."
+  },
+  {
+   "id": "1.4.4.5",
+   "d": "IMP-09",
+   "note": "show, index.md and branch-by-branch paging let users inspect output without reading everything."
+  },
+  {
+   "id": "1.4.4.5.1",
+   "d": "IMP-09",
+   "note": "Partial reading guidance pages branch by branch instead of loading the whole ~128k-token file."
+  },
+  {
+   "id": "1.4.4.5.2",
+   "d": "IMP-09",
+   "note": "Branch-level paging and index.md make trees usable without filling a 1M context."
+  },
+  {
+   "id": "1.4.4.5.3",
+   "d": "X-DONE",
+   "note": "show subcommand now prints subtrees or top levels for cheap inspection; summarizing stays declined (R-01)."
+  },
+  {
+   "id": "1.4.4.5.4",
+   "d": "IMP-06",
+   "note": "Hygiene report mechanically flags duplicates, restatements and over-length reasons, reducing manual review."
+  },
+  {
+   "id": "1.4.4.5.5",
+   "d": "IMP-15",
+   "note": "Clarifies mechanical checks and measurement are allowed, while interpretation stays with the user."
+  },
+  {
+   "id": "1.4.5",
+   "d": "X-HIST",
+   "note": "Presumed-tinkerer audience explains past risk tolerance; verification gaps covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "1.4.5.1",
+   "d": "X-ENV",
+   "note": "Early adopter demographics are an ecosystem fact."
+  },
+  {
+   "id": "1.4.5.1.1",
+   "d": "X-ENV",
+   "note": "CLI installation requirements are Claude Code platform design."
+  },
+  {
+   "id": "1.4.5.1.2",
+   "d": "X-ENV",
+   "note": "Ecosystem age and audience are outside the plugin's control."
+  },
+  {
+   "id": "1.4.5.1.3",
+   "d": "X-ENV",
+   "note": "Community sharing norms are ecosystem culture."
+  },
+  {
+   "id": "1.4.5.1.4",
+   "d": "X-HIST",
+   "note": "True: readable stdlib Python and Markdown by design; it merely lowered perceived risk, nothing to change."
+  },
+  {
+   "id": "1.4.5.1.5",
+   "d": "X-ENV",
+   "note": "Early adopters' preferences are ecosystem culture."
+  },
+  {
+   "id": "1.4.5.2",
+   "d": "IMP-05",
+   "note": "Cost preview and confirmation make the token cost of a possibly failing run explicit upfront."
+  },
+  {
+   "id": "1.4.5.2.1",
+   "d": "X-HIST",
+   "note": "True: writes are confined to .five-whys; a sound design fact that only lowered perceived risk."
+  },
+  {
+   "id": "1.4.5.2.2",
+   "d": "X-HIST",
+   "note": "True: never touches user code; sound design that merely lowered perceived release risk."
+  },
+  {
+   "id": "1.4.5.2.3",
+   "d": "IMP-19",
+   "note": "Partial assembly turns separately saved fragments into a valid tree with explicit missing-branch markers."
+  },
+  {
+   "id": "1.4.5.2.4",
+   "d": "X-HIST",
+   "note": "True: output is advisory by the user's requirement; nothing to change."
+  },
+  {
+   "id": "1.4.5.2.5",
+   "d": "IMP-05",
+   "note": "Users see measured agent, reason and token estimates and confirm before spending on a full run."
+  },
+  {
+   "id": "1.4.5.3",
+   "d": "X-FALSE",
+   "note": "The plugin is publicly published on GitHub and the RedJay marketplace, so breakage reaches other users."
+  },
+  {
+   "id": "1.4.5.3.1",
+   "d": "X-HIST",
+   "note": "It lives in the author's publicly addable RedJay marketplace; no plugin change follows."
+  },
+  {
+   "id": "1.4.5.3.2",
+   "d": "X-FALSE",
+   "note": "It is publicly published at github.com/JoshuaRamirez/five-whys and listed in the RedJay marketplace."
+  },
+  {
+   "id": "1.4.5.3.3",
+   "d": "IMP-11",
+   "note": "An automated test suite acts as an independent tester apart from the author."
+  },
+  {
+   "id": "1.4.5.3.4",
+   "d": "X-DONE",
+   "note": "The author's full run on 2026-09-13 surfaced the 20-subagent cap, fixed in a committed change."
+  },
+  {
+   "id": "1.4.5.3.5",
+   "d": "X-HIST",
+   "note": "Perceived exemption of personal tools is past psychology."
+  },
+  {
+   "id": "1.4.5.4",
+   "d": "IMP-12",
+   "note": "Recorded attempts and FAILED replies with first error attribute failures to script, prompt or model."
+  },
+  {
+   "id": "1.4.5.4.1",
+   "d": "X-ENV",
+   "note": "LLM output variability is a model property."
+  },
+  {
+   "id": "1.4.5.4.2",
+   "d": "IMP-12",
+   "note": "Per-task attempts and first-error reporting let users see where a failure originated."
+  },
+  {
+   "id": "1.4.5.4.3",
+   "d": "X-ENV",
+   "note": "Model update frequency is outside the plugin's control."
+  },
+  {
+   "id": "1.4.5.4.4",
+   "d": "X-ENV",
+   "note": "Public discourse about AI reliability is industry culture."
+  },
+  {
+   "id": "1.4.5.4.5",
+   "d": "R-05",
+   "note": "A telemetry backend is declined heavy infrastructure; IMP-12 records failures locally instead."
+  },
+  {
+   "id": "1.4.5.5",
+   "d": "X-ENV",
+   "note": "AI tooling norms rewarding fast shipping are industry culture."
+  },
+  {
+   "id": "1.4.5.5.1",
+   "d": "X-ENV",
+   "note": "Pace of model improvement is outside the plugin's control."
+  },
+  {
+   "id": "1.4.5.5.2",
+   "d": "X-ENV",
+   "note": "Community recognition dynamics are ecosystem culture."
+  },
+  {
+   "id": "1.4.5.5.3",
+   "d": "X-ENV",
+   "note": "Other frameworks' launch histories are ecosystem facts."
+  },
+  {
+   "id": "1.4.5.5.4",
+   "d": "IMP-18",
+   "note": "The plugin uses claude plugin eval for a concrete smoke-run eval despite immature industry methods."
+  },
+  {
+   "id": "1.4.5.5.5",
+   "d": "X-ENV",
+   "note": "Ease of revising prompt-based tools is a general property of the medium."
+  }
+ ]
+}

@@ -8,41 +8,241 @@
     "check takes --depth; breadth is the module constant BRANCHING; the shape is otherwise hard-coded as 5 wide by 5 deep with a root/branch split at level 2.",
     "The agent definition uses model: inherit, lists eight generic cause kinds, tells agents to assume typical context, and requires one Write of the whole fragment.",
     "There are no tests, no evals, no cost preview, no hygiene/duplicate checks, and no navigation subcommand in v0.1.0.",
-    "The user's requirements: 5x5x5x5x5 reasons; everything goes into one JSON for whole-context reading; analysis is up to the user of the plugin."
+    "The user's requirements: 5x5x5x5x5 reasons; everything goes into one JSON for whole-context reading; analysis is up to the user of the plugin.",
+    "All 28 NEW entries from the classification pass were reconciled on 2026-09-13 into IMP-20..IMP-31 (accepted) or R-08..R-10 and existing codes."
   ],
   "improvements": [
-    {"code": "IMP-01", "title": "Parameterized shape", "detail": "init --breadth/--depth (defaults 5/5); root/branch split derived; shape stored in run.json; plan, check, assemble, prompts and examples all read it instead of literals."},
-    {"code": "IMP-02", "title": "Smoke preset and subset dispatch", "detail": "init --preset smoke (3 wide x 3 deep) for cheap rehearsal; plan --only <id,...> to dispatch chosen branches."},
-    {"code": "IMP-03", "title": "Dispatch waves", "detail": "plan groups tasks into waves no larger than the concurrency cap (default 20); the skill dispatches wave by wave."},
-    {"code": "IMP-04", "title": "Model selection", "detail": "init --model (inherit|sonnet|opus|haiku) recorded in run.json; plan emits it per task; the skill passes it as the Agent model override; docs explain the trade-off."},
-    {"code": "IMP-05", "title": "Cost and size preview with confirmation", "detail": "init and plan report agent count, reason count and measured token estimates; the skill confirms with the user before dispatching a full-size run."},
-    {"code": "IMP-06", "title": "Non-blocking hygiene report", "detail": "assemble writes hygiene.json: exact duplicates, near-duplicates (stdlib token overlap discounting ancestor words), children restating a parent or ancestor, over-length reasons. Flags annotate only; nothing is deleted, ranked or summarized."},
-    {"code": "IMP-07", "title": "Sibling-aware branch prompts", "detail": "Branch prompts include the other level-1/level-2 reasons as causes covered elsewhere, so isolated agents avoid reproducing them."},
-    {"code": "IMP-08", "title": "Agent instructions for specificity", "detail": "Replace the fixed generic cause-kind checklist and 'assume typical context' with grounding in the problem's specifics, explicit stated assumptions, outline-before-write, a specific-vs-generic example, targeted Edit repairs, and a fix-loop cap."},
-    {"code": "IMP-09", "title": "Navigation and partial reading", "detail": "show subcommand prints a subtree with its ancestor chain or the top N levels; assemble writes index.md of levels 1-2; loading guidance pages branch by branch."},
-    {"code": "IMP-10", "title": "Measurement recorded in output", "detail": "Assembled header and run.json record per-level counts, average words per level, bytes, approximate tokens, created-to-assembled duration and dispatch attempts."},
-    {"code": "IMP-11", "title": "Test suite", "detail": "stdlib unittest coverage for shapes, init, plan, check, assemble, hygiene, show, waves and partial assembly."},
-    {"code": "IMP-12", "title": "Failure semantics", "detail": "Dispatch attempts recorded per task; tasks past 3 attempts reported as stuck; agents cap their fix loop and reply FAILED with the first error."},
-    {"code": "IMP-13", "title": "Progress status", "detail": "status subcommand prints done/total fragments and missing ids; the skill reports progress after each wave."},
-    {"code": "IMP-14", "title": "Honest documentation", "detail": "README documents measured cost and time, what validation does and does not cover, known limitations, the concurrency cap, a real excerpt, and design decisions (stdlib-only, generation-only)."},
-    {"code": "IMP-15", "title": "Principle clarification", "detail": "Skill, agent and README separate allowed mechanical aids (hygiene flags, navigation, measurement) from interpretation, ranking, pruning and summarizing, which stay with the user."},
-    {"code": "IMP-16", "title": "Optional context intake", "detail": "The skill accepts extra context and, when the problem statement is thin, asks once for key specifics; context is stored in run.json and included in every prompt."},
-    {"code": "IMP-17", "title": "Self-improvement record", "detail": "Keep this tree, catalog and the 3,905-entry ledger in docs/self-improvement as dogfooding evidence and a changelog of why each change was made."},
-    {"code": "IMP-18", "title": "Eval suite", "detail": "evals/ case for claude plugin eval that exercises a smoke-preset run end to end and grades shape validity and hygiene report presence."},
-    {"code": "IMP-19", "title": "Partial assembly", "detail": "assemble --partial writes a valid tree with explicit missing-branch markers so interrupted or budget-capped runs still yield output."}
+    {
+      "code": "IMP-01",
+      "title": "Parameterized shape",
+      "detail": "init --breadth/--depth (defaults 5/5); root/branch split derived; shape stored in run.json; plan, check, assemble, prompts and examples all read it instead of literals."
+    },
+    {
+      "code": "IMP-02",
+      "title": "Smoke preset and subset dispatch",
+      "detail": "init --preset smoke (3 wide x 3 deep) for cheap rehearsal; plan --only <id,...> to dispatch chosen branches."
+    },
+    {
+      "code": "IMP-03",
+      "title": "Dispatch waves",
+      "detail": "plan groups tasks into waves no larger than the concurrency cap (default 20); the skill dispatches wave by wave."
+    },
+    {
+      "code": "IMP-04",
+      "title": "Model selection",
+      "detail": "init --model (inherit|sonnet|opus|haiku) recorded in run.json; plan emits it per task; the skill passes it as the Agent model override; docs explain the trade-off."
+    },
+    {
+      "code": "IMP-05",
+      "title": "Cost and size preview with confirmation",
+      "detail": "init and plan report agent count, reason count and measured token estimates; the skill confirms with the user before dispatching a full-size run."
+    },
+    {
+      "code": "IMP-06",
+      "title": "Non-blocking hygiene report",
+      "detail": "assemble writes hygiene.json: exact duplicates, near-duplicates (stdlib token overlap discounting ancestor words), children restating a parent or ancestor, over-length reasons. Flags annotate only; nothing is deleted, ranked or summarized."
+    },
+    {
+      "code": "IMP-07",
+      "title": "Sibling-aware branch prompts",
+      "detail": "Branch prompts include the other level-1/level-2 reasons as causes covered elsewhere, so isolated agents avoid reproducing them."
+    },
+    {
+      "code": "IMP-08",
+      "title": "Agent instructions for specificity",
+      "detail": "Replace the fixed generic cause-kind checklist and 'assume typical context' with grounding in the problem's specifics, explicit stated assumptions, outline-before-write, a specific-vs-generic example, targeted Edit repairs, and a fix-loop cap."
+    },
+    {
+      "code": "IMP-09",
+      "title": "Navigation and partial reading",
+      "detail": "show subcommand prints a subtree with its ancestor chain or the top N levels; assemble writes index.md of levels 1-2; loading guidance pages branch by branch."
+    },
+    {
+      "code": "IMP-10",
+      "title": "Measurement recorded in output",
+      "detail": "Assembled header and run.json record per-level counts, average words per level, bytes, approximate tokens, created-to-assembled duration and dispatch attempts."
+    },
+    {
+      "code": "IMP-11",
+      "title": "Test suite",
+      "detail": "stdlib unittest coverage for shapes, init, plan, check, assemble, hygiene, show, waves and partial assembly."
+    },
+    {
+      "code": "IMP-12",
+      "title": "Failure semantics",
+      "detail": "Dispatch attempts recorded per task; tasks past 3 attempts reported as stuck; agents cap their fix loop and reply FAILED with the first error."
+    },
+    {
+      "code": "IMP-13",
+      "title": "Progress status",
+      "detail": "status subcommand prints done/total fragments and missing ids; the skill reports progress after each wave."
+    },
+    {
+      "code": "IMP-14",
+      "title": "Honest documentation",
+      "detail": "README documents measured cost and time, what validation does and does not cover, known limitations, the concurrency cap, a real excerpt, and design decisions (stdlib-only, generation-only)."
+    },
+    {
+      "code": "IMP-15",
+      "title": "Principle clarification",
+      "detail": "Skill, agent and README separate allowed mechanical aids (hygiene flags, navigation, measurement) from interpretation, ranking, pruning and summarizing, which stay with the user."
+    },
+    {
+      "code": "IMP-16",
+      "title": "Optional context intake",
+      "detail": "The skill accepts extra context and, when the problem statement is thin, asks once for key specifics; context is stored in run.json and included in every prompt."
+    },
+    {
+      "code": "IMP-17",
+      "title": "Self-improvement record",
+      "detail": "Keep this tree, catalog and the 3,905-entry ledger in docs/self-improvement as dogfooding evidence and a changelog of why each change was made."
+    },
+    {
+      "code": "IMP-18",
+      "title": "Eval suite",
+      "detail": "evals/ case for claude plugin eval that exercises a smoke-preset run end to end and grades shape validity and hygiene report presence."
+    },
+    {
+      "code": "IMP-19",
+      "title": "Partial assembly",
+      "detail": "assemble --partial writes a valid tree with explicit missing-branch markers so interrupted or budget-capped runs still yield output."
+    },
+    {
+      "code": "IMP-20",
+      "title": "Runs kept out of git",
+      "detail": "init writes .five-whys/.gitignore because problem statements and reasons can be sensitive."
+    },
+    {
+      "code": "IMP-21",
+      "title": "Release checklist",
+      "detail": "RELEASING.md gates version bumps on unit tests, manifest validation and a real smoke run."
+    },
+    {
+      "code": "IMP-22",
+      "title": "Skill option syntax",
+      "detail": "Leading --smoke, --model, --breadth, --depth, --yes and --resume flags in the invocation, advertised in argument-hint."
+    },
+    {
+      "code": "IMP-23",
+      "title": "Fragment hygiene warnings in check",
+      "detail": "check prints non-blocking warnings (repeated text, restatements, over-long reasons) after OK."
+    },
+    {
+      "code": "IMP-24",
+      "title": "Compact dispatch",
+      "detail": "plan writes full prompts to files; the dispatch prompt is a short pointer, keeping the orchestrator's context small."
+    },
+    {
+      "code": "IMP-25",
+      "title": "Evidence reading",
+      "detail": "Agents Read local files or paths named in the problem or context before writing reasons."
+    },
+    {
+      "code": "IMP-26",
+      "title": "Random spot-check sampling",
+      "detail": "show --sample N --seed S prints random reasons with their ancestor chains."
+    },
+    {
+      "code": "IMP-27",
+      "title": "Size hint in prompts",
+      "detail": "Prompts state expected output tokens so agents don't compress reasons to save room."
+    },
+    {
+      "code": "IMP-28",
+      "title": "Separate root and branch models",
+      "detail": "init --root-model and --branch-model (default: --model) let root and branch tasks use different tiers."
+    },
+    {
+      "code": "IMP-29",
+      "title": "Docs consistency test",
+      "detail": "unittest keeps README, skill and agent text consistent with script defaults and options."
+    },
+    {
+      "code": "IMP-30",
+      "title": "CI for unit tests",
+      "detail": "GitHub Actions runs the stdlib unittest suite on push and pull request; no model calls."
+    },
+    {
+      "code": "IMP-31",
+      "title": "Check log",
+      "detail": "check appends each result to the run's check-log.jsonl; status reports check cycles per fragment."
+    }
   ],
   "dispositions": [
-    {"code": "R-01", "title": "Declined: plugin-side ranking, synthesis, pruning or root-cause selection", "detail": "The user's requirement puts analysis with the user. Mechanical hygiene flags (IMP-06) are the allowed substitute."},
-    {"code": "R-02", "title": "Declined: embeddings, third-party packages, API keys or network calls in the script", "detail": "Would break the zero-dependency offline install. Stdlib heuristics (IMP-06) instead."},
-    {"code": "R-03", "title": "Declined: LLM judge inside the blocking fix loop", "detail": "Flaky verdicts cause endless loops and multiply cost. Non-blocking hygiene flags instead."},
-    {"code": "R-04", "title": "Declined: dropping complete trees (adaptive fan-out, early stopping, variable depth, 'not applicable' slots)", "detail": "The user specified complete 5x5x5x5x5 trees. The shape is configurable (IMP-01) but every tree stays complete."},
-    {"code": "R-05", "title": "Declined: heavy infrastructure", "detail": "MCP server, database store, HTML viewer, CI with live model runs, telemetry backend, prompt-cache engineering. File-based tools (IMP-09/10/11/18) cover the need."},
-    {"code": "R-06", "title": "Out of scope: social or organizational remedies", "detail": "Recruiting reviewers, beta testers or experts, user research, building public benchmark datasets. Not changes to the plugin."},
-    {"code": "R-07", "title": "Declined: sequential waves that feed deeper generated output between branches, shared scratchpads", "detail": "Serializes the run. IMP-07 shares the cheap level-1/2 digest instead."},
-    {"code": "X-DONE", "title": "Already resolved in the current state", "detail": "The note must say what resolved it (see facts)."},
-    {"code": "X-FALSE", "title": "Premise is factually wrong about the current plugin", "detail": "The note must say what is actually true."},
-    {"code": "X-ENV", "title": "Outside the plugin's control", "detail": "A fact about Claude Code, models, the ecosystem or industry culture that no plugin change can address."},
-    {"code": "X-HIST", "title": "Past motivation, process or psychology with no further artifact change", "detail": "Plausible explanation of how v0.1.0 came to be; any actionable part is already covered by another code."},
-    {"code": "NEW", "title": "Actionable improvement missing from this catalog", "detail": "The note must state the proposed change; the lead reconciles every NEW entry into an IMP, R or X code before merge."}
+    {
+      "code": "R-01",
+      "title": "Declined: plugin-side ranking, synthesis, pruning or root-cause selection",
+      "detail": "The user's requirement puts analysis with the user. Mechanical hygiene flags (IMP-06) are the allowed substitute."
+    },
+    {
+      "code": "R-02",
+      "title": "Declined: embeddings, third-party packages, API keys or network calls in the script",
+      "detail": "Would break the zero-dependency offline install. Stdlib heuristics (IMP-06) instead."
+    },
+    {
+      "code": "R-03",
+      "title": "Declined: LLM judge inside the blocking fix loop",
+      "detail": "Flaky verdicts cause endless loops and multiply cost. Non-blocking hygiene flags instead."
+    },
+    {
+      "code": "R-04",
+      "title": "Declined: dropping complete trees (adaptive fan-out, early stopping, variable depth, 'not applicable' slots)",
+      "detail": "The user specified complete 5x5x5x5x5 trees. The shape is configurable (IMP-01) but every tree stays complete."
+    },
+    {
+      "code": "R-05",
+      "title": "Declined: heavy infrastructure",
+      "detail": "MCP server, database store, HTML viewer, CI with live model runs, telemetry backend, prompt-cache engineering. File-based tools (IMP-09/10/11/18) cover the need."
+    },
+    {
+      "code": "R-06",
+      "title": "Out of scope: social or organizational remedies",
+      "detail": "Recruiting reviewers, beta testers or experts, user research, building public benchmark datasets. Not changes to the plugin."
+    },
+    {
+      "code": "R-07",
+      "title": "Declined: sequential waves that feed deeper generated output between branches, shared scratchpads",
+      "detail": "Serializes the run. IMP-07 shares the cheap level-1/2 digest instead."
+    },
+    {
+      "code": "R-08",
+      "title": "Declined: plain-text outline fragments converted by the script",
+      "detail": "All 26 JSON fragments in the real run passed their first check; JSON keeps validation exact and simple."
+    },
+    {
+      "code": "R-09",
+      "title": "Declined: dropping the per-line depth key or indentation",
+      "detail": "They keep lines self-describing when the file is read in windows; the saving is small."
+    },
+    {
+      "code": "R-10",
+      "title": "Deferred: empirical studies",
+      "detail": "Model-tier quality and full-tree versus single-branch loading comparisons are recorded as known limitations, not code changes."
+    },
+    {
+      "code": "X-DONE",
+      "title": "Already resolved in the current state",
+      "detail": "The note must say what resolved it (see facts)."
+    },
+    {
+      "code": "X-FALSE",
+      "title": "Premise is factually wrong about the current plugin",
+      "detail": "The note must say what is actually true."
+    },
+    {
+      "code": "X-ENV",
+      "title": "Outside the plugin's control",
+      "detail": "A fact about Claude Code, models, the ecosystem or industry culture that no plugin change can address."
+    },
+    {
+      "code": "X-HIST",
+      "title": "Past motivation, process or psychology with no further artifact change",
+      "detail": "Plausible explanation of how v0.1.0 came to be; any actionable part is already covered by another code."
+    },
+    {
+      "code": "NEW",
+      "title": "Actionable improvement missing from this catalog",
+      "detail": "The note must state the proposed change; the lead reconciles every NEW entry into an IMP, R or X code before merge."
+    }
   ]
 }

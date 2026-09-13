@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "5.2.1",
+   "d": "IMP-04",
+   "note": "Unquestioned inherit default becomes a deliberate init --model choice recorded in run.json, with documented trade-offs."
+  },
+  {
+   "id": "5.2.1.1",
+   "d": "X-HIST",
+   "note": "Past prototyping haste explains the default; the actionable model choice is covered by IMP-04."
+  },
+  {
+   "id": "5.2.1.1.1",
+   "d": "X-HIST",
+   "note": "Past prioritization of fan-out over tuning; runtime model selection is now handled by IMP-04."
+  },
+  {
+   "id": "5.2.1.1.2",
+   "d": "X-ENV",
+   "note": "How plugin-dev examples frame inherit is outside this plugin's control."
+  },
+  {
+   "id": "5.2.1.1.3",
+   "d": "IMP-04",
+   "note": "Model becomes an explicit init parameter emitted per task, so it is chosen rather than overlooked."
+  },
+  {
+   "id": "5.2.1.1.4",
+   "d": "X-HIST",
+   "note": "Single-session development pressure is past process with nothing further to change."
+  },
+  {
+   "id": "5.2.1.1.5",
+   "d": "X-ENV",
+   "note": "Plugin-dev template comments belong to the ecosystem; this plugin's own docs are covered by IMP-04."
+  },
+  {
+   "id": "5.2.1.2",
+   "d": "X-ENV",
+   "note": "Template documentation framing of inherit is an ecosystem fact outside the plugin."
+  },
+  {
+   "id": "5.2.1.2.1",
+   "d": "X-ENV",
+   "note": "Priorities of external documentation writers are outside the plugin's control."
+  },
+  {
+   "id": "5.2.1.2.2",
+   "d": "X-ENV",
+   "note": "Model alias churn is a platform fact; the plugin cannot change it."
+  },
+  {
+   "id": "5.2.1.2.3",
+   "d": "X-ENV",
+   "note": "Inherit's capability-parity guarantee is Claude Code platform behavior."
+  },
+  {
+   "id": "5.2.1.2.4",
+   "d": "X-ENV",
+   "note": "Official plugin docs targeting single-agent use is an ecosystem fact."
+  },
+  {
+   "id": "5.2.1.2.5",
+   "d": "IMP-04",
+   "note": "Lacking official tier guidance, IMP-04 docs explain the model trade-off for this fan-out workload."
+  },
+  {
+   "id": "5.2.1.3",
+   "d": "X-HIST",
+   "note": "Author's prior plugin experience is past background with no artifact change."
+  },
+  {
+   "id": "5.2.1.3.1",
+   "d": "X-HIST",
+   "note": "Earlier small-agent plugins explain past blind spot; nothing further actionable here."
+  },
+  {
+   "id": "5.2.1.3.2",
+   "d": "IMP-05",
+   "note": "Subscription billing hides cost, so init and plan report measured token estimates and confirm before full runs."
+  },
+  {
+   "id": "5.2.1.3.3",
+   "d": "IMP-17",
+   "note": "The self-improvement tree, catalog and ledger now record model-tier and cost lessons."
+  },
+  {
+   "id": "5.2.1.3.4",
+   "d": "X-HIST",
+   "note": "Interactive-session habits explain the past default; model selection itself is IMP-04."
+  },
+  {
+   "id": "5.2.1.3.5",
+   "d": "X-ENV",
+   "note": "Community plugins' publishing habits are outside this plugin's control."
+  },
+  {
+   "id": "5.2.1.4",
+   "d": "X-HIST",
+   "note": "Premature-optimization reluctance is past psychology; model selection is covered by IMP-04."
+  },
+  {
+   "id": "5.2.1.4.1",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13: 26 agents, about 1.2M subagent tokens, about 7 minutes."
+  },
+  {
+   "id": "5.2.1.4.2",
+   "d": "X-ENV",
+   "note": "Engineering culture around premature optimization is outside the plugin."
+  },
+  {
+   "id": "5.2.1.4.3",
+   "d": "IMP-04",
+   "note": "Quality-versus-cost assumption becomes a user choice via --model, with documented trade-offs; inherit stays default."
+  },
+  {
+   "id": "5.2.1.4.4",
+   "d": "X-HIST",
+   "note": "Fragment format churn during v0.1.0 development is past process."
+  },
+  {
+   "id": "5.2.1.4.5",
+   "d": "X-HIST",
+   "note": "Framing v0.1.0 as disposable is past motivation with nothing further to change."
+  },
+  {
+   "id": "5.2.1.5",
+   "d": "X-HIST",
+   "note": "Past review focus explains the oversight; the model field itself is addressed by IMP-04."
+  },
+  {
+   "id": "5.2.1.5.1",
+   "d": "X-HIST",
+   "note": "Reviewer perception of frontmatter as boilerplate is past psychology."
+  },
+  {
+   "id": "5.2.1.5.2",
+   "d": "IMP-04",
+   "note": "Model moves from unchecked frontmatter to an explicit init option recorded in run.json and emitted per task."
+  },
+  {
+   "id": "5.2.1.5.3",
+   "d": "R-06",
+   "note": "Recruiting a second reviewer is an organizational remedy, not a plugin change."
+  },
+  {
+   "id": "5.2.1.5.4",
+   "d": "X-HIST",
+   "note": "Past allocation of scrutiny to Python logic; nothing further actionable."
+  },
+  {
+   "id": "5.2.1.5.5",
+   "d": "IMP-11",
+   "note": "Unittest suite covers init and plan, including model recorded and emitted per task."
+  },
+  {
+   "id": "5.2.2",
+   "d": "X-DONE",
+   "note": "The 2026-09-13 full run measured about 1.2M subagent tokens across 26 agents."
+  },
+  {
+   "id": "5.2.2.1",
+   "d": "X-DONE",
+   "note": "A full real run completed on 2026-09-13 with measured tokens, time and output size."
+  },
+  {
+   "id": "5.2.2.1.1",
+   "d": "X-HIST",
+   "note": "Deferring the full run was past process; the run has since happened."
+  },
+  {
+   "id": "5.2.2.1.2",
+   "d": "IMP-02",
+   "note": "Smoke preset gives a cheap 3x3 rehearsal so the pipeline is proven before spending quota."
+  },
+  {
+   "id": "5.2.2.1.3",
+   "d": "IMP-02",
+   "note": "Smoke preset runs the real root/branch pipeline end to end at small shape, exercising every branch."
+  },
+  {
+   "id": "5.2.2.1.4",
+   "d": "IMP-18",
+   "note": "Eval suite runs a smoke-preset pipeline end to end headlessly and grades results."
+  },
+  {
+   "id": "5.2.2.1.5",
+   "d": "X-HIST",
+   "note": "Session time spent building is past process with no artifact change."
+  },
+  {
+   "id": "5.2.2.2",
+   "d": "X-ENV",
+   "note": "Claude Code's per-subagent usage reporting is platform behavior outside the plugin."
+  },
+  {
+   "id": "5.2.2.2.1",
+   "d": "X-ENV",
+   "note": "Session-level usage aggregation is a Claude Code platform fact."
+  },
+  {
+   "id": "5.2.2.2.2",
+   "d": "X-ENV",
+   "note": "Subscription plans showing rate limits rather than dollars is a platform fact."
+  },
+  {
+   "id": "5.2.2.2.3",
+   "d": "R-05",
+   "note": "Custom telemetry for per-agent token attribution is heavy infrastructure the catalog declines."
+  },
+  {
+   "id": "5.2.2.2.4",
+   "d": "X-ENV",
+   "note": "Collapsed parallel agent output in the UI is Claude Code behavior."
+  },
+  {
+   "id": "5.2.2.2.5",
+   "d": "X-ENV",
+   "note": "Ecosystem cost tooling targeting API users is outside the plugin's control."
+  },
+  {
+   "id": "5.2.2.3",
+   "d": "IMP-05",
+   "note": "Cost preview uses measured whole-run token estimates, not output size alone."
+  },
+  {
+   "id": "5.2.2.3.1",
+   "d": "X-DONE",
+   "note": "Measured run shows about 1.2M subagent tokens versus about 128k output tokens, correcting the output-size anchor."
+  },
+  {
+   "id": "5.2.2.3.2",
+   "d": "IMP-05",
+   "note": "Measured per-run token estimates in the preview include per-agent prompt overhead."
+  },
+  {
+   "id": "5.2.2.3.3",
+   "d": "IMP-05",
+   "note": "Preview estimates derive from measured total subagent tokens, which include reasoning tokens."
+  },
+  {
+   "id": "5.2.2.3.4",
+   "d": "IMP-05",
+   "note": "Measured estimates cover check-command tool round trips that output-size guesses omitted."
+  },
+  {
+   "id": "5.2.2.3.5",
+   "d": "IMP-14",
+   "note": "README documents measured cost and time, replacing the missing written cost model."
+  },
+  {
+   "id": "5.2.2.4",
+   "d": "IMP-05",
+   "note": "Cost preview with confirmation makes cost an explicit, user-approved part of every full run."
+  },
+  {
+   "id": "5.2.2.4.1",
+   "d": "IMP-05",
+   "note": "Exhaustive breadth stays required; preview lets the user accept its measured cost knowingly."
+  },
+  {
+   "id": "5.2.2.4.2",
+   "d": "X-FALSE",
+   "note": "The plugin is publicly published at github.com/JoshuaRamirez/five-whys and listed in the RedJay marketplace."
+  },
+  {
+   "id": "5.2.2.4.3",
+   "d": "IMP-05",
+   "note": "Preview and confirmation before dispatch act as the per-invocation budget check."
+  },
+  {
+   "id": "5.2.2.4.4",
+   "d": "IMP-14",
+   "note": "README design decisions and limitations write down requirements, including measured cost."
+  },
+  {
+   "id": "5.2.2.4.5",
+   "d": "X-HIST",
+   "note": "Past rating emphasis on quality over efficiency; cost visibility is covered by IMP-05."
+  },
+  {
+   "id": "5.2.2.5",
+   "d": "IMP-10",
+   "note": "Each run records counts, bytes, tokens and duration, creating baselines for comparison."
+  },
+  {
+   "id": "5.2.2.5.1",
+   "d": "X-ENV",
+   "note": "Absence of comparable five-whys tools is an ecosystem fact."
+  },
+  {
+   "id": "5.2.2.5.2",
+   "d": "X-ENV",
+   "note": "Other plugins' undisclosed model costs are outside this plugin's control."
+  },
+  {
+   "id": "5.2.2.5.3",
+   "d": "X-ENV",
+   "note": "Rate-limit window resets are platform behavior."
+  },
+  {
+   "id": "5.2.2.5.4",
+   "d": "IMP-10",
+   "note": "run.json and the assembled header record per-run measurements going forward."
+  },
+  {
+   "id": "5.2.2.5.5",
+   "d": "IMP-05",
+   "note": "Preview reports agent count, reason count and token estimates so the cost profile is visible upfront."
+  },
+  {
+   "id": "5.2.3",
+   "d": "IMP-18",
+   "note": "Eval suite provides a repeatable smoke run grading shape and hygiene, runnable per model tier."
+  },
+  {
+   "id": "5.2.3.1",
+   "d": "IMP-06",
+   "note": "Hygiene report supplies mechanical content proxies; subjective quality judgment stays with the user."
+  },
+  {
+   "id": "5.2.3.1.1",
+   "d": "R-01",
+   "note": "Scoring causal plausibility is analysis the plugin declines; the user judges reasons."
+  },
+  {
+   "id": "5.2.3.1.2",
+   "d": "IMP-18",
+   "note": "Eval grades shape validity and hygiene presence, needing no reference answer."
+  },
+  {
+   "id": "5.2.3.1.3",
+   "d": "R-03",
+   "note": "LLM-as-judge scoring is declined because verdicts are flaky and multiply cost."
+  },
+  {
+   "id": "5.2.3.1.4",
+   "d": "IMP-06",
+   "note": "Hygiene report operationalizes distinctness via duplicate, near-duplicate and ancestor-restating flags."
+  },
+  {
+   "id": "5.2.3.1.5",
+   "d": "IMP-02",
+   "note": "Smoke preset and plan --only let tiers be compared on small trees or single branches."
+  },
+  {
+   "id": "5.2.3.2",
+   "d": "IMP-06",
+   "note": "Assemble writes hygiene.json with content flags beyond JSON shape."
+  },
+  {
+   "id": "5.2.3.2.1",
+   "d": "X-HIST",
+   "note": "Choosing shape validation first was a reasonable past decision; content flags come via IMP-06."
+  },
+  {
+   "id": "5.2.3.2.2",
+   "d": "IMP-06",
+   "note": "Stdlib token-overlap heuristics give content checks without NLP packages or model calls."
+  },
+  {
+   "id": "5.2.3.2.3",
+   "d": "IMP-15",
+   "note": "Docs separate allowed mechanical aids from interpretation, which remains the user's call."
+  },
+  {
+   "id": "5.2.3.2.4",
+   "d": "IMP-06",
+   "note": "Hygiene report defines near-duplicate and over-length thresholds as non-blocking flags."
+  },
+  {
+   "id": "5.2.3.2.5",
+   "d": "IMP-06",
+   "note": "A separate non-blocking hygiene report serves measurement, leaving check as the retry gate."
+  },
+  {
+   "id": "5.2.3.3",
+   "d": "IMP-18",
+   "note": "Eval suite adds a repeatable smoke-preset case under evals/."
+  },
+  {
+   "id": "5.2.3.3.1",
+   "d": "IMP-11",
+   "note": "Stdlib unittest suite establishes tests and fixtures for script behavior."
+  },
+  {
+   "id": "5.2.3.3.2",
+   "d": "IMP-18",
+   "note": "A single curated eval case suffices for shape and hygiene grading without large curation."
+  },
+  {
+   "id": "5.2.3.3.3",
+   "d": "IMP-18",
+   "note": "Eval grades structural validity and hygiene presence, which are robust to non-deterministic text."
+  },
+  {
+   "id": "5.2.3.3.4",
+   "d": "X-FALSE",
+   "note": "claude plugin eval provides a standard eval scaffold; IMP-18 adopts it."
+  },
+  {
+   "id": "5.2.3.3.5",
+   "d": "IMP-02",
+   "note": "Smoke preset (3 wide x 3 deep) needs far fewer agents per tier comparison."
+  },
+  {
+   "id": "5.2.3.4",
+   "d": "IMP-02",
+   "note": "Smoke preset and subset dispatch make multi-tier comparisons a fraction of a full run."
+  },
+  {
+   "id": "5.2.3.4.1",
+   "d": "X-DONE",
+   "note": "A full run completed on 2026-09-13 in about 7 minutes."
+  },
+  {
+   "id": "5.2.3.4.2",
+   "d": "IMP-03",
+   "note": "Plan groups tasks into waves no larger than the concurrency cap."
+  },
+  {
+   "id": "5.2.3.4.3",
+   "d": "IMP-02",
+   "note": "plan --only dispatches chosen branches, enabling single-branch sampling."
+  },
+  {
+   "id": "5.2.3.4.4",
+   "d": "R-01",
+   "note": "Judging tier differences is analysis left to the user; the plugin will not rank outputs."
+  },
+  {
+   "id": "5.2.3.4.5",
+   "d": "IMP-05",
+   "note": "Cost preview with confirmation lets the user weigh quota before dispatching."
+  },
+  {
+   "id": "5.2.3.5",
+   "d": "IMP-10",
+   "note": "Per-level counts and average words recorded in output quantify depth effects per run."
+  },
+  {
+   "id": "5.2.3.5.1",
+   "d": "IMP-06",
+   "note": "Near-duplicate and ancestor-restating flags give a mechanical signal of repetition at depth."
+  },
+  {
+   "id": "5.2.3.5.2",
+   "d": "IMP-10",
+   "note": "Per-level measurements replace intuition about decay with recorded data."
+  },
+  {
+   "id": "5.2.3.5.3",
+   "d": "IMP-09",
+   "note": "show --id/--levels and index.md enable level-by-level sampling of assembled trees."
+  },
+  {
+   "id": "5.2.3.5.4",
+   "d": "IMP-10",
+   "note": "Assembled header records per-level counts, average words, bytes and tokens."
+  },
+  {
+   "id": "5.2.3.5.5",
+   "d": "IMP-04",
+   "note": "Model recorded per run lets tiers vary while prompts stay fixed, isolating model effects."
+  },
+  {
+   "id": "5.2.4",
+   "d": "IMP-04",
+   "note": "The top-tier assumption becomes testable: users pick --model, docs explain trade-offs."
+  },
+  {
+   "id": "5.2.4.1",
+   "d": "IMP-04",
+   "note": "Belief about small models is replaced by user-selectable tiers with documented trade-offs."
+  },
+  {
+   "id": "5.2.4.1.1",
+   "d": "X-HIST",
+   "note": "Past impressions of small models are background psychology."
+  },
+  {
+   "id": "5.2.4.1.2",
+   "d": "IMP-08",
+   "note": "Specificity grounding and examples help any tier produce diverse, problem-specific reasons."
+  },
+  {
+   "id": "5.2.4.1.3",
+   "d": "X-ENV",
+   "note": "Model marketing emphasis is an industry fact outside the plugin."
+  },
+  {
+   "id": "5.2.4.1.4",
+   "d": "IMP-04",
+   "note": "init --model makes side-by-side tier trials a one-flag change."
+  },
+  {
+   "id": "5.2.4.1.5",
+   "d": "IMP-06",
+   "note": "Hygiene flags count repetition objectively, countering memorable-failure bias."
+  },
+  {
+   "id": "5.2.4.2",
+   "d": "IMP-08",
+   "note": "Outline-before-write and targeted Edit repairs ease the 155-reason single-fragment task."
+  },
+  {
+   "id": "5.2.4.2.1",
+   "d": "IMP-08",
+   "note": "Agent instructions add outline-before-write and targeted Edit repairs instead of rewriting whole fragments."
+  },
+  {
+   "id": "5.2.4.2.2",
+   "d": "IMP-12",
+   "note": "Capped fix loops, FAILED replies and stuck-task reports bound JSON failures from weaker tiers."
+  },
+  {
+   "id": "5.2.4.2.3",
+   "d": "R-07",
+   "note": "Per-level chained calls feeding generated output deeper would serialize the run; declined."
+  },
+  {
+   "id": "5.2.4.2.4",
+   "d": "X-HIST",
+   "note": "The check-and-fix loop is intended validation design; its cap is covered by IMP-12."
+  },
+  {
+   "id": "5.2.4.2.5",
+   "d": "IMP-04",
+   "note": "Documented model trade-offs note long structured output as where tiers differ."
+  },
+  {
+   "id": "5.2.4.3",
+   "d": "X-HIST",
+   "note": "Past prioritization of quality over cost; model choice is now IMP-04."
+  },
+  {
+   "id": "5.2.4.3.1",
+   "d": "X-HIST",
+   "note": "Rating criteria emphasis explains past capability bias; nothing further actionable here."
+  },
+  {
+   "id": "5.2.4.3.2",
+   "d": "IMP-08",
+   "note": "Specificity-focused agent instructions protect causal depth regardless of tier."
+  },
+  {
+   "id": "5.2.4.3.3",
+   "d": "IMP-14",
+   "note": "README known limitations explain model effects on reason quality."
+  },
+  {
+   "id": "5.2.4.3.4",
+   "d": "IMP-04",
+   "note": "Inherit stays default protecting quality; cheaper tiers are opt-in with documented trade-offs."
+  },
+  {
+   "id": "5.2.4.3.5",
+   "d": "X-HIST",
+   "note": "Author's personal thoroughness preference is past psychology."
+  },
+  {
+   "id": "5.2.4.4",
+   "d": "IMP-08",
+   "note": "Clearer instructions with examples and stated assumptions make rules followable by weaker tiers."
+  },
+  {
+   "id": "5.2.4.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene report flags children restating a parent or ancestor mechanically."
+  },
+  {
+   "id": "5.2.4.4.2",
+   "d": "IMP-08",
+   "note": "Agent instructions are rewritten with explicit grounding, examples and a fix-loop cap."
+  },
+  {
+   "id": "5.2.4.4.3",
+   "d": "IMP-08",
+   "note": "Agent instructions add a specific-versus-generic reason example."
+  },
+  {
+   "id": "5.2.4.4.4",
+   "d": "IMP-18",
+   "note": "Eval case can run under each --model tier to validate prompts beyond the top model."
+  },
+  {
+   "id": "5.2.4.4.5",
+   "d": "IMP-06",
+   "note": "Hygiene report surfaces ancestor restating and duplicates the shape checker misses."
+  },
+  {
+   "id": "5.2.4.5",
+   "d": "IMP-28",
+   "note": "NEW reconciled: init --root-model and --branch-model added."
+  },
+  {
+   "id": "5.2.4.5.1",
+   "d": "IMP-04",
+   "note": "Skill passes model as Agent override per task, so one agent definition no longer fixes the tier."
+  },
+  {
+   "id": "5.2.4.5.2",
+   "d": "X-HIST",
+   "note": "Treating the agent as one role was past design thinking."
+  },
+  {
+   "id": "5.2.4.5.3",
+   "d": "IMP-04",
+   "note": "Skill passes the run's model as the Agent model override at dispatch."
+  },
+  {
+   "id": "5.2.4.5.4",
+   "d": "IMP-10",
+   "note": "Per-level measurements recorded per run provide data on which levels differ."
+  },
+  {
+   "id": "5.2.4.5.5",
+   "d": "IMP-04",
+   "note": "Dispatch-time model override avoids a second agent definition."
+  },
+  {
+   "id": "5.2.5",
+   "d": "IMP-04",
+   "note": "init --model exposes model choice as a user setting recorded in run.json."
+  },
+  {
+   "id": "5.2.5.1",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth introduces run configuration stored in run.json, which --model also uses."
+  },
+  {
+   "id": "5.2.5.1.1",
+   "d": "IMP-01",
+   "note": "Shape becomes init --breadth/--depth with 5/5 defaults."
+  },
+  {
+   "id": "5.2.5.1.2",
+   "d": "IMP-04",
+   "note": "Model is an init flag stored in run.json, avoiding separate plugin settings files."
+  },
+  {
+   "id": "5.2.5.1.3",
+   "d": "X-HIST",
+   "note": "Zero-config priority was past; IMP-01/04 keep defaults so installs remain zero-config."
+  },
+  {
+   "id": "5.2.5.1.4",
+   "d": "X-FALSE",
+   "note": "The plugin is public on GitHub and listed in the RedJay marketplace, not author-only."
+  },
+  {
+   "id": "5.2.5.1.5",
+   "d": "IMP-11",
+   "note": "Unittest suite covers shapes, init and plan, absorbing the added configuration surface."
+  },
+  {
+   "id": "5.2.5.2",
+   "d": "IMP-04",
+   "note": "The skill passes init's recorded model as the Agent model override per task."
+  },
+  {
+   "id": "5.2.5.2.1",
+   "d": "IMP-04",
+   "note": "Plan emits model per task and the skill passes it in each Agent call."
+  },
+  {
+   "id": "5.2.5.2.2",
+   "d": "X-HIST",
+   "note": "Not applying override knowledge was a past design gap; the fix is IMP-04."
+  },
+  {
+   "id": "5.2.5.2.3",
+   "d": "X-ENV",
+   "note": "Plugin documentation's framing of frontmatter is an ecosystem fact."
+  },
+  {
+   "id": "5.2.5.2.4",
+   "d": "IMP-04",
+   "note": "User picks the tier at init; skill passes it verbatim without reasoning about cost."
+  },
+  {
+   "id": "5.2.5.2.5",
+   "d": "X-ENV",
+   "note": "Lack of a plugin environment-variable convention is a platform fact."
+  },
+  {
+   "id": "5.2.5.3",
+   "d": "IMP-04",
+   "note": "Adding the --model setting lets users act on and surface demand for cheaper tiers."
+  },
+  {
+   "id": "5.2.5.3.1",
+   "d": "X-FALSE",
+   "note": "The plugin is published publicly at github.com/JoshuaRamirez/five-whys and in the RedJay marketplace."
+  },
+  {
+   "id": "5.2.5.3.2",
+   "d": "IMP-05",
+   "note": "Cost preview with confirmation prevents surprise limit hits that lead to silent abandonment."
+  },
+  {
+   "id": "5.2.5.3.3",
+   "d": "X-FALSE",
+   "note": "The public GitHub repository has issues enabled, providing a feedback channel."
+  },
+  {
+   "id": "5.2.5.3.4",
+   "d": "X-HIST",
+   "note": "Author's past lack of cost pain is background; the full run now measured cost."
+  },
+  {
+   "id": "5.2.5.3.5",
+   "d": "IMP-12",
+   "note": "Agents reply FAILED with the first error and stuck tasks are reported, making failures legible."
+  },
+  {
+   "id": "5.2.5.4",
+   "d": "IMP-04",
+   "note": "Explicit --model makes the tier a recorded run choice instead of an external session default."
+  },
+  {
+   "id": "5.2.5.4.1",
+   "d": "IMP-04",
+   "note": "Users running top-tier sessions can pick a cheaper subagent tier via --model."
+  },
+  {
+   "id": "5.2.5.4.2",
+   "d": "IMP-04",
+   "note": "The plugin takes responsibility by exposing the choice and documenting its trade-off."
+  },
+  {
+   "id": "5.2.5.4.3",
+   "d": "IMP-04",
+   "note": "Docs explain that inherit means subagents use the session model, and how to override."
+  },
+  {
+   "id": "5.2.5.4.4",
+   "d": "IMP-14",
+   "note": "README documents measured cost with the model used, grounding cost claims despite varying sessions."
+  },
+  {
+   "id": "5.2.5.4.5",
+   "d": "IMP-04",
+   "note": "Inherit stays the default; aliases are only chosen by the user at init."
+  },
+  {
+   "id": "5.2.5.5",
+   "d": "IMP-14",
+   "note": "README documents measured cost, time and known limitations from the real run."
+  },
+  {
+   "id": "5.2.5.5.1",
+   "d": "IMP-18",
+   "note": "Eval suite run per tier provides data before recommending any model."
+  },
+  {
+   "id": "5.2.5.5.2",
+   "d": "IMP-14",
+   "note": "Honest documentation replaces minimal v0.1.0 docs with cost, limits and design decisions."
+  },
+  {
+   "id": "5.2.5.5.3",
+   "d": "IMP-14",
+   "note": "README documents the measured run's cost and time as the trade-off benchmark."
+  },
+  {
+   "id": "5.2.5.5.4",
+   "d": "IMP-12",
+   "note": "Check still enforces the JSON contract; failure semantics report tiers that cannot pass."
+  },
+  {
+   "id": "5.2.5.5.5",
+   "d": "IMP-18",
+   "note": "One prompt set is kept; the eval case run per tier catches incompatibilities."
+  }
+ ]
+}

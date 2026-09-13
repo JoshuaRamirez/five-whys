@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "2.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene report adds near-duplicate detection by token overlap, catching paraphrases that exact string or hash comparison misses."
+  },
+  {
+   "id": "2.4.1.1",
+   "d": "IMP-07",
+   "note": "Branch prompts will list sibling level-1/2 reasons as covered elsewhere, so agents see shared wording and avoid rephrasing it."
+  },
+  {
+   "id": "2.4.1.1.1",
+   "d": "IMP-07",
+   "note": "True today: prompts carry only the ancestor chain; IMP-07 adds the other level-1/2 reasons to each branch prompt."
+  },
+  {
+   "id": "2.4.1.1.2",
+   "d": "R-07",
+   "note": "Waiting for other branches' deeper output would serialize the run; declined, with IMP-07 sharing the pre-existing level-1/2 digest instead."
+  },
+  {
+   "id": "2.4.1.1.3",
+   "d": "IMP-07",
+   "note": "Confirms why full sharing is avoided; IMP-07 shares only the compact level-1/2 reasons, which fit easily in every prompt."
+  },
+  {
+   "id": "2.4.1.1.4",
+   "d": "X-HIST",
+   "note": "Describes v0.1.0 design priority; the coordination gap it left is addressed by IMP-07."
+  },
+  {
+   "id": "2.4.1.1.5",
+   "d": "IMP-07",
+   "note": "The sibling level-1/2 digest in branch prompts serves as the shared list of already-named causes a glossary would provide."
+  },
+  {
+   "id": "2.4.1.2",
+   "d": "IMP-06",
+   "note": "Lexical variation defeats exact matching; hygiene near-duplicate flags use token overlap to catch reworded repeats."
+  },
+  {
+   "id": "2.4.1.2.1",
+   "d": "X-ENV",
+   "note": "Sampling temperature is a model and Claude Code behavior the plugin does not control."
+  },
+  {
+   "id": "2.4.1.2.2",
+   "d": "X-ENV",
+   "note": "Model training against verbatim repetition is a model property outside the plugin's control."
+  },
+  {
+   "id": "2.4.1.2.3",
+   "d": "IMP-06",
+   "note": "The short-reason limit stays for whole-context reading; near-duplicate token-overlap flags catch the resulting reworded repeats."
+  },
+  {
+   "id": "2.4.1.2.4",
+   "d": "IMP-06",
+   "note": "Hygiene near-duplicate scoring discounts ancestor words, reducing context-primed vocabulary differences and false matches."
+  },
+  {
+   "id": "2.4.1.2.5",
+   "d": "X-ENV",
+   "note": "Claude Code's Agent tool exposes no temperature or seed parameter to plugins."
+  },
+  {
+   "id": "2.4.1.3",
+   "d": "IMP-06",
+   "note": "Token-overlap flags are advisory annotations only; the user judges causal direction and negation, so lexical blind spots cost little."
+  },
+  {
+   "id": "2.4.1.3.1",
+   "d": "IMP-06",
+   "note": "Reversed-direction pairs may be flagged, but hygiene flags only annotate; the user decides whether they truly duplicate."
+  },
+  {
+   "id": "2.4.1.3.2",
+   "d": "IMP-06",
+   "note": "Negation-differing pairs may get flagged near-duplicates; non-blocking hygiene leaves the judgment to the user reading the report."
+  },
+  {
+   "id": "2.4.1.3.3",
+   "d": "IMP-06",
+   "note": "Short texts make overlap scores coarse; acceptable because hygiene flags are non-blocking and delete nothing."
+  },
+  {
+   "id": "2.4.1.3.4",
+   "d": "R-02",
+   "note": "Synonym awareness implies embeddings or thesaurus packages, declined for zero-dependency offline install; stdlib overlap heuristics instead."
+  },
+  {
+   "id": "2.4.1.3.5",
+   "d": "IMP-06",
+   "note": "Implementation detail for the hygiene token-overlap heuristic: avoid stripping negation and direction words when normalizing."
+  },
+  {
+   "id": "2.4.1.4",
+   "d": "IMP-06",
+   "note": "Hygiene goes beyond the exact-hash baseline, adding near-duplicate and child-restates-ancestor flags using stdlib token overlap."
+  },
+  {
+   "id": "2.4.1.4.1",
+   "d": "IMP-06",
+   "note": "True that exact dedupe is trivial; not even that exists in v0.1.0, and hygiene.json will report exact duplicates."
+  },
+  {
+   "id": "2.4.1.4.2",
+   "d": "IMP-06",
+   "note": "Hygiene uses token-set overlap rather than character-based difflib, avoiding its cost and substring bias."
+  },
+  {
+   "id": "2.4.1.4.3",
+   "d": "IMP-06",
+   "note": "Normalization alone catches cosmetic variants; hygiene adds token-overlap near-duplicate detection for rewordings."
+  },
+  {
+   "id": "2.4.1.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene needs no custom stemmer or synonym map; simple stdlib token overlap with ancestor-word discounting suffices for advisory flags."
+  },
+  {
+   "id": "2.4.1.4.5",
+   "d": "IMP-06",
+   "note": "True: v0.1.0 validates structure only, with no dedupe; hygiene.json adds exact and near-duplicate reporting at assemble."
+  },
+  {
+   "id": "2.4.1.5",
+   "d": "IMP-06",
+   "note": "Hygiene compares reasons across the whole tree and flags children restating ancestors, catching cross-level conceptual repeats lexically."
+  },
+  {
+   "id": "2.4.1.5.1",
+   "d": "IMP-06",
+   "note": "Near-duplicate flags compare all reasons regardless of level or branch, surfacing deep-versus-shallow reappearances."
+  },
+  {
+   "id": "2.4.1.5.2",
+   "d": "R-01",
+   "note": "Recurring systemic causes may be signal; deciding to merge or prune them is analysis the user owns, not the plugin."
+  },
+  {
+   "id": "2.4.1.5.3",
+   "d": "IMP-08",
+   "note": "Agent instructions will ground reasons in problem specifics with a specific-vs-generic example, discouraging generic deep-level causes."
+  },
+  {
+   "id": "2.4.1.5.4",
+   "d": "R-01",
+   "note": "Judging legitimate recurrence versus redundancy is interpretation left to the user; plugin only flags mechanically."
+  },
+  {
+   "id": "2.4.1.5.5",
+   "d": "IMP-07",
+   "note": "Sibling-aware prompts tell branches which causes are already covered, reducing convergence onto the same few named factors."
+  },
+  {
+   "id": "2.4.2",
+   "d": "R-02",
+   "note": "Embedding models and fuzzy-matching packages stay declined to preserve zero-dependency offline install; stdlib heuristics in IMP-06 instead."
+  },
+  {
+   "id": "2.4.2.1",
+   "d": "X-ENV",
+   "note": "Claude Code plugins lacking a dependency install step is a platform fact the plugin cannot change."
+  },
+  {
+   "id": "2.4.2.1.1",
+   "d": "X-ENV",
+   "note": "The plugin manifest schema is defined by Claude Code, not by this plugin."
+  },
+  {
+   "id": "2.4.2.1.2",
+   "d": "X-ENV",
+   "note": "Plugin caching without setup steps is Claude Code distribution behavior."
+  },
+  {
+   "id": "2.4.2.1.3",
+   "d": "X-ENV",
+   "note": "Variation in users' Python installations is an environment fact outside the plugin's control."
+  },
+  {
+   "id": "2.4.2.1.4",
+   "d": "X-ENV",
+   "note": "PEP 668 externally managed Python on macOS is an ecosystem constraint."
+  },
+  {
+   "id": "2.4.2.1.5",
+   "d": "X-ENV",
+   "note": "Marketplace zero-configuration expectations are ecosystem norms the plugin must accept."
+  },
+  {
+   "id": "2.4.2.2",
+   "d": "R-02",
+   "note": "Vendoring embedding models is declined; zero-dependency stdlib hygiene heuristics replace them."
+  },
+  {
+   "id": "2.4.2.2.1",
+   "d": "X-ENV",
+   "note": "Sentence-transformer weight sizes are an ecosystem fact outside the plugin's control."
+  },
+  {
+   "id": "2.4.2.2.2",
+   "d": "X-ENV",
+   "note": "Git's poor handling of large binaries without LFS is a platform fact."
+  },
+  {
+   "id": "2.4.2.2.3",
+   "d": "R-02",
+   "note": "Adding torch or onnxruntime runtimes is exactly the third-party dependency the catalog declines."
+  },
+  {
+   "id": "2.4.2.2.4",
+   "d": "R-02",
+   "note": "First-run weight downloads need network access and caches, declined to keep the script offline and dependency-free."
+  },
+  {
+   "id": "2.4.2.2.5",
+   "d": "X-ENV",
+   "note": "Platform-specific wheel differences are a Python packaging ecosystem fact."
+  },
+  {
+   "id": "2.4.2.3",
+   "d": "IMP-14",
+   "note": "README will record the stdlib-only, single-script design decision and its portability and auditability rationale."
+  },
+  {
+   "id": "2.4.2.3.1",
+   "d": "R-02",
+   "note": "Single inspectable stdlib file is kept deliberately; adding dependencies that would undermine auditability is declined."
+  },
+  {
+   "id": "2.4.2.3.2",
+   "d": "R-02",
+   "note": "Supply-chain risk is a reason the catalog declines third-party packages in the script."
+  },
+  {
+   "id": "2.4.2.3.3",
+   "d": "X-HIST",
+   "note": "Author's minimal-moving-parts preference explains the design; its actionable consequence is covered by R-02 and IMP-14."
+  },
+  {
+   "id": "2.4.2.3.4",
+   "d": "R-02",
+   "note": "Easy stdlib debugging is preserved by declining dependencies; nothing further to change."
+  },
+  {
+   "id": "2.4.2.3.5",
+   "d": "X-HIST",
+   "note": "Explains v0.1.0 end-to-end-first sequencing; the deferred quality tooling is now IMP-06 and IMP-11."
+  },
+  {
+   "id": "2.4.2.4",
+   "d": "IMP-06",
+   "note": "Hygiene uses a stdlib token-overlap heuristic instead of difflib, making a cheap near-duplicate flag worth adding."
+  },
+  {
+   "id": "2.4.2.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene compares token sets, not SequenceMatcher substrings, so shared concepts expressed in shared words drive scores."
+  },
+  {
+   "id": "2.4.2.4.2",
+   "d": "IMP-06",
+   "note": "Hygiene discounts ancestor words when scoring overlap, reducing inflated scores from shared boilerplate phrasing."
+  },
+  {
+   "id": "2.4.2.4.3",
+   "d": "IMP-11",
+   "note": "Unit tests will pin hygiene behavior on hand-chosen duplicate and distinct pairs, giving the threshold concrete calibration examples."
+  },
+  {
+   "id": "2.4.2.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene avoids per-pair difflib; token-set overlap over 3,905 reasons is tractable once at assemble time."
+  },
+  {
+   "id": "2.4.2.4.5",
+   "d": "IMP-14",
+   "note": "README will state what validation and hygiene flags do and do not cover, preventing false confidence in a heuristic detector."
+  },
+  {
+   "id": "2.4.2.5",
+   "d": "R-02",
+   "note": "Optional-dependency tiers enabling embeddings when present are declined; one stdlib hygiene path keeps behavior consistent everywhere."
+  },
+  {
+   "id": "2.4.2.5.1",
+   "d": "IMP-06",
+   "note": "No check tiers needed: content hygiene runs at assemble as a separate non-blocking report, leaving check purely structural."
+  },
+  {
+   "id": "2.4.2.5.2",
+   "d": "R-02",
+   "note": "Optional dependency fallbacks are declined, avoiding the doubled test surface; IMP-11 covers the single stdlib path."
+  },
+  {
+   "id": "2.4.2.5.3",
+   "d": "X-HIST",
+   "note": "Accurate v0.1.0 scoping history; the deferred quality tooling is now planned as IMP-06."
+  },
+  {
+   "id": "2.4.2.5.4",
+   "d": "X-HIST",
+   "note": "Absence of user demand explains past omission; this self-improvement run now motivates IMP-06."
+  },
+  {
+   "id": "2.4.2.5.5",
+   "d": "IMP-06",
+   "note": "Cross-fragment analysis moves to assemble, which writes hygiene.json across the whole tree rather than per fragment."
+  },
+  {
+   "id": "2.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene runs once at assemble; stdlib token-set comparison over 3,905 short reasons is feasible without naive fuzzy matching."
+  },
+  {
+   "id": "2.4.3.1",
+   "d": "IMP-06",
+   "note": "Hygiene at assemble is exactly where cross-branch duplicates become visible, so that is where they get flagged."
+  },
+  {
+   "id": "2.4.3.1.1",
+   "d": "IMP-07",
+   "note": "Per-fragment checks cannot see other branches; sibling-aware prompts prevent cross-branch repeats before checking."
+  },
+  {
+   "id": "2.4.3.1.2",
+   "d": "IMP-06",
+   "note": "Assemble gains a content pass writing hygiene.json alongside its merge and shape validation."
+  },
+  {
+   "id": "2.4.3.1.3",
+   "d": "IMP-06",
+   "note": "Hygiene never rejects or re-dispatches; flags annotate the assembled tree only, so no re-dispatch workflow is needed."
+  },
+  {
+   "id": "2.4.3.1.4",
+   "d": "IMP-06",
+   "note": "Assembled output carries hierarchical ids, so hygiene can link flagged pairs across branches without fragment metadata."
+  },
+  {
+   "id": "2.4.3.1.5",
+   "d": "R-07",
+   "note": "Making agents wait on a global duplicate index would serialize dispatch; declined in favor of IMP-07 digest sharing."
+  },
+  {
+   "id": "2.4.3.2",
+   "d": "IMP-06",
+   "note": "The hygiene report is the planned engineering for scalable stdlib similarity flagging at assemble."
+  },
+  {
+   "id": "2.4.3.2.1",
+   "d": "IMP-06",
+   "note": "Hygiene uses plain token overlap over a few thousand reasons, needing no locality-sensitive hashing parameters."
+  },
+  {
+   "id": "2.4.3.2.2",
+   "d": "R-02",
+   "note": "FAISS and similar libraries are third-party dependencies the catalog declines."
+  },
+  {
+   "id": "2.4.3.2.3",
+   "d": "IMP-06",
+   "note": "A pure-Python token index for near-duplicate flagging is the feasible code IMP-06 plans to write."
+  },
+  {
+   "id": "2.4.3.2.4",
+   "d": "IMP-06",
+   "note": "IMP-06 fixes the scopes: exact and near duplicates tree-wide, plus children restating a parent or ancestor."
+  },
+  {
+   "id": "2.4.3.2.5",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13 with 3,905 reasons, providing a benchmark corpus."
+  },
+  {
+   "id": "2.4.3.3",
+   "d": "IMP-06",
+   "note": "Hygiene runs once at assemble, not in agents' check loop, so a pure-Python pass of seconds is acceptable."
+  },
+  {
+   "id": "2.4.3.3.1",
+   "d": "X-ENV",
+   "note": "CPython interpreter overhead is a platform fact; the plugin works within it."
+  },
+  {
+   "id": "2.4.3.3.2",
+   "d": "R-02",
+   "note": "NumPy is a third-party package, declined to keep the script stdlib-only."
+  },
+  {
+   "id": "2.4.3.3.3",
+   "d": "IMP-06",
+   "note": "A single-process assemble-time hygiene pass suffices at this scale; no multiprocessing is planned."
+  },
+  {
+   "id": "2.4.3.3.4",
+   "d": "IMP-06",
+   "note": "Hygiene runs at assemble rather than in check, keeping agents' check commands fast."
+  },
+  {
+   "id": "2.4.3.3.5",
+   "d": "X-ENV",
+   "note": "Bash tool timeouts are Claude Code behavior; assemble-time hygiene at this scale stays well within them."
+  },
+  {
+   "id": "2.4.3.4",
+   "d": "IMP-06",
+   "note": "IMP-06 defines duplication scope concretely: exact, near-duplicate, and child restating parent or ancestor."
+  },
+  {
+   "id": "2.4.3.4.1",
+   "d": "R-01",
+   "note": "Assigning severities to repeat kinds is ranking, declined; hygiene only labels flag kinds and leaves weighing to the user."
+  },
+  {
+   "id": "2.4.3.4.2",
+   "d": "IMP-15",
+   "note": "Skill, agent and README will state mechanical hygiene flags are allowed aids while judging redundancy stays with the user."
+  },
+  {
+   "id": "2.4.3.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene flags annotate only and delete nothing, so recurring root causes remain intact as potential signal."
+  },
+  {
+   "id": "2.4.3.4.4",
+   "d": "IMP-14",
+   "note": "README will document what validation and hygiene cover and what they do not, stating quality criteria explicitly."
+  },
+  {
+   "id": "2.4.3.4.5",
+   "d": "IMP-06",
+   "note": "IMP-06 supplies the definition, making its narrower comparison scopes principled rather than arbitrary."
+  },
+  {
+   "id": "2.4.3.5",
+   "d": "IMP-06",
+   "note": "Hygiene adds a planned content pass at assemble alongside the linear structural walk."
+  },
+  {
+   "id": "2.4.3.5.1",
+   "d": "X-HIST",
+   "note": "Shape was fixed before quality checks; history only, with shape configurability in IMP-01 and checks in IMP-06."
+  },
+  {
+   "id": "2.4.3.5.2",
+   "d": "IMP-06",
+   "note": "The cheap structural pass remains; hygiene adds a separate assemble-time content pass rather than burdening validation."
+  },
+  {
+   "id": "2.4.3.5.3",
+   "d": "IMP-01",
+   "note": "Parameterized breadth and depth stored in run.json force explicit reasoning about scale across plan, check and assemble."
+  },
+  {
+   "id": "2.4.3.5.4",
+   "d": "IMP-10",
+   "note": "Assembled header and run.json will record measured counts, bytes, tokens and duration, broadening measurement beyond token cost."
+  },
+  {
+   "id": "2.4.3.5.5",
+   "d": "X-DONE",
+   "note": "The 2026-09-13 full run measured output at 511 KB and about 128k tokens."
+  },
+  {
+   "id": "2.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene flags are non-blocking annotations, so threshold misjudgments on short sentences never reject content."
+  },
+  {
+   "id": "2.4.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene overlap scoring discounts ancestor words, removing parent-topic vocabulary that inflates sibling similarity."
+  },
+  {
+   "id": "2.4.4.1.1",
+   "d": "IMP-06",
+   "note": "Parent nouns reused by siblings are discounted as ancestor words in the hygiene near-duplicate score."
+  },
+  {
+   "id": "2.4.4.1.2",
+   "d": "IMP-06",
+   "note": "Shared plugin terms mostly appear in ancestors, so ancestor-word discounting in hygiene reduces their inflating effect."
+  },
+  {
+   "id": "2.4.4.1.3",
+   "d": "IMP-06",
+   "note": "Short reasons stay by design; hygiene flags are advisory so resulting coarse similarity scores do no harm."
+  },
+  {
+   "id": "2.4.4.1.4",
+   "d": "R-02",
+   "note": "Embedding topic clustering is moot: embeddings are declined in favor of stdlib token heuristics."
+  },
+  {
+   "id": "2.4.4.1.5",
+   "d": "IMP-06",
+   "note": "Parent-aware normalization is exactly IMP-06's token overlap discounting ancestor words."
+  },
+  {
+   "id": "2.4.4.2",
+   "d": "IMP-11",
+   "note": "Unit tests with hand-picked duplicate and distinct reason pairs provide a small labeled set fixing hygiene threshold behavior."
+  },
+  {
+   "id": "2.4.4.2.1",
+   "d": "X-DONE",
+   "note": "A full real run completed on 2026-09-13, producing this 3,905-reason tree as an annotatable corpus."
+  },
+  {
+   "id": "2.4.4.2.2",
+   "d": "R-06",
+   "note": "Writing annotation guidelines and labeling duplicate pairs is research work, not a plugin change; flags stay advisory."
+  },
+  {
+   "id": "2.4.4.2.3",
+   "d": "X-HIST",
+   "note": "Explains postponed labeling; advisory hygiene flags need no large annotated corpus to be useful."
+  },
+  {
+   "id": "2.4.4.2.4",
+   "d": "X-ENV",
+   "note": "Mismatch of public paraphrase datasets to terse causal reasons is an ecosystem fact."
+  },
+  {
+   "id": "2.4.4.2.5",
+   "d": "IMP-18",
+   "note": "An evals/ suite for claude plugin eval gives a place to store and rerun graded checks."
+  },
+  {
+   "id": "2.4.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene never blocks fragments; flags go to hygiene.json at assemble, so false positives cause no rewrites."
+  },
+  {
+   "id": "2.4.4.3.1",
+   "d": "IMP-12",
+   "note": "Similarity never enters check; agents also cap their fix loop and reply FAILED with the first error."
+  },
+  {
+   "id": "2.4.4.3.2",
+   "d": "IMP-06",
+   "note": "Agents never see hygiene flags, which are computed after assembly, so there is no incentive to evade a detector."
+  },
+  {
+   "id": "2.4.4.3.3",
+   "d": "R-03",
+   "note": "Content judgments inside the blocking fix loop are declined precisely because retries multiply cost across agents."
+  },
+  {
+   "id": "2.4.4.3.4",
+   "d": "IMP-06",
+   "note": "Hygiene is non-blocking, so duplicate detection can never fail a run."
+  },
+  {
+   "id": "2.4.4.3.5",
+   "d": "IMP-06",
+   "note": "Soft warnings go to hygiene.json at assemble rather than through agent replies, which stay OK or FAILED."
+  },
+  {
+   "id": "2.4.4.4",
+   "d": "IMP-06",
+   "note": "Continuous scores feed a separate non-blocking report, leaving check's binary structural contract unchanged."
+  },
+  {
+   "id": "2.4.4.4.1",
+   "d": "X-HIST",
+   "note": "Accurate design history; check stays structural while IMP-06 handles content quality separately."
+  },
+  {
+   "id": "2.4.4.4.2",
+   "d": "IMP-07",
+   "note": "Rather than explaining similarity after the fact, sibling-aware prompts show agents covered causes up front."
+  },
+  {
+   "id": "2.4.4.4.3",
+   "d": "R-02",
+   "note": "Similarity models are declined; stdlib token overlap is deterministic and reproducible across versions."
+  },
+  {
+   "id": "2.4.4.4.4",
+   "d": "IMP-06",
+   "note": "Flagged pairs live in a separate hygiene.json, so the fragment format needs no confidence field."
+  },
+  {
+   "id": "2.4.4.4.5",
+   "d": "IMP-06",
+   "note": "hygiene.json is exactly that separate output mode for listing similar pairs, distinct from check errors."
+  },
+  {
+   "id": "2.4.4.5",
+   "d": "IMP-06",
+   "note": "Noisy short-text scores are tolerable because hygiene flags only annotate and never block or delete."
+  },
+  {
+   "id": "2.4.4.5.1",
+   "d": "X-ENV",
+   "note": "Embedding model training on longer passages is a model property outside the plugin's control."
+  },
+  {
+   "id": "2.4.4.5.2",
+   "d": "IMP-06",
+   "note": "Hygiene uses token-set overlap rather than character ratios, damping single-word swings."
+  },
+  {
+   "id": "2.4.4.5.3",
+   "d": "IMP-08",
+   "note": "Specificity instructions replacing generic cause kinds reduce generic phrasing like lack of time that matches everywhere."
+  },
+  {
+   "id": "2.4.4.5.4",
+   "d": "R-02",
+   "note": "Sentence-vector behavior is moot since embeddings are declined in favor of stdlib heuristics."
+  },
+  {
+   "id": "2.4.4.5.5",
+   "d": "X-ENV",
+   "note": "Vector pooling blurring clauses is a property of embedding models, not the plugin."
+  },
+  {
+   "id": "2.4.5",
+   "d": "R-02",
+   "note": "Embedding API calls from the script are declined: no network, keys or third-party services."
+  },
+  {
+   "id": "2.4.5.1",
+   "d": "X-ENV",
+   "note": "Claude Code offering no embeddings endpoint to plugin scripts is a platform fact."
+  },
+  {
+   "id": "2.4.5.1.1",
+   "d": "X-ENV",
+   "note": "Anthropic's API model lineup is outside the plugin's control."
+  },
+  {
+   "id": "2.4.5.1.2",
+   "d": "X-ENV",
+   "note": "Plugin script subprocesses lacking session model credentials is Claude Code design."
+  },
+  {
+   "id": "2.4.5.1.3",
+   "d": "R-02",
+   "note": "Third-party embedding providers with separate accounts and keys are declined."
+  },
+  {
+   "id": "2.4.5.1.4",
+   "d": "R-03",
+   "note": "Using a model sub-agent to judge similarity is the costly LLM-judge approach the catalog declines."
+  },
+  {
+   "id": "2.4.5.1.5",
+   "d": "X-ENV",
+   "note": "Script and hook interfaces limited to text and exit codes is Claude Code platform design."
+  },
+  {
+   "id": "2.4.5.2",
+   "d": "R-02",
+   "note": "Network calls in the script are declined, so sandboxed or offline runs keep working."
+  },
+  {
+   "id": "2.4.5.2.1",
+   "d": "X-ENV",
+   "note": "Sandbox network restrictions are Claude Code behavior outside plugin control."
+  },
+  {
+   "id": "2.4.5.2.2",
+   "d": "X-ENV",
+   "note": "Corporate proxy policies are environment facts outside plugin control."
+  },
+  {
+   "id": "2.4.5.2.3",
+   "d": "R-02",
+   "note": "Avoided by declining network calls in the script entirely."
+  },
+  {
+   "id": "2.4.5.2.4",
+   "d": "R-02",
+   "note": "No network calls means no retry or timeout handling is needed; declined."
+  },
+  {
+   "id": "2.4.5.2.5",
+   "d": "IMP-14",
+   "note": "README will make the implicit offline, stdlib-only goal an explicit documented design decision."
+  },
+  {
+   "id": "2.4.5.3",
+   "d": "R-02",
+   "note": "Declining third-party network calls keeps reasons about the user's problem local."
+  },
+  {
+   "id": "2.4.5.3.1",
+   "d": "R-02",
+   "note": "Confidential problem statements stay on the machine because external embedding services are declined."
+  },
+  {
+   "id": "2.4.5.3.2",
+   "d": "R-02",
+   "note": "No unrelated vendor receives data since the script makes no network calls."
+  },
+  {
+   "id": "2.4.5.3.3",
+   "d": "R-02",
+   "note": "No new data flows exist to disclose, as external API calls are declined."
+  },
+  {
+   "id": "2.4.5.3.4",
+   "d": "X-ENV",
+   "note": "Enterprise vendor-approval processes are organizational facts outside plugin control."
+  },
+  {
+   "id": "2.4.5.3.5",
+   "d": "X-HIST",
+   "note": "Author's standing privacy rule explains the design; its consequence is captured by R-02."
+  },
+  {
+   "id": "2.4.5.4",
+   "d": "R-02",
+   "note": "Hosted similarity models are declined; stdlib heuristics give reproducible hygiene results."
+  },
+  {
+   "id": "2.4.5.4.1",
+   "d": "X-ENV",
+   "note": "Provider model deprecation policies are outside the plugin's control."
+  },
+  {
+   "id": "2.4.5.4.2",
+   "d": "X-ENV",
+   "note": "Hardware floating-point variation is a platform fact."
+  },
+  {
+   "id": "2.4.5.4.3",
+   "d": "R-03",
+   "note": "Nondeterministic content verdicts in the blocking fix loop are declined to prevent flip-flop loops."
+  },
+  {
+   "id": "2.4.5.4.4",
+   "d": "IMP-11",
+   "note": "Stdlib unittest suite covers hygiene deterministically, needing no remote mocks since no remote calls exist."
+  },
+  {
+   "id": "2.4.5.4.5",
+   "d": "IMP-11",
+   "note": "True for v0.1.0; a stdlib unittest suite covering shapes, check, assemble and hygiene is planned."
+  },
+  {
+   "id": "2.4.5.5",
+   "d": "R-02",
+   "note": "Paid embedding services are declined, adding no second per-run charge."
+  },
+  {
+   "id": "2.4.5.5.1",
+   "d": "X-FALSE",
+   "note": "The measured full run used about 1.2M subagent tokens, far more than the 150k stated."
+  },
+  {
+   "id": "2.4.5.5.2",
+   "d": "X-ENV",
+   "note": "User budgeting habits for paid services are outside plugin control."
+  },
+  {
+   "id": "2.4.5.5.3",
+   "d": "IMP-05",
+   "note": "init and plan will report agent count and measured token estimates, confirming before full-size dispatch."
+  },
+  {
+   "id": "2.4.5.5.4",
+   "d": "R-02",
+   "note": "No embedding API means no batching or rate-limit code; declined."
+  },
+  {
+   "id": "2.4.5.5.5",
+   "d": "X-HIST",
+   "note": "Zero-config priority explains past choices; its ongoing form is R-02."
+  }
+ ]
+}

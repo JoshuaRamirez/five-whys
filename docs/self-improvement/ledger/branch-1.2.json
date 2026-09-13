@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "1.2.1",
+   "d": "IMP-02",
+   "note": "Perceived cost of a full run is answered by a cheap 3x3 smoke preset for rehearsal."
+  },
+  {
+   "id": "1.2.1.1",
+   "d": "IMP-04",
+   "note": "Per-agent model cost multiplied across the fan-out is addressed by selectable model per run."
+  },
+  {
+   "id": "1.2.1.1.1",
+   "d": "IMP-04",
+   "note": "model: inherit is true today; init --model lets runs pass a cheaper model override."
+  },
+  {
+   "id": "1.2.1.1.2",
+   "d": "IMP-04",
+   "note": "Model selection plus documented trade-offs lets users choose and compare cheaper models."
+  },
+  {
+   "id": "1.2.1.1.3",
+   "d": "X-ENV",
+   "note": "Frontmatter conventions making inherit the easy default are a Claude Code platform fact."
+  },
+  {
+   "id": "1.2.1.1.4",
+   "d": "X-HIST",
+   "note": "Past fear about quality; the actionable model choice is covered by IMP-04."
+  },
+  {
+   "id": "1.2.1.1.5",
+   "d": "IMP-05",
+   "note": "Missing spend estimate is addressed by cost and size preview with confirmation before dispatch."
+  },
+  {
+   "id": "1.2.1.2",
+   "d": "IMP-09",
+   "note": "Large output is made manageable by show, index.md and branch-by-branch loading guidance."
+  },
+  {
+   "id": "1.2.1.2.1",
+   "d": "IMP-01",
+   "note": "Fixed exponential shape becomes configurable via init --breadth/--depth while trees stay complete."
+  },
+  {
+   "id": "1.2.1.2.2",
+   "d": "R-01",
+   "note": "Replacing sentences with compact codes or summaries is plugin-side synthesis, declined; analysis stays with user."
+  },
+  {
+   "id": "1.2.1.2.3",
+   "d": "IMP-09",
+   "note": "Single whole-context file is a user requirement; navigation and partial reading ease its use."
+  },
+  {
+   "id": "1.2.1.2.4",
+   "d": "R-01",
+   "note": "Pruning to shrink the tree is declined; duplicates are only flagged via IMP-06."
+  },
+  {
+   "id": "1.2.1.2.5",
+   "d": "R-04",
+   "note": "Exhaustive completeness is the user's requirement; dropping completeness to shrink output is declined."
+  },
+  {
+   "id": "1.2.1.3",
+   "d": "IMP-03",
+   "note": "Burst risk is handled by dispatching in waves no larger than the concurrency cap."
+  },
+  {
+   "id": "1.2.1.3.1",
+   "d": "IMP-03",
+   "note": "Waves capped at 20 spread the burst instead of launching all branch agents at once."
+  },
+  {
+   "id": "1.2.1.3.2",
+   "d": "X-ENV",
+   "note": "Subscription usage caps are set by Anthropic plans, outside the plugin's control."
+  },
+  {
+   "id": "1.2.1.3.3",
+   "d": "X-DONE",
+   "note": "Skill now dispatches at most 20 agents per round (committed fix); IMP-03 formalizes waves."
+  },
+  {
+   "id": "1.2.1.3.4",
+   "d": "X-DONE",
+   "note": "Full real run on 2026-09-13 showed the 20-subagent cap; skill was fixed accordingly."
+  },
+  {
+   "id": "1.2.1.3.5",
+   "d": "X-ENV",
+   "note": "Sparse Claude Code documentation on concurrency limits is a platform documentation fact."
+  },
+  {
+   "id": "1.2.1.4",
+   "d": "IMP-02",
+   "note": "Missing dry-run mode is exactly the smoke preset (3 wide x 3 deep)."
+  },
+  {
+   "id": "1.2.1.4.1",
+   "d": "IMP-01",
+   "note": "BRANCHING/DEPTH are module constants today; parameterized shape stored in run.json fixes this."
+  },
+  {
+   "id": "1.2.1.4.2",
+   "d": "X-HIST",
+   "note": "Deferral decision for v0.1.0 is past process; configurability itself is IMP-01."
+  },
+  {
+   "id": "1.2.1.4.3",
+   "d": "IMP-11",
+   "note": "Testability as a requirement is addressed by the stdlib unittest suite."
+  },
+  {
+   "id": "1.2.1.4.4",
+   "d": "IMP-01",
+   "note": "Prompts compute counts from fixed constants, not literals; IMP-01 makes them read run shape."
+  },
+  {
+   "id": "1.2.1.4.5",
+   "d": "IMP-01",
+   "note": "Coordinated change is IMP-01: skill, prompts, plan, check and assemble all read stored shape."
+  },
+  {
+   "id": "1.2.1.5",
+   "d": "IMP-19",
+   "note": "Resume already works via plan; partial assembly adds usable output from interrupted runs."
+  },
+  {
+   "id": "1.2.1.5.1",
+   "d": "X-FALSE",
+   "note": "plan already skips fragments that exist and validate, so re-running plan resumes."
+  },
+  {
+   "id": "1.2.1.5.2",
+   "d": "IMP-12",
+   "note": "Undesigned failure handling is addressed by recorded attempts, stuck reporting and FAILED replies."
+  },
+  {
+   "id": "1.2.1.5.3",
+   "d": "IMP-12",
+   "note": "Retry state moves into the script: attempts recorded per task, stuck tasks reported after 3."
+  },
+  {
+   "id": "1.2.1.5.4",
+   "d": "X-HIST",
+   "note": "Past assumption of first-try success; failure semantics are covered by IMP-12."
+  },
+  {
+   "id": "1.2.1.5.5",
+   "d": "X-FALSE",
+   "note": "run.json exists, storing problem and creation time; fragment files carry run state."
+  },
+  {
+   "id": "1.2.2",
+   "d": "X-HIST",
+   "note": "Preference for visible design progress is past motivation; a real run has since been completed."
+  },
+  {
+   "id": "1.2.2.1",
+   "d": "IMP-09",
+   "note": "index.md of levels 1-2 and show make a run's result legible without reading everything."
+  },
+  {
+   "id": "1.2.2.1.1",
+   "d": "IMP-09",
+   "note": "Skimming is enabled by show subtree output and an index of the top levels."
+  },
+  {
+   "id": "1.2.2.1.2",
+   "d": "IMP-06",
+   "note": "A non-blocking hygiene report gives quick mechanical quality signal without summarizing content."
+  },
+  {
+   "id": "1.2.2.1.3",
+   "d": "X-HIST",
+   "note": "Compactness of code versus output is a true observation with nothing further actionable."
+  },
+  {
+   "id": "1.2.2.1.4",
+   "d": "R-01",
+   "note": "Leaving analysis to the user is a deliberate requirement; plugin-side conclusions are declined."
+  },
+  {
+   "id": "1.2.2.1.5",
+   "d": "IMP-18",
+   "note": "Eval suite grades shape validity and hygiene report presence, giving a pass/fail signal."
+  },
+  {
+   "id": "1.2.2.2",
+   "d": "R-06",
+   "note": "Adding reviewers to a solo project is an organizational remedy, not a plugin change."
+  },
+  {
+   "id": "1.2.2.2.1",
+   "d": "R-06",
+   "note": "Team or stakeholder review process is social/organizational, outside plugin changes."
+  },
+  {
+   "id": "1.2.2.2.2",
+   "d": "IMP-18",
+   "note": "A smoke-preset end-to-end eval provides the demonstration run a release checklist would require."
+  },
+  {
+   "id": "1.2.2.2.3",
+   "d": "X-ENV",
+   "note": "AI assistant behavior about insisting on testing is a model trait outside the plugin."
+  },
+  {
+   "id": "1.2.2.2.4",
+   "d": "X-HIST",
+   "note": "Author's fragmented time is personal circumstance with no plugin artifact change."
+  },
+  {
+   "id": "1.2.2.2.5",
+   "d": "X-ENV",
+   "note": "Marketplace publishing requirements are set by the ecosystem, not the plugin."
+  },
+  {
+   "id": "1.2.2.3",
+   "d": "X-HIST",
+   "note": "Preference for controllable design over empirical runs is past psychology; real run now done."
+  },
+  {
+   "id": "1.2.2.3.1",
+   "d": "X-ENV",
+   "note": "Run-to-run LLM output variance is a model property outside plugin control."
+  },
+  {
+   "id": "1.2.2.3.2",
+   "d": "IMP-12",
+   "note": "Agents replying FAILED with first error and recorded attempts reduce transcript digging."
+  },
+  {
+   "id": "1.2.2.3.3",
+   "d": "X-HIST",
+   "note": "Abstract design versus empirical observation is past process; no further artifact change."
+  },
+  {
+   "id": "1.2.2.3.4",
+   "d": "X-HIST",
+   "note": "Author's experience profile is background with nothing further actionable in the plugin."
+  },
+  {
+   "id": "1.2.2.3.5",
+   "d": "X-DONE",
+   "note": "The feared run happened: full 3,905-reason run completed 2026-09-13 and drives this redesign."
+  },
+  {
+   "id": "1.2.2.4",
+   "d": "X-ENV",
+   "note": "Ecosystem incentives rewarding early publishing are outside the plugin's control."
+  },
+  {
+   "id": "1.2.2.4.1",
+   "d": "X-ENV",
+   "note": "Semantic versioning conventions for 0.x releases are an industry norm."
+  },
+  {
+   "id": "1.2.2.4.2",
+   "d": "X-ENV",
+   "note": "Youth of the Claude Code plugin ecosystem is an ecosystem fact."
+  },
+  {
+   "id": "1.2.2.4.3",
+   "d": "X-ENV",
+   "note": "Iterate-in-public advice is industry culture, not a plugin property."
+  },
+  {
+   "id": "1.2.2.4.4",
+   "d": "X-HIST",
+   "note": "Treating marketplace listing as the finish line was past motivation; nothing further actionable."
+  },
+  {
+   "id": "1.2.2.4.5",
+   "d": "X-ENV",
+   "note": "Pace of Claude Code platform change is outside the plugin's control."
+  },
+  {
+   "id": "1.2.2.5",
+   "d": "X-HIST",
+   "note": "Habits from earlier tools explain v0.1.0's origin; no further artifact change."
+  },
+  {
+   "id": "1.2.2.5.1",
+   "d": "X-HIST",
+   "note": "Contrast between earlier deterministic projects and LLM pipelines is background history."
+  },
+  {
+   "id": "1.2.2.5.2",
+   "d": "X-HIST",
+   "note": "Size of past tools is historical context with nothing actionable here."
+  },
+  {
+   "id": "1.2.2.5.3",
+   "d": "X-HIST",
+   "note": "Professional background emphasizing specs first is personal history."
+  },
+  {
+   "id": "1.2.2.5.4",
+   "d": "X-HIST",
+   "note": "Memory salience bias is psychology with no plugin artifact change."
+  },
+  {
+   "id": "1.2.2.5.5",
+   "d": "IMP-17",
+   "note": "The self-improvement record in docs/ is a retrospective questioning why each change was made."
+  },
+  {
+   "id": "1.2.3",
+   "d": "X-DONE",
+   "note": "A concrete test problem was used: the plugin's own 6/10 rating, full run 2026-09-13."
+  },
+  {
+   "id": "1.2.3.1",
+   "d": "X-DONE",
+   "note": "No incident was needed; the self-rating problem served as a real run's subject."
+  },
+  {
+   "id": "1.2.3.1.1",
+   "d": "X-HIST",
+   "note": "Calm development period is past circumstance with nothing actionable."
+  },
+  {
+   "id": "1.2.3.1.2",
+   "d": "X-ENV",
+   "note": "Work incident trackers living in separate systems is an organizational environment fact."
+  },
+  {
+   "id": "1.2.3.1.3",
+   "d": "X-HIST",
+   "note": "Low motivation to re-analyze resolved incidents is past psychology."
+  },
+  {
+   "id": "1.2.3.1.4",
+   "d": "X-HIST",
+   "note": "Building tools ahead of need is the author's habit; nothing further actionable."
+  },
+  {
+   "id": "1.2.3.1.5",
+   "d": "IMP-18",
+   "note": "The evals/ case supplies a standing example problem for exercising the pipeline."
+  },
+  {
+   "id": "1.2.3.2",
+   "d": "R-06",
+   "note": "Building problems with known root causes is a benchmark dataset effort, out of scope."
+  },
+  {
+   "id": "1.2.3.2.1",
+   "d": "X-ENV",
+   "note": "Contested nature of real root causes is a property of the domain, not the plugin."
+  },
+  {
+   "id": "1.2.3.2.2",
+   "d": "X-ENV",
+   "note": "Brevity of published postmortems is an industry fact outside plugin control."
+  },
+  {
+   "id": "1.2.3.2.3",
+   "d": "R-06",
+   "note": "Creating synthetic known-cause benchmark problems is a dataset-building remedy, declined as out of scope."
+  },
+  {
+   "id": "1.2.3.2.4",
+   "d": "X-ENV",
+   "note": "Immaturity of open-ended causal reasoning evaluation is a field-wide fact."
+  },
+  {
+   "id": "1.2.3.2.5",
+   "d": "IMP-08",
+   "note": "Agent instructions gain a specific-vs-generic example defining what a good reason looks like."
+  },
+  {
+   "id": "1.2.3.3",
+   "d": "X-DONE",
+   "note": "The self-run used the public plugin itself as its subject, avoiding confidential data."
+  },
+  {
+   "id": "1.2.3.3.1",
+   "d": "X-ENV",
+   "note": "Employer AI data policies are organizational rules outside the plugin."
+  },
+  {
+   "id": "1.2.3.3.2",
+   "d": "X-ENV",
+   "note": "Effort to sanitize real incidents depends on the user's data, not the plugin."
+  },
+  {
+   "id": "1.2.3.3.3",
+   "d": "X-HIST",
+   "note": "Separating personal machine from work data is the author's habit; nothing actionable."
+  },
+  {
+   "id": "1.2.3.3.4",
+   "d": "IMP-20",
+   "note": "NEW reconciled: init now writes .five-whys/.gitignore."
+  },
+  {
+   "id": "1.2.3.3.5",
+   "d": "X-ENV",
+   "note": "Data-handling guarantees for subagents are defined by Anthropic and Claude Code, not the plugin."
+  },
+  {
+   "id": "1.2.3.4",
+   "d": "X-HIST",
+   "note": "Generic-tool origin is past motivation; the plugin's scope is the user's stated requirement."
+  },
+  {
+   "id": "1.2.3.4.1",
+   "d": "X-HIST",
+   "note": "Interest in the methodology is the plugin's origin story, nothing further actionable."
+  },
+  {
+   "id": "1.2.3.4.2",
+   "d": "X-HIST",
+   "note": "Appeal of generality for audience is past motivation with no artifact change."
+  },
+  {
+   "id": "1.2.3.4.3",
+   "d": "R-06",
+   "note": "Recruiting a stakeholder waiting on results is an organizational remedy, out of scope."
+  },
+  {
+   "id": "1.2.3.4.4",
+   "d": "X-HIST",
+   "note": "Attention spread across many personal tools is circumstance, not a plugin property."
+  },
+  {
+   "id": "1.2.3.4.5",
+   "d": "R-06",
+   "note": "Gathering observed user needs is user research, declined as not a plugin change."
+  },
+  {
+   "id": "1.2.3.5",
+   "d": "IMP-02",
+   "note": "A smoke preset gives a cheap run size fitting ordinary problems without risking full cost."
+  },
+  {
+   "id": "1.2.3.5.1",
+   "d": "IMP-01",
+   "note": "Configurable breadth and depth let run size match the problem's scope."
+  },
+  {
+   "id": "1.2.3.5.2",
+   "d": "X-HIST",
+   "note": "Fear that a poor result would discourage work is past psychology."
+  },
+  {
+   "id": "1.2.3.5.3",
+   "d": "IMP-02",
+   "note": "Smoke preset defines a small calibration run size between trivial and full."
+  },
+  {
+   "id": "1.2.3.5.4",
+   "d": "IMP-01",
+   "note": "Stored configurable shape lets cost scale with problem importance; IMP-05 shows the estimate."
+  },
+  {
+   "id": "1.2.3.5.5",
+   "d": "X-HIST",
+   "note": "Perfectionism about the first showcase run is past psychology; the run has happened."
+  },
+  {
+   "id": "1.2.4",
+   "d": "IMP-14",
+   "note": "README will document what validation does and does not cover, correcting the shape-equals-working assumption."
+  },
+  {
+   "id": "1.2.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene report adds duplicate, restatement and length flags beyond the narrow shape check."
+  },
+  {
+   "id": "1.2.4.1.1",
+   "d": "IMP-06",
+   "note": "Cheap stdlib hygiene heuristics extend validation effort past structure without model judgment."
+  },
+  {
+   "id": "1.2.4.1.2",
+   "d": "IMP-14",
+   "note": "Documenting that check OK means shape only prevents reading it as content correctness."
+  },
+  {
+   "id": "1.2.4.1.3",
+   "d": "R-03",
+   "note": "Model judgment of content inside the fix loop is declined; non-blocking hygiene flags instead."
+  },
+  {
+   "id": "1.2.4.1.4",
+   "d": "X-HIST",
+   "note": "Conflating schema compliance with success was a past mindset; documentation covered by IMP-14."
+  },
+  {
+   "id": "1.2.4.1.5",
+   "d": "IMP-14",
+   "note": "README documents validation scope and known limitations explicitly."
+  },
+  {
+   "id": "1.2.4.2",
+   "d": "IMP-18",
+   "note": "End-to-end eval of a smoke run exercises integration between skill, agent and script."
+  },
+  {
+   "id": "1.2.4.2.1",
+   "d": "X-HIST",
+   "note": "Writing components in separate sessions is past process; integration testing is IMP-18."
+  },
+  {
+   "id": "1.2.4.2.2",
+   "d": "IMP-11",
+   "note": "Unittest coverage of init, plan, check and assemble provides the missing contract tests."
+  },
+  {
+   "id": "1.2.4.2.3",
+   "d": "X-DONE",
+   "note": "Full run completed in ~7 minutes with 26 agents, empirically exercising context and timing."
+  },
+  {
+   "id": "1.2.4.2.4",
+   "d": "IMP-02",
+   "note": "Smoke preset makes integration checks cheap instead of requiring the costly full run."
+  },
+  {
+   "id": "1.2.4.2.5",
+   "d": "IMP-14",
+   "note": "README known-limitations section records observed multi-agent failure modes like the concurrency cap."
+  },
+  {
+   "id": "1.2.4.3",
+   "d": "IMP-12",
+   "note": "Treating agents as probabilistic means recording attempts, capping fix loops and reporting stuck tasks."
+  },
+  {
+   "id": "1.2.4.3.1",
+   "d": "X-DONE",
+   "note": "Script already validates every fragment deterministically and re-lists invalid ones for re-dispatch."
+  },
+  {
+   "id": "1.2.4.3.2",
+   "d": "X-HIST",
+   "note": "Expectations from conventional programming are background mindset, nothing further actionable."
+  },
+  {
+   "id": "1.2.4.3.3",
+   "d": "X-DONE",
+   "note": "Variance at scale was tested: full 26-agent run completed on 2026-09-13."
+  },
+  {
+   "id": "1.2.4.3.4",
+   "d": "IMP-12",
+   "note": "Fix-loop cap, FAILED replies and stuck-task reporting expose unreliability the loop hid."
+  },
+  {
+   "id": "1.2.4.3.5",
+   "d": "IMP-06",
+   "note": "Hygiene report flags repetition and restated ancestors, making depth drift visible."
+  },
+  {
+   "id": "1.2.4.4",
+   "d": "X-DONE",
+   "note": "Scaling was exercised: the real run hit the 20-agent cap and the skill now dispatches at most 20."
+  },
+  {
+   "id": "1.2.4.4.1",
+   "d": "X-ENV",
+   "note": "Claude Code documentation content about concurrency limits is outside plugin control."
+  },
+  {
+   "id": "1.2.4.4.2",
+   "d": "X-DONE",
+   "note": "The author has now dispatched 26 agents in one real run."
+  },
+  {
+   "id": "1.2.4.4.3",
+   "d": "X-FALSE",
+   "note": "Agents reply one line (OK or FAILED path), so returning results add little orchestrator context."
+  },
+  {
+   "id": "1.2.4.4.4",
+   "d": "X-DONE",
+   "note": "Batched dispatch was verified in the real run; the 20-per-message cap is now enforced."
+  },
+  {
+   "id": "1.2.4.4.5",
+   "d": "IMP-18",
+   "note": "A repeatable eval re-verifies the pipeline when Claude Code versions change."
+  },
+  {
+   "id": "1.2.4.5",
+   "d": "X-DONE",
+   "note": "No longer extrapolated: a full end-to-end 3,905-reason run completed on 2026-09-13."
+  },
+  {
+   "id": "1.2.4.5.1",
+   "d": "IMP-02",
+   "note": "Smoke preset offers an equally cheap end-to-end check instead of single-fragment trials."
+  },
+  {
+   "id": "1.2.4.5.2",
+   "d": "IMP-06",
+   "note": "Hygiene report's tree-wide near-duplicate detection exposes cross-branch duplication."
+  },
+  {
+   "id": "1.2.4.5.3",
+   "d": "X-HIST",
+   "note": "Extrapolating from an identical template was past reasoning; nothing further actionable."
+  },
+  {
+   "id": "1.2.4.5.4",
+   "d": "IMP-18",
+   "note": "Eval suite is the required end-to-end acceptance run separate from unit tests."
+  },
+  {
+   "id": "1.2.4.5.5",
+   "d": "X-HIST",
+   "note": "Enthusiasm to publish is past motivation with no artifact change."
+  },
+  {
+   "id": "1.2.5",
+   "d": "X-HIST",
+   "note": "Novelty of orchestration as motivation is how v0.1.0 came to be; nothing further actionable."
+  },
+  {
+   "id": "1.2.5.1",
+   "d": "X-HIST",
+   "note": "Desire to master fan-out patterns is past motivation."
+  },
+  {
+   "id": "1.2.5.1.1",
+   "d": "X-ENV",
+   "note": "Claude Code adding subagents and plugins is a platform release fact."
+  },
+  {
+   "id": "1.2.5.1.2",
+   "d": "X-HIST",
+   "note": "Building plugins to learn the platform is the author's practice, not a plugin property."
+  },
+  {
+   "id": "1.2.5.1.3",
+   "d": "X-HIST",
+   "note": "Perceived transferability of orchestration skills is past motivation."
+  },
+  {
+   "id": "1.2.5.1.4",
+   "d": "X-ENV",
+   "note": "Content of official Claude Code examples is outside the plugin's control."
+  },
+  {
+   "id": "1.2.5.1.5",
+   "d": "X-HIST",
+   "note": "Implicit learning goals outranking analysis quality is past process; quality work is IMP-08."
+  },
+  {
+   "id": "1.2.5.2",
+   "d": "X-HIST",
+   "note": "Enjoyment of the context-budget puzzle is past motivation."
+  },
+  {
+   "id": "1.2.5.2.1",
+   "d": "X-HIST",
+   "note": "Constraint inviting clever decomposition is design history, nothing actionable."
+  },
+  {
+   "id": "1.2.5.2.2",
+   "d": "X-HIST",
+   "note": "Elegance of root-plus-25-branches mapping is past design motivation."
+  },
+  {
+   "id": "1.2.5.2.3",
+   "d": "IMP-02",
+   "note": "Smoke preset shortens the empirical feedback loop to rival fast reasoning loops."
+  },
+  {
+   "id": "1.2.5.2.4",
+   "d": "X-HIST",
+   "note": "Toolsmith identity is personal psychology with no plugin change."
+  },
+  {
+   "id": "1.2.5.2.5",
+   "d": "X-FALSE",
+   "note": "The 5x5x5x5x5 shape is the user's stated requirement, not chosen for orchestration interest."
+  },
+  {
+   "id": "1.2.5.3",
+   "d": "X-HIST",
+   "note": "Author's interest in agent tooling over RCA practice is background motivation."
+  },
+  {
+   "id": "1.2.5.3.1",
+   "d": "X-HIST",
+   "note": "Lack of an incident-facilitation role is personal circumstance."
+  },
+  {
+   "id": "1.2.5.3.2",
+   "d": "X-HIST",
+   "note": "Five Whys as demonstration domain is origin history; nothing further actionable."
+  },
+  {
+   "id": "1.2.5.3.3",
+   "d": "IMP-08",
+   "note": "Agent instructions ground reasons in problem specifics with explicit causal quality guidance."
+  },
+  {
+   "id": "1.2.5.3.4",
+   "d": "X-HIST",
+   "note": "Composition of the author's plugin portfolio is background, not a plugin change."
+  },
+  {
+   "id": "1.2.5.3.5",
+   "d": "X-HIST",
+   "note": "Plugin is intentionally a Five Whys tree per user requirement; other RCA methods stay out."
+  },
+  {
+   "id": "1.2.5.4",
+   "d": "IMP-09",
+   "note": "Navigation and partial reading let users examine branches without reading thousands of reasons linearly."
+  },
+  {
+   "id": "1.2.5.4.1",
+   "d": "IMP-09",
+   "note": "show subtree and index.md reduce reading time by paging branch by branch."
+  },
+  {
+   "id": "1.2.5.4.2",
+   "d": "IMP-09",
+   "note": "show --id and --levels provide a mechanical way to review chosen subsets."
+  },
+  {
+   "id": "1.2.5.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene report automates duplicate and restatement detection."
+  },
+  {
+   "id": "1.2.5.4.4",
+   "d": "X-HIST",
+   "note": "Emotional friction of reading one's own output is psychology; the run was read anyway."
+  },
+  {
+   "id": "1.2.5.4.5",
+   "d": "X-HIST",
+   "note": "Building versus evaluating reward structure is past motivation."
+  },
+  {
+   "id": "1.2.5.5",
+   "d": "X-ENV",
+   "note": "Community celebration of architectures over evaluation is ecosystem culture."
+  },
+  {
+   "id": "1.2.5.5.1",
+   "d": "X-ENV",
+   "note": "Attention dynamics of agent swarm demos are industry culture."
+  },
+  {
+   "id": "1.2.5.5.2",
+   "d": "X-ENV",
+   "note": "Scarcity of public rigorous LLM tool evaluations is an ecosystem fact."
+  },
+  {
+   "id": "1.2.5.5.3",
+   "d": "X-ENV",
+   "note": "Agentic AI hype rewarding scope is industry culture outside the plugin."
+  },
+  {
+   "id": "1.2.5.5.4",
+   "d": "X-HIST",
+   "note": "Author's content consumption habits are personal background, nothing actionable."
+  },
+  {
+   "id": "1.2.5.5.5",
+   "d": "IMP-14",
+   "note": "Marketplaces lack quality evidence, so README supplies measured cost, time and a real excerpt."
+  }
+ ]
+}

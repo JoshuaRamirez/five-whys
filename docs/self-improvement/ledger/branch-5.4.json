@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "5.4.1",
+   "d": "X-FALSE",
+   "note": "The plugin is a git repository published publicly at github.com/JoshuaRamirez/five-whys, so a host could trigger CI."
+  },
+  {
+   "id": "5.4.1.1",
+   "d": "X-FALSE",
+   "note": "The folder is now an initialized git repository with commits and a public GitHub remote."
+  },
+  {
+   "id": "5.4.1.1.1",
+   "d": "X-HIST",
+   "note": "Past expectation that the experiment would be discarded; it has since been kept and published."
+  },
+  {
+   "id": "5.4.1.1.2",
+   "d": "X-HIST",
+   "note": "Workspace setup habit explains the origin; the repository now exists, so nothing further is actionable."
+  },
+  {
+   "id": "5.4.1.1.3",
+   "d": "X-ENV",
+   "note": "Claude Code session behavior around version control is a platform trait, not something the plugin controls."
+  },
+  {
+   "id": "5.4.1.1.4",
+   "d": "X-HIST",
+   "note": "Past overhead perception across side projects; this project now has a repository."
+  },
+  {
+   "id": "5.4.1.1.5",
+   "d": "X-DONE",
+   "note": "The shift happened: the plugin is committed, published on GitHub and listed in the RedJay marketplace."
+  },
+  {
+   "id": "5.4.1.2",
+   "d": "X-FALSE",
+   "note": "The plugin is published publicly on GitHub and listed in the RedJay marketplace, not only a local cache path."
+  },
+  {
+   "id": "5.4.1.2.1",
+   "d": "X-ENV",
+   "note": "How Claude Code loads plugins from local marketplace directories is platform behavior outside the plugin."
+  },
+  {
+   "id": "5.4.1.2.2",
+   "d": "X-HIST",
+   "note": "Past single-user payoff reasoning; the plugin has since been published to GitHub."
+  },
+  {
+   "id": "5.4.1.2.3",
+   "d": "X-ENV",
+   "note": "RedJay marketplace mechanics are a registry fact outside the plugin's own files."
+  },
+  {
+   "id": "5.4.1.2.4",
+   "d": "X-HIST",
+   "note": "Past convenience tradeoff; publishing to a hosting service has since been done."
+  },
+  {
+   "id": "5.4.1.2.5",
+   "d": "X-FALSE",
+   "note": "The work is pushed publicly to github.com/JoshuaRamirez/five-whys, so reluctance did not prevent publishing."
+  },
+  {
+   "id": "5.4.1.3",
+   "d": "X-ENV",
+   "note": "CI services activating on hosted pushes is an ecosystem fact; the repository is hosted now anyway."
+  },
+  {
+   "id": "5.4.1.3.1",
+   "d": "X-ENV",
+   "note": "Webhook-driven CI product design is an industry fact beyond plugin control."
+  },
+  {
+   "id": "5.4.1.3.2",
+   "d": "IMP-11",
+   "note": "A stdlib unittest suite gives a one-command local check that hooks or runners could invoke."
+  },
+  {
+   "id": "5.4.1.3.3",
+   "d": "X-ENV",
+   "note": "Background watchers on the author's machine are personal environment setup, not a plugin change."
+  },
+  {
+   "id": "5.4.1.3.4",
+   "d": "R-05",
+   "note": "Implied remedy is hosted CI with live model runs and secrets, which the catalog declines; IMP-11 tests need none."
+  },
+  {
+   "id": "5.4.1.3.5",
+   "d": "X-FALSE",
+   "note": "fivewhys.py is stdlib-only, uses cwd and CLAUDE_PLUGIN_ROOT, and contains no macOS-specific paths."
+  },
+  {
+   "id": "5.4.1.4",
+   "d": "X-DONE",
+   "note": "Versioning now happens through git commits in the published repository, not directory names alone."
+  },
+  {
+   "id": "5.4.1.4.1",
+   "d": "X-ENV",
+   "note": "The plugin cache's versioned path layout is Claude Code platform behavior."
+  },
+  {
+   "id": "5.4.1.4.2",
+   "d": "X-HIST",
+   "note": "Past habit of copying directories; git history now tracks changes."
+  },
+  {
+   "id": "5.4.1.4.3",
+   "d": "X-DONE",
+   "note": "Commit history now exists in the public repository, giving reviewers a diff surface."
+  },
+  {
+   "id": "5.4.1.4.4",
+   "d": "X-ENV",
+   "note": "Manifest schema contents are defined by Claude Code, not by this plugin."
+  },
+  {
+   "id": "5.4.1.4.5",
+   "d": "IMP-17",
+   "note": "The self-improvement tree, catalog and ledger record a baseline and why each later change was made."
+  },
+  {
+   "id": "5.4.1.5",
+   "d": "X-DONE",
+   "note": "Changes are now recorded as git commits, such as the concurrency cap fix and show subcommand."
+  },
+  {
+   "id": "5.4.1.5.1",
+   "d": "X-HIST",
+   "note": "Past reasoning that transcripts sufficed; commits are now used."
+  },
+  {
+   "id": "5.4.1.5.2",
+   "d": "X-HIST",
+   "note": "Past friction with committing tiny edits; nothing plugin-side remains to change."
+  },
+  {
+   "id": "5.4.1.5.3",
+   "d": "X-HIST",
+   "note": "Author's past decision-recovery habit; git log is now available for this project."
+  },
+  {
+   "id": "5.4.1.5.4",
+   "d": "X-DONE",
+   "note": "The project now has git commits and pushes that can fire hooks and checks."
+  },
+  {
+   "id": "5.4.1.5.5",
+   "d": "X-DONE",
+   "note": "Session edits are now committed to git with attribution, producing reviewable changesets."
+  },
+  {
+   "id": "5.4.2",
+   "d": "X-HIST",
+   "note": "Past preference for a working demo; the actionable testing and release gaps are covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "5.4.2.1",
+   "d": "X-HIST",
+   "note": "Original exploratory motivation for v0.1.0; later rigor is covered by other catalog codes."
+  },
+  {
+   "id": "5.4.2.1.1",
+   "d": "X-DONE",
+   "note": "Value is no longer unproven: a full 3,905-reason run completed on 2026-09-13."
+  },
+  {
+   "id": "5.4.2.1.2",
+   "d": "X-DONE",
+   "note": "Feasibility was answered by the full run: 26 agents, about 7 minutes, 3,905 reasons."
+  },
+  {
+   "id": "5.4.2.1.3",
+   "d": "X-HIST",
+   "note": "Side-project time pattern explains past prioritization; no plugin artifact follows."
+  },
+  {
+   "id": "5.4.2.1.4",
+   "d": "IMP-18",
+   "note": "An eval suite running a smoke-preset end to end replaces one successful invocation as validation."
+  },
+  {
+   "id": "5.4.2.1.5",
+   "d": "IMP-17",
+   "note": "The self-improvement catalog and ledger now schedule the deferred rigor as concrete improvements."
+  },
+  {
+   "id": "5.4.2.2",
+   "d": "IMP-11",
+   "note": "The missing verification work is supplied directly by a stdlib unittest suite."
+  },
+  {
+   "id": "5.4.2.2.1",
+   "d": "X-HIST",
+   "note": "Past judging of progress by capability; testing itself is covered by IMP-11."
+  },
+  {
+   "id": "5.4.2.2.2",
+   "d": "IMP-11",
+   "note": "Unittest coverage with fixture fragments for plan, check and assemble replaces eyeballing output."
+  },
+  {
+   "id": "5.4.2.2.3",
+   "d": "X-HIST",
+   "note": "Lack of external credit is past motivation; no plugin change addresses it."
+  },
+  {
+   "id": "5.4.2.2.4",
+   "d": "X-ENV",
+   "note": "AI-assisted coding speed shaping cost perception is an ecosystem fact."
+  },
+  {
+   "id": "5.4.2.2.5",
+   "d": "X-FALSE",
+   "note": "The plugin is public on GitHub and the RedJay marketplace, so failures now affect other users."
+  },
+  {
+   "id": "5.4.2.3",
+   "d": "IMP-11",
+   "note": "Manual spot checks get replaced by repeatable unittest coverage of script behavior."
+  },
+  {
+   "id": "5.4.2.3.1",
+   "d": "X-HIST",
+   "note": "Author confidence during development is past psychology; tests are covered by IMP-11."
+  },
+  {
+   "id": "5.4.2.3.2",
+   "d": "IMP-14",
+   "note": "README will state what fragment validation does and does not cover, so OK is not mistaken for coverage."
+  },
+  {
+   "id": "5.4.2.3.3",
+   "d": "X-DONE",
+   "note": "Generalization was checked: a full-size run completed with 3,905 reasons and only one exact duplicate."
+  },
+  {
+   "id": "5.4.2.3.4",
+   "d": "IMP-06",
+   "note": "Mechanical hygiene flags for duplicates, restatements and over-length reasons aid reading without replacing human judgment."
+  },
+  {
+   "id": "5.4.2.3.5",
+   "d": "IMP-11",
+   "note": "Tests deliberately exercise invalid fragments and edge shapes instead of only successful outputs."
+  },
+  {
+   "id": "5.4.2.4",
+   "d": "X-HIST",
+   "note": "Relaxed hobby discipline explains v0.1.0; concrete gaps are covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "5.4.2.4.1",
+   "d": "X-HIST",
+   "note": "Workplace policy contrast is past context with no plugin artifact to change."
+  },
+  {
+   "id": "5.4.2.4.2",
+   "d": "IMP-11",
+   "note": "A committed test suite becomes the project's concrete verification bar for done."
+  },
+  {
+   "id": "5.4.2.4.3",
+   "d": "X-HIST",
+   "note": "Author fatigue is past psychology; nothing further actionable in the plugin."
+  },
+  {
+   "id": "5.4.2.4.4",
+   "d": "X-HIST",
+   "note": "Past view of the tool as disposable; it is now published and being improved."
+  },
+  {
+   "id": "5.4.2.4.5",
+   "d": "X-HIST",
+   "note": "Personal templates live outside the plugin; this project's practices are covered by IMP-11 and IMP-14."
+  },
+  {
+   "id": "5.4.2.5",
+   "d": "IMP-11",
+   "note": "Test suite supplies the release criterion that v0.1.0 lacked."
+  },
+  {
+   "id": "5.4.2.5.1",
+   "d": "X-ENV",
+   "note": "Pre-1.0 semver signaling is an industry convention outside plugin control."
+  },
+  {
+   "id": "5.4.2.5.2",
+   "d": "X-DONE",
+   "note": "The self-improvement tree and catalog now enumerate what the plugin needs beyond its 6/10 rating."
+  },
+  {
+   "id": "5.4.2.5.3",
+   "d": "X-HIST",
+   "note": "Past manifest-driven version choice; no further artifact change implied."
+  },
+  {
+   "id": "5.4.2.5.4",
+   "d": "X-FALSE",
+   "note": "Release is not just a local install: the plugin is public on GitHub and in the RedJay marketplace."
+  },
+  {
+   "id": "5.4.2.5.5",
+   "d": "IMP-18",
+   "note": "An eval suite grading smoke runs lets quality be checked before release rather than retrospectively."
+  },
+  {
+   "id": "5.4.3",
+   "d": "R-06",
+   "note": "Remedy is acquiring collaborators and reviewers, an organizational change outside the plugin."
+  },
+  {
+   "id": "5.4.3.1",
+   "d": "X-FALSE",
+   "note": "The plugin is shared publicly at github.com/JoshuaRamirez/five-whys and listed in the RedJay marketplace."
+  },
+  {
+   "id": "5.4.3.1.1",
+   "d": "X-HIST",
+   "note": "Past wish to polish before exposure; the plugin has since been published."
+  },
+  {
+   "id": "5.4.3.1.2",
+   "d": "X-ENV",
+   "note": "Immature Claude Code plugin discovery channels are an ecosystem fact."
+  },
+  {
+   "id": "5.4.3.1.3",
+   "d": "R-06",
+   "note": "Advertising or indexing the marketplace is promotion, not a change to the plugin."
+  },
+  {
+   "id": "5.4.3.1.4",
+   "d": "X-ENV",
+   "note": "Size of the audience for exhaustive why-trees is a market fact the plugin cannot change."
+  },
+  {
+   "id": "5.4.3.1.5",
+   "d": "X-HIST",
+   "note": "Past support-obligation reluctance; the plugin was published regardless."
+  },
+  {
+   "id": "5.4.3.2",
+   "d": "R-06",
+   "note": "Finding a peer review group is a social remedy outside the plugin."
+  },
+  {
+   "id": "5.4.3.2.1",
+   "d": "R-06",
+   "note": "Recruiting busy colleagues as reviewers is organizational, not a plugin change."
+  },
+  {
+   "id": "5.4.3.2.2",
+   "d": "R-06",
+   "note": "Building an open-source community is a social remedy the catalog excludes."
+  },
+  {
+   "id": "5.4.3.2.3",
+   "d": "X-HIST",
+   "note": "Author's reluctance to impose on peers is psychology with no artifact change."
+  },
+  {
+   "id": "5.4.3.2.4",
+   "d": "X-ENV",
+   "note": "Remote work patterns reducing casual sharing are outside plugin control."
+  },
+  {
+   "id": "5.4.3.2.5",
+   "d": "IMP-14",
+   "note": "README design decisions, limitations and a real excerpt give outside reviewers the missing context."
+  },
+  {
+   "id": "5.4.3.3",
+   "d": "IMP-11",
+   "note": "Since the AI collaborator will not insist on tests, the plugin gains an explicit test suite."
+  },
+  {
+   "id": "5.4.3.3.1",
+   "d": "X-ENV",
+   "note": "Claude Code's scope-following behavior is a model and platform trait."
+  },
+  {
+   "id": "5.4.3.3.2",
+   "d": "X-HIST",
+   "note": "Past feature-focused prompting explains the gap; harnesses are covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "5.4.3.3.3",
+   "d": "X-ENV",
+   "note": "Assistant anti-gold-plating guidance is platform behavior, not plugin-controlled."
+  },
+  {
+   "id": "5.4.3.3.4",
+   "d": "IMP-06",
+   "note": "Beyond shape checks, assemble writes a hygiene report flagging duplicates, restatements and over-length reasons."
+  },
+  {
+   "id": "5.4.3.3.5",
+   "d": "X-HIST",
+   "note": "Mistaken assumption about AI scrutiny is past psychology; no artifact change beyond other codes."
+  },
+  {
+   "id": "5.4.3.4",
+   "d": "IMP-06",
+   "note": "Hygiene report surfaces duplication mechanically without waiting for user bug reports."
+  },
+  {
+   "id": "5.4.3.4.1",
+   "d": "X-DONE",
+   "note": "A full 3,905-reason run was executed on 2026-09-13, surfacing the concurrency cap failure."
+  },
+  {
+   "id": "5.4.3.4.2",
+   "d": "IMP-06",
+   "note": "Near-duplicate and ancestor-restatement flags make subtle repetition visible without close reading."
+  },
+  {
+   "id": "5.4.3.4.3",
+   "d": "IMP-09",
+   "note": "show subcommand and index.md let the reader page branch by branch instead of the whole output."
+  },
+  {
+   "id": "5.4.3.4.4",
+   "d": "IMP-10",
+   "note": "Per-run measurements like per-level counts and words per level are recorded in output, no telemetry backend."
+  },
+  {
+   "id": "5.4.3.4.5",
+   "d": "IMP-06",
+   "note": "Non-crashing content degradation is surfaced by the hygiene report annotating each assembled tree."
+  },
+  {
+   "id": "5.4.3.5",
+   "d": "R-06",
+   "note": "Recruiting a reviewer is a social remedy outside the plugin."
+  },
+  {
+   "id": "5.4.3.5.1",
+   "d": "IMP-14",
+   "note": "README documenting design decisions and the fan-out explains the plugin to a reviewer."
+  },
+  {
+   "id": "5.4.3.5.2",
+   "d": "X-ENV",
+   "note": "Scarcity of LLM evaluation expertise is an industry fact."
+  },
+  {
+   "id": "5.4.3.5.3",
+   "d": "R-06",
+   "note": "Seeking a second opinion on the rating is organizational, not a plugin change."
+  },
+  {
+   "id": "5.4.3.5.4",
+   "d": "X-HIST",
+   "note": "Stakes-based judgment about formal review is past reasoning with nothing actionable."
+  },
+  {
+   "id": "5.4.3.5.5",
+   "d": "X-HIST",
+   "note": "Past view that review was premature while design changed; no artifact change implied."
+  },
+  {
+   "id": "5.4.4",
+   "d": "IMP-18",
+   "note": "A smoke-preset claude plugin eval case gives proportionate automated coverage without full-size runs."
+  },
+  {
+   "id": "5.4.4.1",
+   "d": "IMP-02",
+   "note": "Smoke preset of 3 wide by 3 deep makes automated rehearsal runs cheap."
+  },
+  {
+   "id": "5.4.4.1.1",
+   "d": "IMP-05",
+   "note": "init and plan will report agent count and token estimates so per-run cost is weighed."
+  },
+  {
+   "id": "5.4.4.1.2",
+   "d": "IMP-04",
+   "note": "init --model lets test runs choose a cheaper model instead of inheriting the session model."
+  },
+  {
+   "id": "5.4.4.1.3",
+   "d": "IMP-11",
+   "note": "Unit tests exercise plan, check and assemble orchestration with fixture fragments and no model calls."
+  },
+  {
+   "id": "5.4.4.1.4",
+   "d": "IMP-02",
+   "note": "Smoke preset keeps any recurring automated spend small enough for a personal budget."
+  },
+  {
+   "id": "5.4.4.1.5",
+   "d": "IMP-18",
+   "note": "Eval grades shape validity and hygiene report presence mechanically; output is about 128k tokens, not read back."
+  },
+  {
+   "id": "5.4.4.2",
+   "d": "IMP-18",
+   "note": "Eval grades structural validity and hygiene report presence rather than exact reason text."
+  },
+  {
+   "id": "5.4.4.2.1",
+   "d": "IMP-18",
+   "note": "Eval checks shape and hygiene presence, which survive sampling variation unlike snapshots."
+  },
+  {
+   "id": "5.4.4.2.2",
+   "d": "X-ENV",
+   "note": "Deterministic assumptions of unit-testing tools are an ecosystem fact."
+  },
+  {
+   "id": "5.4.4.2.3",
+   "d": "IMP-06",
+   "note": "Stdlib token-overlap heuristics encode distinctness and restatement as non-blocking flags."
+  },
+  {
+   "id": "5.4.4.2.4",
+   "d": "X-ENV",
+   "note": "Silent model updates shifting outputs are outside plugin control."
+  },
+  {
+   "id": "5.4.4.2.5",
+   "d": "IMP-18",
+   "note": "Eval uses structural pass criteria, avoiding the need for statistical text thresholds."
+  },
+  {
+   "id": "5.4.4.3",
+   "d": "IMP-06",
+   "note": "Instead of a judge or rubric, non-blocking stdlib hygiene flags give mechanical quality signals."
+  },
+  {
+   "id": "5.4.4.3.1",
+   "d": "R-03",
+   "note": "Implied remedy is building a calibrated LLM judge; the catalog declines judge-based verdicts."
+  },
+  {
+   "id": "5.4.4.3.2",
+   "d": "R-06",
+   "note": "Building a labeled benchmark dataset of reasons is explicitly out of scope."
+  },
+  {
+   "id": "5.4.4.3.3",
+   "d": "X-FALSE",
+   "note": "agents/why-expander.md defines quality: causal, distinct siblings, no ancestor restatement, about 20 words, specific."
+  },
+  {
+   "id": "5.4.4.3.4",
+   "d": "IMP-06",
+   "note": "Hygiene report adds stdlib near-duplicate detection across branches."
+  },
+  {
+   "id": "5.4.4.3.5",
+   "d": "R-03",
+   "note": "Adding judge prompts is the declined remedy; hygiene flags stay deterministic."
+  },
+  {
+   "id": "5.4.4.4",
+   "d": "IMP-18",
+   "note": "claude plugin eval provides the harness, avoiding bespoke headless CI setup."
+  },
+  {
+   "id": "5.4.4.4.1",
+   "d": "X-ENV",
+   "note": "Claude Code's interactive-first design is a platform fact."
+  },
+  {
+   "id": "5.4.4.4.2",
+   "d": "R-05",
+   "note": "Storing credentials for CI with live model runs is declined heavy infrastructure."
+  },
+  {
+   "id": "5.4.4.4.3",
+   "d": "X-ENV",
+   "note": "Headless sub-agent dispatch debuggability is Claude Code platform behavior."
+  },
+  {
+   "id": "5.4.4.4.4",
+   "d": "R-05",
+   "note": "Reproducing plugin installation in hosted CI with live runs is declined infrastructure."
+  },
+  {
+   "id": "5.4.4.4.5",
+   "d": "X-ENV",
+   "note": "Scarcity of public plugin CI examples is an ecosystem fact."
+  },
+  {
+   "id": "5.4.4.5",
+   "d": "IMP-11",
+   "note": "Stdlib unittest suite covers the deterministic script regardless of its size."
+  },
+  {
+   "id": "5.4.4.5.1",
+   "d": "IMP-11",
+   "note": "Tests for shapes, check, assemble and show replace assumed obvious correctness."
+  },
+  {
+   "id": "5.4.4.5.2",
+   "d": "IMP-18",
+   "note": "Eval case exercises the prompts through a smoke run, complementing script unit tests."
+  },
+  {
+   "id": "5.4.4.5.3",
+   "d": "IMP-11",
+   "note": "stdlib unittest runs via python3 -m unittest with no packaging or runner configuration."
+  },
+  {
+   "id": "5.4.4.5.4",
+   "d": "X-FALSE",
+   "note": "fivewhys.py already separates pure functions (validate, frontier, prompt builders) from cmd_ handlers."
+  },
+  {
+   "id": "5.4.4.5.5",
+   "d": "IMP-11",
+   "note": "Automated tests replace the assumption that manual runs expose script bugs."
+  },
+  {
+   "id": "5.4.5",
+   "d": "X-ENV",
+   "note": "Absence of an ecosystem test scaffold or publishing gate is outside the plugin's control."
+  },
+  {
+   "id": "5.4.5.1",
+   "d": "X-ENV",
+   "note": "Plugin documentation emphasis is set by Anthropic, not this plugin."
+  },
+  {
+   "id": "5.4.5.1.1",
+   "d": "X-ENV",
+   "note": "Plugin system maturity and doc priorities are ecosystem facts."
+  },
+  {
+   "id": "5.4.5.1.2",
+   "d": "X-ENV",
+   "note": "Reference plugins lacking tests is an ecosystem fact."
+  },
+  {
+   "id": "5.4.5.1.3",
+   "d": "IMP-18",
+   "note": "Mixed prompts and scripts get split coverage: eval suite for prompts, IMP-11 unittest for the script."
+  },
+  {
+   "id": "5.4.5.1.4",
+   "d": "X-ENV",
+   "note": "Documentation assumptions about developer practices are outside the plugin."
+  },
+  {
+   "id": "5.4.5.1.5",
+   "d": "X-ENV",
+   "note": "Scattered or late skill-evaluation guidance is an ecosystem timing fact."
+  },
+  {
+   "id": "5.4.5.2",
+   "d": "X-ENV",
+   "note": "Marketplace admission validation is a platform and registry property."
+  },
+  {
+   "id": "5.4.5.2.1",
+   "d": "X-ENV",
+   "note": "Marketplace directory design is Claude Code platform behavior."
+  },
+  {
+   "id": "5.4.5.2.2",
+   "d": "X-ENV",
+   "note": "Loader capability to run test suites belongs to Claude Code."
+  },
+  {
+   "id": "5.4.5.2.3",
+   "d": "X-ENV",
+   "note": "RedJay marketplace admission rules are registry policy, not a change to this plugin."
+  },
+  {
+   "id": "5.4.5.2.4",
+   "d": "X-ENV",
+   "note": "Manifest schema validation rules are defined by Claude Code."
+  },
+  {
+   "id": "5.4.5.2.5",
+   "d": "X-ENV",
+   "note": "Absence of plugin signing or certification is an ecosystem fact."
+  },
+  {
+   "id": "5.4.5.3",
+   "d": "X-ENV",
+   "note": "Scaffolding tool output is outside the plugin's control."
+  },
+  {
+   "id": "5.4.5.3.1",
+   "d": "X-ENV",
+   "note": "Plugin creation workflow focus is set by ecosystem tooling."
+  },
+  {
+   "id": "5.4.5.3.2",
+   "d": "IMP-18",
+   "note": "The plugin adopts an evals/ case for claude plugin eval as its evaluation structure."
+  },
+  {
+   "id": "5.4.5.3.3",
+   "d": "X-ENV",
+   "note": "Tool builders' prioritization is an ecosystem fact."
+  },
+  {
+   "id": "5.4.5.3.4",
+   "d": "X-HIST",
+   "note": "Skeleton-driven expectations explain v0.1.0; tests and evals are now catalogued."
+  },
+  {
+   "id": "5.4.5.3.5",
+   "d": "X-ENV",
+   "note": "Plugin validator agent scope is defined by ecosystem tooling."
+  },
+  {
+   "id": "5.4.5.4",
+   "d": "IMP-18",
+   "note": "The plugin gains an evals/ case using claude plugin eval."
+  },
+  {
+   "id": "5.4.5.4.1",
+   "d": "X-ENV",
+   "note": "Recency and adoption of plugin eval features are ecosystem facts."
+  },
+  {
+   "id": "5.4.5.4.2",
+   "d": "X-HIST",
+   "note": "Past lack of motivation to search; the 6/10 analysis now prompted IMP-18."
+  },
+  {
+   "id": "5.4.5.4.3",
+   "d": "X-HIST",
+   "note": "Past time competition between learning evals and finishing; no further artifact change."
+  },
+  {
+   "id": "5.4.5.4.4",
+   "d": "X-ENV",
+   "note": "Discoverability of eval documentation is controlled by Anthropic."
+  },
+  {
+   "id": "5.4.5.4.5",
+   "d": "IMP-18",
+   "note": "Eval runs a whole smoke-preset fan-out end to end rather than a single prompt."
+  },
+  {
+   "id": "5.4.5.5",
+   "d": "X-ENV",
+   "note": "Community testing norms for agent workflows are an industry culture fact."
+  },
+  {
+   "id": "5.4.5.5.1",
+   "d": "X-ENV",
+   "note": "Craft-style prompt iteration is industry culture outside the plugin."
+  },
+  {
+   "id": "5.4.5.5.2",
+   "d": "X-ENV",
+   "note": "Pace of agentic workflow versus verification methods is an industry fact."
+  },
+  {
+   "id": "5.4.5.5.3",
+   "d": "X-ENV",
+   "note": "Shared plugins rarely including tests is ecosystem culture."
+  },
+  {
+   "id": "5.4.5.5.4",
+   "d": "X-ENV",
+   "note": "Showcase culture favoring outputs over evaluations is industry culture."
+  },
+  {
+   "id": "5.4.5.5.5",
+   "d": "X-ENV",
+   "note": "Evaluation research focus on models is outside plugin control."
+  }
+ ]
+}

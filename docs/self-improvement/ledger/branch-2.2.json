@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "2.2.1",
+   "d": "IMP-15",
+   "note": "Docs will separate mechanical aids like hygiene flags from interpretation, so quality checks stop counting as analysis."
+  },
+  {
+   "id": "2.2.1.1",
+   "d": "IMP-15",
+   "note": "Principle clarification defines the boundary of 'analysis' explicitly in skill, agent and README."
+  },
+  {
+   "id": "2.2.1.1.1",
+   "d": "X-HIST",
+   "note": "Informal drafting explains v0.1.0; the missing definition itself is addressed by IMP-15."
+  },
+  {
+   "id": "2.2.1.1.2",
+   "d": "IMP-15",
+   "note": "Skill, agent and README will state what counts as analysis versus allowed mechanical aids."
+  },
+  {
+   "id": "2.2.1.1.3",
+   "d": "X-HIST",
+   "note": "Author assumption about a self-evident term; the definition gap is covered by IMP-15."
+  },
+  {
+   "id": "2.2.1.1.4",
+   "d": "R-06",
+   "note": "Implied remedy is recruiting reviewers, a social remedy outside plugin changes."
+  },
+  {
+   "id": "2.2.1.1.5",
+   "d": "X-ENV",
+   "note": "Claude Code plugin authoring templates are ecosystem artifacts the plugin cannot change."
+  },
+  {
+   "id": "2.2.1.2",
+   "d": "IMP-06",
+   "note": "Hygiene report only flags; nothing is filtered, deleted or ranked, so it is not ranking."
+  },
+  {
+   "id": "2.2.1.2.1",
+   "d": "R-01",
+   "note": "Removing weak reasons is plugin-side pruning, declined; non-deleting hygiene flags substitute."
+  },
+  {
+   "id": "2.2.1.2.2",
+   "d": "IMP-15",
+   "note": "Clarification adds the explicit exception: mechanical aids allowed, ranking and pruning still forbidden."
+  },
+  {
+   "id": "2.2.1.2.3",
+   "d": "IMP-06",
+   "note": "Duplicates are flagged in hygiene.json with no survivor chosen and nothing removed."
+  },
+  {
+   "id": "2.2.1.2.4",
+   "d": "X-HIST",
+   "note": "Motivation for the ban; the concern remains honored because flags never rank causal framings."
+  },
+  {
+   "id": "2.2.1.2.5",
+   "d": "IMP-15",
+   "note": "Docs will describe hygiene flags as an allowed aid that judges no causal merit."
+  },
+  {
+   "id": "2.2.1.3",
+   "d": "IMP-06",
+   "note": "Separate hygiene report handles duplication and length mechanically, apart from any semantic judgment."
+  },
+  {
+   "id": "2.2.1.3.1",
+   "d": "IMP-06",
+   "note": "assemble writes a distinct hygiene.json, adding a second responsibility beyond structural check."
+  },
+  {
+   "id": "2.2.1.3.2",
+   "d": "IMP-06",
+   "note": "Stdlib token-overlap flags are non-blocking, so uncalibrated thresholds only annotate, never fail runs."
+  },
+  {
+   "id": "2.2.1.3.3",
+   "d": "IMP-06",
+   "note": "Exact-duplicate detection is part of the hygiene report rather than postponed."
+  },
+  {
+   "id": "2.2.1.3.4",
+   "d": "R-02",
+   "note": "Adding fuzzy-matching packages is declined to keep zero dependencies; stdlib heuristics substitute."
+  },
+  {
+   "id": "2.2.1.3.5",
+   "d": "IMP-06",
+   "note": "Hygiene heuristics are deterministic stdlib checks, catching quality issues without probabilistic verdicts."
+  },
+  {
+   "id": "2.2.1.4",
+   "d": "IMP-15",
+   "note": "Clarification keeps generation-only but permits mechanical aids inside the tool rather than all downstream."
+  },
+  {
+   "id": "2.2.1.4.1",
+   "d": "X-HIST",
+   "note": "Brainstorming-tool mental model explains origin; nothing further actionable beyond IMP-06/IMP-15."
+  },
+  {
+   "id": "2.2.1.4.2",
+   "d": "X-HIST",
+   "note": "The user's session remains the intended interpreter per requirements; mechanical aids covered by IMP-06/IMP-09."
+  },
+  {
+   "id": "2.2.1.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene becomes a mechanical stage of the same pipeline at assemble time."
+  },
+  {
+   "id": "2.2.1.4.4",
+   "d": "X-HIST",
+   "note": "Past scoping of the smallest increment; later increments are catalogued improvements."
+  },
+  {
+   "id": "2.2.1.4.5",
+   "d": "X-ENV",
+   "note": "A fact about traditional Five Whys facilitation practice, outside the plugin's control."
+  },
+  {
+   "id": "2.2.1.5",
+   "d": "IMP-15",
+   "note": "Clarification explicitly distinguishes 'no analysis' from 'no quality control' in the shipped docs."
+  },
+  {
+   "id": "2.2.1.5.1",
+   "d": "R-06",
+   "note": "Remedy would be adding a second reviewer, a social remedy outside the plugin."
+  },
+  {
+   "id": "2.2.1.5.2",
+   "d": "IMP-14",
+   "note": "README will record design decisions with rationale, such as stdlib-only and generation-only."
+  },
+  {
+   "id": "2.2.1.5.3",
+   "d": "IMP-17",
+   "note": "The dogfooded tree, catalog and ledger make critical review a recorded, repeatable artifact."
+  },
+  {
+   "id": "2.2.1.5.4",
+   "d": "X-HIST",
+   "note": "Personal workflow habit explaining missing review; no artifact change beyond IMP-15/IMP-17."
+  },
+  {
+   "id": "2.2.1.5.5",
+   "d": "IMP-15",
+   "note": "The inherited principle is re-examined and restated with explicit limits."
+  },
+  {
+   "id": "2.2.2",
+   "d": "R-03",
+   "note": "An LLM judge step is declined; non-blocking hygiene flags are the chosen substitute."
+  },
+  {
+   "id": "2.2.2.1",
+   "d": "R-03",
+   "note": "Self-judging concerns reinforce the declined LLM judge; mechanical flags avoid self-rating entirely."
+  },
+  {
+   "id": "2.2.2.1.1",
+   "d": "X-ENV",
+   "note": "Shared blind spots in self-evaluation are a model property outside plugin control."
+  },
+  {
+   "id": "2.2.2.1.2",
+   "d": "R-03",
+   "note": "Cross-model judges are still an LLM judge in the loop, which the catalog declines."
+  },
+  {
+   "id": "2.2.2.1.3",
+   "d": "X-HIST",
+   "note": "Author skepticism from research explains the choice; the judge remains declined under R-03."
+  },
+  {
+   "id": "2.2.2.1.4",
+   "d": "IMP-04",
+   "note": "init --model lets runs pick a model instead of always inheriting identical weights."
+  },
+  {
+   "id": "2.2.2.1.5",
+   "d": "R-06",
+   "note": "Building human-labeled datasets is a social/benchmark remedy outside plugin changes."
+  },
+  {
+   "id": "2.2.2.2",
+   "d": "R-03",
+   "note": "Extra judge cost is one reason the judge is declined; hygiene flags cost no tokens."
+  },
+  {
+   "id": "2.2.2.2.1",
+   "d": "IMP-06",
+   "note": "Stdlib hygiene scans all 3,905 reasons without any model reading pass."
+  },
+  {
+   "id": "2.2.2.2.2",
+   "d": "R-03",
+   "note": "No extra judge agents are added; mechanical flags run inside assemble instead."
+  },
+  {
+   "id": "2.2.2.2.3",
+   "d": "X-DONE",
+   "note": "Cost was measured on 2026-09-13: 26 agents, about 1.2M subagent tokens, about 7 minutes."
+  },
+  {
+   "id": "2.2.2.2.4",
+   "d": "IMP-05",
+   "note": "Cost and size preview with confirmation lets metered users decide before a full run."
+  },
+  {
+   "id": "2.2.2.2.5",
+   "d": "IMP-04",
+   "note": "Model selection via init --model is recorded in run.json and passed per task."
+  },
+  {
+   "id": "2.2.2.3",
+   "d": "R-03",
+   "note": "Non-deterministic judges in the blocking loop are declined; the check stays crisp."
+  },
+  {
+   "id": "2.2.2.3.1",
+   "d": "IMP-06",
+   "note": "Scored-style annotations live in a separate non-blocking hygiene report, keeping check binary."
+  },
+  {
+   "id": "2.2.2.3.2",
+   "d": "IMP-12",
+   "note": "Agents will cap their fix loop and reply FAILED, preventing endless retry cycles."
+  },
+  {
+   "id": "2.2.2.3.3",
+   "d": "IMP-12",
+   "note": "Failure semantics add a fix-loop cap for agents and stuck-task reporting after 3 attempts."
+  },
+  {
+   "id": "2.2.2.3.4",
+   "d": "R-02",
+   "note": "Credentials, API keys or network calls in the script are declined to stay offline."
+  },
+  {
+   "id": "2.2.2.3.5",
+   "d": "X-HIST",
+   "note": "Reproducibility remains valued; hygiene flags (IMP-06) are deterministic, so nothing further needed."
+  },
+  {
+   "id": "2.2.2.4",
+   "d": "IMP-08",
+   "note": "Agent instructions gain concrete specificity criteria and a specific-vs-generic example as a working standard."
+  },
+  {
+   "id": "2.2.2.4.1",
+   "d": "IMP-16",
+   "note": "Optional context intake supplies problem-specific details that ground plausibility."
+  },
+  {
+   "id": "2.2.2.4.2",
+   "d": "IMP-06",
+   "note": "Hygiene report adds measurable criteria: duplicates, parent restatement, over-length reasons."
+  },
+  {
+   "id": "2.2.2.4.3",
+   "d": "IMP-08",
+   "note": "Instructions will include a specific-versus-generic example pair illustrating good and bad reasons."
+  },
+  {
+   "id": "2.2.2.4.4",
+   "d": "X-ENV",
+   "note": "State of Five Whys literature is outside the plugin's control."
+  },
+  {
+   "id": "2.2.2.4.5",
+   "d": "X-DONE",
+   "note": "A full real run completed on 2026-09-13; this catalog was derived from its actual failures."
+  },
+  {
+   "id": "2.2.2.5",
+   "d": "R-01",
+   "note": "Model vetoing reasons is plugin-side pruning, declined; user keeps interpretive authority."
+  },
+  {
+   "id": "2.2.2.5.1",
+   "d": "R-01",
+   "note": "User as sole judge is the requirement; any remedy moving judgment to the plugin is declined."
+  },
+  {
+   "id": "2.2.2.5.2",
+   "d": "IMP-06",
+   "note": "Hygiene flags annotate only and delete nothing, so the tree stays fully transparent."
+  },
+  {
+   "id": "2.2.2.5.3",
+   "d": "IMP-06",
+   "note": "Flag-without-delete is exactly the hygiene report design."
+  },
+  {
+   "id": "2.2.2.5.4",
+   "d": "X-HIST",
+   "note": "Author's prior tooling experiences explain distrust; flags-only design (IMP-06) respects it."
+  },
+  {
+   "id": "2.2.2.5.5",
+   "d": "IMP-06",
+   "note": "hygiene.json carries annotations such as possible duplicate beside the unchanged tree."
+  },
+  {
+   "id": "2.2.3",
+   "d": "IMP-06",
+   "note": "Hygiene report measures rule compliance instead of trusting prompt rules alone."
+  },
+  {
+   "id": "2.2.3.1",
+   "d": "IMP-06",
+   "note": "Restatement and duplicate flags check whether the agent file's rules were actually followed."
+  },
+  {
+   "id": "2.2.3.1.1",
+   "d": "X-HIST",
+   "note": "Prompt-authoring assumption explaining the gap; verification is covered by IMP-06 and IMP-18."
+  },
+  {
+   "id": "2.2.3.1.2",
+   "d": "IMP-18",
+   "note": "Eval exercises an end-to-end smoke run instead of relying on single-fragment spot checks."
+  },
+  {
+   "id": "2.2.3.1.3",
+   "d": "X-ENV",
+   "note": "Model instruction-following trends and author habits across the industry are outside plugin control."
+  },
+  {
+   "id": "2.2.3.1.4",
+   "d": "X-DONE",
+   "note": "A full 3,905-reason real run completed on 2026-09-13, providing failure data."
+  },
+  {
+   "id": "2.2.3.1.5",
+   "d": "IMP-08",
+   "note": "Outline-before-write and grounding instructions address attention across long outputs."
+  },
+  {
+   "id": "2.2.3.2",
+   "d": "IMP-07",
+   "note": "Branch prompts will list other level-1/level-2 reasons as causes covered elsewhere."
+  },
+  {
+   "id": "2.2.3.2.1",
+   "d": "IMP-07",
+   "note": "Sibling-aware prompts add the other branches' level-1/2 reasons to each branch prompt."
+  },
+  {
+   "id": "2.2.3.2.2",
+   "d": "R-07",
+   "note": "Sequential waves feeding generated output between branches are declined; IMP-07 digest instead."
+  },
+  {
+   "id": "2.2.3.2.3",
+   "d": "IMP-07",
+   "note": "Only the cheap level-1/2 digest is shared, avoiding bloat from full sibling output."
+  },
+  {
+   "id": "2.2.3.2.4",
+   "d": "IMP-06",
+   "note": "Near-duplicate flags across the whole tree surface cross-branch repeats mechanically."
+  },
+  {
+   "id": "2.2.3.2.5",
+   "d": "IMP-07",
+   "note": "Shared level-1/2 digest improves global coherence while keeping parallel fan-out."
+  },
+  {
+   "id": "2.2.3.3",
+   "d": "IMP-08",
+   "note": "Specificity grounding and outline-before-write target decay across each agent's 155 reasons."
+  },
+  {
+   "id": "2.2.3.3.1",
+   "d": "IMP-08",
+   "note": "Replacing generic cause-kind checklist with problem grounding and specific-vs-generic example counters generic drift."
+  },
+  {
+   "id": "2.2.3.3.2",
+   "d": "IMP-08",
+   "note": "Outline-before-write lets agents plan deep levels before emitting nested JSON."
+  },
+  {
+   "id": "2.2.3.3.3",
+   "d": "R-08",
+   "note": "NEW reconciled: outline format declined; nested JSON caused no failures in 26 fragments."
+  },
+  {
+   "id": "2.2.3.3.4",
+   "d": "IMP-10",
+   "note": "Assembled header records per-level counts and average words per level for depth-by-depth observation."
+  },
+  {
+   "id": "2.2.3.3.5",
+   "d": "IMP-08",
+   "note": "Specificity instructions and example push concrete phrasing within the roughly 20-word cap."
+  },
+  {
+   "id": "2.2.3.4",
+   "d": "IMP-06",
+   "note": "Compliance measurement is added as cheap stdlib hygiene code, not left to prompt rules."
+  },
+  {
+   "id": "2.2.3.4.1",
+   "d": "IMP-11",
+   "note": "Stdlib unittest suite covers hygiene and other script logic, supplying the tests validator code needs."
+  },
+  {
+   "id": "2.2.3.4.2",
+   "d": "IMP-11",
+   "note": "Adds the missing test suite so new validator code is not untested risk."
+  },
+  {
+   "id": "2.2.3.4.3",
+   "d": "IMP-06",
+   "note": "Non-blocking stdlib token-overlap flags need no tuned thresholds to be useful."
+  },
+  {
+   "id": "2.2.3.4.4",
+   "d": "X-ENV",
+   "note": "Plugin versioning and release mechanics are Claude Code ecosystem facts."
+  },
+  {
+   "id": "2.2.3.4.5",
+   "d": "IMP-18",
+   "note": "Eval suite adds evaluation engineering alongside prompt work."
+  },
+  {
+   "id": "2.2.3.5",
+   "d": "IMP-06",
+   "note": "Hygiene report surfaces content failures at assemble time; in-loop warnings proposed separately under 2.2.3.5.3."
+  },
+  {
+   "id": "2.2.3.5.1",
+   "d": "IMP-06",
+   "note": "Hygiene checks add content-level messages beyond parse and count failures."
+  },
+  {
+   "id": "2.2.3.5.2",
+   "d": "IMP-08",
+   "note": "Instructions add grounding and outline review so agents check specificity, not just OK."
+  },
+  {
+   "id": "2.2.3.5.3",
+   "d": "IMP-23",
+   "note": "NEW reconciled: check now prints non-blocking hygiene warnings."
+  },
+  {
+   "id": "2.2.3.5.4",
+   "d": "X-HIST",
+   "note": "Schema-validation lineage explains the loop design; content feedback covered by IMP-06."
+  },
+  {
+   "id": "2.2.3.5.5",
+   "d": "R-03",
+   "note": "Content feedback in the blocking agent loop is declined for cost and delay."
+  },
+  {
+   "id": "2.2.4",
+   "d": "IMP-14",
+   "note": "README will list known limitations honestly instead of framing omissions as principle."
+  },
+  {
+   "id": "2.2.4.1",
+   "d": "X-HIST",
+   "note": "Past engineering priority on valid JSON; shape pipeline now works end to end."
+  },
+  {
+   "id": "2.2.4.1.1",
+   "d": "X-DONE",
+   "note": "check validates exact five-item lists and agents fix until OK; the full run produced all 3,905 reasons."
+  },
+  {
+   "id": "2.2.4.1.2",
+   "d": "X-DONE",
+   "note": "plan, check and assemble in fivewhys.py already coordinate fragment paths and ids."
+  },
+  {
+   "id": "2.2.4.1.3",
+   "d": "X-DONE",
+   "note": "assemble already writes the one-line-per-reason five-whys.json."
+  },
+  {
+   "id": "2.2.4.1.4",
+   "d": "X-HIST",
+   "note": "Speculation about early development effort; nothing further actionable."
+  },
+  {
+   "id": "2.2.4.1.5",
+   "d": "X-ENV",
+   "note": "Maturity of Claude Code subagent documentation is outside plugin control."
+  },
+  {
+   "id": "2.2.4.2",
+   "d": "IMP-14",
+   "note": "Honest documentation separates deliberate design decisions from known limitations."
+  },
+  {
+   "id": "2.2.4.2.1",
+   "d": "IMP-14",
+   "note": "Known limitations section admits what v0.1.0 lacks rather than framing it as philosophy."
+  },
+  {
+   "id": "2.2.4.2.2",
+   "d": "IMP-14",
+   "note": "README will state what validation does and does not cover alongside intent."
+  },
+  {
+   "id": "2.2.4.2.3",
+   "d": "X-HIST",
+   "note": "Lack of stakeholders explains past gaps; the catalog now serves as the roadmap."
+  },
+  {
+   "id": "2.2.4.2.4",
+   "d": "X-HIST",
+   "note": "Sincere valuing of the principle explains stretching it; scope fixed by IMP-15."
+  },
+  {
+   "id": "2.2.4.2.5",
+   "d": "IMP-17",
+   "note": "Self-improvement catalog and ledger record content hygiene as planned, justified work."
+  },
+  {
+   "id": "2.2.4.3",
+   "d": "X-HIST",
+   "note": "Release pressure explains v0.1.0 scope; nothing further actionable."
+  },
+  {
+   "id": "2.2.4.3.1",
+   "d": "X-HIST",
+   "note": "Side-project momentum is past motivation with no artifact change."
+  },
+  {
+   "id": "2.2.4.3.2",
+   "d": "X-DONE",
+   "note": "Real usage happened: a full run on 2026-09-13 produced this self-improvement tree."
+  },
+  {
+   "id": "2.2.4.3.3",
+   "d": "X-ENV",
+   "note": "Marketplace incentives are ecosystem facts outside the plugin."
+  },
+  {
+   "id": "2.2.4.3.4",
+   "d": "X-HIST",
+   "note": "Author's time allocation is past process with nothing to change in the plugin."
+  },
+  {
+   "id": "2.2.4.3.5",
+   "d": "IMP-14",
+   "note": "Known limitations in README make rough edges explicit rather than implied by version number."
+  },
+  {
+   "id": "2.2.4.4",
+   "d": "IMP-06",
+   "note": "Content hygiene becomes a shipped report rather than a deferred enhancement."
+  },
+  {
+   "id": "2.2.4.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene report makes silent content failures visible alongside assembly output."
+  },
+  {
+   "id": "2.2.4.4.2",
+   "d": "IMP-06",
+   "note": "Flags appear in hygiene.json every run, so content issues surface during development."
+  },
+  {
+   "id": "2.2.4.4.3",
+   "d": "IMP-14",
+   "note": "README will state validation checks shape only and what it does not cover."
+  },
+  {
+   "id": "2.2.4.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene counts give a measurable per-run quality signal without ranking reasons."
+  },
+  {
+   "id": "2.2.4.4.5",
+   "d": "X-ENV",
+   "note": "General software-engineering norms about definition of done are outside plugin control."
+  },
+  {
+   "id": "2.2.4.5",
+   "d": "IMP-18",
+   "note": "Eval suite runs a smoke-preset case and grades shape validity and hygiene presence."
+  },
+  {
+   "id": "2.2.4.5.1",
+   "d": "IMP-18",
+   "note": "Eval grades mechanical properties rather than open-ended causal quality, keeping it writable."
+  },
+  {
+   "id": "2.2.4.5.2",
+   "d": "IMP-11",
+   "note": "A stdlib unittest suite establishes the testing foundation evals can build on."
+  },
+  {
+   "id": "2.2.4.5.3",
+   "d": "R-06",
+   "note": "Building ground-truth benchmark trees is declined as out of scope."
+  },
+  {
+   "id": "2.2.4.5.4",
+   "d": "IMP-02",
+   "note": "Smoke preset (3 wide by 3 deep) makes eval runs cheap rehearsals."
+  },
+  {
+   "id": "2.2.4.5.5",
+   "d": "IMP-18",
+   "note": "claude plugin eval now provides the scaffold; IMP-18 adds a smoke-run case."
+  },
+  {
+   "id": "2.2.5",
+   "d": "IMP-06",
+   "note": "Hygiene flags point users at duplicates and restatements instead of expecting unaided spotting."
+  },
+  {
+   "id": "2.2.5.1",
+   "d": "IMP-09",
+   "note": "Navigation via show, index.md and branch paging supports conversational exploration without reading every line."
+  },
+  {
+   "id": "2.2.5.1.1",
+   "d": "IMP-09",
+   "note": "Loading guidance will page branch by branch with index.md of levels 1-2."
+  },
+  {
+   "id": "2.2.5.1.2",
+   "d": "IMP-06",
+   "note": "Mechanical flags mark vacuous duplicates rather than trusting downstream Claude to skip them."
+  },
+  {
+   "id": "2.2.5.1.3",
+   "d": "IMP-06",
+   "note": "Duplicates are detected by script, not model reading; actual output is about 128k tokens."
+  },
+  {
+   "id": "2.2.5.1.4",
+   "d": "IMP-09",
+   "note": "Branch-by-branch partial reading reduces reliance on one long-context pass."
+  },
+  {
+   "id": "2.2.5.1.5",
+   "d": "R-01",
+   "note": "Pre-filtering output is declined; IMP-06 flags are the allowed substitute."
+  },
+  {
+   "id": "2.2.5.2",
+   "d": "IMP-09",
+   "note": "Navigation and partial reading make the output tractable for human attention."
+  },
+  {
+   "id": "2.2.5.2.1",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth lets users choose smaller shapes; defaults stay 5 by 5."
+  },
+  {
+   "id": "2.2.5.2.2",
+   "d": "IMP-09",
+   "note": "show prints subtrees or top N levels and index.md gives a levels 1-2 view."
+  },
+  {
+   "id": "2.2.5.2.3",
+   "d": "R-04",
+   "note": "Volume is the user's 5x5x5x5x5 requirement; shrinking complete trees is declined."
+  },
+  {
+   "id": "2.2.5.2.4",
+   "d": "X-DONE",
+   "note": "A full 3,905-reason run completed on 2026-09-13, beyond small-fragment testing."
+  },
+  {
+   "id": "2.2.5.2.5",
+   "d": "IMP-09",
+   "note": "Navigation for the large artifact is now in scope through show and index.md."
+  },
+  {
+   "id": "2.2.5.3",
+   "d": "IMP-14",
+   "note": "README documents cost, limitations and a real excerpt for a general audience."
+  },
+  {
+   "id": "2.2.5.3.1",
+   "d": "IMP-06",
+   "note": "Hygiene flags provide noise filtering aids to users lacking the author's judgment."
+  },
+  {
+   "id": "2.2.5.3.2",
+   "d": "IMP-06",
+   "note": "Mechanical duplicate and restatement flags help non-experts spot filler."
+  },
+  {
+   "id": "2.2.5.3.3",
+   "d": "R-06",
+   "note": "Recruiting external users or beta testers is a social remedy outside plugin changes."
+  },
+  {
+   "id": "2.2.5.3.4",
+   "d": "IMP-14",
+   "note": "Public marketplace listing is addressed by honest README for a broader audience."
+  },
+  {
+   "id": "2.2.5.3.5",
+   "d": "R-06",
+   "note": "Writing user personas is user research, declined as out of scope."
+  },
+  {
+   "id": "2.2.5.4",
+   "d": "X-ENV",
+   "note": "Five Whys tradition of team validation is a methodology fact outside plugin control."
+  },
+  {
+   "id": "2.2.5.4.1",
+   "d": "X-ENV",
+   "note": "Toyota origin of the method is historical context outside plugin control."
+  },
+  {
+   "id": "2.2.5.4.2",
+   "d": "X-ENV",
+   "note": "Paper and whiteboard practice is external methodology history."
+  },
+  {
+   "id": "2.2.5.4.3",
+   "d": "X-HIST",
+   "note": "Carrying assumptions over explains design; actionable scope clarified by IMP-15."
+  },
+  {
+   "id": "2.2.5.4.4",
+   "d": "R-03",
+   "note": "An automated facilitator challenging answers is an LLM judge, declined; hygiene flags substitute."
+  },
+  {
+   "id": "2.2.5.4.5",
+   "d": "X-ENV",
+   "note": "State of guidance on automating root-cause methods is an ecosystem fact."
+  },
+  {
+   "id": "2.2.5.5",
+   "d": "IMP-06",
+   "note": "Tool bears some quality cost itself by emitting hygiene flags each run."
+  },
+  {
+   "id": "2.2.5.5.1",
+   "d": "X-HIST",
+   "note": "Reputation lag explains the 6/10 discovery; nothing further actionable."
+  },
+  {
+   "id": "2.2.5.5.2",
+   "d": "R-05",
+   "note": "Telemetry on discarded reasons requires a telemetry backend, declined as heavy infrastructure."
+  },
+  {
+   "id": "2.2.5.5.3",
+   "d": "X-ENV",
+   "note": "Tools without feedback channels pushing work onto users is general industry culture."
+  },
+  {
+   "id": "2.2.5.5.4",
+   "d": "X-ENV",
+   "note": "User attribution habits are psychology outside plugin control."
+  },
+  {
+   "id": "2.2.5.5.5",
+   "d": "R-05",
+   "note": "Collecting usefulness confirmations needs a feedback/telemetry store, declined; IMP-17 dogfooding substitutes."
+  }
+ ]
+}

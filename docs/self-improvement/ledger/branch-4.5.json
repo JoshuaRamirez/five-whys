@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "4.5.1",
+   "d": "IMP-01",
+   "note": "Shape is hard-coded 5x5; init --breadth/--depth makes shape a stored choice rather than fixed cells to fill."
+  },
+  {
+   "id": "4.5.1.1",
+   "d": "R-01",
+   "note": "Implied remedy is searching for the single most likely root cause; plugin-side root-cause selection is declined."
+  },
+  {
+   "id": "4.5.1.1.1",
+   "d": "R-04",
+   "note": "Implied remedy is letting the model prune branches; the user requires complete trees."
+  },
+  {
+   "id": "4.5.1.1.2",
+   "d": "X-HIST",
+   "note": "Past motivation for avoiding pruning; it supports the current design and needs no artifact change."
+  },
+  {
+   "id": "4.5.1.1.3",
+   "d": "IMP-14",
+   "note": "README design decisions will state breadth five is the user's requirement and now configurable."
+  },
+  {
+   "id": "4.5.1.1.4",
+   "d": "X-HIST",
+   "note": "Speculation about demo appeal; completeness is the user's stated requirement, not a demo choice."
+  },
+  {
+   "id": "4.5.1.1.5",
+   "d": "R-04",
+   "note": "Pruned-versus-full comparison only matters if pruning is an option; complete trees are required."
+  },
+  {
+   "id": "4.5.1.2",
+   "d": "IMP-01",
+   "note": "Hard-coded 5x5 shape becomes init --breadth/--depth stored in run.json."
+  },
+  {
+   "id": "4.5.1.2.1",
+   "d": "IMP-01",
+   "note": "Plan, check, assemble and prompts all read the stored shape, so changing it needs no rework."
+  },
+  {
+   "id": "4.5.1.2.2",
+   "d": "X-HIST",
+   "note": "Past shipping psychology for v0.1.0; the shape rigidity itself is handled by IMP-01."
+  },
+  {
+   "id": "4.5.1.2.3",
+   "d": "IMP-01",
+   "note": "Adds the missing configuration layer: breadth and depth flags recorded in run.json."
+  },
+  {
+   "id": "4.5.1.2.4",
+   "d": "IMP-01",
+   "note": "Fan-out math and agent counts get derived from stored breadth/depth instead of round-number literals."
+  },
+  {
+   "id": "4.5.1.2.5",
+   "d": "X-HIST",
+   "note": "Sunk-cost psychology during development; parameterized shape (IMP-01) removes the wiring lock-in."
+  },
+  {
+   "id": "4.5.1.3",
+   "d": "IMP-06",
+   "note": "Hygiene report adds non-blocking quality signals so exact shape is no longer the only definition of done."
+  },
+  {
+   "id": "4.5.1.3.1",
+   "d": "IMP-06",
+   "note": "Stdlib duplicate, restatement and length checks are deterministic quality signals the script can compute."
+  },
+  {
+   "id": "4.5.1.3.2",
+   "d": "R-03",
+   "note": "Implied remedy is a quality verdict inside the fix loop; LLM judges in the blocking loop are declined."
+  },
+  {
+   "id": "4.5.1.3.3",
+   "d": "R-04",
+   "note": "Variable child counts would drop complete trees, which the user's 5x5x5x5x5 requirement forbids."
+  },
+  {
+   "id": "4.5.1.3.4",
+   "d": "X-HIST",
+   "note": "Speculation about author trust; nothing actionable beyond the content signals in IMP-06/IMP-08."
+  },
+  {
+   "id": "4.5.1.3.5",
+   "d": "IMP-06",
+   "note": "Hygiene flags (duplicates, ancestor restatement, over-length) are the script-enforceable rubric, reported non-blocking."
+  },
+  {
+   "id": "4.5.1.4",
+   "d": "X-HIST",
+   "note": "The 5x5x5x5x5 recipe is the user's reaffirmed requirement; taking it literally was correct."
+  },
+  {
+   "id": "4.5.1.4.1",
+   "d": "X-ENV",
+   "note": "Model tendency to satisfy stated specs is a model behavior fact outside plugin control."
+  },
+  {
+   "id": "4.5.1.4.2",
+   "d": "X-HIST",
+   "note": "How the original request was phrased; past process with nothing further to change."
+  },
+  {
+   "id": "4.5.1.4.3",
+   "d": "IMP-16",
+   "note": "Optional context intake asks once for key specifics, including what the tree should inform."
+  },
+  {
+   "id": "4.5.1.4.4",
+   "d": "X-HIST",
+   "note": "Past interaction psychology during authoring; no artifact change follows."
+  },
+  {
+   "id": "4.5.1.4.5",
+   "d": "IMP-14",
+   "note": "README design decisions will record the intended use: one JSON for whole-context reading, analysis by the user."
+  },
+  {
+   "id": "4.5.1.5",
+   "d": "IMP-14",
+   "note": "README known limitations will state completeness does not guarantee the true root cause is present or findable."
+  },
+  {
+   "id": "4.5.1.5.1",
+   "d": "X-HIST",
+   "note": "Past reasoning analogy from testing; honest limitations are covered by IMP-14."
+  },
+  {
+   "id": "4.5.1.5.2",
+   "d": "IMP-09",
+   "note": "Reading cost is addressed by show, index.md of levels 1-2 and branch-by-branch paging guidance."
+  },
+  {
+   "id": "4.5.1.5.3",
+   "d": "IMP-07",
+   "note": "Sibling-aware branch prompts push isolated agents toward causes not already covered elsewhere."
+  },
+  {
+   "id": "4.5.1.5.4",
+   "d": "IMP-06",
+   "note": "Real run found 1 exact duplicate; hygiene.json will measure near-duplicates and restatements every run."
+  },
+  {
+   "id": "4.5.1.5.5",
+   "d": "X-HIST",
+   "note": "Past risk preference; burying cost is handled by navigation (IMP-09), completeness stays required."
+  },
+  {
+   "id": "4.5.2",
+   "d": "R-01",
+   "note": "Scoring insight is judgment the user owns; plugin offers only mechanical proxies (IMP-06, IMP-10)."
+  },
+  {
+   "id": "4.5.2.1",
+   "d": "R-01",
+   "note": "Because insight is reader-dependent, scoring it stays with the user; the plugin will not rank reasons."
+  },
+  {
+   "id": "4.5.2.1.1",
+   "d": "X-ENV",
+   "note": "Users valuing different causes is a fact about readers, and the reason analysis stays user-side."
+  },
+  {
+   "id": "4.5.2.1.2",
+   "d": "R-03",
+   "note": "Implied remedy is LLM-as-judge scoring; declined as flaky and costly."
+  },
+  {
+   "id": "4.5.2.1.3",
+   "d": "R-06",
+   "note": "Building labeled strong-versus-weak reason datasets is a benchmark effort, not a plugin change."
+  },
+  {
+   "id": "4.5.2.1.4",
+   "d": "IMP-16",
+   "note": "Context intake lets the user state the target decision, stored in run.json and every prompt."
+  },
+  {
+   "id": "4.5.2.1.5",
+   "d": "R-02",
+   "note": "Model-based quality scoring in the script would break stdlib offline design; stdlib hygiene flags substitute."
+  },
+  {
+   "id": "4.5.2.2",
+   "d": "IMP-18",
+   "note": "An evals/ smoke-run case exercises end-to-end output; unit tests follow in IMP-11."
+  },
+  {
+   "id": "4.5.2.2.1",
+   "d": "X-FALSE",
+   "note": "claude plugin eval exists as tooling for plugin evals; IMP-18 adds a case using it."
+  },
+  {
+   "id": "4.5.2.2.2",
+   "d": "X-HIST",
+   "note": "Past v0.1.0 prioritization; tests and evals are now planned in IMP-11 and IMP-18."
+  },
+  {
+   "id": "4.5.2.2.3",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13: 3,905 reasons, now evaluated by this self-improvement pass."
+  },
+  {
+   "id": "4.5.2.2.4",
+   "d": "R-06",
+   "note": "Ground-truth problems with known root causes are a benchmark dataset effort outside the plugin."
+  },
+  {
+   "id": "4.5.2.2.5",
+   "d": "X-HIST",
+   "note": "Past development habit; the validation gap is covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "4.5.2.3",
+   "d": "IMP-10",
+   "note": "Header and run.json will record per-level counts, words per level, bytes, tokens, duration and attempts."
+  },
+  {
+   "id": "4.5.2.3.1",
+   "d": "IMP-10",
+   "note": "Beyond free counts, assembly will record words per level, duration and dispatch attempts."
+  },
+  {
+   "id": "4.5.2.3.2",
+   "d": "X-HIST",
+   "note": "Goodhart dynamic in v0.1.0 design; broader measurement lands in IMP-06 and IMP-10."
+  },
+  {
+   "id": "4.5.2.3.3",
+   "d": "IMP-06",
+   "note": "Premise overstated: stdlib token-overlap heuristics detect near-duplicates without embeddings or model calls."
+  },
+  {
+   "id": "4.5.2.3.4",
+   "d": "R-02",
+   "note": "Similarity libraries would break zero-dependency install; stdlib heuristics in IMP-06 instead."
+  },
+  {
+   "id": "4.5.2.3.5",
+   "d": "X-HIST",
+   "note": "Headline appeal of a reason total is past framing with nothing further to change."
+  },
+  {
+   "id": "4.5.2.4",
+   "d": "R-05",
+   "note": "Recording user usefulness ratings needs telemetry or feedback infrastructure, declined as heavy."
+  },
+  {
+   "id": "4.5.2.4.1",
+   "d": "R-01",
+   "note": "Analysis outside the plugin is the user's requirement; no return channel into ranking is wanted."
+  },
+  {
+   "id": "4.5.2.4.2",
+   "d": "X-ENV",
+   "note": "Absence of a built-in rating mechanism is a Claude Code platform fact."
+  },
+  {
+   "id": "4.5.2.4.3",
+   "d": "X-ENV",
+   "note": "CLI users' tolerance for feedback friction is an ecosystem fact outside plugin control."
+  },
+  {
+   "id": "4.5.2.4.4",
+   "d": "R-05",
+   "note": "Usage logging of outputs would be a telemetry backend, which is declined."
+  },
+  {
+   "id": "4.5.2.4.5",
+   "d": "IMP-17",
+   "note": "The dogfooding tree, catalog and ledger in docs/self-improvement formalize the developer-user feedback."
+  },
+  {
+   "id": "4.5.2.5",
+   "d": "IMP-10",
+   "note": "run.json and header will record bytes, approximate tokens, duration and attempts per run."
+  },
+  {
+   "id": "4.5.2.5.1",
+   "d": "X-ENV",
+   "note": "Claude Code does not expose subagent token usage to scripts; IMP-10 records output-size proxies."
+  },
+  {
+   "id": "4.5.2.5.2",
+   "d": "X-ENV",
+   "note": "Account-level billing is an Anthropic platform fact outside plugin control."
+  },
+  {
+   "id": "4.5.2.5.3",
+   "d": "IMP-05",
+   "note": "Init and plan will show agent count and measured token estimates, surfacing cost hidden by subscriptions."
+  },
+  {
+   "id": "4.5.2.5.4",
+   "d": "IMP-10",
+   "note": "File-based measurement in run.json replaces telemetry for usage accounting; no backend needed."
+  },
+  {
+   "id": "4.5.2.5.5",
+   "d": "IMP-10",
+   "note": "The cost half gets recorded per run; insight judgment stays with the user."
+  },
+  {
+   "id": "4.5.3",
+   "d": "X-DONE",
+   "note": "A full end-to-end run completed 2026-09-13: 26 agents, ~1.2M subagent tokens, ~7 minutes."
+  },
+  {
+   "id": "4.5.3.1",
+   "d": "X-DONE",
+   "note": "Real run measured the output: 511 KB, about 128k tokens, not an estimate anymore."
+  },
+  {
+   "id": "4.5.3.1.1",
+   "d": "IMP-14",
+   "note": "README will document measured cost and time from the real run instead of an estimate."
+  },
+  {
+   "id": "4.5.3.1.2",
+   "d": "IMP-02",
+   "note": "Smoke preset (3 wide x 3 deep) and plan --only make rehearsal runs cheap and fast."
+  },
+  {
+   "id": "4.5.3.1.3",
+   "d": "X-DONE",
+   "note": "The 2026-09-13 full run produced the total output size, 511 KB, not just partial fragments."
+  },
+  {
+   "id": "4.5.3.1.4",
+   "d": "IMP-05",
+   "note": "Plan and init will report token estimates grounded in the measured real-run output."
+  },
+  {
+   "id": "4.5.3.1.5",
+   "d": "X-HIST",
+   "note": "Timing of the estimate relative to architecture is past process; measurement now exists."
+  },
+  {
+   "id": "4.5.3.2",
+   "d": "IMP-05",
+   "note": "Cost and size preview with confirmation brings output economics into every run."
+  },
+  {
+   "id": "4.5.3.2.1",
+   "d": "X-HIST",
+   "note": "Past allocation of development attention; economics are now handled by IMP-05 and IMP-10."
+  },
+  {
+   "id": "4.5.3.2.2",
+   "d": "X-HIST",
+   "note": "Past prioritization of urgent assembly bugs; nothing further to change."
+  },
+  {
+   "id": "4.5.3.2.3",
+   "d": "X-HIST",
+   "note": "Engineering instinct during authoring; no artifact change beyond other codes."
+  },
+  {
+   "id": "4.5.3.2.4",
+   "d": "IMP-05",
+   "note": "The preview reports reason count and token estimate, answering consumption cost before dispatch."
+  },
+  {
+   "id": "4.5.3.2.5",
+   "d": "X-HIST",
+   "note": "v0.1.0 success definition is past; quality signals are added via IMP-06 and IMP-18."
+  },
+  {
+   "id": "4.5.3.3",
+   "d": "IMP-05",
+   "note": "Preview sums aggregate agents, reasons and tokens so distributed cost is visible upfront."
+  },
+  {
+   "id": "4.5.3.3.1",
+   "d": "IMP-05",
+   "note": "Whole-run agent, reason and token totals shown before dispatch counter per-agent cheapness."
+  },
+  {
+   "id": "4.5.3.3.2",
+   "d": "X-DONE",
+   "note": "Assemble already prints bytes and approx_tokens, and the skill forbids reading the tree unless asked."
+  },
+  {
+   "id": "4.5.3.3.3",
+   "d": "IMP-10",
+   "note": "Recorded bytes, tokens, duration and attempts per run expose the aggregate fan-out cost."
+  },
+  {
+   "id": "4.5.3.3.4",
+   "d": "IMP-01",
+   "note": "A system budget is set by choosing breadth/depth at init, which all prompts derive from."
+  },
+  {
+   "id": "4.5.3.3.5",
+   "d": "IMP-01",
+   "note": "Breadth and depth flags cap total reasons while keeping trees complete; truncation stays declined."
+  },
+  {
+   "id": "4.5.3.4",
+   "d": "IMP-09",
+   "note": "Show, index.md and branch-by-branch loading guidance replace assuming the whole file is readable."
+  },
+  {
+   "id": "4.5.3.4.1",
+   "d": "X-ENV",
+   "note": "How 1M-token models shape user expectations is a model ecosystem fact."
+  },
+  {
+   "id": "4.5.3.4.2",
+   "d": "IMP-14",
+   "note": "README known limitations will warn about long-context recall degradation when reading whole trees."
+  },
+  {
+   "id": "4.5.3.4.3",
+   "d": "IMP-09",
+   "note": "Show subcommand exists; index.md and partial-reading guidance add the missing indexing."
+  },
+  {
+   "id": "4.5.3.4.4",
+   "d": "IMP-09",
+   "note": "index.md of levels 1-2 delivers the deferred index; summaries stay declined under R-01."
+  },
+  {
+   "id": "4.5.3.4.5",
+   "d": "IMP-09",
+   "note": "Loading guidance will page branch by branch instead of treating the context limit as the only bound."
+  },
+  {
+   "id": "4.5.3.5",
+   "d": "IMP-04",
+   "note": "init --model lets runs use cheaper models, with documented trade-offs."
+  },
+  {
+   "id": "4.5.3.5.1",
+   "d": "IMP-04",
+   "note": "Model choice recorded in run.json and passed as the Agent model override per task."
+  },
+  {
+   "id": "4.5.3.5.2",
+   "d": "IMP-04",
+   "note": "Inherit remains default but becomes an explicit choice among inherit, sonnet, opus, haiku."
+  },
+  {
+   "id": "4.5.3.5.3",
+   "d": "IMP-04",
+   "note": "Docs will explain model quality-cost trade-offs; smoke runs allow cheap comparison."
+  },
+  {
+   "id": "4.5.3.5.4",
+   "d": "X-ENV",
+   "note": "Claude Code interface not surfacing per-model cost is a platform fact."
+  },
+  {
+   "id": "4.5.3.5.5",
+   "d": "X-HIST",
+   "note": "Past sequencing judgment; model selection is now covered by IMP-04."
+  },
+  {
+   "id": "4.5.4",
+   "d": "IMP-15",
+   "note": "Principle clarification separates allowed mechanical aids from interpretation, so value questions are not wholly excluded."
+  },
+  {
+   "id": "4.5.4.1",
+   "d": "R-01",
+   "note": "Avoiding ranking is the user's requirement; plugin-side ranking remains declined."
+  },
+  {
+   "id": "4.5.4.1.1",
+   "d": "R-01",
+   "note": "Authoritative-but-wrong model picks justify keeping root-cause selection with the user."
+  },
+  {
+   "id": "4.5.4.1.2",
+   "d": "IMP-15",
+   "note": "Docs will state helpful mechanical aids like hygiene flags and navigation fit within neutrality."
+  },
+  {
+   "id": "4.5.4.1.3",
+   "d": "R-01",
+   "note": "Ranking without user system context is exactly why ranking stays declined."
+  },
+  {
+   "id": "4.5.4.1.4",
+   "d": "R-01",
+   "note": "Implied remedy is adding LLM synthesis; analysis remains the user's by requirement."
+  },
+  {
+   "id": "4.5.4.1.5",
+   "d": "X-HIST",
+   "note": "Analogy to facilitated sessions explains past design; nothing further actionable."
+  },
+  {
+   "id": "4.5.4.2",
+   "d": "R-01",
+   "note": "A synthesis stage is plugin-side analysis, which the user's requirement declines."
+  },
+  {
+   "id": "4.5.4.2.1",
+   "d": "IMP-06",
+   "note": "Assemble will also write hygiene.json, adding a mechanical artifact beyond the raw tree."
+  },
+  {
+   "id": "4.5.4.2.2",
+   "d": "IMP-06",
+   "note": "Duplicate detection arrives as non-blocking flags; clustering and deletion stay declined."
+  },
+  {
+   "id": "4.5.4.2.3",
+   "d": "R-01",
+   "note": "Synthesis over 3,905 reasons is declined; the cost argument reinforces that."
+  },
+  {
+   "id": "4.5.4.2.4",
+   "d": "R-06",
+   "note": "Testing division-of-labor fit with real users is user research, not a plugin change."
+  },
+  {
+   "id": "4.5.4.2.5",
+   "d": "R-01",
+   "note": "Defining and producing insight inside the plugin is analysis, which stays with the user."
+  },
+  {
+   "id": "4.5.4.3",
+   "d": "IMP-09",
+   "note": "Navigation and partial reading reduce the need to read thousands of reasons at once."
+  },
+  {
+   "id": "4.5.4.3.1",
+   "d": "X-HIST",
+   "note": "Developer-as-user tolerance explains past design; reader burden is handled by IMP-09."
+  },
+  {
+   "id": "4.5.4.3.2",
+   "d": "IMP-05",
+   "note": "Preview will show reason count before dispatch, making human reading volume explicit."
+  },
+  {
+   "id": "4.5.4.3.3",
+   "d": "IMP-15",
+   "note": "Clarification will state that Claude loading and navigating the tree on request is allowed, not forbidden analysis."
+  },
+  {
+   "id": "4.5.4.3.4",
+   "d": "IMP-14",
+   "note": "README will include a real excerpt and usage guidance describing a realistic reader."
+  },
+  {
+   "id": "4.5.4.3.5",
+   "d": "IMP-09",
+   "note": "Show prints an indented outline and index.md adds a skimmable levels 1-2 view for humans."
+  },
+  {
+   "id": "4.5.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene report adds a mechanical quality signal so delivery alone is not the only criterion."
+  },
+  {
+   "id": "4.5.4.4.1",
+   "d": "IMP-08",
+   "note": "Specificity instructions and examples raise the bar so generic complete filler is less acceptable."
+  },
+  {
+   "id": "4.5.4.4.2",
+   "d": "X-HIST",
+   "note": "Boundary simplicity was a sound past design rationale with nothing to change."
+  },
+  {
+   "id": "4.5.4.4.3",
+   "d": "IMP-14",
+   "note": "Honest README known limitations take ownership of what the design does not deliver."
+  },
+  {
+   "id": "4.5.4.4.4",
+   "d": "R-01",
+   "note": "Generator positioning matches the user's requirement; becoming an advisor is declined."
+  },
+  {
+   "id": "4.5.4.4.5",
+   "d": "R-06",
+   "note": "Checking whether users reached conclusions requires user research, outside the plugin."
+  },
+  {
+   "id": "4.5.4.5",
+   "d": "X-ENV",
+   "note": "Relative model reliability at generation versus judgment is a model capability fact."
+  },
+  {
+   "id": "4.5.4.5.1",
+   "d": "IMP-06",
+   "note": "Hygiene flags expose duplicates, restatements and over-length reasons that enumeration hides."
+  },
+  {
+   "id": "4.5.4.5.2",
+   "d": "R-01",
+   "note": "Undetectable judgment errors reinforce keeping judgment with the user."
+  },
+  {
+   "id": "4.5.4.5.3",
+   "d": "X-ENV",
+   "note": "Maturity of generation versus evaluation tooling is an ecosystem fact."
+  },
+  {
+   "id": "4.5.4.5.4",
+   "d": "X-HIST",
+   "note": "Common design heuristic explaining past choices; nothing further actionable."
+  },
+  {
+   "id": "4.5.4.5.5",
+   "d": "R-01",
+   "note": "Implied remedy is a ranked shortlist; ranking is declined, IMP-06 flags weak reasons instead."
+  },
+  {
+   "id": "4.5.5",
+   "d": "IMP-05",
+   "note": "Cost preview with confirmation counters volume feeling free because wall-clock time stays low."
+  },
+  {
+   "id": "4.5.5.1",
+   "d": "IMP-05",
+   "note": "Low latency hides token cost; preview shows it. Note dispatch is now capped at 20 per round."
+  },
+  {
+   "id": "4.5.5.1.1",
+   "d": "X-ENV",
+   "note": "Which cost users notice most is a user-behavior fact outside plugin control."
+  },
+  {
+   "id": "4.5.5.1.2",
+   "d": "X-HIST",
+   "note": "Showcasing Claude Code parallelism was past motivation; nothing further to change."
+  },
+  {
+   "id": "4.5.5.1.3",
+   "d": "X-HIST",
+   "note": "Small per-agent contexts are a sound past design rationale needing no change."
+  },
+  {
+   "id": "4.5.5.1.4",
+   "d": "IMP-05",
+   "note": "Preview and confirmation make parallel token spend visible even though the session is not slowed."
+  },
+  {
+   "id": "4.5.5.1.5",
+   "d": "X-HIST",
+   "note": "Past assumption about free throughput; visibility is covered by IMP-05 and IMP-10."
+  },
+  {
+   "id": "4.5.5.2",
+   "d": "IMP-07",
+   "note": "Branch prompts will list other level-1/level-2 reasons as covered elsewhere."
+  },
+  {
+   "id": "4.5.5.2.1",
+   "d": "R-07",
+   "note": "Sharing deeper sibling output serializes the run; declined in favor of the level-1/2 digest."
+  },
+  {
+   "id": "4.5.5.2.2",
+   "d": "IMP-07",
+   "note": "The cheap level-1/2 digest in each prompt provides coordination without a shared step."
+  },
+  {
+   "id": "4.5.5.2.3",
+   "d": "X-HIST",
+   "note": "Deliberate anti-anchoring isolation is past rationale; IMP-07 shares only the level-1/2 digest."
+  },
+  {
+   "id": "4.5.5.2.4",
+   "d": "IMP-06",
+   "note": "Assemble gains the overlap post-pass via hygiene.json near-duplicate detection."
+  },
+  {
+   "id": "4.5.5.2.5",
+   "d": "IMP-07",
+   "note": "Showing agents sibling level-1/2 reasons reinforces the partition instead of assuming it."
+  },
+  {
+   "id": "4.5.5.3",
+   "d": "R-04",
+   "note": "Implied remedy is unbalanced trees; the user requires complete trees, shape configurable via IMP-01."
+  },
+  {
+   "id": "4.5.5.3.1",
+   "d": "X-HIST",
+   "note": "Neat id and fragment mapping explains past design; nothing further to change."
+  },
+  {
+   "id": "4.5.5.3.2",
+   "d": "R-04",
+   "note": "Uneven trees and dynamic scheduling would drop completeness, which is declined."
+  },
+  {
+   "id": "4.5.5.3.3",
+   "d": "X-HIST",
+   "note": "Builder aesthetic preference is past psychology with no artifact change."
+  },
+  {
+   "id": "4.5.5.3.4",
+   "d": "X-HIST",
+   "note": "Ease of explanation is past motivation; nothing further actionable."
+  },
+  {
+   "id": "4.5.5.3.5",
+   "d": "R-01",
+   "note": "Pruning judgment calls are exactly what the plugin declines; analysis stays user-side."
+  },
+  {
+   "id": "4.5.5.4",
+   "d": "R-04",
+   "note": "Adaptive stopping would drop complete trees, which the user's requirement forbids."
+  },
+  {
+   "id": "4.5.5.4.1",
+   "d": "IMP-06",
+   "note": "Non-blocking hygiene flags detect children restating ancestors using stdlib overlap, without stopping branches."
+  },
+  {
+   "id": "4.5.5.4.2",
+   "d": "R-04",
+   "note": "Prompting agents to stop at a root cause means variable depth, which is declined."
+  },
+  {
+   "id": "4.5.5.4.3",
+   "d": "IMP-08",
+   "note": "Specificity grounding, stated assumptions and specific-vs-generic examples reduce plausible filler at deep levels."
+  },
+  {
+   "id": "4.5.5.4.4",
+   "d": "R-04",
+   "note": "Variable-depth fragments are declined; trees stay complete at the configured depth."
+  },
+  {
+   "id": "4.5.5.4.5",
+   "d": "IMP-01",
+   "note": "Depth becomes a configurable init --depth instead of a fixed law of five."
+  },
+  {
+   "id": "4.5.5.5",
+   "d": "IMP-05",
+   "note": "Init and plan will report agents, reasons and token estimates and confirm before full runs."
+  },
+  {
+   "id": "4.5.5.5.1",
+   "d": "X-ENV",
+   "note": "Claude Code lacking pre-launch cost estimates is a platform fact; IMP-05 compensates in-plugin."
+  },
+  {
+   "id": "4.5.5.5.2",
+   "d": "X-ENV",
+   "note": "No sub-agent token budget control for plugin authors is a Claude Code platform limit."
+  },
+  {
+   "id": "4.5.5.5.3",
+   "d": "X-ENV",
+   "note": "Delayed plan usage limits are an Anthropic billing fact outside plugin control."
+  },
+  {
+   "id": "4.5.5.5.4",
+   "d": "IMP-05",
+   "note": "The skill will show fan-out size and confirm with the user before a full-size dispatch."
+  },
+  {
+   "id": "4.5.5.5.5",
+   "d": "IMP-05",
+   "note": "Confirmation before full-size dispatch adds proportional friction to large runs."
+  }
+ ]
+}

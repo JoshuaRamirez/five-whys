@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "1.1.1",
+   "d": "IMP-02",
+   "note": "A smoke preset (3x3) gives the cheap trial run this reason says is missing."
+  },
+  {
+   "id": "1.1.1.1",
+   "d": "X-HIST",
+   "note": "Complete trees are the user's stated requirement; the cheap-trial gap is handled by IMP-02 and IMP-01."
+  },
+  {
+   "id": "1.1.1.1.1",
+   "d": "X-HIST",
+   "note": "5x5x5x5x5 is the user's explicit specification, not an unexamined reinterpretation; nothing further to change."
+  },
+  {
+   "id": "1.1.1.1.2",
+   "d": "R-06",
+   "note": "User research into preferred tree size is an organizational activity, not a plugin change."
+  },
+  {
+   "id": "1.1.1.1.3",
+   "d": "X-HIST",
+   "note": "Past design emphasis; time-to-first-insight is now served by smoke preset and navigation (IMP-02, IMP-09)."
+  },
+  {
+   "id": "1.1.1.1.4",
+   "d": "X-HIST",
+   "note": "Exhaustiveness is the user's requirement and remains the plugin's purpose; no artifact change follows."
+  },
+  {
+   "id": "1.1.1.1.5",
+   "d": "X-HIST",
+   "note": "Author experience gap; the real run measured cost (1.2M tokens) and IMP-05 surfaces it to users."
+  },
+  {
+   "id": "1.1.1.2",
+   "d": "IMP-01",
+   "note": "BRANCHING and DEPTH are module constants; IMP-01 adds init --breadth/--depth stored in run.json."
+  },
+  {
+   "id": "1.1.1.2.1",
+   "d": "X-FALSE",
+   "note": "validate() uses the BRANCHING constant and a depth argument, not literal counts; parameterizing is IMP-01 plumbing."
+  },
+  {
+   "id": "1.1.1.2.2",
+   "d": "IMP-01",
+   "note": "Script prompts derive counts from constants, but SKILL.md and agent prose hard-code 5, 26 and 3,905; IMP-01 fixes."
+  },
+  {
+   "id": "1.1.1.2.3",
+   "d": "X-HIST",
+   "note": "Shipping-speed motivation for v0.1.0; configuration itself is delivered by IMP-01."
+  },
+  {
+   "id": "1.1.1.2.4",
+   "d": "X-FALSE",
+   "note": "The script already uses argparse flags (--base, --depth, --id, --levels); init --breadth/--depth fit that convention."
+  },
+  {
+   "id": "1.1.1.2.5",
+   "d": "IMP-01",
+   "note": "IMP-01 keeps each run uniform and complete while making the uniform shape configurable, preserving assembly simplicity."
+  },
+  {
+   "id": "1.1.1.3",
+   "d": "IMP-11",
+   "note": "A stdlib unittest suite exercises init, plan, check and assemble with synthetic fragments, no model calls."
+  },
+  {
+   "id": "1.1.1.3.1",
+   "d": "IMP-11",
+   "note": "Tests generating placeholder fragments serve as the mock agent for pipeline coverage."
+  },
+  {
+   "id": "1.1.1.3.2",
+   "d": "IMP-18",
+   "note": "The claude plugin eval case runs the skill's prose orchestration end to end on a smoke preset."
+  },
+  {
+   "id": "1.1.1.3.3",
+   "d": "X-FALSE",
+   "note": "fivewhys.py already owns deterministic orchestration (plan, check, assemble); agents only generate fragment content."
+  },
+  {
+   "id": "1.1.1.3.4",
+   "d": "IMP-18",
+   "note": "claude plugin eval provides the dispatch harness; IMP-18 adds a smoke-preset eval case using it."
+  },
+  {
+   "id": "1.1.1.3.5",
+   "d": "IMP-11",
+   "note": "There are still no tests in v0.1.0; IMP-11 adds the stdlib unittest suite."
+  },
+  {
+   "id": "1.1.1.4",
+   "d": "IMP-02",
+   "note": "plan --only <id,...> dispatches chosen branches, giving on-demand single-branch expansion."
+  },
+  {
+   "id": "1.1.1.4.1",
+   "d": "IMP-02",
+   "note": "plan emits root then all missing branches with no selection; --only lets users pick branch ids."
+  },
+  {
+   "id": "1.1.1.4.2",
+   "d": "X-FALSE",
+   "note": "Partial state is tracked: per-branch fragment files persist and plan re-lists only missing or invalid ones."
+  },
+  {
+   "id": "1.1.1.4.3",
+   "d": "IMP-02",
+   "note": "Complete trees stay the default, but --only permits branch-by-branch exploratory dispatch."
+  },
+  {
+   "id": "1.1.1.4.4",
+   "d": "IMP-19",
+   "note": "assemble exits unless all 25 branches validate; assemble --partial writes a tree with missing-branch markers."
+  },
+  {
+   "id": "1.1.1.4.5",
+   "d": "IMP-02",
+   "note": "Selection lives in the script's plan --only flag, so the skill prose stays simple."
+  },
+  {
+   "id": "1.1.1.5",
+   "d": "X-HIST",
+   "note": "Splitting is also forced by output limits; the speed-versus-cost choice is past design, now measured by IMP-10."
+  },
+  {
+   "id": "1.1.1.5.1",
+   "d": "X-HIST",
+   "note": "Prototyping pain point that motivated parallel dispatch; nothing further to change."
+  },
+  {
+   "id": "1.1.1.5.2",
+   "d": "X-HIST",
+   "note": "Past perception; the real run measured about 1.2M subagent tokens, and IMP-05 now surfaces cost."
+  },
+  {
+   "id": "1.1.1.5.3",
+   "d": "IMP-10",
+   "note": "Per-run measurement in run.json and header quantifies agent overhead for future split decisions."
+  },
+  {
+   "id": "1.1.1.5.4",
+   "d": "X-ENV",
+   "note": "Model output-length limits are a platform fact that forces multiple agents regardless of plugin design."
+  },
+  {
+   "id": "1.1.1.5.5",
+   "d": "IMP-10",
+   "note": "Recorded tokens, duration and attempts per run supply the data a split-cost comparison needs."
+  },
+  {
+   "id": "1.1.2",
+   "d": "IMP-01",
+   "note": "155 reasons per branch follows from 5x5 at three levels; configurable shape lets users choose smaller branches."
+  },
+  {
+   "id": "1.1.2.1",
+   "d": "R-08",
+   "note": "NEW reconciled: outline fragment format declined; real run's JSON fragments all passed first check."
+  },
+  {
+   "id": "1.1.2.1.1",
+   "d": "X-HIST",
+   "note": "Validation-friendly format choice was reasonable; the token-economy remedy is the NEW outline format at 1.1.2.1."
+  },
+  {
+   "id": "1.1.2.1.2",
+   "d": "R-08",
+   "note": "NEW reconciled: plain-text fragment format declined; JSON validation stays exact."
+  },
+  {
+   "id": "1.1.2.1.3",
+   "d": "X-HIST",
+   "note": "Reliability rationale for JSON generation; any format change is proposed under 1.1.2.1."
+  },
+  {
+   "id": "1.1.2.1.4",
+   "d": "R-08",
+   "note": "NEW reconciled: outline-to-JSON converter declined; generation format stays JSON."
+  },
+  {
+   "id": "1.1.2.1.5",
+   "d": "IMP-10",
+   "note": "Recording bytes and approximate tokens per run measures structural overhead that was never quantified."
+  },
+  {
+   "id": "1.1.2.2",
+   "d": "IMP-06",
+   "note": "Hygiene report flags over-length reasons without deleting; sentence length itself supports specificity."
+  },
+  {
+   "id": "1.1.2.2.1",
+   "d": "X-HIST",
+   "note": "Readable specific causes are intended and reinforced by IMP-08; brevity is not a goal to change."
+  },
+  {
+   "id": "1.1.2.2.2",
+   "d": "X-HIST",
+   "note": "Sound rationale that terse phrases lose meaning for later analysis; no change implied."
+  },
+  {
+   "id": "1.1.2.2.3",
+   "d": "IMP-10",
+   "note": "Average words per level recorded per run gives the baseline for any length calibration."
+  },
+  {
+   "id": "1.1.2.2.4",
+   "d": "IMP-10",
+   "note": "Recorded average words and approximate tokens per level calibrate the limit against real budgets."
+  },
+  {
+   "id": "1.1.2.2.5",
+   "d": "X-HIST",
+   "note": "Justification for full-sentence reasons; it argues for keeping the current design."
+  },
+  {
+   "id": "1.1.2.3",
+   "d": "X-ENV",
+   "note": "Isolated subagents need the problem and ancestor chain; this is small input cost, inherent to dispatch."
+  },
+  {
+   "id": "1.1.2.3.1",
+   "d": "X-ENV",
+   "note": "Claude Code subagents share no memory with each other; the plugin cannot change that."
+  },
+  {
+   "id": "1.1.2.3.2",
+   "d": "X-ENV",
+   "note": "Problem length is the user's input for this run; the plugin uses statements verbatim by design."
+  },
+  {
+   "id": "1.1.2.3.3",
+   "d": "X-FALSE",
+   "note": "run.json already stores the problem; reading it from disk would cost the same input tokens anyway."
+  },
+  {
+   "id": "1.1.2.3.4",
+   "d": "X-HIST",
+   "note": "Isolated-agent clarity is the right priority; prompt restatement is a minor input cost."
+  },
+  {
+   "id": "1.1.2.3.5",
+   "d": "X-ENV",
+   "note": "Per-subagent system prompt and tool definition loading is Claude Code platform behavior."
+  },
+  {
+   "id": "1.1.2.4",
+   "d": "IMP-08",
+   "note": "Agent instructions gain targeted Edit repairs and a fix-loop cap instead of full rewrites."
+  },
+  {
+   "id": "1.1.2.4.1",
+   "d": "IMP-08",
+   "note": "The agent says single Write of the whole fragment; IMP-08 replaces that with targeted Edit repairs."
+  },
+  {
+   "id": "1.1.2.4.2",
+   "d": "X-FALSE",
+   "note": "check already reports path-located errors like whys[2].whys[4]: expected 5 reasons, got 4."
+  },
+  {
+   "id": "1.1.2.4.3",
+   "d": "IMP-08",
+   "note": "Outline-before-write instruction helps agents keep exactly five items across 155 nodes."
+  },
+  {
+   "id": "1.1.2.4.4",
+   "d": "IMP-08",
+   "note": "No Edit repair path exists and the agent lacks the Edit tool; IMP-08 adds targeted repairs."
+  },
+  {
+   "id": "1.1.2.4.5",
+   "d": "X-ENV",
+   "note": "Losing nesting depth in long JSON is a model limitation; outline-before-write (IMP-08) mitigates it."
+  },
+  {
+   "id": "1.1.2.5",
+   "d": "IMP-01",
+   "note": "3,905 is intrinsic to complete 5x5 trees; configurable breadth and depth let users pick smaller complete trees."
+  },
+  {
+   "id": "1.1.2.5.1",
+   "d": "R-04",
+   "note": "Pruning geometric growth drops complete trees, which the user specified; shape is configurable instead."
+  },
+  {
+   "id": "1.1.2.5.2",
+   "d": "R-04",
+   "note": "Skipping low-value nodes yields incomplete trees and requires value judgment, both declined."
+  },
+  {
+   "id": "1.1.2.5.3",
+   "d": "R-01",
+   "note": "A relevance filter is plugin-side pruning and judgment; analysis stays with the user."
+  },
+  {
+   "id": "1.1.2.5.4",
+   "d": "R-04",
+   "note": "Variable fan-out or not-applicable slots break the required complete tree shape."
+  },
+  {
+   "id": "1.1.2.5.5",
+   "d": "R-04",
+   "note": "Adaptive depth is explicitly declined; every tree stays complete at the configured depth."
+  },
+  {
+   "id": "1.1.3",
+   "d": "IMP-04",
+   "note": "init --model records a chosen model and the skill passes it as the Agent override."
+  },
+  {
+   "id": "1.1.3.1",
+   "d": "IMP-04",
+   "note": "model: inherit remains default, but per-run model selection lets users pick cheaper models."
+  },
+  {
+   "id": "1.1.3.1.1",
+   "d": "X-HIST",
+   "note": "Past assumption about quality needs; IMP-04 documents the model trade-off for users to decide."
+  },
+  {
+   "id": "1.1.3.1.2",
+   "d": "IMP-04",
+   "note": "The unrevisited scaffold default is addressed by an explicit per-run model option."
+  },
+  {
+   "id": "1.1.3.1.3",
+   "d": "IMP-04",
+   "note": "IMP-04 docs explain the quality-cost trade-off; users choose rather than the plugin pinning blindly."
+  },
+  {
+   "id": "1.1.3.1.4",
+   "d": "IMP-04",
+   "note": "IMP-04 uses stable aliases (inherit, sonnet, opus, haiku), avoiding breakage from versioned identifiers."
+  },
+  {
+   "id": "1.1.3.1.5",
+   "d": "IMP-04",
+   "note": "Keeping inherit as default with optional override accommodates differing plan access."
+  },
+  {
+   "id": "1.1.3.2",
+   "d": "IMP-04",
+   "note": "Model choice at invocation is exactly init --model plus the skill's Agent model override."
+  },
+  {
+   "id": "1.1.3.2.1",
+   "d": "IMP-04",
+   "note": "Skill argument handling gains a model option recorded in run.json."
+  },
+  {
+   "id": "1.1.3.2.2",
+   "d": "IMP-04",
+   "note": "plan emits the model per task and the skill passes it as the Agent model override."
+  },
+  {
+   "id": "1.1.3.2.3",
+   "d": "X-HIST",
+   "note": "Past oversight; cost-sensitive users are served by IMP-02, IMP-04 and IMP-05."
+  },
+  {
+   "id": "1.1.3.2.4",
+   "d": "X-HIST",
+   "note": "Minimal-interface motivation for v0.1.0; options arrive via IMP-01, IMP-02 and IMP-04."
+  },
+  {
+   "id": "1.1.3.2.5",
+   "d": "X-ENV",
+   "note": "Thin plugin configuration documentation is a Claude Code ecosystem fact."
+  },
+  {
+   "id": "1.1.3.3",
+   "d": "X-ENV",
+   "note": "Users' default session model choice is outside the plugin's control."
+  },
+  {
+   "id": "1.1.3.3.1",
+   "d": "IMP-04",
+   "note": "Explicit per-run model selection and docs remind users subagents otherwise inherit Opus."
+  },
+  {
+   "id": "1.1.3.3.2",
+   "d": "IMP-05",
+   "note": "Claude Code lacks estimates, so init and plan report measured token estimates and confirm before dispatch."
+  },
+  {
+   "id": "1.1.3.3.3",
+   "d": "X-ENV",
+   "note": "Subscription plans hiding marginal cost is an Anthropic product fact, not plugin-controlled."
+  },
+  {
+   "id": "1.1.3.3.4",
+   "d": "X-ENV",
+   "note": "Long-context variant usage pressure is a platform pricing and quota fact."
+  },
+  {
+   "id": "1.1.3.3.5",
+   "d": "IMP-04",
+   "note": "A per-run model override removes the need to switch the session model."
+  },
+  {
+   "id": "1.1.3.4",
+   "d": "IMP-14",
+   "note": "README documents measured cost and time; README currently only says the file is about 150k tokens."
+  },
+  {
+   "id": "1.1.3.4.1",
+   "d": "X-DONE",
+   "note": "A full run on 2026-09-13 measured about 1.2M subagent tokens, 26 agents, about 7 minutes."
+  },
+  {
+   "id": "1.1.3.4.2",
+   "d": "IMP-14",
+   "note": "README gains measured cost, time, limitations and concurrency cap sections."
+  },
+  {
+   "id": "1.1.3.4.3",
+   "d": "IMP-10",
+   "note": "run.json and header record size, tokens, duration and attempts; a telemetry backend is declined (R-05)."
+  },
+  {
+   "id": "1.1.3.4.4",
+   "d": "X-HIST",
+   "note": "Psychological reluctance to disclose cost; disclosure is now planned in IMP-14."
+  },
+  {
+   "id": "1.1.3.4.5",
+   "d": "IMP-05",
+   "note": "The skill confirms with the user, showing agent and token estimates, before a full-size run."
+  },
+  {
+   "id": "1.1.3.5",
+   "d": "IMP-05",
+   "note": "Preview and confirmation show usage impact before dispatching 26 agents against subscription limits."
+  },
+  {
+   "id": "1.1.3.5.1",
+   "d": "IMP-03",
+   "note": "Plan-level dispatch waves bounded by a configurable cap shape the burst instead of ad hoc batches."
+  },
+  {
+   "id": "1.1.3.5.2",
+   "d": "X-ENV",
+   "note": "Quota sharing across a user's Claude work is a subscription platform fact."
+  },
+  {
+   "id": "1.1.3.5.3",
+   "d": "IMP-03",
+   "note": "Wave size is configurable below the default 20, allowing a throttled dispatch pace."
+  },
+  {
+   "id": "1.1.3.5.4",
+   "d": "IMP-12",
+   "note": "Dispatch attempts recorded per task and stuck tasks reported after 3 bound retry consumption."
+  },
+  {
+   "id": "1.1.3.5.5",
+   "d": "X-ENV",
+   "note": "Remaining quota visibility is a Claude Code/subscription feature the plugin cannot provide."
+  },
+  {
+   "id": "1.1.4",
+   "d": "IMP-09",
+   "note": "Measured output is about 128k tokens; show, index.md and branch-by-branch loading allow partial reading."
+  },
+  {
+   "id": "1.1.4.1",
+   "d": "R-01",
+   "note": "A summarization or synthesis layer is plugin-side interpretation, declined per the user's requirement."
+  },
+  {
+   "id": "1.1.4.1.1",
+   "d": "X-HIST",
+   "note": "Deliberate, still-valid motivation matching the requirement that analysis belongs to the user."
+  },
+  {
+   "id": "1.1.4.1.2",
+   "d": "R-01",
+   "note": "Synthesis is declined on principle, not difficulty; mechanical aids (IMP-06, IMP-09) substitute."
+  },
+  {
+   "id": "1.1.4.1.3",
+   "d": "R-01",
+   "note": "This risk is exactly why plugin-side ranking stays declined."
+  },
+  {
+   "id": "1.1.4.1.4",
+   "d": "X-HIST",
+   "note": "The raw tree as product is the user's requirement; no change implied."
+  },
+  {
+   "id": "1.1.4.1.5",
+   "d": "IMP-09",
+   "note": "assemble writes index.md of levels 1-2: a mechanical index, not an interpretive digest."
+  },
+  {
+   "id": "1.1.4.2",
+   "d": "X-DONE",
+   "note": "The show subcommand (commit a13b846) prints a subtree with ancestors or top N levels."
+  },
+  {
+   "id": "1.1.4.2.1",
+   "d": "X-DONE",
+   "note": "show --id extracts a single branch and show --levels prints the top levels."
+  },
+  {
+   "id": "1.1.4.2.2",
+   "d": "X-DONE",
+   "note": "Navigation helper now exists: fivewhys.py show with --id and --levels."
+  },
+  {
+   "id": "1.1.4.2.3",
+   "d": "IMP-09",
+   "note": "SKILL.md still says read whole in 400-line windows; IMP-09 adds branch-by-branch loading guidance."
+  },
+  {
+   "id": "1.1.4.2.4",
+   "d": "X-DONE",
+   "note": "The query interface was since built as the show subcommand."
+  },
+  {
+   "id": "1.1.4.2.5",
+   "d": "R-05",
+   "note": "An HTML viewer or rendered page is declined heavy infrastructure; show covers browsing."
+  },
+  {
+   "id": "1.1.4.3",
+   "d": "R-09",
+   "note": "NEW reconciled: keeping depth key; lines stay self-describing when read in windows."
+  },
+  {
+   "id": "1.1.4.3.1",
+   "d": "X-HIST",
+   "note": "Self-contained lines are intentional for grep and paging; keep them."
+  },
+  {
+   "id": "1.1.4.3.2",
+   "d": "X-HIST",
+   "note": "Dotted ids are the navigation key used by show --id; their length is an accepted cost."
+  },
+  {
+   "id": "1.1.4.3.3",
+   "d": "X-HIST",
+   "note": "Grep readability was a deliberate trade-off that still supports whole-file and partial reading."
+  },
+  {
+   "id": "1.1.4.3.4",
+   "d": "IMP-10",
+   "note": "Recording bytes, approximate tokens and average words per level measures per-line cost."
+  },
+  {
+   "id": "1.1.4.3.5",
+   "d": "X-HIST",
+   "note": "Prefix deduplication would break self-contained lines; the simple assembler choice stands."
+  },
+  {
+   "id": "1.1.4.4",
+   "d": "IMP-09",
+   "note": "Partial, branch-by-branch reading avoids loading all 128k tokens when context is tight."
+  },
+  {
+   "id": "1.1.4.4.1",
+   "d": "X-ENV",
+   "note": "Context window size is a model fact outside the plugin's control."
+  },
+  {
+   "id": "1.1.4.4.2",
+   "d": "X-ENV",
+   "note": "Auto-compaction behavior belongs to Claude Code; paging guidance (IMP-09) mitigates."
+  },
+  {
+   "id": "1.1.4.4.3",
+   "d": "IMP-14",
+   "note": "README known limitations should advise a fresh session or long-context model for whole-tree analysis."
+  },
+  {
+   "id": "1.1.4.4.4",
+   "d": "X-ENV",
+   "note": "Per-turn latency and cost scaling with context size is a model platform fact."
+  },
+  {
+   "id": "1.1.4.4.5",
+   "d": "X-ENV",
+   "note": "Prompt cache expiry timing is set by the API platform, not the plugin."
+  },
+  {
+   "id": "1.1.4.5",
+   "d": "X-DONE",
+   "note": "assemble reports bytes and approx_tokens; the real run measured 511 KB, about 128k tokens."
+  },
+  {
+   "id": "1.1.4.5.1",
+   "d": "X-DONE",
+   "note": "A full 3,905-reason run completed on 2026-09-13."
+  },
+  {
+   "id": "1.1.4.5.2",
+   "d": "X-DONE",
+   "note": "The estimate was replaced by measurement: about 128k tokens, slightly below the ~150k figure."
+  },
+  {
+   "id": "1.1.4.5.3",
+   "d": "X-FALSE",
+   "note": "assemble already prints bytes and approx_tokens; check needs no token count."
+  },
+  {
+   "id": "1.1.4.5.4",
+   "d": "X-HIST",
+   "note": "Deferring optimization until the pipeline worked was reasonable; it now works."
+  },
+  {
+   "id": "1.1.4.5.5",
+   "d": "IMP-10",
+   "note": "Recorded per-run size and token measurements establish the baseline any size target needs."
+  },
+  {
+   "id": "1.1.5",
+   "d": "IMP-02",
+   "note": "Smoke preset and subset dispatch are the cost-reduction path; resuming already works via plan."
+  },
+  {
+   "id": "1.1.5.1",
+   "d": "X-FALSE",
+   "note": "plan skips fragments that exist and validate, so re-running plan resumes interrupted runs."
+  },
+  {
+   "id": "1.1.5.1.1",
+   "d": "X-FALSE",
+   "note": "plan calls load_fragment for each branch and lists only missing or invalid fragments."
+  },
+  {
+   "id": "1.1.5.1.2",
+   "d": "X-DONE",
+   "note": "Only init creates timestamped folders; plan on the existing run directory resumes it."
+  },
+  {
+   "id": "1.1.5.1.3",
+   "d": "X-DONE",
+   "note": "plan is effectively idempotent: it re-lists only unfinished fragments each round."
+  },
+  {
+   "id": "1.1.5.1.4",
+   "d": "X-DONE",
+   "note": "The real full run exposed the 20-concurrent-subagent cap, now fixed in the skill."
+  },
+  {
+   "id": "1.1.5.1.5",
+   "d": "IMP-22",
+   "note": "NEW reconciled: skill --resume <run-dir> option added."
+  },
+  {
+   "id": "1.1.5.2",
+   "d": "R-05",
+   "note": "A reusable run library or knowledge base is declined infrastructure; the plugin is generation-only."
+  },
+  {
+   "id": "1.1.5.2.1",
+   "d": "R-02",
+   "note": "Similarity-based retrieval would need embeddings or packages, breaking the offline stdlib install."
+  },
+  {
+   "id": "1.1.5.2.2",
+   "d": "R-05",
+   "note": "Adapting causes from stored branches implies a knowledge-base store, declined."
+  },
+  {
+   "id": "1.1.5.2.3",
+   "d": "R-02",
+   "note": "Fuzzy problem matching would need embeddings or network models, declined."
+  },
+  {
+   "id": "1.1.5.2.4",
+   "d": "X-HIST",
+   "note": "One-shot generation is a deliberate design decision (generation-only), still held."
+  },
+  {
+   "id": "1.1.5.2.5",
+   "d": "R-05",
+   "note": "Tags exist only to enable reuse retrieval, which is declined infrastructure."
+  },
+  {
+   "id": "1.1.5.3",
+   "d": "IMP-17",
+   "note": "The committed docs/self-improvement tree is a real 3,905-reason sample kept as dogfooding evidence."
+  },
+  {
+   "id": "1.1.5.3.1",
+   "d": "X-DONE",
+   "note": "docs/self-improvement/tree.json, a full real run, is now tracked in the repository."
+  },
+  {
+   "id": "1.1.5.3.2",
+   "d": "IMP-14",
+   "note": "README will include a real excerpt of generated reasons."
+  },
+  {
+   "id": "1.1.5.3.3",
+   "d": "X-DONE",
+   "note": "The expensive showcase run was already done on 2026-09-13 and committed."
+  },
+  {
+   "id": "1.1.5.3.4",
+   "d": "X-ENV",
+   "note": "Marketplace listing space limits are set by the marketplace, not the plugin."
+  },
+  {
+   "id": "1.1.5.3.5",
+   "d": "X-HIST",
+   "note": "Past prioritization; onboarding material is addressed by IMP-14 and IMP-17."
+  },
+  {
+   "id": "1.1.5.4",
+   "d": "R-05",
+   "note": "Prompt-cache engineering is explicitly declined heavy infrastructure."
+  },
+  {
+   "id": "1.1.5.4.1",
+   "d": "X-ENV",
+   "note": "Claude Code controls subagent caching; plugins have no caching knobs."
+  },
+  {
+   "id": "1.1.5.4.2",
+   "d": "R-05",
+   "note": "Reordering prompts for cache prefix hits is prompt-cache engineering, declined."
+  },
+  {
+   "id": "1.1.5.4.3",
+   "d": "X-ENV",
+   "note": "Cache lifetime is an API platform setting outside plugin control."
+  },
+  {
+   "id": "1.1.5.4.4",
+   "d": "X-HIST",
+   "note": "Author knowledge gap about caching; caching work is declined under R-05."
+  },
+  {
+   "id": "1.1.5.4.5",
+   "d": "X-DONE",
+   "note": "A full run has now occurred; further cache measurement is declined under R-05."
+  },
+  {
+   "id": "1.1.5.5",
+   "d": "IMP-05",
+   "note": "Cost preview with user confirmation before full-size runs is the plugin's spend control."
+  },
+  {
+   "id": "1.1.5.5.1",
+   "d": "X-ENV",
+   "note": "Claude Code offers no per-plugin budget API; this is a platform fact."
+  },
+  {
+   "id": "1.1.5.5.2",
+   "d": "X-ENV",
+   "note": "Subagent token counts are not exposed to the orchestrator by Claude Code."
+  },
+  {
+   "id": "1.1.5.5.3",
+   "d": "R-04",
+   "note": "Shallower trees under budget pressure drop completeness, declined; users choose shape up front."
+  },
+  {
+   "id": "1.1.5.5.4",
+   "d": "IMP-05",
+   "note": "Instead of silent self-policing, init/plan show estimates and the skill asks for confirmation."
+  },
+  {
+   "id": "1.1.5.5.5",
+   "d": "IMP-19",
+   "note": "assemble --partial writes valid trees with missing-branch markers for budget-capped runs."
+  }
+ ]
+}

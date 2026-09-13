@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "5.3.1",
+   "d": "IMP-18",
+   "note": "Tests seem inapplicable only under exact-match framing; the eval suite grades shape validity and hygiene, which are deterministic."
+  },
+  {
+   "id": "5.3.1.1",
+   "d": "X-HIST",
+   "note": "Author's prior deterministic-software background explains v0.1.0; the actionable part is covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "5.3.1.1.1",
+   "d": "X-HIST",
+   "note": "Career history before LLM components; nothing to change in the plugin."
+  },
+  {
+   "id": "5.3.1.1.2",
+   "d": "X-ENV",
+   "note": "Industry-wide recency of LLM development is outside the plugin's control."
+  },
+  {
+   "id": "5.3.1.1.3",
+   "d": "X-HIST",
+   "note": "Past personal tooling habits; eval gap itself is addressed by IMP-18."
+  },
+  {
+   "id": "5.3.1.1.4",
+   "d": "X-HIST",
+   "note": "Workplace attitude toward randomness shaped past habits; no plugin artifact follows."
+  },
+  {
+   "id": "5.3.1.1.5",
+   "d": "X-ENV",
+   "note": "Career incentive structures are industry culture, not something the plugin can change."
+  },
+  {
+   "id": "5.3.1.2",
+   "d": "X-ENV",
+   "note": "Mainstream tutorials and frameworks teaching exact-match assertions is an ecosystem fact."
+  },
+  {
+   "id": "5.3.1.2.1",
+   "d": "X-ENV",
+   "note": "xUnit framework history is an ecosystem fact outside the plugin."
+  },
+  {
+   "id": "5.3.1.2.2",
+   "d": "X-ENV",
+   "note": "Tutorial authors' incentives are outside the plugin's control."
+  },
+  {
+   "id": "5.3.1.2.3",
+   "d": "X-ENV",
+   "note": "Generic teaching material lacking domain thresholds is an ecosystem fact."
+  },
+  {
+   "id": "5.3.1.2.4",
+   "d": "X-ENV",
+   "note": "Industry coverage metric conventions are outside the plugin's control."
+  },
+  {
+   "id": "5.3.1.2.5",
+   "d": "X-ENV",
+   "note": "CI pipeline expectations are ecosystem practice; the plugin's deterministic checks already suit them."
+  },
+  {
+   "id": "5.3.1.3",
+   "d": "X-ENV",
+   "note": "Software training curricula omitting probabilistic evaluation is an industry fact."
+  },
+  {
+   "id": "5.3.1.3.1",
+   "d": "X-ENV",
+   "note": "Evolving state of LLM evaluation methods is outside the plugin's control."
+  },
+  {
+   "id": "5.3.1.3.2",
+   "d": "X-ENV",
+   "note": "Where eval knowledge is published is an ecosystem fact."
+  },
+  {
+   "id": "5.3.1.3.3",
+   "d": "X-ENV",
+   "note": "Organizational split between data scientists and engineers is industry structure."
+  },
+  {
+   "id": "5.3.1.3.4",
+   "d": "X-ENV",
+   "note": "Difficulty teaching judge reliability is an ecosystem fact; judges in the fix loop are declined anyway (R-03)."
+  },
+  {
+   "id": "5.3.1.3.5",
+   "d": "X-ENV",
+   "note": "Scarcity of published open-source eval suites is an ecosystem fact."
+  },
+  {
+   "id": "5.3.1.4",
+   "d": "IMP-06",
+   "note": "Attention anchored on structure; the hygiene report adds content-level flags for duplicates, restatement and over-length reasons."
+  },
+  {
+   "id": "5.3.1.4.1",
+   "d": "X-HIST",
+   "note": "Why shape checks were written first; no further artifact change beyond IMP-06."
+  },
+  {
+   "id": "5.3.1.4.2",
+   "d": "X-HIST",
+   "note": "Dependency order explaining build sequence; nothing further actionable."
+  },
+  {
+   "id": "5.3.1.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene flags give content quality crisp mechanical definitions: exact and near duplicates, ancestor restatement, over-length."
+  },
+  {
+   "id": "5.3.1.4.4",
+   "d": "IMP-14",
+   "note": "README will state what validation does and does not cover, dispelling the illusion that shape checks verify content."
+  },
+  {
+   "id": "5.3.1.4.5",
+   "d": "IMP-08",
+   "note": "Agent instructions add outline-before-write and specific-vs-generic examples, so quality guidance extends beyond the structural check."
+  },
+  {
+   "id": "5.3.1.5",
+   "d": "R-06",
+   "note": "Implied remedy is involving an eval-experienced reviewer; recruiting reviewers is out of scope."
+  },
+  {
+   "id": "5.3.1.5.1",
+   "d": "R-06",
+   "note": "Adding a formal human review step means recruiting reviewers, an organizational remedy out of scope."
+  },
+  {
+   "id": "5.3.1.5.2",
+   "d": "X-ENV",
+   "note": "Where LLM eval specialists work is an industry fact."
+  },
+  {
+   "id": "5.3.1.5.3",
+   "d": "X-HIST",
+   "note": "Tendency to hide early prototypes; the plugin is now public on GitHub and RedJay."
+  },
+  {
+   "id": "5.3.1.5.4",
+   "d": "IMP-18",
+   "note": "The assistant has now been used to define an evaluation strategy: a smoke-preset eval suite for claude plugin eval."
+  },
+  {
+   "id": "5.3.1.5.5",
+   "d": "X-ENV",
+   "note": "Marketplace review gates are ecosystem policy outside the plugin."
+  },
+  {
+   "id": "5.3.2",
+   "d": "IMP-18",
+   "note": "No ground truth needed: the eval grades shape validity and hygiene report presence rather than comparing against reference reasons."
+  },
+  {
+   "id": "5.3.2.1",
+   "d": "X-ENV",
+   "note": "Interpretive nature of root cause analysis is inherent to the method, not the plugin."
+  },
+  {
+   "id": "5.3.2.1.1",
+   "d": "X-ENV",
+   "note": "Organizational problems admitting multiple decompositions is a property of problems, not the plugin."
+  },
+  {
+   "id": "5.3.2.1.2",
+   "d": "X-ENV",
+   "note": "Five Whys lacking a formal correctness standard is a method fact."
+  },
+  {
+   "id": "5.3.2.1.3",
+   "d": "X-ENV",
+   "note": "Human facilitation practice is outside the plugin's control."
+  },
+  {
+   "id": "5.3.2.1.4",
+   "d": "IMP-16",
+   "note": "Optional context intake asks for key specifics when the statement is thin and feeds them into every prompt."
+  },
+  {
+   "id": "5.3.2.1.5",
+   "d": "R-01",
+   "note": "Separating true causes from correlated facts is evidence-based analysis, which stays with the user."
+  },
+  {
+   "id": "5.3.2.2",
+   "d": "IMP-18",
+   "note": "Domain-independent eval grades structure and hygiene, so no fixed domain of reference answers is required."
+  },
+  {
+   "id": "5.3.2.2.1",
+   "d": "X-HIST",
+   "note": "Generality was deliberate and remains the design; nothing further to change."
+  },
+  {
+   "id": "5.3.2.2.2",
+   "d": "X-HIST",
+   "note": "Past reasoning against a benchmark domain; the eval avoids needing one."
+  },
+  {
+   "id": "5.3.2.2.3",
+   "d": "R-06",
+   "note": "Implied remedy is building a public vetted Five Whys dataset, declined as out of scope."
+  },
+  {
+   "id": "5.3.2.2.4",
+   "d": "R-06",
+   "note": "Collecting users' real problems as test cases is user research, out of scope."
+  },
+  {
+   "id": "5.3.2.2.5",
+   "d": "R-06",
+   "note": "Implied remedy is scheduling user research to pick sample problems; declined as organizational."
+  },
+  {
+   "id": "5.3.2.3",
+   "d": "IMP-18",
+   "note": "Hand-labeled reference trees are unnecessary; the eval grades mechanical properties instead."
+  },
+  {
+   "id": "5.3.2.3.1",
+   "d": "IMP-02",
+   "note": "Smoke preset (3 wide x 3 deep) shrinks a tree to 39 reasons, making any manual inspection tractable."
+  },
+  {
+   "id": "5.3.2.3.2",
+   "d": "R-06",
+   "note": "Implied remedy is finding additional labelers, an organizational remedy out of scope."
+  },
+  {
+   "id": "5.3.2.3.3",
+   "d": "R-05",
+   "note": "Building a tree-labeling tool is heavy infrastructure; file-based show and hygiene tools cover the need."
+  },
+  {
+   "id": "5.3.2.3.4",
+   "d": "R-02",
+   "note": "Semantic comparison would need embeddings or packages; stdlib token-overlap hygiene (IMP-06) is the substitute."
+  },
+  {
+   "id": "5.3.2.3.5",
+   "d": "IMP-18",
+   "note": "Eval grades shape and hygiene rather than reference reasons, so it survives prompt or shape changes."
+  },
+  {
+   "id": "5.3.2.4",
+   "d": "IMP-06",
+   "note": "Hygiene report turns distinctness and restatement criteria into measurable non-blocking flags."
+  },
+  {
+   "id": "5.3.2.4.1",
+   "d": "IMP-06",
+   "note": "Distinctness and non-restatement instructions get translated into mechanical duplicate and ancestor-restatement checks."
+  },
+  {
+   "id": "5.3.2.4.2",
+   "d": "R-02",
+   "note": "Embeddings or judge models are declined; stdlib token overlap in IMP-06 approximates distinctness offline."
+  },
+  {
+   "id": "5.3.2.4.3",
+   "d": "R-02",
+   "note": "Stdlib-only design is kept deliberately; similarity is computed with stdlib heuristics instead of dependencies."
+  },
+  {
+   "id": "5.3.2.4.4",
+   "d": "X-DONE",
+   "note": "Baseline data now exists: the 2026-09-13 full run produced 3,905 reasons with measured tokens, time and one duplicate."
+  },
+  {
+   "id": "5.3.2.4.5",
+   "d": "IMP-06",
+   "note": "Hygiene flags supply operational definitions for duplicate, restating and over-length reasons."
+  },
+  {
+   "id": "5.3.2.5",
+   "d": "R-01",
+   "note": "Implied remedy is plugin-defined downstream analysis or ranking; analysis stays with the user by requirement."
+  },
+  {
+   "id": "5.3.2.5.1",
+   "d": "X-HIST",
+   "note": "Neutrality was a deliberate choice that the catalog upholds; nothing further to change."
+  },
+  {
+   "id": "5.3.2.5.2",
+   "d": "R-01",
+   "note": "Tying the tree to a plugin-stated decision would move analysis into the plugin, which is declined."
+  },
+  {
+   "id": "5.3.2.5.3",
+   "d": "R-05",
+   "note": "Ratings or telemetry backends are declined heavy infrastructure."
+  },
+  {
+   "id": "5.3.2.5.4",
+   "d": "IMP-09",
+   "note": "Output is about 128k tokens; show subcommand, index.md and branch-by-branch paging make partial review practical."
+  },
+  {
+   "id": "5.3.2.5.5",
+   "d": "R-01",
+   "note": "Recovering a quality signal by adding analysis to the plugin is declined; hygiene flags are the allowed aid."
+  },
+  {
+   "id": "5.3.3",
+   "d": "IMP-18",
+   "note": "A ready harness now exists: an evals/ case for claude plugin eval running a smoke-preset run end to end."
+  },
+  {
+   "id": "5.3.3.1",
+   "d": "IMP-18",
+   "note": "The plugin eval feature is now known and adopted via an evals/ smoke-run case."
+  },
+  {
+   "id": "5.3.3.1.1",
+   "d": "X-ENV",
+   "note": "Recency and adoption of Claude Code eval features is a platform fact."
+  },
+  {
+   "id": "5.3.3.1.2",
+   "d": "X-HIST",
+   "note": "Past learning materials shaped the gap; IMP-18 covers the actionable part."
+  },
+  {
+   "id": "5.3.3.1.3",
+   "d": "X-ENV",
+   "note": "Claude Code release cadence is outside the plugin's control."
+  },
+  {
+   "id": "5.3.3.1.4",
+   "d": "X-ENV",
+   "note": "Other plugins lacking eval suites is an ecosystem fact."
+  },
+  {
+   "id": "5.3.3.1.5",
+   "d": "X-HIST",
+   "note": "Evaluation was not a priority then; it now is, via IMP-18."
+  },
+  {
+   "id": "5.3.3.2",
+   "d": "IMP-18",
+   "note": "claude plugin eval provides the sandboxed unattended invocation, so headless setup need not be hand-built."
+  },
+  {
+   "id": "5.3.3.2.1",
+   "d": "X-ENV",
+   "note": "Headless mode documentation and permission prompts are Claude Code platform facts."
+  },
+  {
+   "id": "5.3.3.2.2",
+   "d": "IMP-18",
+   "note": "The eval harness triggers the skill orchestrator itself, avoiding custom scripted triggering."
+  },
+  {
+   "id": "5.3.3.2.3",
+   "d": "IMP-02",
+   "note": "Smoke preset cuts per-run fan-out far below 26 agents, making repeated automated runs fit rate limits."
+  },
+  {
+   "id": "5.3.3.2.4",
+   "d": "X-HIST",
+   "note": "Interactive workflow habit explains the gap; nothing further beyond IMP-18."
+  },
+  {
+   "id": "5.3.3.2.5",
+   "d": "IMP-18",
+   "note": "Eval grades output files (shape validity, hygiene.json presence) rather than parsing transcripts."
+  },
+  {
+   "id": "5.3.3.3",
+   "d": "IMP-18",
+   "note": "Rather than general prompt-response libraries, the plugin uses claude plugin eval, which runs the real multi-agent workflow."
+  },
+  {
+   "id": "5.3.3.3.1",
+   "d": "X-ENV",
+   "note": "Eval libraries' chatbot and RAG origins are an ecosystem fact."
+  },
+  {
+   "id": "5.3.3.3.2",
+   "d": "X-ENV",
+   "note": "Scarcity of multi-agent orchestration tooling is an ecosystem fact."
+  },
+  {
+   "id": "5.3.3.3.3",
+   "d": "IMP-18",
+   "note": "The eval inspects produced files directly, capturing the side effects prompt-response harnesses miss."
+  },
+  {
+   "id": "5.3.3.3.4",
+   "d": "R-02",
+   "note": "Adapting third-party eval libraries adds dependencies, which the stdlib-only script declines."
+  },
+  {
+   "id": "5.3.3.3.5",
+   "d": "IMP-06",
+   "note": "Tree-specific hygiene metrics replace generic relevance or BLEU scores that do not fit causal trees."
+  },
+  {
+   "id": "5.3.3.4",
+   "d": "X-ENV",
+   "note": "Emphasis of official plugin development guidance is a platform documentation fact."
+  },
+  {
+   "id": "5.3.3.4.1",
+   "d": "X-ENV",
+   "note": "Documentation writers' priorities are outside the plugin's control."
+  },
+  {
+   "id": "5.3.3.4.2",
+   "d": "X-ENV",
+   "note": "Platform-level maturity of agent behavioral verification is outside the plugin's control."
+  },
+  {
+   "id": "5.3.3.4.3",
+   "d": "X-ENV",
+   "note": "Why structure validators are easier to document is a platform documentation fact."
+  },
+  {
+   "id": "5.3.3.4.4",
+   "d": "X-ENV",
+   "note": "Community plugin culture is ecosystem culture outside the plugin."
+  },
+  {
+   "id": "5.3.3.4.5",
+   "d": "X-ENV",
+   "note": "Tutorial scope is an ecosystem fact outside the plugin."
+  },
+  {
+   "id": "5.3.3.5",
+   "d": "IMP-11",
+   "note": "Stdlib unittest suite covers init, plan, check, assemble, hygiene, show and waves without live model calls."
+  },
+  {
+   "id": "5.3.3.5.1",
+   "d": "IMP-18",
+   "note": "Markdown-interpreted orchestration can only be exercised live, which the smoke-preset eval does end to end."
+  },
+  {
+   "id": "5.3.3.5.2",
+   "d": "IMP-11",
+   "note": "Script logic stops relying on eye verification; unittest covers shapes, planning, checking and assembly."
+  },
+  {
+   "id": "5.3.3.5.3",
+   "d": "R-05",
+   "note": "A record-and-replay fixture system is heavy infrastructure; unit tests plus smoke eval cover the need."
+  },
+  {
+   "id": "5.3.3.5.4",
+   "d": "X-DONE",
+   "note": "A real full run completed on 2026-09-13, so tests can now reflect validated behavior rather than assumptions."
+  },
+  {
+   "id": "5.3.3.5.5",
+   "d": "X-HIST",
+   "note": "Prototype budget priorities explain the gap; IMP-11 covers the actionable part."
+  },
+  {
+   "id": "5.3.4",
+   "d": "IMP-02",
+   "note": "Smoke preset gives a cheap 3x3 rehearsal so evaluation does not require the full 3,905-reason fan-out."
+  },
+  {
+   "id": "5.3.4.1",
+   "d": "IMP-04",
+   "note": "init --model lets runs use cheaper models instead of inheriting the session model for all 26 agents."
+  },
+  {
+   "id": "5.3.4.1.1",
+   "d": "R-04",
+   "note": "Implied remedy is reducing exhaustive coverage; complete trees are the user's requirement."
+  },
+  {
+   "id": "5.3.4.1.2",
+   "d": "IMP-04",
+   "note": "Agent uses model: inherit today; init --model records a choice passed as the Agent model override."
+  },
+  {
+   "id": "5.3.4.1.3",
+   "d": "R-05",
+   "note": "Deduplicating shared prompt tokens means prompt-cache engineering, which is declined."
+  },
+  {
+   "id": "5.3.4.1.4",
+   "d": "IMP-09",
+   "note": "Show subcommand and index.md let users read portions instead of loading the whole ~128k-token output."
+  },
+  {
+   "id": "5.3.4.1.5",
+   "d": "X-DONE",
+   "note": "Cost is now measured: the 2026-09-13 run used about 1.2M subagent tokens; IMP-10 records such figures going forward."
+  },
+  {
+   "id": "5.3.4.2",
+   "d": "IMP-02",
+   "note": "Smoke preset and plan --only give short rehearsal loops instead of a full multi-minute run."
+  },
+  {
+   "id": "5.3.4.2.1",
+   "d": "IMP-04",
+   "note": "Choosing a faster model via init --model shortens long per-branch generation."
+  },
+  {
+   "id": "5.3.4.2.2",
+   "d": "IMP-03",
+   "note": "Plan groups tasks into waves within the concurrency cap, making queuing explicit and predictable."
+  },
+  {
+   "id": "5.3.4.2.3",
+   "d": "IMP-12",
+   "note": "Agents cap their fix loop and reply FAILED; attempts are recorded, bounding retry time."
+  },
+  {
+   "id": "5.3.4.2.4",
+   "d": "IMP-02",
+   "note": "Root-before-branch ordering is inherent; a smoke preset shortens the whole serialized cycle for rehearsal."
+  },
+  {
+   "id": "5.3.4.2.5",
+   "d": "IMP-11",
+   "note": "Stdlib unit tests give sub-second feedback on the deterministic script without a model run."
+  },
+  {
+   "id": "5.3.4.3",
+   "d": "IMP-02",
+   "note": "Cheap smoke runs make multiple runs per problem affordable for variance estimates."
+  },
+  {
+   "id": "5.3.4.3.1",
+   "d": "IMP-02",
+   "note": "Variance can be sampled cheaply with repeated smoke-preset runs before committing to full size."
+  },
+  {
+   "id": "5.3.4.3.2",
+   "d": "X-ENV",
+   "note": "Plugin agent definitions exposing no temperature control is a Claude Code platform fact."
+  },
+  {
+   "id": "5.3.4.3.3",
+   "d": "IMP-02",
+   "note": "Paired prompt-variant comparisons become affordable at smoke size or with plan --only subsets."
+  },
+  {
+   "id": "5.3.4.3.4",
+   "d": "X-ENV",
+   "note": "Engineers' unfamiliarity with statistical evaluation is an industry fact."
+  },
+  {
+   "id": "5.3.4.3.5",
+   "d": "IMP-18",
+   "note": "Eval grades deterministically on shape and hygiene, adding no judge calls or judge variance."
+  },
+  {
+   "id": "5.3.4.4",
+   "d": "IMP-02",
+   "note": "init --preset smoke provides the missing reduced-size configuration for cheap pipeline exercise."
+  },
+  {
+   "id": "5.3.4.4.1",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth stored in run.json replaces constants baked into prompts and validation."
+  },
+  {
+   "id": "5.3.4.4.2",
+   "d": "X-HIST",
+   "note": "Past judgment that configurability was premature; IMP-01 now parameterizes shape."
+  },
+  {
+   "id": "5.3.4.4.3",
+   "d": "IMP-01",
+   "note": "Plan, check, assemble, prompts and examples all read the stored shape, a one-time refactor."
+  },
+  {
+   "id": "5.3.4.4.4",
+   "d": "IMP-02",
+   "note": "plan --only dispatches chosen full-depth branches, so depth-5 decay can be inspected without a full run."
+  },
+  {
+   "id": "5.3.4.4.5",
+   "d": "X-HIST",
+   "note": "Missing design review is past process; the exercise path is now IMP-02 and IMP-18."
+  },
+  {
+   "id": "5.3.4.5",
+   "d": "IMP-02",
+   "note": "Smoke preset keeps experimental runs small so they do not exhaust the everyday usage quota."
+  },
+  {
+   "id": "5.3.4.5.1",
+   "d": "X-ENV",
+   "note": "Subscription quota sharing is a platform billing fact."
+  },
+  {
+   "id": "5.3.4.5.2",
+   "d": "X-ENV",
+   "note": "Rolling usage-limit windows are a platform fact outside the plugin."
+  },
+  {
+   "id": "5.3.4.5.3",
+   "d": "X-ENV",
+   "note": "Lack of funding or a sponsor for API budget is outside the plugin's control."
+  },
+  {
+   "id": "5.3.4.5.4",
+   "d": "IMP-05",
+   "note": "init and plan will report agent count, reason count and measured token estimates before dispatch."
+  },
+  {
+   "id": "5.3.4.5.5",
+   "d": "IMP-05",
+   "note": "Cost preview with user confirmation before full-size runs reduces the risk of surprise lockouts."
+  },
+  {
+   "id": "5.3.5",
+   "d": "IMP-18",
+   "note": "Deferring evals now has a concrete remedy: a smoke-preset eval suite grading shape and hygiene."
+  },
+  {
+   "id": "5.3.5.1",
+   "d": "X-HIST",
+   "note": "Experimental framing of 0.1.0 is past motivation; evaluation gaps are covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "5.3.5.1.1",
+   "d": "X-ENV",
+   "note": "Semantic versioning conventions for 0.x are an ecosystem norm."
+  },
+  {
+   "id": "5.3.5.1.2",
+   "d": "X-HIST",
+   "note": "Origin as a fan-out exploration explains v0.1.0; nothing further actionable."
+  },
+  {
+   "id": "5.3.5.1.3",
+   "d": "IMP-17",
+   "note": "The self-improvement record is the trigger that revisits deferred questions, with a ledger explaining each change."
+  },
+  {
+   "id": "5.3.5.1.4",
+   "d": "X-FALSE",
+   "note": "The plugin is published publicly on GitHub and listed in the RedJay marketplace, so external expectations exist."
+  },
+  {
+   "id": "5.3.5.1.5",
+   "d": "IMP-06",
+   "note": "Hygiene flags give a concrete, mechanical partial answer to what good output means."
+  },
+  {
+   "id": "5.3.5.2",
+   "d": "IMP-06",
+   "note": "Hygiene report surfaces duplicates and restatements without waiting for user reports."
+  },
+  {
+   "id": "5.3.5.2.1",
+   "d": "X-FALSE",
+   "note": "The plugin is public at github.com/JoshuaRamirez/five-whys and listed in the RedJay marketplace."
+  },
+  {
+   "id": "5.3.5.2.2",
+   "d": "X-DONE",
+   "note": "Spot checks were superseded by a full 3,905-reason real run on 2026-09-13 that exposed concrete issues."
+  },
+  {
+   "id": "5.3.5.2.3",
+   "d": "IMP-06",
+   "note": "Hygiene report mechanically flags exact and near duplicates that casual readers miss across thousands of entries."
+  },
+  {
+   "id": "5.3.5.2.4",
+   "d": "R-05",
+   "note": "In-plugin flagging or telemetry backends are declined; IMP-06 flags weak or repeated reasons mechanically."
+  },
+  {
+   "id": "5.3.5.2.5",
+   "d": "IMP-06",
+   "note": "Mechanical flags catch restatement and duplication that fluent prose hides from casual reading."
+  },
+  {
+   "id": "5.3.5.3",
+   "d": "X-HIST",
+   "note": "Build-session psychology favoring visible mechanics; actionable part covered by IMP-18."
+  },
+  {
+   "id": "5.3.5.3.1",
+   "d": "X-HIST",
+   "note": "Author's intellectual preferences explain past priorities; nothing further actionable."
+  },
+  {
+   "id": "5.3.5.3.2",
+   "d": "X-HIST",
+   "note": "Past reluctance toward disappointing numbers; measurement now comes via IMP-10 and IMP-18."
+  },
+  {
+   "id": "5.3.5.3.3",
+   "d": "X-ENV",
+   "note": "Relative acceleration AI coding gives features versus metrics is an ecosystem fact."
+  },
+  {
+   "id": "5.3.5.3.4",
+   "d": "X-HIST",
+   "note": "Session momentum is past process psychology with no artifact change."
+  },
+  {
+   "id": "5.3.5.3.5",
+   "d": "IMP-18",
+   "note": "Eval suite provides a quality target to track progress against: shape validity and hygiene report presence."
+  },
+  {
+   "id": "5.3.5.4",
+   "d": "IMP-06",
+   "note": "Rather than trusting prompt instructions, hygiene report measures whether reasons are distinct and non-restating."
+  },
+  {
+   "id": "5.3.5.4.1",
+   "d": "X-ENV",
+   "note": "Model instruction-following in small trials is a model capability fact."
+  },
+  {
+   "id": "5.3.5.4.2",
+   "d": "IMP-06",
+   "note": "Stated rules get checked mechanically after assembly, replacing confidence that stating them enforces them."
+  },
+  {
+   "id": "5.3.5.4.3",
+   "d": "IMP-07",
+   "note": "Branch prompts will include the other level-1/level-2 reasons so isolated agents avoid reproducing them."
+  },
+  {
+   "id": "5.3.5.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene flags are computed across the whole assembled tree, revealing depth-related repetition that spot checks miss."
+  },
+  {
+   "id": "5.3.5.4.5",
+   "d": "X-HIST",
+   "note": "Generalized trust in model capability was past psychology; verification now comes from IMP-06 and IMP-18."
+  },
+  {
+   "id": "5.3.5.5",
+   "d": "IMP-18",
+   "note": "The eval suite supplies the missing output-quality evidence a definition of done can require."
+  },
+  {
+   "id": "5.3.5.5.1",
+   "d": "X-HIST",
+   "note": "Solo-project process norms explain the gap; the evidence mechanism is IMP-18."
+  },
+  {
+   "id": "5.3.5.5.2",
+   "d": "X-ENV",
+   "note": "Plugin template contents are an ecosystem fact outside this plugin."
+  },
+  {
+   "id": "5.3.5.5.3",
+   "d": "IMP-18",
+   "note": "With hygiene metrics defined, the eval makes a concrete checkable quality item possible."
+  },
+  {
+   "id": "5.3.5.5.4",
+   "d": "X-HIST",
+   "note": "Past judgment that gating version bumps was unnecessary; no further artifact change."
+  },
+  {
+   "id": "5.3.5.5.5",
+   "d": "X-HIST",
+   "note": "Habit reinforced by past tools; nothing actionable beyond IMP-18."
+  }
+ ]
+}

@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "3.5.1",
+   "d": "IMP-08",
+   "note": "Outline-before-write and targeted Edit repairs replace the one-shot three-level Write that the dispatch template currently requests."
+  },
+  {
+   "id": "3.5.1.1",
+   "d": "X-HIST",
+   "note": "Round-trip minimization explains the v0.1.0 design; the quality cost is addressed by IMP-08 staged drafting."
+  },
+  {
+   "id": "3.5.1.1.1",
+   "d": "X-HIST",
+   "note": "Prototype impressions shaped the design; nothing further to change beyond the staged workflow and measurement already catalogued."
+  },
+  {
+   "id": "3.5.1.1.2",
+   "d": "X-ENV",
+   "note": "Per-turn latency and rate limits are Claude Code and API properties the plugin cannot change."
+  },
+  {
+   "id": "3.5.1.1.3",
+   "d": "IMP-03",
+   "note": "Plan-level dispatch waves under the 20-agent cap make larger agent counts dispatchable without refused calls."
+  },
+  {
+   "id": "3.5.1.1.4",
+   "d": "IMP-10",
+   "note": "Run.json and the assembled header record created-to-assembled duration, replacing speed-by-feel with measurement."
+  },
+  {
+   "id": "3.5.1.1.5",
+   "d": "X-HIST",
+   "note": "The pipeline-first v0.1.0 goal is past motivation; quality work now proceeds via IMP-06 and IMP-08."
+  },
+  {
+   "id": "3.5.1.2",
+   "d": "X-HIST",
+   "note": "One fragment per agent is a sound retained design; generic deep reasons are addressed in agent instructions, not assembly."
+  },
+  {
+   "id": "3.5.1.2.1",
+   "d": "X-HIST",
+   "note": "Accurate description of the assembler's one-to-one mapping, kept deliberately; no artifact change implied."
+  },
+  {
+   "id": "3.5.1.2.2",
+   "d": "IMP-19",
+   "note": "Partial assembly with explicit missing-branch markers supplies the incremental-output handling without per-fragment merge logic."
+  },
+  {
+   "id": "3.5.1.2.3",
+   "d": "IMP-11",
+   "note": "A stdlib unittest suite lets the script grow beyond minimal scope while staying trustworthy."
+  },
+  {
+   "id": "3.5.1.2.4",
+   "d": "X-ENV",
+   "note": "Subagents returning only text is a Claude Code constraint; file handoff remains the right workaround."
+  },
+  {
+   "id": "3.5.1.2.5",
+   "d": "IMP-08",
+   "note": "Targeted Edit repairs let agents fix errors without regenerating the whole subtree, loosening the whole-branch unit."
+  },
+  {
+   "id": "3.5.1.3",
+   "d": "IMP-08",
+   "note": "The single-Write mandate is replaced by outline-before-write plus targeted Edit repairs in the agent instructions."
+  },
+  {
+   "id": "3.5.1.3.1",
+   "d": "IMP-08",
+   "note": "Overwrite risk is avoided by using Edit for staged filling and repairs instead of repeated Writes."
+  },
+  {
+   "id": "3.5.1.3.2",
+   "d": "X-ENV",
+   "note": "Partial JSON failing to parse is inherent to the format; IMP-08 staging via skeleton plus Edit sidesteps it."
+  },
+  {
+   "id": "3.5.1.3.3",
+   "d": "X-HIST",
+   "note": "Drafting order of the agent definition is history; the rewrite for depth degradation is IMP-08."
+  },
+  {
+   "id": "3.5.1.3.4",
+   "d": "X-HIST",
+   "note": "An authoring assumption; measurement (IMP-10) and hygiene flags (IMP-06) now test it."
+  },
+  {
+   "id": "3.5.1.3.5",
+   "d": "IMP-18",
+   "note": "An eval suite running smoke-preset trees provides a harness to compare instruction variants."
+  },
+  {
+   "id": "3.5.1.4",
+   "d": "IMP-01",
+   "note": "Parameterized breadth and depth with a derived root/branch split removes the hard-coded level-2 partition."
+  },
+  {
+   "id": "3.5.1.4.1",
+   "d": "R-04",
+   "note": "The complete 5x5x5x5x5 tree is the user's explicit requirement; shape becomes configurable but trees stay complete."
+  },
+  {
+   "id": "3.5.1.4.2",
+   "d": "IMP-01",
+   "note": "The root/branch split becomes derived from stored shape rather than fixed at level 2."
+  },
+  {
+   "id": "3.5.1.4.3",
+   "d": "IMP-03",
+   "note": "Waves no larger than the concurrency cap make 125-agent dispatch feasible, just slower."
+  },
+  {
+   "id": "3.5.1.4.4",
+   "d": "IMP-01",
+   "note": "True today (BRANCHING, DEPTH, ROOT_DEPTH constants); IMP-01 moves shape into run.json for all commands."
+  },
+  {
+   "id": "3.5.1.4.5",
+   "d": "IMP-01",
+   "note": "A derived, parameterized split makes items-per-agent a tunable instead of a side effect of minimizing agents."
+  },
+  {
+   "id": "3.5.1.5",
+   "d": "IMP-10",
+   "note": "Per-level counts and average words per level are recorded, making level-wise degradation visible."
+  },
+  {
+   "id": "3.5.1.5.1",
+   "d": "IMP-06",
+   "note": "The hygiene report adds content checks: duplicates, near-duplicates, ancestor restatements, over-length reasons."
+  },
+  {
+   "id": "3.5.1.5.2",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13 producing 3,905 reasons, and this tree reads that output critically."
+  },
+  {
+   "id": "3.5.1.5.3",
+   "d": "IMP-18",
+   "note": "An eval case for claude plugin eval exercises a smoke run and grades shape validity and hygiene."
+  },
+  {
+   "id": "3.5.1.5.4",
+   "d": "IMP-09",
+   "note": "The show subcommand and level 1-2 index.md let reviewers page branch by branch instead of reading everything."
+  },
+  {
+   "id": "3.5.1.5.5",
+   "d": "IMP-15",
+   "note": "Clarifies that mechanical self-inspection (hygiene, measurement) is allowed while interpretation stays with the user."
+  },
+  {
+   "id": "3.5.2",
+   "d": "IMP-08",
+   "note": "Grounding in problem specifics, outline-before-write and a specific-vs-generic example counter template drift in long fragments."
+  },
+  {
+   "id": "3.5.2.1",
+   "d": "X-ENV",
+   "note": "Conditioning on earlier output is how autoregressive models work; the plugin cannot change it."
+  },
+  {
+   "id": "3.5.2.1.1",
+   "d": "X-ENV",
+   "note": "Decoding dynamics are a model property outside the plugin's control."
+  },
+  {
+   "id": "3.5.2.1.2",
+   "d": "IMP-08",
+   "note": "Agent instruction rewrite replaces rigid generic guidance with specificity grounding, addressing uniform one-sentence frames."
+  },
+  {
+   "id": "3.5.2.1.3",
+   "d": "IMP-08",
+   "note": "Uniform content is countered by specificity grounding and examples; the JSON format itself is required output."
+  },
+  {
+   "id": "3.5.2.1.4",
+   "d": "IMP-08",
+   "note": "The fixed cause-kind checklist is replaced with problem-specific grounding, including guidance for deep levels."
+  },
+  {
+   "id": "3.5.2.1.5",
+   "d": "X-ENV",
+   "note": "The Agent tool exposes no sampling temperature, so Claude Code controls it, not the plugin."
+  },
+  {
+   "id": "3.5.2.2",
+   "d": "IMP-08",
+   "note": "Outline-before-write gives agents an explicit planning step before committing leaf reasons."
+  },
+  {
+   "id": "3.5.2.2.1",
+   "d": "IMP-15",
+   "note": "Clarifies the prohibition targets ranking, summarizing and interpretation, not drafting or outlining the fragment."
+  },
+  {
+   "id": "3.5.2.2.2",
+   "d": "IMP-08",
+   "note": "Outlining first and targeted Edit repairs give agents revision room beyond one Write argument."
+  },
+  {
+   "id": "3.5.2.2.3",
+   "d": "IMP-08",
+   "note": "An explicit outline-before-write step provides deliberate planning without relying on extended thinking settings."
+  },
+  {
+   "id": "3.5.2.2.4",
+   "d": "X-HIST",
+   "note": "Token-avoidance was the original motive; IMP-08 now accepts outline cost for better leaves."
+  },
+  {
+   "id": "3.5.2.2.5",
+   "d": "IMP-08",
+   "note": "Outline-before-write directly supplies the staged workflow of drafting upper levels before filling leaves."
+  },
+  {
+   "id": "3.5.2.3",
+   "d": "IMP-08",
+   "note": "Grounding instructions and outlines keep leaves tied to problem specifics despite token distance."
+  },
+  {
+   "id": "3.5.2.3.1",
+   "d": "IMP-08",
+   "note": "Outline-then-fill with Edits places each leaf's generation near its parent outline rather than one long stream."
+  },
+  {
+   "id": "3.5.2.3.2",
+   "d": "IMP-08",
+   "note": "Instructions to ground every reason in stated problem specifics counter the single upfront mention."
+  },
+  {
+   "id": "3.5.2.3.3",
+   "d": "X-ENV",
+   "note": "Attention decay over distance is a model characteristic outside the plugin's control."
+  },
+  {
+   "id": "3.5.2.3.4",
+   "d": "IMP-08",
+   "note": "A specific-vs-generic example and grounding guidance keep level-4 parents concrete."
+  },
+  {
+   "id": "3.5.2.3.5",
+   "d": "IMP-08",
+   "note": "Outline-before-write keeps the ancestor structure explicit while filling each subtree."
+  },
+  {
+   "id": "3.5.2.4",
+   "d": "IMP-08",
+   "note": "Staged outline and Edit-based filling relieve the pressure of producing everything in one response."
+  },
+  {
+   "id": "3.5.2.4.1",
+   "d": "X-FALSE",
+   "note": "Measured output is about 33 tokens per reason, so a 155-reason fragment is roughly 5k tokens, a modest share."
+  },
+  {
+   "id": "3.5.2.4.2",
+   "d": "X-ENV",
+   "note": "Length-anticipation behavior is a model trait the plugin cannot alter."
+  },
+  {
+   "id": "3.5.2.4.3",
+   "d": "IMP-27",
+   "note": "NEW reconciled: prompts now state expected output tokens."
+  },
+  {
+   "id": "3.5.2.4.4",
+   "d": "IMP-08",
+   "note": "Staged filling with targeted Edits removes the all-or-nothing single Write that makes truncation feel dangerous."
+  },
+  {
+   "id": "3.5.2.4.5",
+   "d": "IMP-08",
+   "note": "Outline-before-write with targeted Edits provides the staged, chunked writing path."
+  },
+  {
+   "id": "3.5.2.5",
+   "d": "X-ENV",
+   "note": "Model training objectives are outside the plugin's control."
+  },
+  {
+   "id": "3.5.2.5.1",
+   "d": "X-ENV",
+   "note": "Training reward design belongs to model developers, not the plugin."
+  },
+  {
+   "id": "3.5.2.5.2",
+   "d": "X-ENV",
+   "note": "Preference data composition is an ecosystem fact the plugin cannot change."
+  },
+  {
+   "id": "3.5.2.5.3",
+   "d": "X-ENV",
+   "note": "Preference-tuning bias toward safe statements is a model property."
+  },
+  {
+   "id": "3.5.2.5.4",
+   "d": "X-ENV",
+   "note": "Industry under-measurement of late-list degradation is outside the plugin; IMP-06 measures locally."
+  },
+  {
+   "id": "3.5.2.5.5",
+   "d": "X-HIST",
+   "note": "An author assumption behind v0.1.0; hygiene and measurement improvements now test it."
+  },
+  {
+   "id": "3.5.3",
+   "d": "IMP-16",
+   "note": "Optional context intake stores specifics in run.json and includes them in every agent prompt."
+  },
+  {
+   "id": "3.5.3.1",
+   "d": "IMP-16",
+   "note": "The skill accepts extra context and asks once for specifics when the statement is thin."
+  },
+  {
+   "id": "3.5.3.1.1",
+   "d": "IMP-16",
+   "note": "Adds a one-question intake when the problem statement lacks key specifics."
+  },
+  {
+   "id": "3.5.3.1.2",
+   "d": "IMP-16",
+   "note": "User-supplied context such as logs or history is stored and included in every dispatch prompt."
+  },
+  {
+   "id": "3.5.3.1.3",
+   "d": "X-HIST",
+   "note": "Prompt-size cost motive; IMP-16 now accepts larger prompts to carry context."
+  },
+  {
+   "id": "3.5.3.1.4",
+   "d": "IMP-16",
+   "note": "Intake checks for thin statements and asks for specifics instead of assuming sufficiency."
+  },
+  {
+   "id": "3.5.3.1.5",
+   "d": "IMP-08",
+   "note": "The 'assume typical context' rule is replaced with explicit stated assumptions and grounding."
+  },
+  {
+   "id": "3.5.3.2",
+   "d": "IMP-16",
+   "note": "Context gathered once at intake supplies specifics without per-agent research."
+  },
+  {
+   "id": "3.5.3.2.1",
+   "d": "X-FALSE",
+   "note": "The agent's tools are Write, Read and Bash; Read and Bash can inspect files, though instructions never ask it."
+  },
+  {
+   "id": "3.5.3.2.2",
+   "d": "IMP-16",
+   "note": "Rather than investigation per agent, intake context is included in every prompt for grounding."
+  },
+  {
+   "id": "3.5.3.2.3",
+   "d": "IMP-16",
+   "note": "Intake shares context once across all prompts, avoiding multiplied per-agent research cost."
+  },
+  {
+   "id": "3.5.3.2.4",
+   "d": "IMP-16",
+   "note": "Domain-agnostic context intake works for non-code problems where a code research step would not."
+  },
+  {
+   "id": "3.5.3.2.5",
+   "d": "IMP-08",
+   "note": "The single-Write workflow is replaced by outline-before-write and Edit repairs, allowing intermediate tool use."
+  },
+  {
+   "id": "3.5.3.3",
+   "d": "IMP-16",
+   "note": "Intake adds facts beyond a short statement so deep levels have more to draw on."
+  },
+  {
+   "id": "3.5.3.3.1",
+   "d": "IMP-16",
+   "note": "Extra context supplied at intake enlarges the fact supply available to all 125 leaves per branch."
+  },
+  {
+   "id": "3.5.3.3.2",
+   "d": "IMP-08",
+   "note": "Grounding and a specific-vs-generic example counter drift toward stock systemic themes."
+  },
+  {
+   "id": "3.5.3.3.3",
+   "d": "R-04",
+   "note": "The fivefold fan-out at every level is the user's explicit requirement and stays."
+  },
+  {
+   "id": "3.5.3.3.4",
+   "d": "R-04",
+   "note": "The 3,905-reason total is the user's requirement; configurable shape (IMP-01) exists but trees stay complete."
+  },
+  {
+   "id": "3.5.3.3.5",
+   "d": "IMP-16",
+   "note": "Context lives in run.json and plan regenerates prompts, so users can add facts between rounds."
+  },
+  {
+   "id": "3.5.3.4",
+   "d": "IMP-08",
+   "note": "The fixed generic cause-kind checklist is replaced with grounding in the problem's specifics."
+  },
+  {
+   "id": "3.5.3.4.1",
+   "d": "IMP-08",
+   "note": "Removes the eight-kind list that doubles as a template, substituting problem-specific grounding."
+  },
+  {
+   "id": "3.5.3.4.2",
+   "d": "IMP-08",
+   "note": "Without a category checklist, agents cannot map slots to stock categories and boilerplate phrases."
+  },
+  {
+   "id": "3.5.3.4.3",
+   "d": "IMP-08",
+   "note": "Grounding in the problem's own specifics replaces untailored generic categories."
+  },
+  {
+   "id": "3.5.3.4.4",
+   "d": "IMP-08",
+   "note": "Dropping the eight-category checklist removes the cycling pattern across parents."
+  },
+  {
+   "id": "3.5.3.4.5",
+   "d": "IMP-08",
+   "note": "Adds a specific-vs-generic example of a grounded deep reason to the instructions."
+  },
+  {
+   "id": "3.5.3.5",
+   "d": "IMP-08",
+   "note": "Outline-before-write and specificity guidance let agents sharpen abstract level-4 parents before expanding them."
+  },
+  {
+   "id": "3.5.3.5.1",
+   "d": "R-03",
+   "note": "A blocking quality gate between levels implies model verdicts in the loop, declined as flaky and costly."
+  },
+  {
+   "id": "3.5.3.5.2",
+   "d": "IMP-08",
+   "note": "Outline-before-write gives agents a checkpoint to judge parent concreteness before writing children."
+  },
+  {
+   "id": "3.5.3.5.3",
+   "d": "IMP-08",
+   "note": "The instruction rewrite clarifies deeper means more underlying yet still specific, not more abstract."
+  },
+  {
+   "id": "3.5.3.5.4",
+   "d": "R-07",
+   "note": "Orchestrator review between levels would serialize the run; IMP-07's cheap digest is the allowed sharing."
+  },
+  {
+   "id": "3.5.3.5.5",
+   "d": "IMP-08",
+   "note": "Specific-vs-generic example and grounding counter the drift toward easy abstract parents."
+  },
+  {
+   "id": "3.5.4",
+   "d": "IMP-06",
+   "note": "A non-blocking hygiene report adds content signals beyond the shape check."
+  },
+  {
+   "id": "3.5.4.1",
+   "d": "IMP-06",
+   "note": "Hygiene report checks duplicates, near-duplicates, restatements and over-length reasons in addition to shape."
+  },
+  {
+   "id": "3.5.4.1.1",
+   "d": "X-HIST",
+   "note": "Cheap deterministic shape validation explains v0.1.0; stdlib hygiene heuristics extend it."
+  },
+  {
+   "id": "3.5.4.1.2",
+   "d": "IMP-06",
+   "note": "Builds the stdlib heuristics: token-overlap near-duplicates, ancestor restatements and length flags."
+  },
+  {
+   "id": "3.5.4.1.3",
+   "d": "X-HIST",
+   "note": "Plumbing-first prioritization is past process; output evaluation is now catalogued."
+  },
+  {
+   "id": "3.5.4.1.4",
+   "d": "R-03",
+   "note": "Correct rationale: model judges in the blocking fix loop stay declined; checks remain deterministic."
+  },
+  {
+   "id": "3.5.4.1.5",
+   "d": "IMP-06",
+   "note": "Hygiene defines concrete mechanical criteria for weak reasons without a subjective genericness rule."
+  },
+  {
+   "id": "3.5.4.2",
+   "d": "R-01",
+   "note": "Agent self-scoring of reason quality is ranking or judgment, which the user's requirement leaves to the user."
+  },
+  {
+   "id": "3.5.4.2.1",
+   "d": "X-HIST",
+   "note": "One-line replies keep orchestrator context small; a sound retained design with nothing to change."
+  },
+  {
+   "id": "3.5.4.2.2",
+   "d": "X-HIST",
+   "note": "Context-bloat avoidance is valid and retained; no artifact change implied."
+  },
+  {
+   "id": "3.5.4.2.3",
+   "d": "IMP-15",
+   "note": "Clarifies the prohibition covers ranking and summarizing, not mechanical self-checks."
+  },
+  {
+   "id": "3.5.4.2.4",
+   "d": "R-01",
+   "note": "Confidence or specificity scores per reason amount to plugin-side ranking, declined."
+  },
+  {
+   "id": "3.5.4.2.5",
+   "d": "IMP-06",
+   "note": "hygiene.json is the mechanical quality feedback, surfaced to the user rather than acted on automatically."
+  },
+  {
+   "id": "3.5.4.3",
+   "d": "IMP-06",
+   "note": "Non-blocking hygiene flags annotate vague, duplicate and restated reasons without retries."
+  },
+  {
+   "id": "3.5.4.3.1",
+   "d": "R-03",
+   "note": "Adding quality verdicts to the blocking fix-until-OK loop is declined; flags stay non-blocking."
+  },
+  {
+   "id": "3.5.4.3.2",
+   "d": "R-02",
+   "note": "Semantic embeddings would break the offline stdlib install; IMP-06 uses token overlap instead."
+  },
+  {
+   "id": "3.5.4.3.3",
+   "d": "R-03",
+   "note": "Quality-driven retries multiply cost and risk loops; declined in favor of non-blocking flags."
+  },
+  {
+   "id": "3.5.4.3.4",
+   "d": "IMP-06",
+   "note": "Hygiene reports repetition counts and flags; thresholds annotate only, with judgment left to the user."
+  },
+  {
+   "id": "3.5.4.3.5",
+   "d": "IMP-06",
+   "note": "The script reads content mechanically at assembly, so vagueness proxies surface without orchestrator reading."
+  },
+  {
+   "id": "3.5.4.4",
+   "d": "IMP-08",
+   "note": "Specificity instructions and a contrast example shift agents from count-completion toward substance."
+  },
+  {
+   "id": "3.5.4.4.1",
+   "d": "IMP-08",
+   "note": "The rewritten instructions emphasize grounded specificity alongside the required count stated in the prompt."
+  },
+  {
+   "id": "3.5.4.4.2",
+   "d": "X-ENV",
+   "note": "Training toward exact counts is a model property outside the plugin's control."
+  },
+  {
+   "id": "3.5.4.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene flags make some weak lists visible instead of silently passing."
+  },
+  {
+   "id": "3.5.4.4.4",
+   "d": "IMP-08",
+   "note": "The specific-vs-generic example shows that a capped sentence can still be substantive or empty."
+  },
+  {
+   "id": "3.5.4.4.5",
+   "d": "IMP-08",
+   "note": "Adds a specific-vs-generic example contrasting strong and weak reasons."
+  },
+  {
+   "id": "3.5.4.5",
+   "d": "IMP-15",
+   "note": "Separates mechanical aids the plugin provides from interpretation that stays with the user."
+  },
+  {
+   "id": "3.5.4.5.1",
+   "d": "R-01",
+   "note": "Leaving analysis to the user is the explicit requirement; plugin-side judgment stays declined."
+  },
+  {
+   "id": "3.5.4.5.2",
+   "d": "IMP-09",
+   "note": "Show subcommand, index.md and branch-by-branch loading make the ~128k-token output reviewable in parts."
+  },
+  {
+   "id": "3.5.4.5.3",
+   "d": "IMP-17",
+   "note": "This self-improvement tree, catalog and ledger are the channel turning review findings into prompt changes."
+  },
+  {
+   "id": "3.5.4.5.4",
+   "d": "R-05",
+   "note": "Collecting usage signals needs telemetry infrastructure, which is declined as heavy."
+  },
+  {
+   "id": "3.5.4.5.5",
+   "d": "R-06",
+   "note": "Recruiting other early users or reviewers is an organizational remedy outside the plugin."
+  },
+  {
+   "id": "3.5.5",
+   "d": "IMP-04",
+   "note": "init --model lets users choose the branch agent model instead of inheriting silently."
+  },
+  {
+   "id": "3.5.5.1",
+   "d": "IMP-04",
+   "note": "Model selection recorded in run.json and passed per task as the Agent model override."
+  },
+  {
+   "id": "3.5.5.1.1",
+   "d": "IMP-04",
+   "note": "Uses stable aliases with inherit as default, avoiding hard-coded release-specific model names."
+  },
+  {
+   "id": "3.5.5.1.2",
+   "d": "IMP-18",
+   "note": "The eval suite gives a repeatable harness to compare runs across model choices."
+  },
+  {
+   "id": "3.5.5.1.3",
+   "d": "IMP-04",
+   "note": "Users can opt into a stronger model; docs explain the cost-quality trade-off."
+  },
+  {
+   "id": "3.5.5.1.4",
+   "d": "X-ENV",
+   "note": "Frontmatter and Agent tool accept only model aliases; that granularity is Claude Code's."
+  },
+  {
+   "id": "3.5.5.1.5",
+   "d": "IMP-04",
+   "note": "Explicit recorded model choice and documented trade-offs make weaker defaults visible, not silent."
+  },
+  {
+   "id": "3.5.5.2",
+   "d": "IMP-05",
+   "note": "Cost and size previews with measured estimates make spend an informed choice rather than fixed thrift."
+  },
+  {
+   "id": "3.5.5.2.1",
+   "d": "IMP-05",
+   "note": "The preview reports agent count and token estimates so the 25x multiplier is visible before dispatch."
+  },
+  {
+   "id": "3.5.5.2.2",
+   "d": "X-HIST",
+   "note": "Design-time cost concern is past motivation; preview and model choice now surface it."
+  },
+  {
+   "id": "3.5.5.2.3",
+   "d": "IMP-10",
+   "note": "Recording per-level counts, words and approximate tokens exposes spend per reason, not just per run."
+  },
+  {
+   "id": "3.5.5.2.4",
+   "d": "X-ENV",
+   "note": "Subscription rate limits are set by Anthropic, outside the plugin's control."
+  },
+  {
+   "id": "3.5.5.2.5",
+   "d": "IMP-04",
+   "note": "Model selection is the option to trade more cost for better deep-level quality."
+  },
+  {
+   "id": "3.5.5.3",
+   "d": "IMP-08",
+   "note": "Outline-before-write adds deliberate planning before each reason is committed."
+  },
+  {
+   "id": "3.5.5.3.1",
+   "d": "IMP-10",
+   "note": "Roughly accurate (measured ~33 tokens per reason); IMP-10 records such averages per run."
+  },
+  {
+   "id": "3.5.5.3.2",
+   "d": "IMP-08",
+   "note": "An explicit outline step reserves planning effort separate from the capped final sentences."
+  },
+  {
+   "id": "3.5.5.3.3",
+   "d": "IMP-08",
+   "note": "Outline-before-write moves reasoning into a prior planning step instead of inline JSON typing."
+  },
+  {
+   "id": "3.5.5.3.4",
+   "d": "IMP-08",
+   "note": "Outlining lets agents draft and revise candidates before writing final reasons."
+  },
+  {
+   "id": "3.5.5.3.5",
+   "d": "X-HIST",
+   "note": "Output-size motive for concise leaves; the length cap stays and hygiene flags over-length."
+  },
+  {
+   "id": "3.5.5.4",
+   "d": "IMP-08",
+   "note": "Adds a specific-vs-generic example so agents see demonstrated quality, not only rules."
+  },
+  {
+   "id": "3.5.5.4.1",
+   "d": "IMP-07",
+   "note": "Keeps small independent contexts but adds the level-1/2 sibling digest to each branch prompt."
+  },
+  {
+   "id": "3.5.5.4.2",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13; its 3,905-reason tree now exists in docs/self-improvement."
+  },
+  {
+   "id": "3.5.5.4.3",
+   "d": "IMP-08",
+   "note": "A short specific-vs-generic example avoids the cost of a full 155-reason few-shot."
+  },
+  {
+   "id": "3.5.5.4.4",
+   "d": "IMP-08",
+   "note": "A small contrast example teaches specificity with little topical content to leak."
+  },
+  {
+   "id": "3.5.5.4.5",
+   "d": "IMP-08",
+   "note": "Supplements abstract rules with a demonstrated specific-vs-generic example."
+  },
+  {
+   "id": "3.5.5.5",
+   "d": "R-03",
+   "note": "A model-driven critique-and-regenerate pass is declined as costly and flaky; non-blocking hygiene flags instead."
+  },
+  {
+   "id": "3.5.5.5.1",
+   "d": "IMP-06",
+   "note": "Assembly gains a non-blocking hygiene step between fragment checks and final output."
+  },
+  {
+   "id": "3.5.5.5.2",
+   "d": "R-03",
+   "note": "A critique-and-revise agent loop is the declined model-judge approach; hygiene flags substitute."
+  },
+  {
+   "id": "3.5.5.5.3",
+   "d": "IMP-10",
+   "note": "Recorded tokens, bytes and duration per run replace unmeasured cost assumptions."
+  },
+  {
+   "id": "3.5.5.5.4",
+   "d": "IMP-08",
+   "note": "Targeted Edit repairs and outline-first drafting replace the write-once framing."
+  },
+  {
+   "id": "3.5.5.5.5",
+   "d": "IMP-06",
+   "note": "hygiene.json flags duplicates, restatements and over-length reasons, giving users a target list."
+  }
+ ]
+}

@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "5.1.1",
+   "d": "IMP-01",
+   "note": "SKILL.md still hard-codes 3,905 and 26 agents; IMP-01 makes prompts, docs and examples read the stored shape."
+  },
+  {
+   "id": "5.1.1.1",
+   "d": "IMP-01",
+   "note": "Five feels definitional; init --breadth/--depth keeps 5/5 defaults while making the shape a tunable choice."
+  },
+  {
+   "id": "5.1.1.1.1",
+   "d": "X-ENV",
+   "note": "Toyota-derived teaching convention of five levels is an industry fact outside the plugin."
+  },
+  {
+   "id": "5.1.1.1.2",
+   "d": "X-HIST",
+   "note": "Name encodes the method; defaults remain 5/5 per the user's requirement, so the name needs no change."
+  },
+  {
+   "id": "5.1.1.1.3",
+   "d": "IMP-02",
+   "note": "Unsurveyed variants like three-whys become available as the 3x3 smoke preset; adaptive depth stays declined."
+  },
+  {
+   "id": "5.1.1.1.4",
+   "d": "X-HIST",
+   "note": "The user did require the textbook 5x5x5x5x5; that motivation is accurate and defaults preserve it."
+  },
+  {
+   "id": "5.1.1.1.5",
+   "d": "IMP-14",
+   "note": "README design decisions will record why breadth five is the default and that it is configurable."
+  },
+  {
+   "id": "5.1.1.2",
+   "d": "X-FALSE",
+   "note": "The script already has a total_reasons(depth) helper computing sums of powers of BRANCHING."
+  },
+  {
+   "id": "5.1.1.2.1",
+   "d": "X-FALSE",
+   "note": "plan, check and assemble share BRANCHING, DEPTH and total_reasons(); arithmetic is not repeated as literals."
+  },
+  {
+   "id": "5.1.1.2.2",
+   "d": "IMP-01",
+   "note": "Script prompts compute totals, but SKILL.md reuses drafted literals (3,905, 20 then 5); IMP-01 derives them."
+  },
+  {
+   "id": "5.1.1.2.3",
+   "d": "X-FALSE",
+   "note": "fivewhys.py defines a shared constants block (BRANCHING, DEPTH, ROOT_DEPTH, BRANCH_DEPTH) at module top."
+  },
+  {
+   "id": "5.1.1.2.4",
+   "d": "X-FALSE",
+   "note": "Neither 155 nor 3,905 appears in the script; both are computed from module constants."
+  },
+  {
+   "id": "5.1.1.2.5",
+   "d": "X-FALSE",
+   "note": "A size function exists: total_reasons(depth) with BRANCHING as a module constant."
+  },
+  {
+   "id": "5.1.1.3",
+   "d": "IMP-01",
+   "note": "Exact counts stay required, but validation will read breadth and depth from run.json instead of constants."
+  },
+  {
+   "id": "5.1.1.3.1",
+   "d": "IMP-06",
+   "note": "Beyond list-length checks, assemble will write hygiene.json flagging duplicates, restatements and over-length reasons."
+  },
+  {
+   "id": "5.1.1.3.2",
+   "d": "R-04",
+   "note": "A range or configurable minimum would allow incomplete trees; exact complete fan-out is the user's requirement."
+  },
+  {
+   "id": "5.1.1.3.3",
+   "d": "X-HIST",
+   "note": "Concrete counts in errors help agents repair fragments; that remains desirable with a stored shape."
+  },
+  {
+   "id": "5.1.1.3.4",
+   "d": "X-FALSE",
+   "note": "plan and check already derive expectations from the same module constants, not independent literals."
+  },
+  {
+   "id": "5.1.1.3.5",
+   "d": "R-02",
+   "note": "JSON Schema validation would need the third-party jsonschema package, breaking the zero-dependency install."
+  },
+  {
+   "id": "5.1.1.4",
+   "d": "IMP-01",
+   "note": "The level-2 root/branch split becomes derived from the stored shape rather than tuned to 25 agents."
+  },
+  {
+   "id": "5.1.1.4.1",
+   "d": "IMP-03",
+   "note": "Real ceiling is Claude Code's 20-subagent cap; plan will group tasks into waves no larger than the cap."
+  },
+  {
+   "id": "5.1.1.4.2",
+   "d": "IMP-01",
+   "note": "Split point is derived per shape under IMP-01, with waves (IMP-03) handling larger agent counts."
+  },
+  {
+   "id": "5.1.1.4.3",
+   "d": "IMP-10",
+   "note": "Assembled header and run.json will record bytes, tokens, duration and attempts, giving measurements for split decisions."
+  },
+  {
+   "id": "5.1.1.4.4",
+   "d": "X-HIST",
+   "note": "Rationale for picking 155-reason fragments; the derived split under IMP-01 covers any further action."
+  },
+  {
+   "id": "5.1.1.4.5",
+   "d": "IMP-01",
+   "note": "A derived root/branch split computed from stored breadth and depth is the planner this reason says was missing."
+  },
+  {
+   "id": "5.1.1.5",
+   "d": "X-HIST",
+   "note": "Prompts already render computed numbers concretely via f-strings; the concreteness motivation needs no change."
+  },
+  {
+   "id": "5.1.1.5.1",
+   "d": "X-ENV",
+   "note": "Models following concrete numeric targets more reliably is a model behavior fact."
+  },
+  {
+   "id": "5.1.1.5.2",
+   "d": "X-HIST",
+   "note": "Authoring history of prompt text; prompts are now formatted from constants, and IMP-01 finishes the job."
+  },
+  {
+   "id": "5.1.1.5.3",
+   "d": "X-HIST",
+   "note": "Past reinforcement from early drafts; nothing further actionable beyond IMP-01."
+  },
+  {
+   "id": "5.1.1.5.4",
+   "d": "X-HIST",
+   "note": "Readable plan output is a benefit worth keeping; no artifact change implied."
+  },
+  {
+   "id": "5.1.1.5.5",
+   "d": "R-02",
+   "note": "A templating library would add a third-party dependency; stdlib f-strings already suffice."
+  },
+  {
+   "id": "5.1.2",
+   "d": "IMP-01",
+   "note": "A general tree specification is the shape stored in run.json that every subcommand reads."
+  },
+  {
+   "id": "5.1.2.1",
+   "d": "IMP-02",
+   "note": "A second use case now exists: init --preset smoke gives a cheap 3x3 rehearsal."
+  },
+  {
+   "id": "5.1.2.1.1",
+   "d": "X-HIST",
+   "note": "The user did specify 5x5x5x5x5; accurate history, and defaults keep that shape."
+  },
+  {
+   "id": "5.1.2.1.2",
+   "d": "X-HIST",
+   "note": "Build-order history; end-to-end first was reasonable and generalization now follows in IMP-01."
+  },
+  {
+   "id": "5.1.2.1.3",
+   "d": "IMP-02",
+   "note": "The imagined three-by-three triage becomes the --preset smoke 3x3 shape."
+  },
+  {
+   "id": "5.1.2.1.4",
+   "d": "X-HIST",
+   "note": "Framing history; exhaustiveness remains the user's requirement while the shape becomes adjustable."
+  },
+  {
+   "id": "5.1.2.1.5",
+   "d": "IMP-14",
+   "note": "README design decisions will write down requirements and parameters that previously lived only in conversation."
+  },
+  {
+   "id": "5.1.2.2",
+   "d": "IMP-01",
+   "note": "The two-root-level assumption goes away when the root/branch split is derived from the stored shape."
+  },
+  {
+   "id": "5.1.2.2.1",
+   "d": "X-FALSE",
+   "note": "Ids are parsed with split('.') and int(), so multi-digit child indexes already work."
+  },
+  {
+   "id": "5.1.2.2.2",
+   "d": "X-HIST",
+   "note": "Human-scannable fragment names are a good choice and remain; nothing to change."
+  },
+  {
+   "id": "5.1.2.2.3",
+   "d": "IMP-01",
+   "note": "Segment counts tied to ROOT_DEPTH become derived from the stored depth and split."
+  },
+  {
+   "id": "5.1.2.2.4",
+   "d": "IMP-11",
+   "note": "unittest coverage of init, plan and assemble across shapes exercises alternate run structures."
+  },
+  {
+   "id": "5.1.2.2.5",
+   "d": "IMP-19",
+   "note": "Enumerating expected ids is correct; assemble --partial will mark missing branches instead of failing outright."
+  },
+  {
+   "id": "5.1.2.3",
+   "d": "IMP-01",
+   "note": "Subcommands will read shape from run.json rather than module globals."
+  },
+  {
+   "id": "5.1.2.3.1",
+   "d": "X-HIST",
+   "note": "Single-file stdlib script is a deliberate, kept decision (see R-02); no change implied."
+  },
+  {
+   "id": "5.1.2.3.2",
+   "d": "IMP-01",
+   "note": "Globals remain defaults only; per-run shape comes from run.json under IMP-01."
+  },
+  {
+   "id": "5.1.2.3.3",
+   "d": "IMP-01",
+   "note": "Passing the stored shape from run.json into plan, check and assemble fills the missing geometry object."
+  },
+  {
+   "id": "5.1.2.3.4",
+   "d": "X-ENV",
+   "note": "Ecosystem norm of ad hoc plugin helper scripts is outside the plugin's control."
+  },
+  {
+   "id": "5.1.2.3.5",
+   "d": "X-HIST",
+   "note": "Deferral history; the parameterization refactor itself is IMP-01."
+  },
+  {
+   "id": "5.1.2.4",
+   "d": "IMP-03",
+   "note": "SKILL.md's literal root-then-20-then-5 rounds become plan-emitted waves the skill dispatches in order."
+  },
+  {
+   "id": "5.1.2.4.1",
+   "d": "X-FALSE",
+   "note": "SKILL.md already loops: run plan, dispatch listed tasks, repeat until state is ready."
+  },
+  {
+   "id": "5.1.2.4.2",
+   "d": "X-ENV",
+   "note": "Skills lacking a native loop construct is a Claude Code platform fact."
+  },
+  {
+   "id": "5.1.2.4.3",
+   "d": "X-FALSE",
+   "note": "Sequencing is generic: plan's state field returns root first, then branches, then ready."
+  },
+  {
+   "id": "5.1.2.4.4",
+   "d": "IMP-03",
+   "note": "Explicit batch sizes become plan-emitted waves capped at the concurrency limit."
+  },
+  {
+   "id": "5.1.2.4.5",
+   "d": "IMP-01",
+   "note": "Skill prose will state counts from init/plan output instead of literals, so agent count can vary."
+  },
+  {
+   "id": "5.1.2.5",
+   "d": "IMP-09",
+   "note": "show subcommand, index.md of levels 1-2 and branch-by-branch loading guidance decouple reading from one token budget."
+  },
+  {
+   "id": "5.1.2.5.1",
+   "d": "X-ENV",
+   "note": "The size one context can read whole is a model/platform limit."
+  },
+  {
+   "id": "5.1.2.5.2",
+   "d": "IMP-05",
+   "note": "init and plan will report reason count and token estimates, and confirm before large runs."
+  },
+  {
+   "id": "5.1.2.5.3",
+   "d": "IMP-02",
+   "note": "Smaller shapes become first-class through the smoke preset."
+  },
+  {
+   "id": "5.1.2.5.4",
+   "d": "IMP-09",
+   "note": "Paged reading via show and index.md addresses output too large to read whole."
+  },
+  {
+   "id": "5.1.2.5.5",
+   "d": "IMP-05",
+   "note": "Measured token estimates will be computed and reported for whatever shape a run uses."
+  },
+  {
+   "id": "5.1.3",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth is the missing CLI option carrying shape into the script."
+  },
+  {
+   "id": "5.1.3.1",
+   "d": "IMP-01",
+   "note": "The skill will pass optional breadth/depth through to init's flags; problem-only invocation keeps 5/5 defaults."
+  },
+  {
+   "id": "5.1.3.1.1",
+   "d": "X-ENV",
+   "note": "Slash-command arguments arriving as free text is a Claude Code platform fact."
+  },
+  {
+   "id": "5.1.3.1.2",
+   "d": "X-HIST",
+   "note": "Prose-burden concern; IMP-01 lets argparse validate while the skill merely forwards values."
+  },
+  {
+   "id": "5.1.3.1.3",
+   "d": "X-HIST",
+   "note": "One-line invocation stays available because breadth and depth default to 5."
+  },
+  {
+   "id": "5.1.3.1.4",
+   "d": "X-HIST",
+   "note": "Precedent in other plugins is past context with nothing further actionable."
+  },
+  {
+   "id": "5.1.3.1.5",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth are argparse flags, so the script, not the model, validates option values."
+  },
+  {
+   "id": "5.1.3.2",
+   "d": "IMP-01",
+   "note": "run.json already records branching and depth, but subcommands ignore it; IMP-01 makes them read it."
+  },
+  {
+   "id": "5.1.3.2.1",
+   "d": "X-FALSE",
+   "note": "plan and assemble already read run.json for the problem; only check takes just a path."
+  },
+  {
+   "id": "5.1.3.2.2",
+   "d": "X-FALSE",
+   "note": "run.json already exists with a schema field for versioning."
+  },
+  {
+   "id": "5.1.3.2.3",
+   "d": "X-FALSE",
+   "note": "run.json stores schema, problem, created, branching and depth, not only the problem."
+  },
+  {
+   "id": "5.1.3.2.4",
+   "d": "IMP-01",
+   "note": "Subcommands will read the recorded shape from run.json instead of each assuming constants."
+  },
+  {
+   "id": "5.1.3.2.5",
+   "d": "IMP-01",
+   "note": "check will read breadth and depth from the run's stored shape, completing the half parameterization."
+  },
+  {
+   "id": "5.1.3.3",
+   "d": "IMP-01",
+   "note": "Per-run init flags stored in run.json supply shape preferences without a plugin settings surface."
+  },
+  {
+   "id": "5.1.3.3.1",
+   "d": "X-ENV",
+   "note": "Obscurity of Claude Code plugin settings documentation is outside the plugin's control."
+  },
+  {
+   "id": "5.1.3.3.2",
+   "d": "X-HIST",
+   "note": "Prioritizing the core pipeline first is past process; nothing further actionable."
+  },
+  {
+   "id": "5.1.3.3.3",
+   "d": "X-HIST",
+   "note": "Avoiding a settings surface was sensible; IMP-01 uses init flags instead."
+  },
+  {
+   "id": "5.1.3.3.4",
+   "d": "X-HIST",
+   "note": "The 6/10 critique now supplies the demand; the response is IMP-01."
+  },
+  {
+   "id": "5.1.3.3.5",
+   "d": "X-ENV",
+   "note": "Inconsistent environment variable inheritance by subagents is a platform behavior."
+  },
+  {
+   "id": "5.1.3.4",
+   "d": "IMP-01",
+   "note": "A planned shape interface (--breadth, --depth, --preset) replaces need-driven flag growth."
+  },
+  {
+   "id": "5.1.3.4.1",
+   "d": "X-HIST",
+   "note": "Accurate: --depth distinguishes root and branch fragments; user choice arrives via init flags."
+  },
+  {
+   "id": "5.1.3.4.2",
+   "d": "IMP-01",
+   "note": "init --breadth adds the breadth parameter, stored in run.json for all subcommands."
+  },
+  {
+   "id": "5.1.3.4.3",
+   "d": "X-HIST",
+   "note": "Incremental flag growth describes past process; IMP-01 is the planned interface."
+  },
+  {
+   "id": "5.1.3.4.4",
+   "d": "IMP-01",
+   "note": "Enumerating implicit parameters yields shape (IMP-01); model choice is separately IMP-04."
+  },
+  {
+   "id": "5.1.3.4.5",
+   "d": "IMP-01",
+   "note": "Prompts are already f-strings; reading shape from run.json threads flags into prompts automatically."
+  },
+  {
+   "id": "5.1.3.5",
+   "d": "IMP-05",
+   "note": "Unknown safe ranges are mitigated by previewing agent, reason and token counts and confirming large runs."
+  },
+  {
+   "id": "5.1.3.5.1",
+   "d": "IMP-06",
+   "note": "Hygiene flags (duplicates, restatements) per run give a mechanical quality signal comparable across fragment sizes."
+  },
+  {
+   "id": "5.1.3.5.2",
+   "d": "X-DONE",
+   "note": "The real run found the 20-subagent default cap; the skill now dispatches at most 20 per round."
+  },
+  {
+   "id": "5.1.3.5.3",
+   "d": "IMP-09",
+   "note": "show subcommand, index.md and branch-by-branch loading guidance are the reading strategy for larger trees."
+  },
+  {
+   "id": "5.1.3.5.4",
+   "d": "IMP-05",
+   "note": "Cost and size preview with user confirmation prevents unexpectedly expensive runs."
+  },
+  {
+   "id": "5.1.3.5.5",
+   "d": "X-HIST",
+   "note": "Sidestepping was past motivation; the open questions are now addressed by IMP-01/05."
+  },
+  {
+   "id": "5.1.4",
+   "d": "IMP-01",
+   "note": "Skill, agent and prompt text will take counts from the stored shape instead of spelling out five."
+  },
+  {
+   "id": "5.1.4.1",
+   "d": "IMP-01",
+   "note": "The agent file's 'exactly 5 items' moves to the generated prompt, which carries the run's breadth."
+  },
+  {
+   "id": "5.1.4.1.1",
+   "d": "X-HIST",
+   "note": "Explicit counts help models; generated prompts will keep concrete per-run counts."
+  },
+  {
+   "id": "5.1.4.1.2",
+   "d": "X-ENV",
+   "note": "Static agent markdown without substitution is a platform fact; per-run counts belong in generated prompts."
+  },
+  {
+   "id": "5.1.4.1.3",
+   "d": "X-HIST",
+   "note": "Authoring habit history; nothing further beyond IMP-01."
+  },
+  {
+   "id": "5.1.4.1.4",
+   "d": "IMP-08",
+   "note": "The agent lists eight generic cause kinds; IMP-08 replaces that checklist with problem-specific grounding."
+  },
+  {
+   "id": "5.1.4.1.5",
+   "d": "IMP-01",
+   "note": "Every file mentioning shape is enumerated and switched to reading run.json in IMP-01."
+  },
+  {
+   "id": "5.1.4.2",
+   "d": "IMP-14",
+   "note": "README will present 5x5 as the default of a configurable shape, with measured figures."
+  },
+  {
+   "id": "5.1.4.2.1",
+   "d": "X-HIST",
+   "note": "Marketplace-description motivation; the name and default stay."
+  },
+  {
+   "id": "5.1.4.2.2",
+   "d": "X-HIST",
+   "note": "Trigger phrases name the method, which is correct for discovery; no change."
+  },
+  {
+   "id": "5.1.4.2.3",
+   "d": "IMP-14",
+   "note": "Documentation will state 3,905 as the default-shape figure so other shapes do not falsify it."
+  },
+  {
+   "id": "5.1.4.2.4",
+   "d": "X-ENV",
+   "note": "Branding numbers resisting change is a general product-culture fact."
+  },
+  {
+   "id": "5.1.4.2.5",
+   "d": "X-HIST",
+   "note": "Naming history; the five-whys name remains appropriate with 5/5 defaults."
+  },
+  {
+   "id": "5.1.4.3",
+   "d": "IMP-01",
+   "note": "run.json becomes the single source of truth read by script and generated prompts."
+  },
+  {
+   "id": "5.1.4.3.1",
+   "d": "X-ENV",
+   "note": "Markdown cannot import Python constants; a platform/format fact."
+  },
+  {
+   "id": "5.1.4.3.2",
+   "d": "IMP-01",
+   "note": "No build step needed: counts move out of static markdown into script-generated prompts."
+  },
+  {
+   "id": "5.1.4.3.3",
+   "d": "IMP-29",
+   "note": "NEW reconciled: docs consistency unittest added."
+  },
+  {
+   "id": "5.1.4.3.4",
+   "d": "X-ENV",
+   "note": "Claude Code loading skill and agent files directly is platform behavior."
+  },
+  {
+   "id": "5.1.4.3.5",
+   "d": "X-HIST",
+   "note": "Cost trade-off history; nothing further beyond IMP-01."
+  },
+  {
+   "id": "5.1.4.4",
+   "d": "X-FALSE",
+   "note": "shape_example() already builds the x{BRANCHING} markers from the constant, not a literal x5."
+  },
+  {
+   "id": "5.1.4.4.1",
+   "d": "X-ENV",
+   "note": "Models imitating example structure closely is model behavior."
+  },
+  {
+   "id": "5.1.4.4.2",
+   "d": "X-FALSE",
+   "note": "Generator code exists: shape_example(depth) renders examples for any BRANCHING and depth."
+  },
+  {
+   "id": "5.1.4.4.3",
+   "d": "X-HIST",
+   "note": "Compact shorthand for short prompts is a kept choice; no change."
+  },
+  {
+   "id": "5.1.4.4.4",
+   "d": "X-ENV",
+   "note": "Prompt schema conventions are ecosystem norms."
+  },
+  {
+   "id": "5.1.4.4.5",
+   "d": "IMP-11",
+   "note": "unittest coverage of plan and check can assert shape examples agree with validator rules."
+  },
+  {
+   "id": "5.1.4.5",
+   "d": "IMP-01",
+   "note": "Script, prompts, skill and examples change together, so general code has callers that use it."
+  },
+  {
+   "id": "5.1.4.5.1",
+   "d": "IMP-01",
+   "note": "Coordinated change across prose and code avoids script-versus-prose mismatch."
+  },
+  {
+   "id": "5.1.4.5.2",
+   "d": "X-HIST",
+   "note": "General engineering psychology explaining past design; nothing further actionable."
+  },
+  {
+   "id": "5.1.4.5.3",
+   "d": "X-HIST",
+   "note": "Consistency preference is past motivation; IMP-01 keeps consistency while adding flexibility."
+  },
+  {
+   "id": "5.1.4.5.4",
+   "d": "IMP-01",
+   "note": "IMP-01 is the scheduled coordinated edit across all shape-bearing files."
+  },
+  {
+   "id": "5.1.4.5.5",
+   "d": "X-HIST",
+   "note": "Avoiding speculative generality was reasonable before demand existed; nothing further."
+  },
+  {
+   "id": "5.1.5",
+   "d": "IMP-11",
+   "note": "stdlib unittest suite covering shapes, plan, check and assemble exercises non-default constants."
+  },
+  {
+   "id": "5.1.5.1",
+   "d": "IMP-11",
+   "note": "Adding the test suite with alternate-shape fixtures directly fills this gap."
+  },
+  {
+   "id": "5.1.5.1.1",
+   "d": "IMP-18",
+   "note": "claude plugin eval exists; an evals/ smoke case adopts it as the plugin's harness."
+  },
+  {
+   "id": "5.1.5.1.2",
+   "d": "IMP-11",
+   "note": "Tests can synthesize fixture fragments programmatically for any shape without model runs."
+  },
+  {
+   "id": "5.1.5.1.3",
+   "d": "IMP-11",
+   "note": "Assertions in a unittest suite replace eyeballing plan output."
+  },
+  {
+   "id": "5.1.5.1.4",
+   "d": "IMP-11",
+   "note": "The deterministic script parts get stdlib unittest coverage regardless of LLM testing difficulty."
+  },
+  {
+   "id": "5.1.5.1.5",
+   "d": "IMP-30",
+   "note": "NEW reconciled: GitHub Actions unittest workflow added."
+  },
+  {
+   "id": "5.1.5.2",
+   "d": "IMP-02",
+   "note": "The smoke preset makes running a non-default shape routine and cheap."
+  },
+  {
+   "id": "5.1.5.2.1",
+   "d": "X-DONE",
+   "note": "A full real run completed 2026-09-13: 26 agents, 3,905 reasons, about 7 minutes."
+  },
+  {
+   "id": "5.1.5.2.2",
+   "d": "IMP-11",
+   "note": "Automated tests replace one-time inspection of plan output."
+  },
+  {
+   "id": "5.1.5.2.3",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth removes the need to edit constants to try a shape."
+  },
+  {
+   "id": "5.1.5.2.4",
+   "d": "IMP-02",
+   "note": "The 3x3 smoke preset makes exploratory variant runs cheap."
+  },
+  {
+   "id": "5.1.5.2.5",
+   "d": "IMP-02",
+   "note": "Dogfooding can use --preset smoke instead of always the default invocation."
+  },
+  {
+   "id": "5.1.5.3",
+   "d": "IMP-11",
+   "note": "Script tests verify expected counts independently, so script bugs are not misread as model mistakes."
+  },
+  {
+   "id": "5.1.5.3.1",
+   "d": "IMP-12",
+   "note": "Agents cap their fix loop and reply FAILED with the first error, surfacing persistent mismatches."
+  },
+  {
+   "id": "5.1.5.3.2",
+   "d": "IMP-06",
+   "note": "Padding to hit counts shows up as near-duplicate or restating-parent hygiene flags."
+  },
+  {
+   "id": "5.1.5.3.3",
+   "d": "X-HIST",
+   "note": "Attitude toward the model as least trusted is past psychology; IMP-11/12 handle actions."
+  },
+  {
+   "id": "5.1.5.3.4",
+   "d": "IMP-31",
+   "note": "NEW reconciled: check appends to check-log.jsonl; status reports cycles."
+  },
+  {
+   "id": "5.1.5.3.5",
+   "d": "IMP-12",
+   "note": "FAILED replies with first error and per-task attempt counts expose retries to the orchestrator."
+  },
+  {
+   "id": "5.1.5.4",
+   "d": "R-06",
+   "note": "Implied remedy is an independent reviewer, a social remedy outside the plugin."
+  },
+  {
+   "id": "5.1.5.4.1",
+   "d": "R-06",
+   "note": "Recruiting a second human reviewer is organizational, not a plugin change."
+  },
+  {
+   "id": "5.1.5.4.2",
+   "d": "X-ENV",
+   "note": "Self-review sharing assumptions is a model behavior fact."
+  },
+  {
+   "id": "5.1.5.4.3",
+   "d": "X-HIST",
+   "note": "Review focus is past process; extensibility is now addressed by IMP-01 and IMP-11."
+  },
+  {
+   "id": "5.1.5.4.4",
+   "d": "X-FALSE",
+   "note": "The script uses named constants (BRANCHING, DEPTH, ROOT_DEPTH), not magic numbers."
+  },
+  {
+   "id": "5.1.5.4.5",
+   "d": "X-HIST",
+   "note": "Past review-prompt criteria; nothing further actionable in the plugin."
+  },
+  {
+   "id": "5.1.5.5",
+   "d": "IMP-18",
+   "note": "An evals/ case for claude plugin eval grades smoke-preset runs end to end."
+  },
+  {
+   "id": "5.1.5.5.1",
+   "d": "IMP-18",
+   "note": "The eval grades mechanical criteria (shape validity, hygiene report) instead of requiring a quality rubric."
+  },
+  {
+   "id": "5.1.5.5.2",
+   "d": "IMP-18",
+   "note": "IMP-18 adopts claude plugin eval for this plugin."
+  },
+  {
+   "id": "5.1.5.5.3",
+   "d": "IMP-06",
+   "note": "Hygiene report duplicate and restatement counts provide comparable metrics across shapes."
+  },
+  {
+   "id": "5.1.5.5.4",
+   "d": "IMP-02",
+   "note": "Smoke preset runs make multi-configuration comparison affordable."
+  },
+  {
+   "id": "5.1.5.5.5",
+   "d": "X-HIST",
+   "note": "Timing of the first evaluation is history; IMP-17 already records this self-improvement pass."
+  }
+ ]
+}

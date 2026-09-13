@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "1.3.1",
+   "d": "IMP-01",
+   "note": "Shape becomes init --breadth/--depth stored in run.json and read by plan, check, assemble and prompts."
+  },
+  {
+   "id": "1.3.1.1",
+   "d": "IMP-01",
+   "note": "Parameterizing shape with 5/5 defaults keeps the identity while making it tunable."
+  },
+  {
+   "id": "1.3.1.1.1",
+   "d": "IMP-01",
+   "note": "Name can stay; IMP-01 keeps 5/5 as defaults while allowing other shapes such as smoke."
+  },
+  {
+   "id": "1.3.1.1.2",
+   "d": "X-HIST",
+   "note": "Past scoping judgment; the parameterization itself is covered by IMP-01."
+  },
+  {
+   "id": "1.3.1.1.3",
+   "d": "X-HIST",
+   "note": "Absence of requests explains v0.1.0; shape flexibility is now planned under IMP-01."
+  },
+  {
+   "id": "1.3.1.1.4",
+   "d": "X-HIST",
+   "note": "Toyota-inspired motivation; classic five-by-five stays the default under IMP-01."
+  },
+  {
+   "id": "1.3.1.1.5",
+   "d": "X-HIST",
+   "note": "Marketing motivation for the fixed count; configurable shape with default 3,905 covered by IMP-01."
+  },
+  {
+   "id": "1.3.1.2",
+   "d": "IMP-01",
+   "note": "Prompts format module constants, not run shape; IMP-01 makes prompts and examples read shape from run.json."
+  },
+  {
+   "id": "1.3.1.2.1",
+   "d": "X-HIST",
+   "note": "Authoring order history; prompts are already script-generated, remaining parameterization is IMP-01."
+  },
+  {
+   "id": "1.3.1.2.2",
+   "d": "X-FALSE",
+   "note": "root_prompt and branch_prompt f-strings already interpolate BRANCHING, ROOT_DEPTH and DEPTH."
+  },
+  {
+   "id": "1.3.1.2.3",
+   "d": "X-HIST",
+   "note": "Wording-focused tuning explains neglect; numeric scaffolding moves to run shape under IMP-01."
+  },
+  {
+   "id": "1.3.1.2.4",
+   "d": "IMP-11",
+   "note": "Unit tests cover shapes and plan output, including rendered prompts across shape values."
+  },
+  {
+   "id": "1.3.1.2.5",
+   "d": "IMP-01",
+   "note": "Shape travels in plan-generated prompts; IMP-01 removes the agent file's literal 'exactly 5 items'."
+  },
+  {
+   "id": "1.3.1.3",
+   "d": "IMP-01",
+   "note": "check keeps exact counts but validates against the run's configured breadth and depth."
+  },
+  {
+   "id": "1.3.1.3.1",
+   "d": "IMP-01",
+   "note": "IMP-01 makes check read expected shape from run.json instead of the BRANCHING constant."
+  },
+  {
+   "id": "1.3.1.3.2",
+   "d": "X-HIST",
+   "note": "Strict equality remains correct; only its constant source changes under IMP-01."
+  },
+  {
+   "id": "1.3.1.3.3",
+   "d": "X-FALSE",
+   "note": "Validation and prompt generation share the same module constants BRANCHING and DEPTH in fivewhys.py."
+  },
+  {
+   "id": "1.3.1.3.4",
+   "d": "IMP-01",
+   "note": "No relaxation needed: exact equality against a configured shape stays strict under IMP-01."
+  },
+  {
+   "id": "1.3.1.3.5",
+   "d": "IMP-01",
+   "note": "init --breadth/--depth supplies the width flag the check will honor."
+  },
+  {
+   "id": "1.3.1.4",
+   "d": "IMP-01",
+   "note": "Branch count derives from breadth and the derived root/branch split under IMP-01."
+  },
+  {
+   "id": "1.3.1.4.1",
+   "d": "X-FALSE",
+   "note": "Dotted-path ids are depth-agnostic; the two-level root is one ROOT_DEPTH constant, not id format."
+  },
+  {
+   "id": "1.3.1.4.2",
+   "d": "IMP-19",
+   "note": "assemble --partial writes a valid tree with missing-branch markers instead of requiring every fragment."
+  },
+  {
+   "id": "1.3.1.4.3",
+   "d": "X-FALSE",
+   "note": "plan walks the root fragment recursively via frontier(), not nested fixed-range loops."
+  },
+  {
+   "id": "1.3.1.4.4",
+   "d": "IMP-19",
+   "note": "Partial trees get explicit missing-branch markers within the existing id scheme."
+  },
+  {
+   "id": "1.3.1.4.5",
+   "d": "IMP-01",
+   "note": "Skill text hard-codes 26 agents and 20-then-5 rounds; IMP-01 makes docs read shape."
+  },
+  {
+   "id": "1.3.1.5",
+   "d": "IMP-01",
+   "note": "The deferred refactor is exactly IMP-01's parameterized shape."
+  },
+  {
+   "id": "1.3.1.5.1",
+   "d": "X-HIST",
+   "note": "Happy-path milestone priority; follow-up flexibility is IMP-01."
+  },
+  {
+   "id": "1.3.1.5.2",
+   "d": "X-HIST",
+   "note": "Author assumption about retrofit cost; the retrofit is IMP-01."
+  },
+  {
+   "id": "1.3.1.5.3",
+   "d": "IMP-17",
+   "note": "The self-improvement catalog and ledger now record shape parameterization as a known gap."
+  },
+  {
+   "id": "1.3.1.5.4",
+   "d": "X-HIST",
+   "note": "Past time pressure; the coupled-file refactor is scheduled as IMP-01."
+  },
+  {
+   "id": "1.3.1.5.5",
+   "d": "IMP-11",
+   "note": "A stdlib unittest suite makes shape refactoring safe."
+  },
+  {
+   "id": "1.3.2",
+   "d": "IMP-02",
+   "note": "A smoke preset makes rehearsal a cheap built-in step of development."
+  },
+  {
+   "id": "1.3.2.1",
+   "d": "X-HIST",
+   "note": "Prompt-tinkering habits explain the gap; rehearsal tooling is IMP-02 and IMP-18."
+  },
+  {
+   "id": "1.3.2.1.1",
+   "d": "X-HIST",
+   "note": "Psychology of editing markdown; software-style testing is covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "1.3.2.1.2",
+   "d": "IMP-18",
+   "note": "An eval exercising a smoke run end to end replaces single-prompt trials as evidence."
+  },
+  {
+   "id": "1.3.2.1.3",
+   "d": "X-ENV",
+   "note": "Plugin ecosystem conventions are outside the plugin's control."
+  },
+  {
+   "id": "1.3.2.1.4",
+   "d": "X-HIST",
+   "note": "Prior small-plugin experience; multi-agent rehearsal is covered by IMP-02."
+  },
+  {
+   "id": "1.3.2.1.5",
+   "d": "IMP-02",
+   "note": "A smoke preset runs real multi-agent dispatch cheaply, exposing integration risk."
+  },
+  {
+   "id": "1.3.2.2",
+   "d": "IMP-21",
+   "note": "NEW reconciled: RELEASING.md gates version bumps on tests, validation and a smoke run."
+  },
+  {
+   "id": "1.3.2.2.1",
+   "d": "IMP-21",
+   "note": "NEW reconciled: RELEASING.md added with test, validate and smoke-run steps."
+  },
+  {
+   "id": "1.3.2.2.2",
+   "d": "X-HIST",
+   "note": "Informal versioning history; a release gate is proposed in the NEW entry for 1.3.2.2."
+  },
+  {
+   "id": "1.3.2.2.3",
+   "d": "R-06",
+   "note": "Recruiting reviewers is a social remedy, not a plugin change."
+  },
+  {
+   "id": "1.3.2.2.4",
+   "d": "X-ENV",
+   "note": "Marketplace acceptance policy is outside the plugin's control."
+  },
+  {
+   "id": "1.3.2.2.5",
+   "d": "IMP-18",
+   "note": "Eval grades runtime behavior of a smoke run, not just file structure."
+  },
+  {
+   "id": "1.3.2.3",
+   "d": "IMP-02",
+   "note": "Smoke preset and --only subset dispatch create a rehearsal ladder before a full run."
+  },
+  {
+   "id": "1.3.2.3.1",
+   "d": "IMP-02",
+   "note": "Smoke preset and subset dispatch replace one big validation run with cheap rehearsals."
+  },
+  {
+   "id": "1.3.2.3.2",
+   "d": "X-HIST",
+   "note": "Missing plan-document content; incremental rehearsal tooling is IMP-02."
+  },
+  {
+   "id": "1.3.2.3.3",
+   "d": "X-HIST",
+   "note": "Conflating test and demo is past process; README real excerpt is IMP-14."
+  },
+  {
+   "id": "1.3.2.3.4",
+   "d": "X-HIST",
+   "note": "Past estimation gap; verification work is now catalogued as IMP-11 and IMP-18."
+  },
+  {
+   "id": "1.3.2.3.5",
+   "d": "IMP-02",
+   "note": "A smoke run exercises every stage at once, so targeted guesses are unnecessary."
+  },
+  {
+   "id": "1.3.2.4",
+   "d": "IMP-14",
+   "note": "README will state what shape validation does and does not cover."
+  },
+  {
+   "id": "1.3.2.4.1",
+   "d": "IMP-18",
+   "note": "Eval runs real agents on a smoke preset rather than relying on hand-made fragments."
+  },
+  {
+   "id": "1.3.2.4.2",
+   "d": "IMP-18",
+   "note": "End-to-end eval covers agent orchestration that offline script checks cannot."
+  },
+  {
+   "id": "1.3.2.4.3",
+   "d": "IMP-14",
+   "note": "Documentation clarifies that check OK means shape validity, not pipeline readiness."
+  },
+  {
+   "id": "1.3.2.4.4",
+   "d": "X-DONE",
+   "note": "The 2026-09-13 real run composed 26 agent fragments into 3,905 valid reasons."
+  },
+  {
+   "id": "1.3.2.4.5",
+   "d": "IMP-12",
+   "note": "Per-task dispatch attempts and stuck-task reporting surface orchestration failures the checker misses."
+  },
+  {
+   "id": "1.3.2.5",
+   "d": "X-HIST",
+   "note": "Attention allocation history; reliability work is catalogued in IMP-11, IMP-12, IMP-18."
+  },
+  {
+   "id": "1.3.2.5.1",
+   "d": "X-HIST",
+   "note": "Motivational priority; engineering follow-ups exist under other codes."
+  },
+  {
+   "id": "1.3.2.5.2",
+   "d": "X-HIST",
+   "note": "Design time distribution in v0.1.0; operational work now catalogued separately."
+  },
+  {
+   "id": "1.3.2.5.3",
+   "d": "IMP-12",
+   "note": "Failure semantics record attempts, flag stuck tasks and cap agent fix loops."
+  },
+  {
+   "id": "1.3.2.5.4",
+   "d": "X-HIST",
+   "note": "Psychological payoff explanation with no artifact change."
+  },
+  {
+   "id": "1.3.2.5.5",
+   "d": "X-DONE",
+   "note": "The real run hit the 20-subagent cap, making reliability salient; the cap fix is committed."
+  },
+  {
+   "id": "1.3.3",
+   "d": "IMP-02",
+   "note": "Modes live in init --preset and run.json, so the skill's generic plan loop needs no alternate prose."
+  },
+  {
+   "id": "1.3.3.1",
+   "d": "IMP-02",
+   "note": "Smoke preset is encoded in script state; skill prose keeps one path following plan output."
+  },
+  {
+   "id": "1.3.3.1.1",
+   "d": "IMP-02",
+   "note": "Mode selection happens in init, so no conditional skill instructions are needed."
+  },
+  {
+   "id": "1.3.3.1.2",
+   "d": "X-HIST",
+   "note": "Author fear; script-side presets (IMP-02) avoid adding skill modes."
+  },
+  {
+   "id": "1.3.3.1.3",
+   "d": "X-ENV",
+   "note": "Skills lacking programmatic control flow is a Claude Code platform fact."
+  },
+  {
+   "id": "1.3.3.1.4",
+   "d": "X-HIST",
+   "note": "Brevity pressure explanation; script-side presets avoid growing the skill."
+  },
+  {
+   "id": "1.3.3.1.5",
+   "d": "X-HIST",
+   "note": "Past model-behavior experience; script-encoded presets sidestep instruction blending."
+  },
+  {
+   "id": "1.3.3.2",
+   "d": "IMP-01",
+   "note": "Skill mentions 26 agents and 25 branches as literals; IMP-01 makes docs derive counts from shape."
+  },
+  {
+   "id": "1.3.3.2.1",
+   "d": "IMP-01",
+   "note": "Literal counts in skill text get replaced by values derived from run shape."
+  },
+  {
+   "id": "1.3.3.2.2",
+   "d": "X-FALSE",
+   "note": "Skill Step 3 already loops on plan output, dispatching exactly the listed tasks."
+  },
+  {
+   "id": "1.3.3.2.3",
+   "d": "X-FALSE",
+   "note": "The skill dispatches the plan's generated tasks verbatim and re-plans until state is ready."
+  },
+  {
+   "id": "1.3.3.2.4",
+   "d": "IMP-03",
+   "note": "Plan-emitted waves make agent counts explicit per message without literals in skill prose."
+  },
+  {
+   "id": "1.3.3.2.5",
+   "d": "IMP-19",
+   "note": "Partial assembly writes valid output with missing-branch markers when fewer branches ran."
+  },
+  {
+   "id": "1.3.3.3",
+   "d": "IMP-22",
+   "note": "NEW reconciled: leading flag syntax defined in the skill."
+  },
+  {
+   "id": "1.3.3.3.1",
+   "d": "X-ENV",
+   "note": "Free-text skill arguments without a schema is a Claude Code platform fact."
+  },
+  {
+   "id": "1.3.3.3.2",
+   "d": "IMP-22",
+   "note": "NEW reconciled: skill parses leading flags and passes the rest as the problem."
+  },
+  {
+   "id": "1.3.3.3.3",
+   "d": "X-HIST",
+   "note": "Single-sentence input preference; optional extra context is IMP-16."
+  },
+  {
+   "id": "1.3.3.3.4",
+   "d": "X-HIST",
+   "note": "No pattern to copy existed; flag handling proposed separately."
+  },
+  {
+   "id": "1.3.3.3.5",
+   "d": "IMP-22",
+   "note": "NEW reconciled: argument-hint now advertises the options."
+  },
+  {
+   "id": "1.3.3.4",
+   "d": "X-FALSE",
+   "note": "Smoke changes only generated prompts; same agent file works, and Agent model override avoids variants."
+  },
+  {
+   "id": "1.3.3.4.1",
+   "d": "IMP-04",
+   "note": "Agent tool model override, recorded via init --model, avoids a second agent file."
+  },
+  {
+   "id": "1.3.3.4.2",
+   "d": "IMP-04",
+   "note": "One agent definition plus per-task model override prevents duplicated definitions."
+  },
+  {
+   "id": "1.3.3.4.3",
+   "d": "X-ENV",
+   "note": "Plugin structure lacking agent templating is a platform fact."
+  },
+  {
+   "id": "1.3.3.4.4",
+   "d": "IMP-01",
+   "note": "A single shape-parameterized prompt template replaces separate variants."
+  },
+  {
+   "id": "1.3.3.4.5",
+   "d": "X-HIST",
+   "note": "Unquantified trade-off in the past; variants are unnecessary under IMP-01 and IMP-04."
+  },
+  {
+   "id": "1.3.3.5",
+   "d": "IMP-02",
+   "note": "Presets encoded in script state give code-level modes while dispatch stays generic in the skill."
+  },
+  {
+   "id": "1.3.3.5.1",
+   "d": "X-HIST",
+   "note": "Familiar-pattern choice explains architecture; no further artifact change."
+  },
+  {
+   "id": "1.3.3.5.2",
+   "d": "X-HIST",
+   "note": "Tool maturity at design time; mode logic moves to the script via IMP-02."
+  },
+  {
+   "id": "1.3.3.5.3",
+   "d": "R-02",
+   "note": "Dispatching agents from Python would require API keys and network calls."
+  },
+  {
+   "id": "1.3.3.5.4",
+   "d": "X-HIST",
+   "note": "Portability concern motivated the split; no further change implied."
+  },
+  {
+   "id": "1.3.3.5.5",
+   "d": "X-ENV",
+   "note": "Sparse public examples of scripted fan-out is an ecosystem fact."
+  },
+  {
+   "id": "1.3.4",
+   "d": "X-DONE",
+   "note": "Full run measured on 2026-09-13: about 1.2M subagent tokens and 7 minutes."
+  },
+  {
+   "id": "1.3.4.1",
+   "d": "IMP-05",
+   "note": "init and plan will report agent count, reason count and measured token estimates."
+  },
+  {
+   "id": "1.3.4.1.1",
+   "d": "IMP-05",
+   "note": "Estimates use measured figures from the real run, needing no live usage data."
+  },
+  {
+   "id": "1.3.4.1.2",
+   "d": "X-ENV",
+   "note": "Claude Code not exposing per-agent token usage to scripts is a platform fact."
+  },
+  {
+   "id": "1.3.4.1.3",
+   "d": "IMP-05",
+   "note": "Cost preview becomes a code feature in init and plan output."
+  },
+  {
+   "id": "1.3.4.1.4",
+   "d": "IMP-14",
+   "note": "README will document measured generation cost, not just the output-size estimate."
+  },
+  {
+   "id": "1.3.4.1.5",
+   "d": "IMP-05",
+   "note": "Preview with confirmation is provided proactively before full-size runs."
+  },
+  {
+   "id": "1.3.4.2",
+   "d": "X-ENV",
+   "note": "Subscription billing opacity is outside the plugin's control."
+  },
+  {
+   "id": "1.3.4.2.1",
+   "d": "X-ENV",
+   "note": "Flat-rate pricing perception is a platform billing fact."
+  },
+  {
+   "id": "1.3.4.2.2",
+   "d": "IMP-05",
+   "note": "Pre-dispatch token estimate and confirmation lets users predict rate-limit impact."
+  },
+  {
+   "id": "1.3.4.2.3",
+   "d": "X-ENV",
+   "note": "Usage dashboard attribution granularity is controlled by Anthropic, not the plugin."
+  },
+  {
+   "id": "1.3.4.2.4",
+   "d": "IMP-14",
+   "note": "README documents measured token cost so metered API users can price a run."
+  },
+  {
+   "id": "1.3.4.2.5",
+   "d": "IMP-04",
+   "note": "init --model with documented trade-offs prices inherit against cheaper models."
+  },
+  {
+   "id": "1.3.4.3",
+   "d": "X-DONE",
+   "note": "Wall-clock time has been measured: about 7 minutes for the full 26-agent run."
+  },
+  {
+   "id": "1.3.4.3.1",
+   "d": "IMP-14",
+   "note": "README documents measured time and the concurrency cap that forces multiple rounds."
+  },
+  {
+   "id": "1.3.4.3.2",
+   "d": "X-DONE",
+   "note": "The 20-subagent cap was discovered in the real run and the skill now respects it."
+  },
+  {
+   "id": "1.3.4.3.3",
+   "d": "IMP-10",
+   "note": "Created-to-assembled duration and dispatch attempts are recorded in run.json."
+  },
+  {
+   "id": "1.3.4.3.4",
+   "d": "IMP-12",
+   "note": "Agents cap their fix loop and reply FAILED, bounding retry time."
+  },
+  {
+   "id": "1.3.4.3.5",
+   "d": "IMP-10",
+   "note": "Timing measurements get recorded in the assembled header and run.json."
+  },
+  {
+   "id": "1.3.4.4",
+   "d": "IMP-02",
+   "note": "Smoke preset surfaces failures cheaply before a full run."
+  },
+  {
+   "id": "1.3.4.4.1",
+   "d": "X-FALSE",
+   "note": "Fragments persist on disk; assemble can simply be rerun without regenerating branches."
+  },
+  {
+   "id": "1.3.4.4.2",
+   "d": "X-DONE",
+   "note": "A full run has now completed and exposed the concurrency cap failure, since fixed."
+  },
+  {
+   "id": "1.3.4.4.3",
+   "d": "IMP-02",
+   "note": "A 3x3 smoke preset provides the small-tree contrast cheaply."
+  },
+  {
+   "id": "1.3.4.4.4",
+   "d": "X-FALSE",
+   "note": "plan skips existing valid fragments, so interrupted runs resume by re-running plan."
+  },
+  {
+   "id": "1.3.4.4.5",
+   "d": "X-HIST",
+   "note": "Prototype stopping point explains missed failures; no further artifact change."
+  },
+  {
+   "id": "1.3.4.5",
+   "d": "X-ENV",
+   "note": "Plugin guide content is outside the plugin's control."
+  },
+  {
+   "id": "1.3.4.5.1",
+   "d": "X-ENV",
+   "note": "Official documentation emphasis is an Anthropic ecosystem fact."
+  },
+  {
+   "id": "1.3.4.5.2",
+   "d": "X-ENV",
+   "note": "Community example practices are outside the plugin's control."
+  },
+  {
+   "id": "1.3.4.5.3",
+   "d": "IMP-18",
+   "note": "claude plugin eval provides execution; an evals/ smoke case uses it."
+  },
+  {
+   "id": "1.3.4.5.4",
+   "d": "IMP-18",
+   "note": "Adopting claude plugin eval with a smoke-preset case addresses the unfamiliarity."
+  },
+  {
+   "id": "1.3.4.5.5",
+   "d": "X-ENV",
+   "note": "Publication style of agent fan-out write-ups is an ecosystem fact."
+  },
+  {
+   "id": "1.3.5",
+   "d": "IMP-02",
+   "note": "Smoke preset targets wiring, not representativeness; full runs remain the default."
+  },
+  {
+   "id": "1.3.5.1",
+   "d": "IMP-06",
+   "note": "Scale-dependent duplication and restating risks are flagged by the hygiene report on full runs."
+  },
+  {
+   "id": "1.3.5.1.1",
+   "d": "IMP-10",
+   "note": "Per-level counts and average words per level measure depth decay on real runs."
+  },
+  {
+   "id": "1.3.5.1.2",
+   "d": "IMP-06",
+   "note": "hygiene.json flags exact and near-duplicates across branches in full-size trees."
+  },
+  {
+   "id": "1.3.5.1.3",
+   "d": "X-HIST",
+   "note": "Author's risk prioritization; scale-independent checks are covered by IMP-02."
+  },
+  {
+   "id": "1.3.5.1.4",
+   "d": "IMP-02",
+   "note": "Wiring failures did occur (concurrency cap); a smoke preset catches them cheaply."
+  },
+  {
+   "id": "1.3.5.1.5",
+   "d": "IMP-14",
+   "note": "Known-limitations docs separate what smoke runs catch from scale-dependent risks."
+  },
+  {
+   "id": "1.3.5.2",
+   "d": "IMP-09",
+   "note": "show subcommand, index.md and branch-by-branch paging reduce whole-file context pressure."
+  },
+  {
+   "id": "1.3.5.2.1",
+   "d": "IMP-09",
+   "note": "Navigation and partial reading guidance avoid requiring whole-file reads."
+  },
+  {
+   "id": "1.3.5.2.2",
+   "d": "IMP-02",
+   "note": "Smoke preset is explicitly a wiring rehearsal, separate from load concerns."
+  },
+  {
+   "id": "1.3.5.2.3",
+   "d": "X-HIST",
+   "note": "Reasoning that devalued smoke tests; wiring rehearsal is IMP-02 regardless."
+  },
+  {
+   "id": "1.3.5.2.4",
+   "d": "X-ENV",
+   "note": "Model-dependent context limits are outside the plugin's control."
+  },
+  {
+   "id": "1.3.5.2.5",
+   "d": "IMP-02",
+   "note": "Cheap orchestration checks become a first-class smoke preset."
+  },
+  {
+   "id": "1.3.5.3",
+   "d": "IMP-18",
+   "note": "An eval running real agents on a smoke tree replaces fixture-only confidence."
+  },
+  {
+   "id": "1.3.5.3.1",
+   "d": "IMP-18",
+   "note": "Real smoke-run eval supplements fixtures that only prove script correctness."
+  },
+  {
+   "id": "1.3.5.3.2",
+   "d": "IMP-18",
+   "note": "Eval exercises real agent formatting and write behavior end to end."
+  },
+  {
+   "id": "1.3.5.3.3",
+   "d": "X-DONE",
+   "note": "All 26 fragments in the real run followed the given JSON shape and assembled."
+  },
+  {
+   "id": "1.3.5.3.4",
+   "d": "IMP-01",
+   "note": "Parameterized shape makes a mini pipeline trivial rather than a separate design."
+  },
+  {
+   "id": "1.3.5.3.5",
+   "d": "X-HIST",
+   "note": "Belief reinforcement history; end-to-end rehearsal is IMP-02 and IMP-18."
+  },
+  {
+   "id": "1.3.5.4",
+   "d": "IMP-01",
+   "note": "Smoke is a shape parameter on the identical code path, not a separate mode."
+  },
+  {
+   "id": "1.3.5.4.1",
+   "d": "IMP-01",
+   "note": "One parameterized path serves both smoke and full runs, preventing drift."
+  },
+  {
+   "id": "1.3.5.4.2",
+   "d": "X-HIST",
+   "note": "Past test-mode experience; single-path parameterization is IMP-01."
+  },
+  {
+   "id": "1.3.5.4.3",
+   "d": "IMP-01",
+   "note": "Shape stored in run.json becomes the shared abstraction."
+  },
+  {
+   "id": "1.3.5.4.4",
+   "d": "IMP-02",
+   "note": "Smoke preset reuses the single real path, preserving that honesty."
+  },
+  {
+   "id": "1.3.5.4.5",
+   "d": "IMP-11",
+   "note": "Unit tests covering multiple shapes detect divergence between smoke and full paths."
+  },
+  {
+   "id": "1.3.5.5",
+   "d": "IMP-02",
+   "note": "Smoke preset is a cheap rehearsal; the exhaustive 5x5 default remains the product."
+  },
+  {
+   "id": "1.3.5.5.1",
+   "d": "X-HIST",
+   "note": "Differentiation rationale; exhaustive default is preserved under IMP-01."
+  },
+  {
+   "id": "1.3.5.5.2",
+   "d": "X-HIST",
+   "note": "Positioning motivation; complete default trees remain, no further change."
+  },
+  {
+   "id": "1.3.5.5.3",
+   "d": "IMP-02",
+   "note": "Framing smoke as a rehearsal preset keeps the core exhaustive promise intact."
+  },
+  {
+   "id": "1.3.5.5.4",
+   "d": "IMP-18",
+   "note": "Eval suite separates internal test utility from user-facing features."
+  },
+  {
+   "id": "1.3.5.5.5",
+   "d": "IMP-11",
+   "note": "Test suite makes pipeline correctness an explicit success measure."
+  }
+ ]
+}

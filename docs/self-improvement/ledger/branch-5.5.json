@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "5.5.1",
+   "d": "IMP-18",
+   "note": "No single correct tree exists, so the eval grades objective shape validity and hygiene report presence instead of a gold reference."
+  },
+  {
+   "id": "5.5.1.1",
+   "d": "IMP-16",
+   "note": "Omitted context is addressed by optional context intake stored in run.json and included in every prompt."
+  },
+  {
+   "id": "5.5.1.1.1",
+   "d": "IMP-16",
+   "note": "Short prompts without system data get an optional context field the skill passes to every agent."
+  },
+  {
+   "id": "5.5.1.1.2",
+   "d": "IMP-16",
+   "note": "The skill will ask once for key specifics when the problem statement is thin."
+  },
+  {
+   "id": "5.5.1.1.3",
+   "d": "IMP-08",
+   "note": "Agent instruction 'assume typical context' is replaced by grounding in problem specifics and explicit stated assumptions."
+  },
+  {
+   "id": "5.5.1.1.4",
+   "d": "IMP-16",
+   "note": "Context intake lets users paste log excerpts or interview notes that a bare problem statement lacks."
+  },
+  {
+   "id": "5.5.1.1.5",
+   "d": "X-HIST",
+   "note": "Past scoping decision for the prototype; the actionable part is covered by IMP-16 context intake."
+  },
+  {
+   "id": "5.5.1.2",
+   "d": "R-06",
+   "note": "A consensus expert reference tree requires recruiting experts, a social remedy outside the plugin."
+  },
+  {
+   "id": "5.5.1.2.1",
+   "d": "X-ENV",
+   "note": "Practitioners' choice of RCA frameworks is an industry fact no plugin change affects."
+  },
+  {
+   "id": "5.5.1.2.2",
+   "d": "X-ENV",
+   "note": "Reviewer domain bias is a human trait outside the plugin's control."
+  },
+  {
+   "id": "5.5.1.2.3",
+   "d": "R-06",
+   "note": "An adjudication process for competing expert trees is organizational work, not a plugin change."
+  },
+  {
+   "id": "5.5.1.2.4",
+   "d": "X-ENV",
+   "note": "Rarely measured inter-rater agreement is a field-wide research practice fact."
+  },
+  {
+   "id": "5.5.1.2.5",
+   "d": "X-ENV",
+   "note": "Five Whys lacks a formal definition industry-wide; the agent file already defines a cause operationally as answering why the parent happens."
+  },
+  {
+   "id": "5.5.1.3",
+   "d": "R-04",
+   "note": "Implied remedy is fewer or variable reasons per node; the user requires complete trees, though shape becomes configurable."
+  },
+  {
+   "id": "5.5.1.3.1",
+   "d": "R-04",
+   "note": "Single-chain human practice implies narrowing fan-out; complete 5-wide trees are the user's requirement."
+  },
+  {
+   "id": "5.5.1.3.2",
+   "d": "R-04",
+   "note": "Implied 'not applicable' slots or variable fan-out are declined; every tree stays complete."
+  },
+  {
+   "id": "5.5.1.3.3",
+   "d": "X-FALSE",
+   "note": "The 5x5x5x5x5 shape came from the user's stated requirement, not a symmetry preference."
+  },
+  {
+   "id": "5.5.1.3.4",
+   "d": "IMP-06",
+   "note": "Padding shows up as near-duplicates or parent restatements, which the hygiene report flags without deleting."
+  },
+  {
+   "id": "5.5.1.3.5",
+   "d": "X-ENV",
+   "note": "No human-authored 3,905-node reference exists anywhere; nothing the plugin can change creates one."
+  },
+  {
+   "id": "5.5.1.4",
+   "d": "IMP-06",
+   "note": "The hygiene report writes down mechanical quality criteria: duplicates, restatements, over-length reasons."
+  },
+  {
+   "id": "5.5.1.4.1",
+   "d": "IMP-15",
+   "note": "Principle clarification separates plugin-provided mechanical quality aids from the interpretation that stays with the user."
+  },
+  {
+   "id": "5.5.1.4.2",
+   "d": "R-01",
+   "note": "Tailoring or ranking reasons by reader insight is analysis the user's requirement keeps out of the plugin."
+  },
+  {
+   "id": "5.5.1.4.3",
+   "d": "X-HIST",
+   "note": "The 6/10 was a one-off judgment; this tree, catalog and ledger now map its causes to concrete changes."
+  },
+  {
+   "id": "5.5.1.4.4",
+   "d": "IMP-18",
+   "note": "The eval suite writes acceptance criteria down as graded checks on shape validity and hygiene report presence."
+  },
+  {
+   "id": "5.5.1.4.5",
+   "d": "IMP-08",
+   "note": "Tacit quality is articulated by demonstration: agent instructions gain a specific-versus-generic example."
+  },
+  {
+   "id": "5.5.1.5",
+   "d": "IMP-18",
+   "note": "The eval avoids reference matching entirely, grading shape and hygiene rather than wording similarity."
+  },
+  {
+   "id": "5.5.1.5.1",
+   "d": "IMP-06",
+   "note": "Stdlib token-overlap near-duplicate detection is non-blocking flags only, acknowledging string metrics cannot decide equivalence."
+  },
+  {
+   "id": "5.5.1.5.2",
+   "d": "R-02",
+   "note": "Embedding similarity would add dependencies or network calls; stdlib token overlap is used instead."
+  },
+  {
+   "id": "5.5.1.5.3",
+   "d": "R-03",
+   "note": "LLM judging is declined inside the fix loop as flaky and costly; non-blocking hygiene flags substitute."
+  },
+  {
+   "id": "5.5.1.5.4",
+   "d": "IMP-18",
+   "note": "Without a reference tree, novel causes are never scored as errors; the eval grades only objective properties."
+  },
+  {
+   "id": "5.5.1.5.5",
+   "d": "X-HIST",
+   "note": "Author's past inexperience with open-ended evals; the actionable part is IMP-18."
+  },
+  {
+   "id": "5.5.2",
+   "d": "R-06",
+   "note": "Hand-authoring an expert gold-standard tree is recruiting and dataset-building work outside the plugin."
+  },
+  {
+   "id": "5.5.2.1",
+   "d": "IMP-02",
+   "note": "The smoke preset yields a 3x3 tree of 39 reasons that one person can review carefully."
+  },
+  {
+   "id": "5.5.2.1.1",
+   "d": "IMP-01",
+   "note": "Exponential growth is controllable once init --breadth/--depth make shape a stored parameter."
+  },
+  {
+   "id": "5.5.2.1.2",
+   "d": "X-ENV",
+   "note": "Human attention limits are outside plugin control; smaller presets exist separately under IMP-02."
+  },
+  {
+   "id": "5.5.2.1.3",
+   "d": "R-06",
+   "note": "A human tree-authoring tool serves reference-dataset building, which is out of scope for a generation-only plugin."
+  },
+  {
+   "id": "5.5.2.1.4",
+   "d": "IMP-02",
+   "note": "Partial checks become cheap via smoke preset and plan --only for selected branches."
+  },
+  {
+   "id": "5.5.2.1.5",
+   "d": "R-06",
+   "note": "Sourcing domain experts to author depth-5 reasons is a social remedy, not a plugin change."
+  },
+  {
+   "id": "5.5.2.2",
+   "d": "R-06",
+   "note": "Hiring or recruiting domain experts is an organizational remedy outside the plugin."
+  },
+  {
+   "id": "5.5.2.2.1",
+   "d": "R-06",
+   "note": "Budget for paid reviewers is a recruiting concern the catalog declines as out of scope."
+  },
+  {
+   "id": "5.5.2.2.2",
+   "d": "R-06",
+   "note": "Assembling multi-domain expert reviewers is social work, not a plugin artifact."
+  },
+  {
+   "id": "5.5.2.2.3",
+   "d": "X-FALSE",
+   "note": "The plugin is released: published at github.com/JoshuaRamirez/five-whys and listed in the RedJay marketplace."
+  },
+  {
+   "id": "5.5.2.2.4",
+   "d": "R-06",
+   "note": "Building a user community to crowdsource reference trees is an organizational remedy."
+  },
+  {
+   "id": "5.5.2.2.5",
+   "d": "R-06",
+   "note": "Recruiting and briefing reviewers is explicitly out-of-scope social work."
+  },
+  {
+   "id": "5.5.2.3",
+   "d": "IMP-06",
+   "note": "Automated hygiene flags take over the mechanical part of reviewing generated trees."
+  },
+  {
+   "id": "5.5.2.3.1",
+   "d": "X-DONE",
+   "note": "The show subcommand now prints any subtree with its ancestor chain, so links are checkable in place."
+  },
+  {
+   "id": "5.5.2.3.2",
+   "d": "IMP-06",
+   "note": "Cross-branch exact and near-duplicate detection is automated in hygiene.json at assemble time."
+  },
+  {
+   "id": "5.5.2.3.3",
+   "d": "R-05",
+   "note": "An accept/reject review interface is a viewer-style heavy infrastructure the catalog declines."
+  },
+  {
+   "id": "5.5.2.3.4",
+   "d": "IMP-09",
+   "note": "index.md of levels 1-2 and branch-by-branch paging let the roughly 128k-token output be read in parts."
+  },
+  {
+   "id": "5.5.2.3.5",
+   "d": "R-06",
+   "note": "A reviewer rubric only matters for recruited certification reviewers, which is declined as social work."
+  },
+  {
+   "id": "5.5.2.4",
+   "d": "R-06",
+   "note": "A multi-domain benchmark of expert trees is public dataset building, declined as out of scope."
+  },
+  {
+   "id": "5.5.2.4.1",
+   "d": "IMP-18",
+   "note": "Eval cases at smoke size can cover several problem statements to check generalization of shape and hygiene."
+  },
+  {
+   "id": "5.5.2.4.2",
+   "d": "R-06",
+   "note": "Defining a problem taxonomy for a benchmark is dataset research, not a plugin change."
+  },
+  {
+   "id": "5.5.2.4.3",
+   "d": "R-06",
+   "note": "Per-domain expert authoring or validation is recruiting work outside the plugin."
+  },
+  {
+   "id": "5.5.2.4.4",
+   "d": "R-06",
+   "note": "Statistically powered quality benchmarks require large dataset building, declined as out of scope."
+  },
+  {
+   "id": "5.5.2.4.5",
+   "d": "IMP-18",
+   "note": "Eval grades shape validity and hygiene presence, which survive prompt wording changes with little maintenance."
+  },
+  {
+   "id": "5.5.2.5",
+   "d": "IMP-18",
+   "note": "A design-independent eval grading shape and hygiene is cheap to keep as the design changes."
+  },
+  {
+   "id": "5.5.2.5.1",
+   "d": "IMP-01",
+   "note": "Shape stored in run.json lets evals and checks read it rather than fixed-shape references."
+  },
+  {
+   "id": "5.5.2.5.2",
+   "d": "IMP-18",
+   "note": "Eval criteria do not depend on prompt wording, so evolving prompts do not obsolete them."
+  },
+  {
+   "id": "5.5.2.5.3",
+   "d": "X-HIST",
+   "note": "Version number reflects past maturity; no artifact change follows from the label itself."
+  },
+  {
+   "id": "5.5.2.5.4",
+   "d": "IMP-14",
+   "note": "README gains a design decisions section recording what is permanent: stdlib-only, generation-only, complete trees."
+  },
+  {
+   "id": "5.5.2.5.5",
+   "d": "IMP-01",
+   "note": "Shape-parameterized plan, check and assemble remove literal-shape assumptions that would need rewriting."
+  },
+  {
+   "id": "5.5.3",
+   "d": "X-HIST",
+   "note": "Past prioritization of pipeline over evals; the actionable part is covered by IMP-11 and IMP-18."
+  },
+  {
+   "id": "5.5.3.1",
+   "d": "X-HIST",
+   "note": "Past time spent on fan-out mechanics; those mechanics now work and evals are planned separately."
+  },
+  {
+   "id": "5.5.3.1.1",
+   "d": "X-DONE",
+   "note": "Orchestration works: a full 26-agent run completed, and the 20-subagent cap fix is committed."
+  },
+  {
+   "id": "5.5.3.1.2",
+   "d": "X-DONE",
+   "note": "Fragment validation and assembly exist and produced the assembled 3,905-reason tree."
+  },
+  {
+   "id": "5.5.3.1.3",
+   "d": "X-HIST",
+   "note": "Past learning curve on packaging conventions; the plugin is packaged and published."
+  },
+  {
+   "id": "5.5.3.1.4",
+   "d": "X-HIST",
+   "note": "Past output-format redesign; the one-reason-per-line format is settled."
+  },
+  {
+   "id": "5.5.3.1.5",
+   "d": "X-HIST",
+   "note": "Past time-boxing choice; quality work is now captured by IMP codes in this catalog."
+  },
+  {
+   "id": "5.5.3.2",
+   "d": "IMP-18",
+   "note": "Treating evaluation as part of building is realized by adding an evals/ case for claude plugin eval."
+  },
+  {
+   "id": "5.5.3.2.1",
+   "d": "X-ENV",
+   "note": "Rapid-iteration norms rewarding visible features are ecosystem culture outside plugin control."
+  },
+  {
+   "id": "5.5.3.2.2",
+   "d": "X-FALSE",
+   "note": "The plugin is public on GitHub and in the RedJay marketplace, so external users can demand quality evidence."
+  },
+  {
+   "id": "5.5.3.2.3",
+   "d": "X-HIST",
+   "note": "Past perception that evals feel unproductive; actionable part is IMP-18."
+  },
+  {
+   "id": "5.5.3.2.4",
+   "d": "IMP-18",
+   "note": "Premise overstates: there are no unit tests either; IMP-18 adds an output eval alongside IMP-11."
+  },
+  {
+   "id": "5.5.3.2.5",
+   "d": "X-ENV",
+   "note": "Plugin project templates lacking an evals directory is an ecosystem tooling fact."
+  },
+  {
+   "id": "5.5.3.3",
+   "d": "X-DONE",
+   "note": "A full real run completed on 2026-09-13, producing this 3,905-reason tree."
+  },
+  {
+   "id": "5.5.3.3.1",
+   "d": "IMP-04",
+   "note": "init --model lets runs use cheaper models instead of default-model pricing."
+  },
+  {
+   "id": "5.5.3.3.2",
+   "d": "IMP-03",
+   "note": "Dispatch waves bounded by the concurrency cap limit simultaneous agents and rate-limit exposure."
+  },
+  {
+   "id": "5.5.3.3.3",
+   "d": "IMP-02",
+   "note": "Small development shapes become a supported smoke preset rather than ad hoc edits."
+  },
+  {
+   "id": "5.5.3.3.4",
+   "d": "X-DONE",
+   "note": "The plugin's own 6/10 rating served as a representative problem for a full run."
+  },
+  {
+   "id": "5.5.3.3.5",
+   "d": "IMP-17",
+   "note": "This tree, catalog and ledger are kept in docs/self-improvement as retained run artifacts."
+  },
+  {
+   "id": "5.5.3.4",
+   "d": "IMP-14",
+   "note": "README will state what validation does and does not cover, so a structural OK is not read as quality."
+  },
+  {
+   "id": "5.5.3.4.1",
+   "d": "IMP-06",
+   "note": "check stays structural, but assemble adds a hygiene report flagging content problems."
+  },
+  {
+   "id": "5.5.3.4.2",
+   "d": "X-HIST",
+   "note": "Developer psychology around green checks; no artifact change beyond IMP-06 and IMP-14."
+  },
+  {
+   "id": "5.5.3.4.3",
+   "d": "IMP-18",
+   "note": "The eval makes hygiene report presence an explicit graded acceptance criterion."
+  },
+  {
+   "id": "5.5.3.4.4",
+   "d": "IMP-15",
+   "note": "Mechanical checks are allowed aids; judging meaning is explicitly left with the user."
+  },
+  {
+   "id": "5.5.3.4.5",
+   "d": "IMP-06",
+   "note": "Hygiene flags surface duplicates and restatements that glance-level plausibility hides."
+  },
+  {
+   "id": "5.5.3.5",
+   "d": "X-FALSE",
+   "note": "Claude Code provides claude plugin eval, which IMP-18 targets."
+  },
+  {
+   "id": "5.5.3.5.1",
+   "d": "X-ENV",
+   "note": "Scaffolding tools' output is controlled by Claude Code tooling, not this plugin."
+  },
+  {
+   "id": "5.5.3.5.2",
+   "d": "X-ENV",
+   "note": "Recency of plugin eval documentation is an ecosystem fact."
+  },
+  {
+   "id": "5.5.3.5.3",
+   "d": "X-ENV",
+   "note": "Marketplace publication requirements are set outside the plugin."
+  },
+  {
+   "id": "5.5.3.5.4",
+   "d": "X-ENV",
+   "note": "Scarcity of example plugins with evals is an ecosystem fact."
+  },
+  {
+   "id": "5.5.3.5.5",
+   "d": "X-ENV",
+   "note": "Immaturity of agent-output evaluation is industry-wide."
+  },
+  {
+   "id": "5.5.4",
+   "d": "X-ENV",
+   "note": "Absence of a public expert Five Whys dataset is an ecosystem fact outside plugin control."
+  },
+  {
+   "id": "5.5.4.1",
+   "d": "X-ENV",
+   "note": "Confidentiality of corporate RCAs is outside the plugin's control."
+  },
+  {
+   "id": "5.5.4.1.1",
+   "d": "X-ENV",
+   "note": "Organizations withholding sensitive postmortem details is an industry fact."
+  },
+  {
+   "id": "5.5.4.1.2",
+   "d": "X-ENV",
+   "note": "Narrative style of public postmortems is industry practice."
+  },
+  {
+   "id": "5.5.4.1.3",
+   "d": "X-ENV",
+   "note": "Legal discouragement of publishing root causes is outside plugin control."
+  },
+  {
+   "id": "5.5.4.1.4",
+   "d": "X-ENV",
+   "note": "Proprietary RCA tool formats belong to other vendors."
+  },
+  {
+   "id": "5.5.4.1.5",
+   "d": "X-ENV",
+   "note": "Causal chains staying inside incident teams is organizational culture."
+  },
+  {
+   "id": "5.5.4.2",
+   "d": "X-ENV",
+   "note": "Academic benchmark framing is a research-community fact."
+  },
+  {
+   "id": "5.5.4.2.1",
+   "d": "X-ENV",
+   "note": "Existing causal datasets' focus on short pairs is set by researchers."
+  },
+  {
+   "id": "5.5.4.2.2",
+   "d": "X-ENV",
+   "note": "Perception of Five Whys as management technique is field culture."
+  },
+  {
+   "id": "5.5.4.2.3",
+   "d": "X-ENV",
+   "note": "Lack of accepted metrics for open-ended causal trees is a research-field gap."
+  },
+  {
+   "id": "5.5.4.2.4",
+   "d": "X-ENV",
+   "note": "Research funding priorities are outside plugin control."
+  },
+  {
+   "id": "5.5.4.2.5",
+   "d": "X-ENV",
+   "note": "Annotation costs deterring dataset creators is an ecosystem economics fact."
+  },
+  {
+   "id": "5.5.4.3",
+   "d": "X-ENV",
+   "note": "Published Five Whys examples being shallow chains is a fact about external literature."
+  },
+  {
+   "id": "5.5.4.3.1",
+   "d": "X-ENV",
+   "note": "Textbook Toyota examples are external material the plugin cannot change."
+  },
+  {
+   "id": "5.5.4.3.2",
+   "d": "X-ENV",
+   "note": "Training-material simplification is external teaching practice."
+  },
+  {
+   "id": "5.5.4.3.3",
+   "d": "X-ENV",
+   "note": "Practitioners converting branching analyses to fishbone diagrams is industry practice."
+  },
+  {
+   "id": "5.5.4.3.4",
+   "d": "X-ENV",
+   "note": "Authors stopping at the first actionable cause is external practice."
+  },
+  {
+   "id": "5.5.4.3.5",
+   "d": "X-ENV",
+   "note": "Invented blog illustrations are external content quality."
+  },
+  {
+   "id": "5.5.4.4",
+   "d": "R-06",
+   "note": "Sourcing and adapting adjacent datasets into a benchmark is dataset building, declined as out of scope."
+  },
+  {
+   "id": "5.5.4.4.1",
+   "d": "X-HIST",
+   "note": "Past allocation of research time; nothing further actionable beyond declined dataset work."
+  },
+  {
+   "id": "5.5.4.4.2",
+   "d": "R-06",
+   "note": "Converting fault-tree data into fragment JSON serves benchmark building, which is declined."
+  },
+  {
+   "id": "5.5.4.4.3",
+   "d": "X-HIST",
+   "note": "Past uncertainty about dataset transfer; the benchmark route itself is declined under R-06."
+  },
+  {
+   "id": "5.5.4.4.4",
+   "d": "X-HIST",
+   "note": "Author background explains past choices; actionable eval work is IMP-18."
+  },
+  {
+   "id": "5.5.4.4.5",
+   "d": "X-HIST",
+   "note": "Past plan omitted data sourcing; dataset building remains out of scope."
+  },
+  {
+   "id": "5.5.4.5",
+   "d": "X-ENV",
+   "note": "Lack of funding incentive for a public dataset is ecosystem economics."
+  },
+  {
+   "id": "5.5.4.5.1",
+   "d": "X-ENV",
+   "note": "Consultancies guarding RCA expertise is industry behavior."
+  },
+  {
+   "id": "5.5.4.5.2",
+   "d": "X-ENV",
+   "note": "LLM vendor benchmark priorities are outside plugin control."
+  },
+  {
+   "id": "5.5.4.5.3",
+   "d": "X-ENV",
+   "note": "Quality-management communities' data practices are external."
+  },
+  {
+   "id": "5.5.4.5.4",
+   "d": "X-ENV",
+   "note": "Recognition norms for open-source dataset curation are ecosystem culture."
+  },
+  {
+   "id": "5.5.4.5.5",
+   "d": "X-ENV",
+   "note": "Market demand timing for AI Five Whys trees is an industry fact."
+  },
+  {
+   "id": "5.5.5",
+   "d": "IMP-06",
+   "note": "Hygiene report specifies mechanical metrics: exact and near-duplicates, restatements, over-length reasons."
+  },
+  {
+   "id": "5.5.5.1",
+   "d": "IMP-14",
+   "note": "README design decisions will state the exhaustive generation-only purpose, framing breadth over precision explicitly."
+  },
+  {
+   "id": "5.5.5.1.1",
+   "d": "R-04",
+   "note": "Trading coverage for per-reason precision implies pruning, declined because complete trees are required."
+  },
+  {
+   "id": "5.5.5.1.2",
+   "d": "IMP-14",
+   "note": "Design decisions will state that exhaustive generation accepts wrong causes for the user to filter rather than missing ones."
+  },
+  {
+   "id": "5.5.5.1.3",
+   "d": "R-06",
+   "note": "Measuring recall needs a reference cause set, i.e., benchmark dataset building, declined as out of scope."
+  },
+  {
+   "id": "5.5.5.1.4",
+   "d": "R-01",
+   "note": "Supports leaving judgment of surprising reasons to the user; plugin-side precision filtering is declined."
+  },
+  {
+   "id": "5.5.5.1.5",
+   "d": "IMP-14",
+   "note": "README will document intended use and known limitations, including ideation-style exhaustive generation."
+  },
+  {
+   "id": "5.5.5.2",
+   "d": "IMP-06",
+   "note": "Only mechanically scorable criteria, distinctness and restatement, become non-blocking hygiene flags."
+  },
+  {
+   "id": "5.5.5.2.1",
+   "d": "R-01",
+   "note": "Judging whether a reason truly causes its parent is analysis kept with the user."
+  },
+  {
+   "id": "5.5.5.2.2",
+   "d": "IMP-06",
+   "note": "Near-duplicate flags use stdlib token overlap; being non-blocking, an imperfect threshold only annotates."
+  },
+  {
+   "id": "5.5.5.2.3",
+   "d": "R-01",
+   "note": "Rating systemic depth of causes is interpretation, which the plugin leaves to the user."
+  },
+  {
+   "id": "5.5.5.2.4",
+   "d": "R-01",
+   "note": "A weighted composite quality score is plugin-side ranking, declined; flags stay separate annotations."
+  },
+  {
+   "id": "5.5.5.2.5",
+   "d": "IMP-06",
+   "note": "Automated stdlib hygiene flagging over all reasons runs during assemble."
+  },
+  {
+   "id": "5.5.5.3",
+   "d": "IMP-06",
+   "note": "Instruction rules on distinctness, restatement and length become measurable hygiene flags."
+  },
+  {
+   "id": "5.5.5.3.1",
+   "d": "IMP-08",
+   "note": "Prose 'concrete and specific' advice gains a specific-versus-generic example and grounding requirements."
+  },
+  {
+   "id": "5.5.5.3.2",
+   "d": "IMP-06",
+   "note": "Over-length reasons are flagged in hygiene.json, making the soft 20-word rule measurable."
+  },
+  {
+   "id": "5.5.5.3.3",
+   "d": "IMP-06",
+   "note": "Hygiene report verifies after the fact whether agents followed distinctness and length guidance."
+  },
+  {
+   "id": "5.5.5.3.4",
+   "d": "X-HIST",
+   "note": "Past view of prompt writing; converting guidance into checks is carried by IMP-06."
+  },
+  {
+   "id": "5.5.5.3.5",
+   "d": "IMP-17",
+   "note": "The self-improvement record links observed output defects to catalog changes."
+  },
+  {
+   "id": "5.5.5.4",
+   "d": "IMP-15",
+   "note": "Skill, agent and README will state what the plugin provides versus the analysis users perform."
+  },
+  {
+   "id": "5.5.5.4.1",
+   "d": "IMP-15",
+   "note": "Mechanical quality aids are reclaimed as plugin responsibility while interpretation stays with users."
+  },
+  {
+   "id": "5.5.5.4.2",
+   "d": "R-06",
+   "note": "User research is explicitly listed as an out-of-scope social remedy."
+  },
+  {
+   "id": "5.5.5.4.3",
+   "d": "R-01",
+   "note": "Modeling root-cause selection would make the plugin select causes, which is declined."
+  },
+  {
+   "id": "5.5.5.4.4",
+   "d": "IMP-14",
+   "note": "README documents intended use and design decisions, giving known-good a stated target."
+  },
+  {
+   "id": "5.5.5.4.5",
+   "d": "IMP-14",
+   "note": "Plugin is now public, so implicit needs get documented in README limitations and design decisions."
+  },
+  {
+   "id": "5.5.5.5",
+   "d": "IMP-06",
+   "note": "Repetition becomes quantified by the hygiene report's duplicate and near-duplicate flags."
+  },
+  {
+   "id": "5.5.5.5.1",
+   "d": "IMP-06",
+   "note": "Hygiene report's near-duplicate detection measures overlap across siblings and branches, discounting ancestor words."
+  },
+  {
+   "id": "5.5.5.5.2",
+   "d": "IMP-10",
+   "note": "Per-level counts and average words per level recorded in output support cross-level comparison."
+  },
+  {
+   "id": "5.5.5.5.3",
+   "d": "X-DONE",
+   "note": "A full run now provides observed data: 3,905 reasons, one exact duplicate, measured size and tokens."
+  },
+  {
+   "id": "5.5.5.5.4",
+   "d": "IMP-10",
+   "note": "Run measurement records per-level statistics, bytes, tokens and dispatch attempts in run.json."
+  },
+  {
+   "id": "5.5.5.5.5",
+   "d": "X-DONE",
+   "note": "The first full run completed on 2026-09-13 and its measurements are recorded in catalog facts."
+  }
+ ]
+}

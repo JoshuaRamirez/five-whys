@@ -1,0 +1,779 @@
+{
+ "entries": [
+  {
+   "id": "4.1.1",
+   "d": "R-04",
+   "note": "Allowing fewer reasons where causes run out drops complete trees, which the user's 5x5x5x5x5 requirement rules out."
+  },
+  {
+   "id": "4.1.1.1",
+   "d": "IMP-01",
+   "note": "Parameterized shape makes the validator read breadth from run.json instead of a hard-coded five."
+  },
+  {
+   "id": "4.1.1.1.1",
+   "d": "IMP-06",
+   "note": "Hygiene report adds mechanical content checks (duplicates, restatements, length) beyond the easy structural validation."
+  },
+  {
+   "id": "4.1.1.1.2",
+   "d": "R-04",
+   "note": "Variable-length lists imply ragged trees; complete trees are required, so id and assembly logic stay uniform."
+  },
+  {
+   "id": "4.1.1.1.3",
+   "d": "IMP-01",
+   "note": "init --breadth exposes the branching factor as a stored run parameter."
+  },
+  {
+   "id": "4.1.1.1.4",
+   "d": "X-HIST",
+   "note": "Predictable totals remain a deliberate benefit; nothing further to change beyond cost preview already in IMP-05."
+  },
+  {
+   "id": "4.1.1.1.5",
+   "d": "X-HIST",
+   "note": "Prototype ordering explains v0.1.0; the real run happened 2026-09-13 and shape becomes configurable under IMP-01."
+  },
+  {
+   "id": "4.1.1.2",
+   "d": "R-04",
+   "note": "Exactly-five prompt instructions keep trees complete; relaxing counts is the declined variable fan-out remedy."
+  },
+  {
+   "id": "4.1.1.2.1",
+   "d": "IMP-01",
+   "note": "Prompts and validator will both read the stored run shape rather than module literals."
+  },
+  {
+   "id": "4.1.1.2.2",
+   "d": "IMP-08",
+   "note": "Padding with weak reasons is countered by specificity instructions, stated assumptions and specific-vs-generic examples."
+  },
+  {
+   "id": "4.1.1.2.3",
+   "d": "R-04",
+   "note": "Terminal or no-further-cause markers are declined 'not applicable' slots; every tree stays complete."
+  },
+  {
+   "id": "4.1.1.2.4",
+   "d": "X-HIST",
+   "note": "Author's past fear of shallow answers explains fixed counts; no artifact change follows from the motivation itself."
+  },
+  {
+   "id": "4.1.1.2.5",
+   "d": "R-04",
+   "note": "Letting agents judge causal saturation means stopping early, which the complete-tree requirement declines."
+  },
+  {
+   "id": "4.1.1.3",
+   "d": "IMP-01",
+   "note": "Breadth becomes an init parameter defaulting to 5, so symmetry is a default rather than a lock."
+  },
+  {
+   "id": "4.1.1.3.1",
+   "d": "IMP-01",
+   "note": "Parameterized shape turns the second five into a tunable breadth stored in run.json."
+  },
+  {
+   "id": "4.1.1.3.2",
+   "d": "X-HIST",
+   "note": "Describability motivated the original shape; IMP-01 keeps 5x5 as a documented default."
+  },
+  {
+   "id": "4.1.1.3.3",
+   "d": "IMP-14",
+   "note": "README design-decisions section will state the basis for default breadth and how to change it."
+  },
+  {
+   "id": "4.1.1.3.4",
+   "d": "X-ENV",
+   "note": "Classic Five Whys defining depth only is a methodology fact outside the plugin's control."
+  },
+  {
+   "id": "4.1.1.3.5",
+   "d": "X-HIST",
+   "note": "This self-review is the revisit; parameterization is covered by IMP-01."
+  },
+  {
+   "id": "4.1.1.4",
+   "d": "IMP-01",
+   "note": "Users can pick a breadth matching their problem rather than inheriting the five-factor assumption."
+  },
+  {
+   "id": "4.1.1.4.1",
+   "d": "X-HIST",
+   "note": "Fishbone-inspired round number is design history; nothing further actionable beyond IMP-01."
+  },
+  {
+   "id": "4.1.1.4.2",
+   "d": "R-06",
+   "note": "Sampling real root-cause analyses to measure branching is research or dataset building, not a plugin change."
+  },
+  {
+   "id": "4.1.1.4.3",
+   "d": "X-ENV",
+   "note": "Models' ability to always generate five plausible reasons is a model property the plugin cannot change."
+  },
+  {
+   "id": "4.1.1.4.4",
+   "d": "IMP-06",
+   "note": "Hygiene flags for near-duplicates and parent restatements surface padded reasons that shape checks miss."
+  },
+  {
+   "id": "4.1.1.4.5",
+   "d": "X-HIST",
+   "note": "Convenience for task sizing explains the assumption; no further artifact change follows."
+  },
+  {
+   "id": "4.1.1.5",
+   "d": "R-04",
+   "note": "Non-uniform branching per node is the declined adaptive fan-out; trees stay complete and uniform."
+  },
+  {
+   "id": "4.1.1.5.1",
+   "d": "R-04",
+   "note": "Identical subtree sizes follow from complete trees, which remain required; ragged branches are declined."
+  },
+  {
+   "id": "4.1.1.5.2",
+   "d": "R-04",
+   "note": "Content-dependent planning implies adaptive fan-out or early stopping, declined for complete trees."
+  },
+  {
+   "id": "4.1.1.5.3",
+   "d": "R-07",
+   "note": "A multi-round coordinator feeding generated content forward serializes the run and is declined."
+  },
+  {
+   "id": "4.1.1.5.4",
+   "d": "X-HIST",
+   "note": "Merge and filename simplicity explain uniform tasks; nothing actionable remains."
+  },
+  {
+   "id": "4.1.1.5.5",
+   "d": "X-FALSE",
+   "note": "The skill already dispatches iteratively: root round, then capped branch rounds re-planned until ready."
+  },
+  {
+   "id": "4.1.2",
+   "d": "R-01",
+   "note": "Pruning weak or irrelevant branches is plugin-side judgment reserved to the user; hygiene flags annotate instead."
+  },
+  {
+   "id": "4.1.2.1",
+   "d": "R-01",
+   "note": "Scoring or ranking reasons before expansion is declined plugin-side analysis."
+  },
+  {
+   "id": "4.1.2.1.1",
+   "d": "IMP-15",
+   "note": "Principle clarification states which mechanical aids are allowed while branch importance stays with the user."
+  },
+  {
+   "id": "4.1.2.1.2",
+   "d": "R-01",
+   "note": "An extra scoring pass implies plugin-side ranking, which is declined regardless of cost."
+  },
+  {
+   "id": "4.1.2.1.3",
+   "d": "R-01",
+   "note": "A plausibility or relevance rubric exists only to rank reasons, a declined remedy."
+  },
+  {
+   "id": "4.1.2.1.4",
+   "d": "R-01",
+   "note": "Relaxing the no-ranking instruction would move analysis into agents, which the catalog declines."
+  },
+  {
+   "id": "4.1.2.1.5",
+   "d": "X-HIST",
+   "note": "Concern about biasing users explains the no-ranking rule; R-01 already records the decision."
+  },
+  {
+   "id": "4.1.2.2",
+   "d": "IMP-07",
+   "note": "Sibling-aware branch prompts list other level-1/2 reasons so isolated agents avoid duplicating them."
+  },
+  {
+   "id": "4.1.2.2.1",
+   "d": "IMP-07",
+   "note": "Branch prompts will include the level-1/level-2 digest beyond the agent's own ancestor chain."
+  },
+  {
+   "id": "4.1.2.2.2",
+   "d": "IMP-07",
+   "note": "The cheap level-1/2 digest restores some cross-branch awareness without giving up parallel speed."
+  },
+  {
+   "id": "4.1.2.2.3",
+   "d": "R-07",
+   "note": "Sharing full sibling fragments is the declined shared-output approach; IMP-07 shares only the small digest."
+  },
+  {
+   "id": "4.1.2.2.4",
+   "d": "IMP-06",
+   "note": "assemble writes hygiene.json flagging exact and near duplicates, annotating without deleting."
+  },
+  {
+   "id": "4.1.2.2.5",
+   "d": "R-02",
+   "note": "Embedding-based semantic dedup needs packages or network calls; stdlib token-overlap heuristics are used instead."
+  },
+  {
+   "id": "4.1.2.3",
+   "d": "IMP-02",
+   "note": "Smoke preset and plan --only let users see a small tree or chosen branches before committing."
+  },
+  {
+   "id": "4.1.2.3.1",
+   "d": "IMP-02",
+   "note": "plan --only enables staged dispatch of selected branches instead of one all-at-once command."
+  },
+  {
+   "id": "4.1.2.3.2",
+   "d": "IMP-02",
+   "note": "After the root fragment, users can dispatch chosen branches via --only while each wave stays parallel."
+  },
+  {
+   "id": "4.1.2.3.3",
+   "d": "X-HIST",
+   "note": "Preference for a finished artifact is past design motivation; staged options are covered by IMP-02."
+  },
+  {
+   "id": "4.1.2.3.4",
+   "d": "X-FALSE",
+   "note": "Runs persist on disk: run.json plus fragments, and plan skips valid fragments, so partial trees can wait and resume."
+  },
+  {
+   "id": "4.1.2.3.5",
+   "d": "X-ENV",
+   "note": "Reliability of multi-turn checkpoints inside skills is a Claude Code platform characteristic."
+  },
+  {
+   "id": "4.1.2.4",
+   "d": "X-HIST",
+   "note": "Exhaustiveness is the user's stated requirement, not mere positioning; no further change follows."
+  },
+  {
+   "id": "4.1.2.4.1",
+   "d": "X-ENV",
+   "note": "Chat producing a free linear why chain is an ecosystem fact outside the plugin."
+  },
+  {
+   "id": "4.1.2.4.2",
+   "d": "X-HIST",
+   "note": "Need to justify existence is past motivation; the exhaustive tree is the user's requirement."
+  },
+  {
+   "id": "4.1.2.4.3",
+   "d": "IMP-14",
+   "note": "Honest README documents measured cost, time and limitations rather than headline reason counts."
+  },
+  {
+   "id": "4.1.2.4.4",
+   "d": "IMP-14",
+   "note": "Documentation will state what the tree is and is not, including known limitations, avoiding breadth-as-insight claims."
+  },
+  {
+   "id": "4.1.2.4.5",
+   "d": "R-06",
+   "note": "User research on structured Five Whys needs is a social remedy, not a plugin change."
+  },
+  {
+   "id": "4.1.2.5",
+   "d": "R-04",
+   "note": "A root-cause stopping criterion implies early stopping or variable depth, declined for complete trees."
+  },
+  {
+   "id": "4.1.2.5.1",
+   "d": "IMP-15",
+   "note": "Principle clarification explicitly assigns root-cause judgment to the user and explains allowed mechanical aids."
+  },
+  {
+   "id": "4.1.2.5.2",
+   "d": "IMP-14",
+   "note": "README will document what shape validation covers and does not, including semantic conditions."
+  },
+  {
+   "id": "4.1.2.5.3",
+   "d": "R-04",
+   "note": "A terminal or out-of-scope field is the declined 'not applicable' slot."
+  },
+  {
+   "id": "4.1.2.5.4",
+   "d": "R-04",
+   "note": "Early termination producing ragged trees is exactly the declined remedy; complete trees remain required."
+  },
+  {
+   "id": "4.1.2.5.5",
+   "d": "R-04",
+   "note": "Per-branch stop-when-fixable means variable depth, declined; run-level depth choice comes via IMP-01."
+  },
+  {
+   "id": "4.1.3",
+   "d": "IMP-01",
+   "note": "init --depth lets each run choose depth, defaulting to five."
+  },
+  {
+   "id": "4.1.3.1",
+   "d": "IMP-01",
+   "note": "Depth becomes a stored run parameter so identity no longer forces five levels."
+  },
+  {
+   "id": "4.1.3.1.1",
+   "d": "IMP-01",
+   "note": "Defaults stay 5/5, preserving the recognizable brand while permitting other depths."
+  },
+  {
+   "id": "4.1.3.1.2",
+   "d": "X-ENV",
+   "note": "Popular summaries treating five as a rule are ecosystem culture outside the plugin's control."
+  },
+  {
+   "id": "4.1.3.1.3",
+   "d": "X-HIST",
+   "note": "Faithful-implementation scoping is past motivation; configurability is covered by IMP-01."
+  },
+  {
+   "id": "4.1.3.1.4",
+   "d": "IMP-01",
+   "note": "A --depth option lets simple problems use two or three levels."
+  },
+  {
+   "id": "4.1.3.1.5",
+   "d": "X-HIST",
+   "note": "Naming preceded usage data; the real run now supplies data and IMP-01 relaxes the lock."
+  },
+  {
+   "id": "4.1.3.2",
+   "d": "IMP-01",
+   "note": "init --depth overrides the module constant; plan, check and assemble read the stored shape."
+  },
+  {
+   "id": "4.1.3.2.1",
+   "d": "X-HIST",
+   "note": "MVP deferral explains the missing option; the configuration itself is IMP-01."
+  },
+  {
+   "id": "4.1.3.2.2",
+   "d": "IMP-01",
+   "note": "Root/branch split will be derived from the stored depth instead of hard-wired levels 1-2 and 3-5."
+  },
+  {
+   "id": "4.1.3.2.3",
+   "d": "IMP-01",
+   "note": "Parameterized shape includes computing agent partitioning from stored breadth and depth."
+  },
+  {
+   "id": "4.1.3.2.4",
+   "d": "IMP-11",
+   "note": "A stdlib unittest suite covering shapes, plan, check and assemble makes parameter changes safe."
+  },
+  {
+   "id": "4.1.3.2.5",
+   "d": "X-HIST",
+   "note": "Absence of requests is past context; this self-review motivates IMP-01."
+  },
+  {
+   "id": "4.1.3.3",
+   "d": "IMP-01",
+   "note": "Users can shrink either breadth or depth per run, taming the multiplicative product while keeping trees complete."
+  },
+  {
+   "id": "4.1.3.3.1",
+   "d": "IMP-05",
+   "note": "Cost and size preview makes the combined breadth-times-depth cost explicit before dispatch."
+  },
+  {
+   "id": "4.1.3.3.2",
+   "d": "X-HIST",
+   "note": "Concern about single chains missing alternatives is a valid past rationale; nothing further to change."
+  },
+  {
+   "id": "4.1.3.3.3",
+   "d": "IMP-05",
+   "note": "init and plan will report reason count and token estimates so context-limit consequences are visible."
+  },
+  {
+   "id": "4.1.3.3.4",
+   "d": "IMP-05",
+   "note": "Preview reports whole-tree totals, supplementing per-node rules with aggregate agent, reason and token counts."
+  },
+  {
+   "id": "4.1.3.3.5",
+   "d": "X-ENV",
+   "note": "Lack of precedent for combined breadth-depth bounds is a field-wide fact."
+  },
+  {
+   "id": "4.1.3.4",
+   "d": "IMP-01",
+   "note": "Users doubting deeper levels' value can choose a shallower depth per run."
+  },
+  {
+   "id": "4.1.3.4.1",
+   "d": "R-06",
+   "note": "Measuring level usefulness requires user studies or benchmark datasets, not a plugin change."
+  },
+  {
+   "id": "4.1.3.4.2",
+   "d": "X-HIST",
+   "note": "Intuition that deeper feels more fundamental is past design psychology; depth choice is IMP-01."
+  },
+  {
+   "id": "4.1.3.4.3",
+   "d": "IMP-06",
+   "note": "Hygiene flags for ancestor restatements and near-duplicates make depth-related quality decay mechanically visible."
+  },
+  {
+   "id": "4.1.3.4.4",
+   "d": "IMP-10",
+   "note": "Per-level counts, average words and token approximations recorded in output expose per-level cost."
+  },
+  {
+   "id": "4.1.3.4.5",
+   "d": "IMP-04",
+   "note": "init --model with documented trade-offs lets users factor model pricing into runs."
+  },
+  {
+   "id": "4.1.3.5",
+   "d": "R-04",
+   "note": "Keeping uniform depth is required; variable-depth branches are the declined remedy."
+  },
+  {
+   "id": "4.1.3.5.1",
+   "d": "IMP-19",
+   "note": "Partial assembly writes explicit missing-branch markers, keeping dotted ids valid when subtrees are absent."
+  },
+  {
+   "id": "4.1.3.5.2",
+   "d": "IMP-19",
+   "note": "assemble --partial handles missing subtrees with markers instead of refusing."
+  },
+  {
+   "id": "4.1.3.5.3",
+   "d": "IMP-09",
+   "note": "show, index.md and branch-by-branch loading guidance complement the regular whole-file format."
+  },
+  {
+   "id": "4.1.3.5.4",
+   "d": "R-04",
+   "note": "Intentional-end metadata exists only for ragged trees, which are declined."
+  },
+  {
+   "id": "4.1.3.5.5",
+   "d": "R-09",
+   "note": "NEW reconciled: keeping depth key and indentation for windowed reading; saving is small."
+  },
+  {
+   "id": "4.1.4",
+   "d": "R-01",
+   "note": "Following only probable chains requires plugin-side ranking and pruning, declined in favor of user analysis."
+  },
+  {
+   "id": "4.1.4.1",
+   "d": "X-HIST",
+   "note": "Fear of missing the root cause is past motivation aligned with the user's exhaustive requirement."
+  },
+  {
+   "id": "4.1.4.1.1",
+   "d": "X-ENV",
+   "note": "Confirmation-bias criticism of single-chain analysis is a methodology literature fact."
+  },
+  {
+   "id": "4.1.4.1.2",
+   "d": "IMP-05",
+   "note": "Preview confirmation makes excess reasons' token and time cost visible, so they no longer feel harmless."
+  },
+  {
+   "id": "4.1.4.1.3",
+   "d": "IMP-05",
+   "note": "Measured estimates (about 1.2M subagent tokens) shown before dispatch counter the cheap-per-item impression."
+  },
+  {
+   "id": "4.1.4.1.4",
+   "d": "R-01",
+   "note": "A confidence signal to drop causes is plugin-side ranking and pruning, declined."
+  },
+  {
+   "id": "4.1.4.1.5",
+   "d": "X-HIST",
+   "note": "Completeness as defense against 'shallow' is past psychology; nothing further actionable."
+  },
+  {
+   "id": "4.1.4.2",
+   "d": "IMP-15",
+   "note": "Principle clarification pairs user-owned judgment with allowed mechanical aids like navigation and hygiene flags."
+  },
+  {
+   "id": "4.1.4.2.1",
+   "d": "IMP-15",
+   "note": "Clarified principle permits mechanical aids (hygiene, navigation, measurement), so the tool is more than a raw generator."
+  },
+  {
+   "id": "4.1.4.2.2",
+   "d": "X-HIST",
+   "note": "Blame avoidance is speculative past motivation; the principle is the user's requirement."
+  },
+  {
+   "id": "4.1.4.2.3",
+   "d": "IMP-16",
+   "note": "Optional context intake passes the user's domain specifics into every agent prompt."
+  },
+  {
+   "id": "4.1.4.2.4",
+   "d": "IMP-02",
+   "note": "plan --only lets users steer dispatch toward chosen branches."
+  },
+  {
+   "id": "4.1.4.2.5",
+   "d": "X-HIST",
+   "note": "Narrow single-job scoping is past design choice; nothing further actionable."
+  },
+  {
+   "id": "4.1.4.3",
+   "d": "IMP-09",
+   "note": "Navigation and partial reading make large output usable by subtree or top levels."
+  },
+  {
+   "id": "4.1.4.3.1",
+   "d": "IMP-05",
+   "note": "Preview will report output reason and token counts, budgeting reading as well as generation."
+  },
+  {
+   "id": "4.1.4.3.2",
+   "d": "IMP-09",
+   "note": "Loading guidance moves from whole-file reading to branch-by-branch paging with an index."
+  },
+  {
+   "id": "4.1.4.3.3",
+   "d": "IMP-09",
+   "note": "index.md of levels 1-2 and show subtree views give humans manageable entry points."
+  },
+  {
+   "id": "4.1.4.3.4",
+   "d": "X-DONE",
+   "note": "A full real run on 2026-09-13 produced 511 KB, about 128k tokens, exposing output weight."
+  },
+  {
+   "id": "4.1.4.3.5",
+   "d": "IMP-09",
+   "note": "Branch-by-branch paging avoids relying on long-context retrieval over the entire file."
+  },
+  {
+   "id": "4.1.4.4",
+   "d": "IMP-05",
+   "note": "Cost and size preview turns 3,905 into concrete agent, token and time figures before dispatch."
+  },
+  {
+   "id": "4.1.4.4.1",
+   "d": "IMP-05",
+   "note": "Preview surfaces aggregate scale that per-node rules hide."
+  },
+  {
+   "id": "4.1.4.4.2",
+   "d": "X-DONE",
+   "note": "A full example was generated on 2026-09-13: 3,905 reasons in about 7 minutes."
+  },
+  {
+   "id": "4.1.4.4.3",
+   "d": "IMP-05",
+   "note": "Concrete preview numbers counter intuitive underestimation of exponential growth."
+  },
+  {
+   "id": "4.1.4.4.4",
+   "d": "IMP-14",
+   "note": "Real run measured about 7 minutes and 1.2M tokens; README will document these figures."
+  },
+  {
+   "id": "4.1.4.4.5",
+   "d": "X-DONE",
+   "note": "The full-size run on 2026-09-13 exercised all 26 agents, not just small subtrees."
+  },
+  {
+   "id": "4.1.4.5",
+   "d": "R-01",
+   "note": "Beam search over causes requires scoring and pruning, declined plugin-side analysis."
+  },
+  {
+   "id": "4.1.4.5.1",
+   "d": "X-HIST",
+   "note": "Speed of v0.1.0 construction is past process; nothing further actionable."
+  },
+  {
+   "id": "4.1.4.5.2",
+   "d": "R-01",
+   "note": "Beam or best-first expansion depends on declined scoring."
+  },
+  {
+   "id": "4.1.4.5.3",
+   "d": "IMP-18",
+   "note": "An eval suite for claude plugin eval gives a basis for comparing pipeline changes."
+  },
+  {
+   "id": "4.1.4.5.4",
+   "d": "R-06",
+   "note": "Recruiting reviewers is a social remedy, not a plugin change."
+  },
+  {
+   "id": "4.1.4.5.5",
+   "d": "X-HIST",
+   "note": "Showcase appeal of parallel fan-out is past motivation; no artifact change follows."
+  },
+  {
+   "id": "4.1.5",
+   "d": "IMP-05",
+   "note": "Preview with confirmation bounds full-size runs by requiring user approval of reason and token counts."
+  },
+  {
+   "id": "4.1.5.1",
+   "d": "IMP-01",
+   "note": "Stored breadth and depth become the explicit size bound, keeping every tree complete."
+  },
+  {
+   "id": "4.1.5.1.1",
+   "d": "X-HIST",
+   "note": "Scoping budget out of v0.1.0 is past decision; preview and shapes now cover it."
+  },
+  {
+   "id": "4.1.5.1.2",
+   "d": "X-DONE",
+   "note": "The real run measured output at 511 KB, about 128k tokens, so size is now known."
+  },
+  {
+   "id": "4.1.5.1.3",
+   "d": "X-ENV",
+   "note": "Absence of a plugin-hookable cost ceiling is a Claude Code platform fact."
+  },
+  {
+   "id": "4.1.5.1.4",
+   "d": "IMP-05",
+   "note": "Measured figures from the real run calibrate upfront token estimates before generation."
+  },
+  {
+   "id": "4.1.5.1.5",
+   "d": "X-DONE",
+   "note": "The 2026-09-13 run produced a cost figure: about 1.2M subagent tokens."
+  },
+  {
+   "id": "4.1.5.2",
+   "d": "IMP-05",
+   "note": "Cost preview before dispatch provides the missing feedback on size growth."
+  },
+  {
+   "id": "4.1.5.2.1",
+   "d": "X-ENV",
+   "note": "Per-subagent token display is Claude Code UI behavior outside the plugin."
+  },
+  {
+   "id": "4.1.5.2.2",
+   "d": "X-ENV",
+   "note": "Per-agent consumption is hidden by the platform; output-side measurement is covered by IMP-10."
+  },
+  {
+   "id": "4.1.5.2.3",
+   "d": "X-ENV",
+   "note": "Subscription billing blurring marginal cost is a pricing fact outside the plugin."
+  },
+  {
+   "id": "4.1.5.2.4",
+   "d": "IMP-10",
+   "note": "run.json and output header will record bytes, tokens, duration and dispatch attempts."
+  },
+  {
+   "id": "4.1.5.2.5",
+   "d": "IMP-04",
+   "note": "init --model records an explicit model choice passed as the Agent override instead of inherit."
+  },
+  {
+   "id": "4.1.5.3",
+   "d": "IMP-01",
+   "note": "Smaller configured shapes cap output size while trees remain complete."
+  },
+  {
+   "id": "4.1.5.3.1",
+   "d": "IMP-19",
+   "note": "assemble --partial yields a valid tree with missing-branch markers instead of rejecting the run."
+  },
+  {
+   "id": "4.1.5.3.2",
+   "d": "IMP-19",
+   "note": "Partial assembly is the truncation mode producing a valid marked partial tree."
+  },
+  {
+   "id": "4.1.5.3.3",
+   "d": "IMP-19",
+   "note": "assemble --partial no longer requires all 25 branch fragments."
+  },
+  {
+   "id": "4.1.5.3.4",
+   "d": "IMP-09",
+   "note": "index.md of levels 1-2 and show --levels provide mechanical compressed views without summarization."
+  },
+  {
+   "id": "4.1.5.3.5",
+   "d": "IMP-01",
+   "note": "All components read the stored shape, so structure changes no longer ripple through literals."
+  },
+  {
+   "id": "4.1.5.4",
+   "d": "IMP-14",
+   "note": "README will document measured size, cost and known limitations so users judge usability upfront."
+  },
+  {
+   "id": "4.1.5.4.1",
+   "d": "IMP-09",
+   "note": "Navigation, index and paging guidance address consuming the tree, not just generating it."
+  },
+  {
+   "id": "4.1.5.4.2",
+   "d": "IMP-02",
+   "note": "Smoke preset supplies a small quick-triage size alongside the full run."
+  },
+  {
+   "id": "4.1.5.4.3",
+   "d": "IMP-11",
+   "note": "Unit tests covering shapes, assemble and measurement give a place to assert size expectations."
+  },
+  {
+   "id": "4.1.5.4.4",
+   "d": "IMP-09",
+   "note": "Navigation and partial-reading tools make reading limits partly the tool's responsibility."
+  },
+  {
+   "id": "4.1.5.4.5",
+   "d": "R-06",
+   "note": "Observing users working with output is user research, not a plugin change."
+  },
+  {
+   "id": "4.1.5.5",
+   "d": "X-HIST",
+   "note": "Late surfacing of growth concerns is past process; the self-improvement review now addresses it."
+  },
+  {
+   "id": "4.1.5.5.1",
+   "d": "X-HIST",
+   "note": "Post-implementation review ordering is past process with nothing further actionable."
+  },
+  {
+   "id": "4.1.5.5.2",
+   "d": "X-DONE",
+   "note": "A full end-to-end run completed 2026-09-13 with 26 agents and 3,905 reasons."
+  },
+  {
+   "id": "4.1.5.5.3",
+   "d": "X-HIST",
+   "note": "Implement-first AI-assisted building describes past process; no artifact change follows."
+  },
+  {
+   "id": "4.1.5.5.4",
+   "d": "IMP-14",
+   "note": "README known-limitations and design-decisions sections will record scale risks."
+  },
+  {
+   "id": "4.1.5.5.5",
+   "d": "IMP-01",
+   "note": "Parameterized shape replaces literals scattered across script, prompts and examples with stored run shape."
+  }
+ ]
+}
