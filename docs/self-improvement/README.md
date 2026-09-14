@@ -24,4 +24,6 @@ Tools shared by the rounds:
 | `ledger.py <round> sample N --seed S [--via own\|inherited] [--level L] [--stratify] [--json]` | Print random ledger entries with their ancestor chain, code and note; `--stratify` draws equally per level and own or inherited line, `--json` prints a reviewer packet |
 | `ledger.py <round> audit VERDICTS [VERDICTS]` | Validate reviewer verdict files and report wrong-code rates with a 95% interval per group; two files add agreement |
 | `reviewer-prompt.md` | What an independent ledger reviewer receives, and the verdict file format |
+| `quality.py draw\|score\|report` | Draw a shuffled packet of reasons without ids, validate a scorer's file, and report means per criterion and level, with agreement between two scorers |
+| `quality-rubric.md` | Anchors for scoring a reason 0-2 as causal, specific and distinct, and the score file format |
 | `usage.py <run-dir> [--out FILE]` | Read Claude Code's subagent logs for a run, report each agent's first-turn context and fit the estimate constants; `--out` keeps the JSON with the round |

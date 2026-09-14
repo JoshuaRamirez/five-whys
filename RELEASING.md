@@ -26,7 +26,7 @@ version's entry in [CHANGELOG.md](CHANGELOG.md).
 |--------|--------------------------|
 | Wording or docs only | Every-release gates |
 | `SKILL.md` steps, `parse`, confirmation or the wave loop | A model-invoked run of the checkout (below), plus one interactive run without `--yes` when Steps 1 or 3 changed: a thin problem must get the question, and a full-size run must ask before dispatching |
-| Agent instructions or prompt text | A model-invoked smoke run whose tree was read with `show --sample 20`, and a measured single branch (below) |
+| Agent instructions or prompt text | A model-invoked smoke run, a scored quality sample of its tree, and a measured single branch (below) |
 | Dispatch, waves or estimate constants | A measured single branch, or a full run when wave logic changed |
 | `evals/` or this file | Run the eval |
 | A release derived from a self-run | An independent ledger audit (below) |
@@ -93,6 +93,15 @@ gate runs again. Until a tool does this, check by hand with
   naming no files in a clean directory is low; a run inside a large repository
   whose files agents read is high). If they differ from that end by more than
   15%, run a full measurement in that setting.
+- **Scored quality sample.** Draw a packet from the run's tree with
+  `python3 docs/self-improvement/quality.py draw <tree> --n 30 --seed S --stratify level --out <round>/quality/<name>.json`.
+  Give it, with `docs/self-improvement/quality-rubric.md`, to two scorers:
+  a fresh-context agent that didn't write the changes, and the maintainer
+  when available. Check each file with `quality.py score`, then commit the
+  packet, its key, the score files and the `quality.py report` output. It
+  passes when the score files validate and the report is committed. Compare
+  the means per level with the previous round's baseline; the first two
+  studies set the baseline, so there is no threshold yet.
 - **Independent ledger audit.** Draw a packet with
   `python3 docs/self-improvement/ledger.py <round> sample 30 --stratify --seed S --json`.
   Give it, with `docs/self-improvement/reviewer-prompt.md`, to a fresh-context
