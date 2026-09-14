@@ -6,9 +6,10 @@ Codes such as IMP-37 refer to the self-improvement ledgers in
 
 ## Unreleased
 
-Changes derived from round 2, the v0.2.0 full run on its own 8/10 rating. The
-version stays 0.2.0 until the gates that need model runs have passed (see
-Evidence).
+Changes derived from round 2, the v0.2.0 full run on its own 8/10 rating, and
+round 3, the full run of this checkout on its 7.4/10 rating
+(`docs/self-improvement/round-3/design.md`). The version stays 0.2.0 until
+every gate has a status that allows the bump (see Evidence).
 
 ### Changed
 
@@ -50,15 +51,22 @@ Evidence).
   unreachable from `/five-whys`. Runs created by v0.2.0 with separate tiers
   still plan with them.
 
-### Evidence
+### Measurements
 
-- 61 unit tests pass, including the replay and labeled-pair tests, and
-  `claude plugin validate .` passes (2026-09-13, Python 3.14 locally; CI covers 3.9 and 3.12).
 - Reassembling the v0.2.0 run with the new hygiene: 3 near-duplicates and 11
   cross-branch leads, where v0.2.0 reported 0 flags.
 - Labeled pairs: 7 of 16 convergent pairs detected, 2 of 8 distinct pairs listed.
-- Model-invoked run of the checkout (2026-09-13, headless `claude -p --plugin-dir .`,
-  claude-opus-5): `/five-whys --smoke --yes` on the nightly-backup problem ran
+
+### Evidence
+
+Statuses as defined in RELEASING.md. These results predate the round-3 fixes
+and go stale as those land, so every gate runs again on the final commit.
+
+- [passed] unit @ed42be1 2026-09-13: 61 unit tests pass, including the replay
+  and labeled-pair tests (Python 3.14 locally; CI covers 3.9 and 3.12).
+- [passed] validate @76dbd37 2026-09-13: `claude plugin validate .` passes.
+- [passed] model-run @76dbd37 2026-09-13: headless `claude -p --plugin-dir .`,
+  claude-opus-5. `/five-whys --smoke --yes` on the nightly-backup problem ran
   `parse`, `init`, two waves and `assemble` from the checkout. 39 of 39 reasons,
   complete, 4 checks with 0 failures, 11 stated assumptions, 0 hygiene flags,
   58 seconds from creation to the last fragment. The orchestrator wrote no
@@ -66,21 +74,22 @@ Evidence).
   A 20-reason `show --sample` read found concrete mechanisms such as
   `flock -n ... || exit 0` and debug-level skip logging. The reply left analysis
   to the user.
-- Interactive checks without `--yes`, with the Agent tool blocked as a safeguard:
-  "Deploys fail." got one question about system, symptoms and attempts, and no
+- [passed] interactive @76dbd37 2026-09-13: without `--yes`, with the Agent
+  tool blocked as a safeguard, "Deploys fail." got one question about system, symptoms and attempts, and no
   run was created. A specific full-size problem ran `parse` and `init`, showed
   26 agents, 3,905 reasons and about 1.62M agent tokens, asked before
   dispatching, and dispatched nothing.
-- Measured single branch (2026-09-13, headless, clean directory, the
-  payments-deploy problem): root 11.3k and branch 1.1 23.6k reported tokens,
+- [passed] measured-branch @76dbd37 2026-09-13: headless, clean directory, the
+  payments-deploy problem. Root 11.3k and branch 1.1 23.6k reported tokens,
   63-74% below the v0.2.0 constants; branch output 14.9k tokens, inside
   v0.2.0's range. First-turn context was 4.6k tokens against 20.9k in the
   repository session, with no evidence reading and 5 turns instead of 12, so
   the gap comes from the setting, not the new prompts. The estimate became a
   range instead of a full remeasurement.
-- Eval: blocked on this machine. `claude plugin eval` refuses Bash-granting
-  cases because `~/.docker/cli-plugins` holds symbolic links (created by Docker
-  Desktop). Both cases recorded 0 turns.
+- [blocked] eval @91b5637 2026-09-13: `claude plugin eval` refuses Bash-granting
+  cases on this machine because `~/.docker/cli-plugins` holds symbolic links
+  (created by Docker Desktop). Both cases recorded 0 turns. Not waived; it runs
+  again where Docker Desktop isn't installed.
 
 ### Deferred
 

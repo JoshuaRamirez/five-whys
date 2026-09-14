@@ -79,6 +79,29 @@ class DocsConsistencyTests(unittest.TestCase):
             self.assertRegex(README, rf"(?m)^\| {zone}:", zone)
             self.assertIn(zone.lower(), " ".join(SKILL.lower().split()), zone)
 
+    def test_changelog_evidence_records_a_status_per_gate(self):
+        gates = re.findall(r"`([a-z-]+)`", re.search(r"Gate names: (.*?)\.\n\n", RELEASING, re.S).group(1))
+        self.assertIn("eval", gates)
+        entry = re.compile(rf"\[(passed|failed|blocked|waived)\] ({'|'.join(gates)}) @[0-9a-f]{{7,40}} "
+                           r"\d{4}-\d{2}-\d{2}: \S")
+        checked = 0
+        for section in re.split(r"(?m)^## ", CHANGELOG)[1:]:
+            title = section.splitlines()[0]
+            evidence = re.search(r"(?ms)^### Evidence\n(.*?)(?=^### |\Z)", section)
+            if not evidence:  # entries before 0.3.0 predate gate statuses
+                continue
+            bullets = re.split(r"(?m)^- ", evidence.group(1))[1:]
+            self.assertTrue(bullets, title)
+            for bullet in bullets:
+                match = entry.match(bullet)
+                self.assertIsNotNone(match, f"{title}: {bullet[:80]}")
+                checked += 1
+                if title != "Unreleased":  # a released version has no failed or unwaived blocked gate
+                    self.assertNotEqual(match.group(1), "failed", bullet)
+                    if match.group(1) == "blocked":
+                        self.assertIn("[waived]", bullet)
+        self.assertGreater(checked, 0)
+
     def test_agent_tools_cover_the_steps_it_is_given(self):
         tools = re.search(r"^tools: (.*)$", AGENT, re.M).group(1)
         self.assertEqual({t.strip() for t in tools.split(",")}, {"Write", "Edit", "Read", "Bash"})
