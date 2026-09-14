@@ -31,7 +31,9 @@ reasons yourself, and don't hand-edit fragments.
 root causes; analysis belongs to the user. It does compute mechanical aids:
 hygiene flags (duplicates, restatements, cross-branch leads, over-long
 reasons), an index of the top levels and measurements. Report those as facts,
-not verdicts.
+not verdicts. The README's design decisions separate run output and reading
+aids, which never judge reasons, from development measurement in
+`docs/self-improvement/`, where the maintainer scores them; a run never does.
 
 ## Step 1: Parse the invocation
 

@@ -185,11 +185,23 @@ Changes: [CHANGELOG.md](CHANGELOG.md).
   and keeps problem statements on your machine. This rules out embeddings, so
   duplicate detection is heuristic.
 - **Generation only.** The plugin must not steer your analysis. The index,
-  hygiene flags and measurements are mechanical aids, not judgments.
+  hygiene flags and measurements are mechanical aids, not judgments. The zones
+  below say where that rule applies.
 - **Complete trees.** Every node gets exactly `breadth` reasons down to `depth`;
   there is no early stopping or pruning.
 - **Script for control, agents for content.** The script parses the
   invocation, decides what runs and verifies it; agents only write fragments.
+
+### Where your analysis begins
+
+| Zone | For | Allowed | Not allowed |
+|------|-----|---------|-------------|
+| Run output: `five-whys.json`, `index.md`, `hygiene.json`, the skill's final reply | You | Reasons verbatim, counts, mechanical flags, measurements | Ranking, summaries, selecting or pruning causes |
+| Reading aids: this README, the skill's loading section, `show` | You | How to load and navigate a tree, and a generic reading method | Examples that pick causes from a real tree |
+| Development measurement: `docs/self-improvement/` | The maintainer | Scored samples, audits, reviews by a model or a person | Writing a score into a run directory or anything a run shows you |
+
+Scoring reasons is how the maintainer measures whether a change made the plugin
+better. It never happens inside a run.
 
 ## How this version was made
 

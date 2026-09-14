@@ -74,6 +74,11 @@ class DocsConsistencyTests(unittest.TestCase):
     def test_changelog_has_an_entry_for_the_manifest_version(self):
         self.assertRegex(CHANGELOG, rf"(?m)^## {re.escape(MANIFEST['version'])} — \d{{4}}-\d{{2}}-\d{{2}}$")
 
+    def test_analysis_boundary_zones_are_documented(self):
+        for zone in ("Run output", "Reading aids", "Development measurement"):
+            self.assertRegex(README, rf"(?m)^\| {zone}:", zone)
+            self.assertIn(zone.lower(), " ".join(SKILL.lower().split()), zone)
+
     def test_agent_tools_cover_the_steps_it_is_given(self):
         tools = re.search(r"^tools: (.*)$", AGENT, re.M).group(1)
         self.assertEqual({t.strip() for t in tools.split(",")}, {"Write", "Edit", "Read", "Bash"})
