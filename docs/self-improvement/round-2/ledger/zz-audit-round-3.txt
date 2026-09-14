@@ -1,0 +1,4 @@
+# Corrections from the independent audit in round 3 (audit/agent-fresh-context.json, seed 11).
+# Both reasons had inherited a code that fit their parent but not them.
+5.5.4.1.3 IMP-41 Hand-kept option tables stay honest through the docs test that pins the option count and checks every README row.
+5.4.2.4.5 R-17 Treating the tree as the finished product is the plugin's own choice to send nothing onward; telemetry is declined.

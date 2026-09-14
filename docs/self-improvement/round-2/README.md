@@ -44,14 +44,15 @@ accounted for here, and the unreleased changes in `CHANGELOG.md` came out of it.
 | Disposition | Reasons |
 |-------------|---------|
 | Addressed by an improvement (IMP-32 to IMP-53) | 1,167 |
-| Remedy declined or deferred, with the reason (R codes) | 564 |
+| Remedy declined or deferred, with the reason (R codes) | 565 |
 | Already resolved (X-DONE) | 134 |
 | Premise untrue or causal link does not hold (X-FALSE) | 14 |
-| Outside the plugin's control (X-ENV) | 565 |
+| Outside the plugin's control (X-ENV) | 564 |
 | Past motivation or process, nothing further to change (X-HIST) | 1,461 |
 | **Total** | **3,905** |
 
-1,170 reasons have their own line; 2,735 inherit their parent's. Per-code
+1,172 reasons have their own line; 2,733 inherit their parent's. Two of the own
+lines are corrections from round 3's independent audit (`audit.md`). Per-code
 counts are in `summary.md`.
 
 ## Found outside the tree
@@ -81,8 +82,11 @@ this session's run for problems no reason named:
 
 - One model family wrote the tree, the catalog, the ledger and the audit.
   Sampling catches misapplied codes, not blind spots the family shares.
-- The sampled wrong-code rate was about 8%; unsampled reasons likely carry
-  errors at a similar rate. Any line can be checked:
+- The author's samples found a wrong-code rate of about 8%. In round 3, an
+  independent, stratified audit found 2 wrong codes in 30 (6.7%, 95% interval
+  1.9%-21.3%) and 9 adjacent ones, concentrated on inherited leaves; both
+  wrong codes were corrected. Unsampled reasons likely carry errors at a
+  similar rate. Any line can be checked:
   `python3 docs/self-improvement/ledger.py docs/self-improvement/round-2 sample 5 --seed 1`.
 - X-HIST grew relative to round 1. This tree explains how v0.2.0 was built in
   one afternoon, and most of those reasons describe that history.
