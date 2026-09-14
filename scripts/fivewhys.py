@@ -43,14 +43,20 @@ MAX_ATTEMPTS = 3
 CONFIRM_AGENTS = 5  # runs needing more agents than this ask the user before dispatching
 READ_WINDOW_BYTES = 48_000  # Read accepted about 64 KB of five-whys.json and rejected about 89 KB
 
-# Measured on the v0.2.0 full run (2026-09-13, claude-opus-5) with
-# docs/self-improvement/usage.py. The root agent reported 44.1k tokens for 30
-# reasons; 18 branch agents with logged checks reported 57.5k-72.5k (mean 63.1k)
-# for 155 reasons. That fits 39.6k per agent plus 152 per reason. The assembled
-# file held 38 tokens per reason.
+# Agent tokens are estimated as a range from two runs measured with
+# docs/self-improvement/usage.py (2026-09-13, claude-opus-5):
+# - High: the v0.2.0 full run on its own rating, inside this repository. Agents
+#   started with about 21k tokens of session context and read local files as
+#   evidence. Root 44.1k for 30 reasons; branches mean 63.1k for 155 reasons.
+# - Low: a root and one branch on a problem naming no files, in a clean
+#   directory. Agents started with about 4.6k tokens and read only their prompt.
+#   Root 11.3k; branch 23.6k.
+# The assembled v0.2.0 file held 38 tokens per reason.
 MEASURED = {"version": "0.2.0", "date": "2026-09-13", "model": "claude-opus-5"}
 AGENT_OVERHEAD_TOKENS = 39_600
 TOKENS_PER_REASON = 152
+AGENT_OVERHEAD_TOKENS_LOW = 8_400
+TOKENS_PER_REASON_LOW = 98
 OUTPUT_TOKENS_PER_REASON = 38
 
 # Options /five-whys accepts. "init" is the init flag an option becomes; None means
@@ -102,11 +108,14 @@ def estimate(breadth: int, depth: int, split: int) -> dict:
     return {
         "agents": agents,
         "reasons": total,
+        "agent_tokens_low": agents * AGENT_OVERHEAD_TOKENS_LOW + total * TOKENS_PER_REASON_LOW,
         "agent_tokens": agents * AGENT_OVERHEAD_TOKENS + total * TOKENS_PER_REASON,
         "output_tokens": total * OUTPUT_TOKENS_PER_REASON,
-        "basis": f"scaled from the measured v{MEASURED['version']} full run ({MEASURED['date']}, "
-                 f"{MEASURED['model']}); agent_tokens sums each agent's reported total, and context "
-                 "re-read on every turn is billed on top, mostly as cache reads. Varies by model and problem.",
+        "basis": f"range from two {MEASURED['model']} runs measured on {MEASURED['date']}: the low end is a "
+                 "problem naming no local files in a clean directory; the high end (agent_tokens) is the "
+                 f"v{MEASURED['version']} self-run inside a large repository, where agents started with more "
+                 "session context and read files as evidence. Each figure sums agents' reported totals; "
+                 "context re-read on every turn is billed on top, mostly as cache reads.",
     }
 
 

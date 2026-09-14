@@ -64,9 +64,12 @@ class DocsConsistencyTests(unittest.TestCase):
     def test_measured_cost_matches_the_constants(self):
         measured = fivewhys.MEASURED
         self.assertIn(f"v{measured['version']} full run", README)
-        self.assertIn(f"{measured['date']}, {measured['model']}", README)
+        self.assertIn(f"{measured['date']} with {measured['model']}", " ".join(README.split()))
         full = fivewhys.estimate(5, 5, 2)
-        self.assertIn(f"about {full['agent_tokens'] / 1e6:.2f}M agent tokens and {full['output_tokens'] // 1000}k output tokens", README)
+        flat = " ".join(README.split())
+        self.assertIn(f"about {full['agent_tokens_low'] / 1e6:.2f}M-{full['agent_tokens'] / 1e6:.2f}M agent tokens "
+                      f"and {full['output_tokens'] // 1000}k output tokens", flat)
+        self.assertIn("agent_tokens_low", SKILL)
 
     def test_changelog_has_an_entry_for_the_manifest_version(self):
         self.assertRegex(CHANGELOG, rf"(?m)^## {re.escape(MANIFEST['version'])} — \d{{4}}-\d{{2}}-\d{{2}}$")

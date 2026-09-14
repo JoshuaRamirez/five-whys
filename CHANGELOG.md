@@ -30,8 +30,11 @@ Evidence).
   windows (IMP-33, IMP-39, IMP-48).
 - `duration_seconds` runs from creation to the newest fragment, so assembling
   again no longer stretches it (found outside the tree).
-- Estimate constants come from the v0.2.0 full run: 39.6k tokens per agent,
-  152 per reason, 38 output tokens per reason (IMP-32).
+- The estimate is a range from two measured runs (IMP-32). The high end
+  (`agent_tokens`: 39.6k per agent plus 152 per reason) comes from the v0.2.0
+  full run inside this repository. The low end (`agent_tokens_low`: 8.4k plus
+  98 per reason) comes from a root and one branch on a problem naming no files.
+  Output stays at 38 tokens per reason.
 - Agent instructions cover non-software problems, problems with nothing to read,
   and leaves that must stay concrete (IMP-49).
 - A replay test walks the skill's dispatch loop with stand-in agents, and a
@@ -67,6 +70,13 @@ Evidence).
   run was created. A specific full-size problem ran `parse` and `init`, showed
   26 agents, 3,905 reasons and about 1.62M agent tokens, asked before
   dispatching, and dispatched nothing.
+- Measured single branch (2026-09-13, headless, clean directory, the
+  payments-deploy problem): root 11.3k and branch 1.1 23.6k reported tokens,
+  63-74% below the v0.2.0 constants; branch output 14.9k tokens, inside
+  v0.2.0's range. First-turn context was 4.6k tokens against 20.9k in the
+  repository session, with no evidence reading and 5 turns instead of 12, so
+  the gap comes from the setting, not the new prompts. The estimate became a
+  range instead of a full remeasurement.
 - Eval: blocked on this machine. `claude plugin eval` refuses Bash-granting
   cases because `~/.docker/cli-plugins` holds symbolic links (created by Docker
   Desktop). Both cases recorded 0 turns.

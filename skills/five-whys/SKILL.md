@@ -86,8 +86,9 @@ It prints JSON with `run`, `shape`, `model`, `max_parallel`, `estimate` and
 ## Step 3: Confirm when init asks
 
 `confirm` is true for runs of more than 5 agents. If it is true and `yes` is
-false, tell the user in one line: agents, reasons, `estimate.agent_tokens` and
-`estimate.output_tokens` (scaled from a measured run), and ask whether to
+false, tell the user in one line: agents, reasons, the agent-token range from
+`estimate.agent_tokens_low` to `estimate.agent_tokens`, and
+`estimate.output_tokens` (scaled from measured runs), and ask whether to
 proceed. Stop until they answer. Mention `--smoke` as the cheap alternative.
 
 ## Step 4: Dispatch wave by wave

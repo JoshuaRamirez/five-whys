@@ -44,9 +44,12 @@ evidence in the version's entry in [CHANGELOG.md](CHANGELOG.md).
   eval passes when every case passes. Record the date and result.
 - **Measured single branch.** Create a full-shape run, dispatch the root and
   one branch with `plan <run> --only 1.1`, then run
-  `python3 docs/self-improvement/usage.py <run>`. Compare the branch's reported
-  total and output tokens with the constants in `scripts/fivewhys.py`. If they
-  differ by more than 15%, run a full measurement.
+  `python3 docs/self-improvement/usage.py <run>`. Compare the root's and the
+  branch's reported totals with the low and high constants in
+  `scripts/fivewhys.py`, using the end that matches the setting (a problem
+  naming no files in a clean directory is low; a run inside a large repository
+  whose files agents read is high). If they differ from that end by more than
+  15%, run a full measurement in that setting.
 - **Full measurement.** A full run in a dedicated session, then `usage.py`.
   It passes when the tree is complete, nothing got stuck and `check-log.jsonl`
   shows every fragment checked. Update `MEASURED` and the three token
