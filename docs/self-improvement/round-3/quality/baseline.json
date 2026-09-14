@@ -1,0 +1,410 @@
+{
+ "problem": "The five-whys Claude Code plugin (unreleased v0.3.0 on branch improve/v0.3.0) is rated 7.4/10 instead of 10/10.",
+ "context": "The plugin being rated is five-whys, in the repository at /Users/joshua/Developer/Plugins/ClaudeCodeCLI/FiveWhys on branch improve/v0.3.0. Those changes are not released: the manifest still says 0.2.0, and the RedJay marketplace still serves 0.2.0. The plugin generates a complete 5x5x5x5x5 Five Whys tree (3,905 reasons) with one root agent and 25 branch agents dispatched in waves of 5. A stdlib Python script (scripts/fivewhys.py, 842 lines, plus scripts/hygiene.py, 140 lines) validates every fragment and assembles one JSON tree plus index.md and hygiene.json. Analysis is left to the user by requirement.\n\nThe unreleased changes came from round 2 (docs/self-improvement/round-2): all 3,905 reasons of the v0.2.0 full run on its 8/10 rating were classified against a 22-improvement catalog by one session without subagents. Changes: a parse subcommand for /five-whys arguments; init returns confirm for runs of more than 5 agents; waves default to 5, and later waves see finished branches' first-level reasons; stemmed hygiene with cross-branch leads; check compares branch fragments with the root's reasons; run.json records version, options and estimate; index.md lists byte-sized Read windows; the estimate is a range; the --root-model and --branch-model options were removed; a replay test and a labeled paraphrase-pair fixture; a thin-problem eval case; release gates by change kind in RELEASING.md; CHANGELOG.md; docs/self-improvement/usage.py for token measurement.\n\nEvidence behind the 7.4/10 rating (weighted rubric, self-graded by the session that wrote the code):\n1. Requirement fidelity 9/10 (weight 15%): the v0.2.0 full run made 3,905/3,905 reasons, and a model-invoked smoke run of the checkout made 39/39 without interpreting them. But no full run of the v0.3.0 code has happened.\n2. Orchestration reliability 8/10 (15%): parse and confirm now live in code, headless model-invoked runs followed the skill in three scenarios (smoke, thin problem, full-size confirmation), and resume survived a machine restart. But each scenario ran once, and branch agents repaired fragments with sed rather than Edit.\n3. Reason quality 6.5/10 (15%): a 20-reason sample of the smoke tree read as concrete, with 11 stated assumptions. But quality has never been measured systematically: no rubric, no second model, no outside reader, and the non-software eval never ran.\n4. Hygiene 7/10 (10%): on labeled pairs from a real tree, stemming and cross-branch leads catch 7 of 16 convergent pairs where v0.2.0 caught 0. But detection is still lexical: it misses 9 of 16 and lists 2 of 8 distinct pairs as leads.\n5. Cost transparency 6.5/10 (10%): the estimate is a range of 0.60M-1.62M agent tokens from two measured runs, and the setting driving the gap is known (session context and evidence reading). But the range is wide, each end comes from one run on one model, and wall clock has never been measured.\n6. Testing 7.5/10 (10%): 61 unit tests pass in CI on Python 3.9 and 3.12, with the replay test, labeled pairs and docs-consistency tests. But the eval has never run, because claude plugin eval refuses Bash-granting cases on this machine (symlinks in ~/.docker/cli-plugins), and the live checks were single samples.\n7. Release process and docs 7.5/10 (10%): gates are defined by change kind, each gate's evidence is recorded in CHANGELOG.md, and the README states its limitations. But 0.3.0 is not released, and the same session wrote and passed the gates.\n8. Maintainability 7/10 (5%): options dropped from 14 to 10 and hygiene was split into its own module. But fivewhys.py grew from 725 to 842 lines, and there are more documents to keep consistent.\n9. Self-improvement process 7/10 (5%): every reason was accounted for, a sampled audit found and fixed 5 wrong codes (about 8%), and a review outside the tree found two real bugs. But one model family wrote the tree, the ledger and the audit, and 2,735 reasons inherit their parent's disposition line.\n10. Readiness for other users 6/10 (5%): local-only, no dependencies, resumable. But unreleased, no outside users, and the eval is blocked.\n\nWhat the grading says would reach 9-10: run the eval once the ~/.docker symlink issue is resolved, then release 0.3.0; a timed full run of v0.3.0 in waves of 5 in a clean directory; a small scored quality study with a second model or a human; a full run on a non-software problem; one outside user's run.",
+ "instructions": "Score each item with quality-rubric.md. chain lists the reasons above it, from the top; siblings are the other reasons answering the same why.",
+ "items": [
+  {
+   "n": 1,
+   "chain": [
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself.",
+    "Round 2 ran in one session without subagents, so no separate context challenged its classifications or code.",
+    "The self-improvement process runs read, catalog, classify, audit, implement, with no step handing work to an independent reviewer.",
+    "Round 2's README lists one-model authorship as a caveat, recording the limit rather than adding a step against it."
+   ],
+   "reason": "audit.md sets no error-rate threshold that would require reclassification or a second reader.",
+   "siblings": [
+    "Both round READMEs close with caveats as disclosure, a pattern that treats naming a limit as handling it.",
+    "The caveat was written after the ledger was committed, too late to change how classification ran.",
+    "Sampling was framed as catching misapplied codes, and shared blind spots were declared beyond its reach.",
+    "The 8% sampled error rate was projected onto unsampled reasons and accepted instead of triggering review."
+   ]
+  },
+  {
+   "n": 2,
+   "chain": [
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+    "The no-dependencies rule limits hygiene.py to stdlib stemming, excluding embedding-based paraphrase detection."
+   ],
+   "reason": "Hosted embedding APIs would send problem text off the machine, breaking the README's local-only promise that R-02 upholds.",
+   "siblings": [
+    "Local embedding models require numpy or torch plus downloaded weights, which a python3-only install cannot provide.",
+    "Claude Code plugins install by copying files, with no step that fetches Python packages for bundled scripts.",
+    "R-02 was applied as a blanket decline, so no optional tier uses embeddings when packages happen to exist.",
+    "Python's standard library carries no synonym or semantic data, and hygiene.py bundles no word list to supply it."
+   ]
+  },
+  {
+   "n": 3,
+   "chain": [
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "Symlinks in ~/.docker/cli-plugins trip the eval's safety check whenever a case grants the Bash tool."
+   ],
+   "reason": "Docker Desktop populates ~/.docker/cli-plugins with symlinks into /Applications/Docker.app instead of plain binaries.",
+   "siblings": [
+    "The eval classifies ~/.docker as a credential store that the Bash sandbox must keep evaluated agents from reading.",
+    "A link inside the store can resolve outside it, so path-based deny rules cannot guarantee exclusion and the sandbox refuses.",
+    "The eval runs cases under the maintainer's real HOME, so Docker resolves its store to the Desktop-managed ~/.docker.",
+    "The refusal is fatal to every Bash-granting case, and claude plugin eval offers no option to override it."
+   ]
+  },
+  {
+   "n": 4,
+   "chain": [
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "No CI job or second machine runs the eval, so one local environment fault blocks it entirely.",
+    "The eval needs an authenticated Claude account, and no CI runner or other host holds a credential.",
+    "No repository secrets are configured, and round 2 recorded that none would be added."
+   ],
+   "reason": "Rotating and auditing a secret is recurring upkeep the stdlib-only design was meant to avoid.",
+   "siblings": [
+    "The repository started with a unittest-only workflow, so no secret was ever needed.",
+    "Adding a secret needs the maintainer's GitHub settings, which the Claude session never touches.",
+    "Holding zero secrets keeps the README's local-only, no-dependencies promise easy to state.",
+    "tests.yml has no env or secrets block, so nothing in the workflow prompts adding one."
+   ]
+  },
+  {
+   "n": 5,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once."
+   ],
+   "reason": "run.json stores no wave timestamps, so a timed run needs separate instrumentation nobody has built yet.",
+   "siblings": [
+    "A full 3,905-reason run costs 0.60M-1.62M agent tokens, so the session verified with a 39-reason smoke run instead.",
+    "Round 2 spent its effort classifying all 3,905 v0.2.0 reasons against the catalog, leaving little budget for live verification.",
+    "No clean-directory harness exists, so every live run is launched by hand via claude --plugin-dir, discouraging repeats.",
+    "RELEASING.md accepts a measured single branch for most dispatch changes, so a full run was never strictly forced."
+   ]
+  },
+  {
+   "n": 6,
+   "chain": [
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin.",
+    "Outreach to a first outside user was deferred until round 2 improvements shipped.",
+    "Catalog code R-06 declined recruiting testers and announcements as out of scope, so outreach never became a planned change.",
+    "R-06 lumped a single invitation together with paid review and curated-marketplace submission, so cheap outreach was declined alongside costly outreach."
+   ],
+   "reason": "Catalog precedence rules sent any reason mentioning testers or announcements to R-06 regardless of scale.",
+   "siblings": [
+    "Decline codes were drafted by theme of remedy, not by the effort or cost of acting on it.",
+    "One broad code kept the catalog small, easing classification of 3,905 reasons in a single session.",
+    "No entry separated asking one acquaintance to run --smoke from recruiting a formal pool of testers.",
+    "The sampled audit checked whether each code fit its reason, never whether a code's scope was too broad."
+   ]
+  },
+  {
+   "n": 7,
+   "chain": [],
+   "reason": "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+   "siblings": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin.",
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself."
+   ]
+  },
+  {
+   "n": 8,
+   "chain": [
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin."
+   ],
+   "reason": "No feedback channel collects reports from marketplace installs, so any outside use of 0.2.0 stays invisible.",
+   "siblings": [
+    "The manifest and RedJay marketplace entry stay at 0.2.0 until every RELEASING.md gate, including the eval, passes.",
+    "Round 2 added per-change-kind gates, multiplying the checks a release must clear before the version bump.",
+    "The output is an unanalyzed 3,905-reason tree, a heavy first artifact for a newcomer deciding whether to adopt.",
+    "Outreach to a first outside user was deferred until round 2 improvements shipped."
+   ]
+  },
+  {
+   "n": 9,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "Round 2 spent its effort classifying all 3,905 v0.2.0 reasons against the catalog, leaving little budget for live verification."
+   ],
+   "reason": "The first sampled audit found inheritance errors, forcing a 298-line second pass and another audit.",
+   "siblings": [
+    "The self-improvement process defines a round as giving every one of the 3,905 reasons exactly one disposition.",
+    "At the user's request no subagents were used, so one context read, classified and implemented everything serially.",
+    "Each disposition was costly because catalog precedence rules and premise checks applied to every reason.",
+    "The ledger was committed before any code changed, so live runs could start only after classification and implementation."
+   ]
+  },
+  {
+   "n": 10,
+   "chain": [
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+    "No rubric scores causality, specificity or distinctness, so a 20-reason read yields no comparable number."
+   ],
+   "reason": "Verification is built on deterministic counts like 3,905/3,905 and hygiene flags, so quality attention went to countable proxies.",
+   "siblings": [
+    "The causal, specific and distinct criteria exist only as generation instructions in why-expander.md, with no score bands or anchors.",
+    "RELEASING.md's prompt-text gate accepts a tree read with show --sample 20, so a qualitative read satisfies the release.",
+    "The eval graders in evals/ check run completion, the 39-reason count and non-interpretation, never the reasons' content quality.",
+    "show --sample prints reasons with ancestor chains but stores no verdicts, so each read leaves nothing comparable across versions."
+   ]
+  },
+  {
+   "n": 11,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "RELEASING.md accepts a measured single branch for most dispatch changes, so a full run was never strictly forced.",
+    "The dispatch row treats a live run as an estimate check, and one branch's tokens extrapolate per agent to the total.",
+    "The table has no row for end-to-end correctness, so completeness of a 3,905-reason tree is never a gate."
+   ],
+   "reason": "Hygiene and index.md are generated at assembly, and no gate inspects them at full size.",
+   "siblings": [
+    "check validates each fragment alone, so full assembly was assumed correct by construction.",
+    "Rows are keyed by kind of edit, not by properties like completeness, stuck agents or resume.",
+    "The Full measurement pass criteria appear only as a fallback under How to run, not as a row.",
+    "Round-2 dispatch items IMP-42 and IMP-43 concern wave size and prompts, not end-to-end completion."
+   ]
+  },
+  {
+   "n": 12,
+   "chain": [],
+   "reason": "Version 0.3.0 is unreleased and no one outside the author has run the plugin.",
+   "siblings": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself."
+   ]
+  },
+  {
+   "n": 13,
+   "chain": [
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin."
+   ],
+   "reason": "Round 2 added per-change-kind gates, multiplying the checks a release must clear before the version bump.",
+   "siblings": [
+    "The manifest and RedJay marketplace entry stay at 0.2.0 until every RELEASING.md gate, including the eval, passes.",
+    "No feedback channel collects reports from marketplace installs, so any outside use of 0.2.0 stays invisible.",
+    "The output is an unanalyzed 3,905-reason tree, a heavy first artifact for a newcomer deciding whether to adopt.",
+    "Outreach to a first outside user was deferred until round 2 improvements shipped."
+   ]
+  },
+  {
+   "n": 14,
+   "chain": [
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself.",
+    "The rubric weights and scores were chosen by the grader, so criteria were never fixed before the evidence.",
+    "The rating came only after v0.3.0 was implemented, so the grader knew the available evidence when choosing criteria."
+   ],
+   "reason": "Half-point scores like 6.5 and 7.5 let the grader tune each criterion to evidence already in hand.",
+   "siblings": [
+    "The rating request named a 10-point scale but no dimensions, leaving the grader to invent them.",
+    "Each criterion pairs strengths with a 'But' clause drafted from what the session had just done or skipped.",
+    "Grading was the closing act of the implementation session, not a separate phase with its own inputs.",
+    "No baseline scores were taken before round 2's changes, so criteria could not be matched before and after."
+   ]
+  },
+  {
+   "n": 15,
+   "chain": [
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin."
+   ],
+   "reason": "The output is an unanalyzed 3,905-reason tree, a heavy first artifact for a newcomer deciding whether to adopt.",
+   "siblings": [
+    "The manifest and RedJay marketplace entry stay at 0.2.0 until every RELEASING.md gate, including the eval, passes.",
+    "Round 2 added per-change-kind gates, multiplying the checks a release must clear before the version bump.",
+    "No feedback channel collects reports from marketplace installs, so any outside use of 0.2.0 stays invisible.",
+    "Outreach to a first outside user was deferred until round 2 improvements shipped."
+   ]
+  },
+  {
+   "n": 16,
+   "chain": [
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin.",
+    "No feedback channel collects reports from marketplace installs, so any outside use of 0.2.0 stays invisible.",
+    "The five-whys repository has issues enabled but no issue template, CONTRIBUTING file or README section inviting reports."
+   ],
+   "reason": "With 0 stars and no issues ever filed, the empty tracker read as no demand rather than no invitation.",
+   "siblings": [
+    "The repository was set up as the fetch target for the RedJay entry, not as a project home for users.",
+    "RELEASING.md's gates check versions, tests, eval and runs, none of which cover how users report problems.",
+    "The README covers install, use, cost, output, validation, limitations, script and design but has no support section.",
+    "A useful report would need run.json and fragments, whose problem text users may not want to post publicly."
+   ]
+  },
+  {
+   "n": 17,
+   "chain": [],
+   "reason": "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+   "siblings": [
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin.",
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself."
+   ]
+  },
+  {
+   "n": 18,
+   "chain": [
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself.",
+    "2,735 reasons inherit their parent's disposition line, so the ledger echoes top-level judgments instead of independent checks.",
+    "ledger.py rule lines cover a node and every descendant lacking its own line, so an unread leaf still counts as classified."
+   ],
+   "reason": "The format presumes a subtree shares its ancestor's disposition because branch agents keep children on their parent's topic.",
+   "siblings": [
+    "Round 2 replaced round 1's per-reason JSON fragments with rule lines to cut how much ledger text had to be written.",
+    "resolve() applies the nearest ancestor's rule line to a descendant without any test that its code or note fits.",
+    "ledger.py check skips the missing-id test for rule fragments, so a sparse fragment passes as readily as a dense one.",
+    "IMP-51 catalogued rule fragments with inheritance recorded as via, so inheritance was an approved improvement, not a shortcut."
+   ]
+  },
+  {
+   "n": 19,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "No clean-directory harness exists, so every live run is launched by hand via claude --plugin-dir, discouraging repeats.",
+    "Interactive checks need someone to answer the skill's question or confirmation, which headless claude -p cannot script."
+   ],
+   "reason": "init returns confirm for runs over 5 agents, so a full-size run stops for a human reply before dispatching.",
+   "siblings": [
+    "Headless claude -p takes one prompt and exits, so it cannot supply a second user turn mid-run.",
+    "Interactive checks pass when nothing dispatches, a result proven by absence rather than by an artifact.",
+    "The harness was pictured as one launcher for all live gates, and the interactive half made it look infeasible.",
+    "Whether a problem counts as thin is decided by the model in Step 1, so the expected outcome varies by sample."
+   ]
+  },
+  {
+   "n": 20,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "No clean-directory harness exists, so every live run is launched by hand via claude --plugin-dir, discouraging repeats."
+   ],
+   "reason": "The eval under evals/ was meant to be the automated live harness, so a separate launcher script seemed redundant.",
+   "siblings": [
+    "RELEASING.md defines the model-invoked run as a typed recipe for a fresh session, so no script encodes its steps.",
+    "Interactive checks need someone to answer the skill's question or confirmation, which headless claude -p cannot script.",
+    "Round 2's 22-improvement catalog came from v0.2.0 tree reasons about output flaws, and none proposed a run harness.",
+    "The unit suite in tests/ is kept offline and deterministic, so live claude invocations have no home there."
+   ]
+  },
+  {
+   "n": 21,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once."
+   ],
+   "reason": "Round 2 spent its effort classifying all 3,905 v0.2.0 reasons against the catalog, leaving little budget for live verification.",
+   "siblings": [
+    "A full 3,905-reason run costs 0.60M-1.62M agent tokens, so the session verified with a 39-reason smoke run instead.",
+    "No clean-directory harness exists, so every live run is launched by hand via claude --plugin-dir, discouraging repeats.",
+    "run.json stores no wave timestamps, so a timed run needs separate instrumentation nobody has built yet.",
+    "RELEASING.md accepts a measured single branch for most dispatch changes, so a full run was never strictly forced."
+   ]
+  },
+  {
+   "n": 22,
+   "chain": [],
+   "reason": "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself.",
+   "siblings": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin."
+   ]
+  },
+  {
+   "n": 23,
+   "chain": [
+    "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+    "The eval gate only applies to evals/ changes, so skill changes could proceed without waiting for it.",
+    "Each eval case allows 1,800 seconds plus a paid judge, so requiring it for every SKILL.md edit looked too costly."
+   ],
+   "reason": "Two cases can take an hour of wall clock at their timeout ceiling, stalling iteration within one session.",
+   "siblings": [
+    "SKILL.md changes often, since parse, confirm and waves each edited it within round 2.",
+    "The eval costs more tokens than the model-invoked run, adding judging and two separate smoke runs.",
+    "Gates were designed to scale down, so the costliest check went to the rarest change kind.",
+    "Skill changes already required a model-invoked run, so adding the eval would pay twice for similar evidence."
+   ]
+  },
+  {
+   "n": 24,
+   "chain": [
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself.",
+    "Round 2 ran in one session without subagents, so no separate context challenged its classifications or code.",
+    "Classification and implementation shared one context because catalog reasoning and premise checks existed nowhere a fresh agent could load.",
+    "Implementation touched fivewhys.py, hygiene.py, SKILL.md, evals and docs together, so splitting work risked conflicting edits."
+   ],
+   "reason": "Subagents in one checkout share a working tree, so parallel implementers would overwrite each other's edits.",
+   "siblings": [
+    "fivewhys.py is one 842-line module, so parse, confirm, check and estimate changes all edit the same file.",
+    "test_docs.py ties docs to code, so every code change forced matching doc edits in the same pass.",
+    "Removing --root-model and --branch-model rippled through SKILL.md, the README and tests at once.",
+    "The improvements interlock, as confirm uses the estimate range and run.json records the options, so order mattered."
+   ]
+  },
+  {
+   "n": 25,
+   "chain": [
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching."
+   ],
+   "reason": "The no-dependencies rule limits hygiene.py to stdlib stemming, excluding embedding-based paraphrase detection.",
+   "siblings": [
+    "No rubric scores causality, specificity or distinctness, so a 20-reason read yields no comparable number.",
+    "The labeled fixture holds only 24 pairs from one tree, too few to tune or trust detection thresholds.",
+    "The non-software eval case never ran, so quality was only read on software-shaped problems.",
+    "Leaving analysis to the user bars the plugin from judging its own reasons, so no quality signal is generated per run."
+   ]
+  },
+  {
+   "n": 26,
+   "chain": [],
+   "reason": "The eval never ran because claude plugin eval refuses Bash-granting cases on this machine.",
+   "siblings": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "Reason quality and hygiene are judged only by a self-read sample and lexical matching.",
+    "Version 0.3.0 is unreleased and no one outside the author has run the plugin.",
+    "One Claude session wrote the code, the ledger, the audit, the gates and the 7.4 grade itself."
+   ]
+  },
+  {
+   "n": 27,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "A full 3,905-reason run costs 0.60M-1.62M agent tokens, so the session verified with a 39-reason smoke run instead."
+   ],
+   "reason": "Tokens come from the maintainer's personal usage allowance, so a 1.6M-token run competes with other work.",
+   "siblings": [
+    "Each of the 26 agents pays a fixed 8.4k-39.6k token start-up overhead before writing any reason.",
+    "The v0.2.0 run's 3,905/3,905 result was treated as still valid, so repeating it seemed redundant.",
+    "The --smoke preset is documented as the cheap rehearsal, making a 39-reason run the default live check.",
+    "Verification ran inside the repository, where agents start with about 21k tokens, pointing to the 1.62M end."
+   ]
+  },
+  {
+   "n": 28,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "No clean-directory harness exists, so every live run is launched by hand via claude --plugin-dir, discouraging repeats.",
+    "RELEASING.md defines the model-invoked run as a typed recipe for a fresh session, so no script encodes its steps.",
+    "The gate was written after the first headless run succeeded, recording the commands used instead of wrapping them."
+   ],
+   "reason": "The round-2 items IMP-35 and IMP-36 covered documenting claude --plugin-dir and usage.py, not scripting them.",
+   "siblings": [
+    "That run was improvised in a terminal during round 2, so its commands existed only in shell history.",
+    "Documenting a gate took one edit, while scripting it meant deciding where run directories and logs belong.",
+    "CHANGELOG.md evidence asks only for a run directory and counts, which a hand-copied note already satisfies.",
+    "Round 2 counted a gate as done once written, so converting the recipe into code had no completion signal."
+   ]
+  },
+  {
+   "n": 29,
+   "chain": [
+    "No full run of the v0.3.0 code has happened, and each live scenario was exercised only once.",
+    "run.json stores no wave timestamps, so a timed run needs separate instrumentation nobody has built yet.",
+    "assemble's duration_seconds, from created to the newest fragment's mtime, already looked like enough timing."
+   ],
+   "reason": "The duration fix came from the stretching bug, framing timing as correcting one number rather than adding detail.",
+   "siblings": [
+    "The CHANGELOG smoke-run evidence cited 58 seconds from creation to last fragment, so one total felt sufficient.",
+    "Fragment mtimes are free to read at assemble time, while per-wave stamps require writes during dispatch.",
+    "Smoke runs finish in two waves, where a total span and a per-wave breakdown barely differ.",
+    "Nothing reads timing from five-whys.json, so no one noticed duration_seconds cannot separate waves from pauses."
+   ]
+  }
+ ]
+}
