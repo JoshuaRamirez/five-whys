@@ -45,6 +45,36 @@ every gate has a status that allows the bump (see Evidence).
 - RELEASING.md gates releases by kind of change and documents
   `claude --plugin-dir .` and `usage.py` (IMP-35, IMP-36).
 
+From round 3 (sections of `docs/self-improvement/round-3/design.md`):
+
+- `parse` prints the script's absolute path, and the skill uses it for every
+  later step (5f).
+- Agents are told not to run network commands; nothing enforces it (5e).
+- `plan --record` stores each wave's start time and ids. `status`, the tree
+  header and `index.md` report each wave's seconds (5a).
+- `check-log.jsonl` names the kinds of errors and warnings, and `status` sums
+  them per fragment (5b).
+- The README says where your analysis begins: run output and reading aids
+  never judge reasons, while development measurement may score them (Fix 2).
+- Every release gate ends `passed`, `failed`, `blocked` or `waived`, with the
+  commit it ran against, and a docs test enforces the format. The eval runs
+  where Docker Desktop isn't installed, and its results may be published (4a,
+  Fix 1).
+- The cost section says base cost follows the dispatching session's context,
+  and adds the v0.3.0 full run (5c).
+- The replay test is described as synthetic fragments, not recorded agent
+  output (5g).
+- Maintainer tooling in `docs/self-improvement/`:
+  - `rubric.md` fixes rating criteria, weights and anchors (3a).
+  - `ledger.py sample` gains `--via`, `--level`, `--stratify` and `--json`.
+  - `ledger.py audit` reads reviewer verdict files, and `reviewer-prompt.md`
+    tells reviewers how to write them (3b).
+  - `quality.py` and `quality-rubric.md` score reason samples (3c).
+  - `ledger.py verify` and round 2's `verification.json` record whether each
+    improvement was observed working (4c).
+  - Deferred dispositions need a trigger in schema-3 catalogs (4d).
+  - `usage.py --out` reports first-turn context (5c).
+
 ### Removed
 
 - `init --root-model` and `--branch-model` (IMP-40). They were unmeasured and

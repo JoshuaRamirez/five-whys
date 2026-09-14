@@ -46,13 +46,16 @@ READ_WINDOW_BYTES = 48_000  # Read accepted about 64 KB of five-whys.json and re
 
 # Agent tokens are estimated as a range from two runs measured with
 # docs/self-improvement/usage.py (2026-09-13, claude-opus-5):
-# - High: the v0.2.0 full run on its own rating, inside this repository. Agents
-#   started with about 21k tokens of session context and read local files as
-#   evidence. Root 44.1k for 30 reasons; branches mean 63.1k for 155 reasons.
-# - Low: a root and one branch on a problem naming no files, in a clean
-#   directory. Agents started with about 4.6k tokens and read only their prompt.
-#   Root 11.3k; branch 23.6k.
-# The assembled v0.2.0 file held 38 tokens per reason.
+# - High: the v0.2.0 full run on its own rating, dispatched from an interactive
+#   session in this repository. Agents inherited about 21k tokens of session
+#   context and read local files as evidence. Root 44.1k for 30 reasons;
+#   branches mean 63.1k for 155 reasons.
+# - Low: a root and one branch dispatched from headless claude -p, on a problem
+#   naming no files, in a clean directory. Agents inherited about 4.6k tokens
+#   and read only their prompt. Root 11.3k; branch 23.6k.
+# A later v0.3.0 full run, headless in this repository (4.9k inherited, files
+# read), totalled 0.97M, inside the range. The assembled v0.2.0 file held 38
+# tokens per reason.
 MEASURED = {"version": "0.2.0", "date": "2026-09-13", "model": "claude-opus-5"}
 AGENT_OVERHEAD_TOKENS = 39_600
 TOKENS_PER_REASON = 152
@@ -117,10 +120,11 @@ def estimate(breadth: int, depth: int, split: int) -> dict:
         "agent_tokens": agents * AGENT_OVERHEAD_TOKENS + total * TOKENS_PER_REASON,
         "output_tokens": total * OUTPUT_TOKENS_PER_REASON,
         "basis": f"range from two {MEASURED['model']} runs measured on {MEASURED['date']}: the low end is a "
-                 "problem naming no local files in a clean directory; the high end (agent_tokens) is the "
-                 f"v{MEASURED['version']} self-run inside a large repository, where agents started with more "
-                 "session context and read files as evidence. Each figure sums agents' reported totals; "
-                 "context re-read on every turn is billed on top, mostly as cache reads.",
+                 "headless session on a problem naming no local files; the high end (agent_tokens) is the "
+                 f"v{MEASURED['version']} self-run dispatched from an interactive session with many tools loaded, "
+                 "where agents inherited about 21k tokens of context and read files as evidence. The dispatching "
+                 "session's context drives the base cost. Each figure sums agents' reported totals; context "
+                 "re-read on every turn is billed on top, mostly as cache reads.",
     }
 
 

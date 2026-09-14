@@ -53,24 +53,30 @@ text in a working copy instead, start a fresh session with
 
 ## What a full run costs
 
-Cost depends heavily on where the run happens. Two runs were measured on
-2026-09-13 with claude-opus-5, read from Claude Code's subagent logs with
-`docs/self-improvement/usage.py`:
+Cost depends first on the session that dispatches the agents. Each agent
+inherits that session's context, such as its tools and MCP server instructions,
+before it reads anything. Second is how much the agents read. Three runs were
+measured on 2026-09-13 with claude-opus-5, read from Claude Code's subagent
+logs with `docs/self-improvement/usage.py`:
 
-| | v0.2.0 full run on its own rating, inside this repository | Root and one branch, a problem naming no files, clean directory |
-|---|---|---|
-| Session context at an agent's first turn | about 21k tokens | about 4.6k tokens |
-| Evidence reading | local files and Bash exploration | none beyond the prompt |
-| Turns per branch agent | 10-22 | 5 |
-| Tokens per agent, as reported | root 44.1k; branches 57.5k-72.5k, mean 63.1k | root 11.3k; branch 23.6k |
-| Output tokens per branch, including thinking | 15k-22k | 15k |
-| Context re-read across a branch's turns, billed on top | 0.4M-1.0M, mostly cache reads | 69k |
+| | v0.2.0 full run, interactive session with many tools, in this repository | v0.3.0 full run, headless `claude -p`, in this repository | Root and one branch, headless, clean directory, a problem naming no files |
+|---|---|---|---|
+| Session context at an agent's first turn | about 21k tokens | about 4.9k tokens | about 4.6k tokens |
+| Evidence reading | local files and Bash exploration | local files and Bash exploration | none beyond the prompt |
+| Turns per branch agent | 10-22 | 8-20 | 5 |
+| Tokens per agent, as reported | root 44.1k; branches 57.5k-72.5k, mean 63.1k | root 14.8k; branches 28.4k-61.7k, mean 38.1k | root 11.3k; branch 23.6k |
+| Agent tokens in total | about 1.62M | about 0.97M | not a full run |
+| Output tokens per branch, including thinking | 15k-22k | mean 18.9k | 15k |
+| Context re-read across a branch's turns, billed on top | 0.4M-1.0M, mostly cache reads | 0.13M-0.54M | 69k |
+| Output file | 595 KB | 607 KB | not a full run |
+| Wall clock, creation to last fragment | not measured (a restart interrupted it) | 29 minutes in waves of 5 | not a full run |
 
 A full 5x5 run is estimated at about 0.60M-1.62M agent tokens and 148k output
-tokens: low for a self-contained problem in a quiet directory, high inside a
-large project whose files agents read. The v0.2.0 full run's output file was
-595 KB (about 149k tokens); its wall clock wasn't measured because a machine
-restart interrupted it.
+tokens. Expect the low end from a headless or lightly loaded session on a
+self-contained problem. Expect the high end from an interactive session with
+many plugins and MCP servers, inside a large project whose files agents read.
+Starting a full run from `claude -p` in a fresh session keeps inherited
+context small.
 
 Claude Code runs at most 20 subagents at once by default. This plugin sends
 waves of 5 unless you choose otherwise, so a full run takes six waves. When
