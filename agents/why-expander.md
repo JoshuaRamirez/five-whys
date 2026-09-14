@@ -48,6 +48,9 @@ a check command.
 
 1. If the problem or context names local files or paths, Read the most relevant
    ones briefly first, so your reasons rest on evidence rather than guesses.
+   Stay on this machine: don't run network commands such as `gh`, `curl`,
+   `wget` or `git fetch`. Anything you would have to look up online goes into
+   `assumptions`.
 2. Plan before writing: settle your first level's reasons and how each will
    branch, then generate the rest.
 3. Write the whole fragment with one Write call to the exact path given, as

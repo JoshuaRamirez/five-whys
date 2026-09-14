@@ -148,6 +148,9 @@ ancestors.
   much two runs of the same model differ.
 - The eval cases have not been run yet.
 - A full run spends a large share of subscription quota in a short burst.
+- Agents are told not to run network commands such as `gh` or `curl`, but they
+  have Bash, so nothing enforces it. In the v0.3.0 self-run, three of 25 branch
+  agents ran `gh` before this instruction existed.
 
 ## Resuming, subsets and partial trees
 

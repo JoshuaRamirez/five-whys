@@ -137,6 +137,11 @@ class ParseTests(RunCase):
         self.assertTrue(self.parse(f"--resume {run_dir} extra words")["errors"])
         self.assertTrue(self.parse(f"--resume {self.base}")["errors"])
 
+    def test_script_path_is_absolute_for_later_steps(self):
+        script = Path(self.parse("--smoke Deploys fail")["script"])
+        self.assertTrue(script.is_absolute())
+        self.assertEqual(script, SCRIPT.resolve())
+
     def test_smoke_with_shape_overrides_is_noted(self):
         self.assertTrue(self.parse("--smoke --depth 4 Deploys fail")["notes"])
 

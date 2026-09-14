@@ -45,9 +45,11 @@ $ARGUMENTS
 FIVE_WHYS_ARGS
 ```
 
-It prints `problem`, `init_flags`, `plan_flags`, `yes`, `resume`, `errors` and
-`notes`. Leading options come first; everything after them (or after `--`) is
-the problem statement.
+It prints `script`, `problem`, `init_flags`, `plan_flags`, `yes`, `resume`,
+`errors` and `notes`. Leading options come first; everything after them (or
+after `--`) is the problem statement. `script` is the absolute path of
+`fivewhys.py`: use it as `$S` in every later command, never a shortened
+relative path such as `scripts/fivewhys.py`.
 
 | Option | Effect |
 |--------|--------|

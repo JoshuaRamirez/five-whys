@@ -185,6 +185,7 @@ def parse_invocation(text: str) -> dict:
         elif target:
             init_args += [target, str(value)]
     return {
+        "script": str(SCRIPT),  # later skill steps use this absolute path, never a relative one
         "problem": problem,
         "options": given,
         "init_flags": "" if "--resume" in given else shlex.join(init_args),

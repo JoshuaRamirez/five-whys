@@ -106,6 +106,15 @@ class DocsConsistencyTests(unittest.TestCase):
         tools = re.search(r"^tools: (.*)$", AGENT, re.M).group(1)
         self.assertEqual({t.strip() for t in tools.split(",")}, {"Write", "Edit", "Read", "Bash"})
 
+    def test_agent_is_told_to_stay_off_the_network(self):
+        flat = " ".join(AGENT.split())
+        self.assertIn("don't run network commands", flat)
+        self.assertIn("`gh`", flat)
+
+    def test_skill_invokes_the_script_only_through_its_absolute_path(self):
+        self.assertIsNone(re.search(r"python3\s+\"?(?!\$)[^\s\"]*scripts/fivewhys\.py", SKILL))
+        self.assertIn("`script` is the absolute path", " ".join(SKILL.split()))
+
     def test_agent_instructions_hold_no_shape_counts(self):
         self.assertIsNone(re.search(r"exactly \d+|\b\d+ (?:items|reasons)\b", AGENT))
 
