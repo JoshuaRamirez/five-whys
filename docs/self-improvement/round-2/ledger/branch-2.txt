@@ -61,7 +61,7 @@
 2.1.4.5.4 IMP-44 The replay test is named and placed apart from docs consistency tests.
 2.1.5 IMP-37 The decisions left in prose that code can make, parsing and confirmation, move into the script.
 2.1.5.1 X-HIST plan's ready-made prompts made the skill look thin.
-2.1.5.1.4 IMP-44 The replay test passes the model field only when it is not null.
+2.1.5.1.4 IMP-44 Plan tests assert the model field stays null unless a model was chosen, the condition SKILL.md relies on.
 2.1.5.1.5 X-ENV Agent registration is platform behavior.
 2.1.5.2.5 IMP-38 The threshold is now a script constant returned as confirm.
 2.1.5.3 IMP-38 Checkable prose decisions move to code; the rest are named in SKILL.md.
@@ -79,7 +79,7 @@
 2.2.1.1.5 X-HIST Substitution was treated as stable.
 2.2.1.2.2 R-02 Calling the API directly adds credentials and network access.
 2.2.1.2.4 IMP-44 A fake agent stub now stands in for why-expander in the replay test.
-2.2.1.4.3 IMP-44 The replay test asserts null models are omitted from dispatch.
+2.2.1.4.3 IMP-44 Plan tests assert a null model unless one was chosen, so the omit-when-null rule has a tested input.
 2.2.1.5.2 IMP-36 A fresh --plugin-dir session registers the current agent definition.
 2.2.1.5.3 IMP-44 A docs test now checks the agent's tools cover the Write, Edit, Read and Bash its steps use.
 2.2.1.5.5 IMP-50 RELEASING.md now quotes the eval command with tools matching the case's allowed_tools.

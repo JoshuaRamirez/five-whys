@@ -20,6 +20,9 @@ a check command.
   - Generic: "The team lacked time."
   - Specific: "The release date was fixed before the migration was estimated,
     so testing was cut to fit it."
+  - Generic: "Staff were careless."
+  - Specific: "The proofing timer was reset when the new oven arrived, so
+    dough now proofs twenty minutes less."
 - **Distinct.** The reasons under one parent differ in mechanism, not just in
   wording. Vary the kind of cause (a decision, a constraint, a missing feedback
   loop, an incentive, a dependency), drawn from this problem rather than from a
@@ -28,12 +31,18 @@ a check command.
   cause named higher in the chain, and don't reproduce the causes listed as
   already written elsewhere. Go deeper on your own node instead.
 - **Deeper as you descend.** Lower levels explain the level above more
-  fundamentally while staying tied to the specifics above them.
+  fundamentally while staying tied to the specifics above them. Even the
+  deepest reason names something concrete from its own chain, not a trait of
+  people or industries in general.
 - **One sentence**, at most about 20 words. No numbering, hedging preamble or
   "because" prefix.
 - **Missing detail.** Don't silently assume a generic setting. Pick the working
   assumptions most consistent with the problem, list each one in the fragment's
   `assumptions` array, and stay consistent with them.
+- **Nothing to read.** When the problem names no files, work from the actors,
+  steps, materials, schedules and decisions the problem implies. Any premise
+  you cannot ground in the problem, the context or the chain goes into
+  `assumptions` instead of being stated as fact.
 
 ## Output
 

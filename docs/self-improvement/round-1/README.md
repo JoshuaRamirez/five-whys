@@ -12,7 +12,7 @@ came out of it.
 | `ledger/` | 26 fragments written by classification agents, one per scope |
 | `ledger.json` | One line per reason: id, disposition code, a note explaining the choice, and the reason text |
 | `summary.md` | Reasons per code |
-| `ledger.py` | `check` validates a fragment against its scope; `merge` proves every reason is covered exactly once |
+| `../ledger.py round-1` | `check` validates a fragment against its scope; `merge` proves every reason is covered exactly once |
 
 ## How it was done
 
@@ -63,4 +63,5 @@ Per-code counts are in `summary.md`.
   One cross-branch overlap got past the hygiene heuristic: 2.3 and 3.1.2 both put
   the gap down to split ownership between the database and platform teams. That
   is the known limitation about deep causes converging.
-- **Not yet done:** a full 5x5 run on v0.2.0, and `claude plugin eval`.
+- **Not yet done at release:** a full 5x5 run on v0.2.0, and `claude plugin eval`. The full run
+  happened later that day and is round 2's input (`../round-2/`); the eval has still not run.

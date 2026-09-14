@@ -20,7 +20,7 @@
   ],
   "improvements": [
     {"code": "IMP-32", "title": "Remeasured cost", "detail": "Estimate constants and the README cost table come from the v0.2.0 full run (per-agent totals, 38 output tokens per reason); the basis names the version, model and what the totals count."},
-    {"code": "IMP-33", "title": "Version stamps", "detail": "run.json and the five-whys.json header record plugin_version read from plugin.json; init and status print it; a MEASURED_VERSION constant labels the estimate and a docs test ties it to the README."},
+    {"code": "IMP-33", "title": "Version stamps", "detail": "run.json and the five-whys.json header record plugin_version read from plugin.json; init and status print it; a MEASURED constant labels the estimate and a docs test ties it to the README."},
     {"code": "IMP-34", "title": "Changelog with evidence", "detail": "CHANGELOG.md holds a dated entry per version with its verification evidence; RELEASING.md points evidence there; a docs test requires an entry for the manifest version."},
     {"code": "IMP-35", "title": "Release gates by change kind", "detail": "RELEASING.md: prompt, agent, dispatch or estimate changes need a model-invoked run through /five-whys (checkout loaded with --plugin-dir) or the eval; figures name their version; review a ledger sample; check option count."},
     {"code": "IMP-36", "title": "Test the checkout before publishing", "detail": "README and RELEASING.md document `claude --plugin-dir .` so unpublished SKILL.md and agent text run in a real session before the marketplace entry changes."},
