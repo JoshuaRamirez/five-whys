@@ -6,7 +6,8 @@ evidence in the version's entry in [CHANGELOG.md](CHANGELOG.md).
 ## Every release
 
 1. **Unit tests pass:** `python3 -m unittest discover tests`. This includes the
-   orchestration replay test and the labeled hygiene pairs.
+   orchestration replay test (synthetic fragments, so it checks orchestration
+   only) and the labeled hygiene pairs.
 2. **Manifest validates:** `claude plugin validate .`
 3. **CHANGELOG.md** has an entry for the new version with its date, the
    changes (with ledger codes when they came from a self-run), removed options

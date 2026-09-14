@@ -171,8 +171,10 @@ scoring in `scripts/hygiene.py`:
 | `assemble <run>` | Write `five-whys.json`, `index.md`, `hygiene.json`; `--partial` allows missing branches |
 | `show <tree-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`) |
 
-Tests: `python3 -m unittest discover tests`. They include a replay of the
-skill's dispatch loop with stand-in agents and the labeled hygiene pairs.
+Tests: `python3 -m unittest discover tests`. They include the labeled hygiene
+pairs and a replay of the skill's dispatch loop. The replay's fragments are
+synthetic filler written by the test itself, not recorded agent output, so it
+checks orchestration, not what agents write.
 Eval: `claude plugin eval . --allow-tools Bash Write Edit --judge-model sonnet --runs 1 --ablation none --no-publish`.
 CI runs the unit tests on every push. Release steps: [RELEASING.md](RELEASING.md).
 Changes: [CHANGELOG.md](CHANGELOG.md).

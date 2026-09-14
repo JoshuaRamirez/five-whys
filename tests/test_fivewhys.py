@@ -475,7 +475,11 @@ class StatusAndShowTests(RunCase):
 
 
 class SkillReplayTests(RunCase):
-    """Walk SKILL.md's steps with fake agents standing in for why-expander."""
+    """Walk SKILL.md's steps with fake agents standing in for why-expander.
+
+    The fragments are synthetic filler from fragment(), not recorded agent output,
+    so these tests cover orchestration, not what real agents write.
+    """
 
     def dispatch_until_done(self, run_dir, broken=()):
         waves = []

@@ -37,8 +37,9 @@ Evidence).
   Output stays at 38 tokens per reason.
 - Agent instructions cover non-software problems, problems with nothing to read,
   and leaves that must stay concrete (IMP-49).
-- A replay test walks the skill's dispatch loop with stand-in agents, and a
-  labeled pair fixture from the v0.2.0 tree measures hygiene (IMP-44, IMP-47).
+- A replay test walks the skill's dispatch loop with synthetic fragments the
+  test writes itself (not recorded agent output), and a labeled pair fixture
+  from the v0.2.0 tree measures hygiene (IMP-44, IMP-47).
 - A second eval case runs a one-line non-software problem (IMP-50).
 - RELEASING.md gates releases by kind of change and documents
   `claude --plugin-dir .` and `usage.py` (IMP-35, IMP-36).

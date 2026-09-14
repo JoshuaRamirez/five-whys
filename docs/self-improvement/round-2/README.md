@@ -28,7 +28,8 @@ accounted for here, and the unreleased changes in `CHANGELOG.md` came out of it.
    reused ones, X codes, and rules for choosing between them (IMP beats R beats X;
    X notes cite the code that handles any actionable part).
 4. **Classified every reason** with rule lines. A line covers its reason and
-   any descendant without a line of its own.
+   any descendant without a line of its own. Notes allow up to 30 words
+   (`max_note_words` in `catalog.json`; `ledger.py` defaults to 25).
 5. **Audited by sampling.** The first 30-reason sample found that inheriting
    across several levels gave leaves notes that didn't describe them, and 2 wrong
    codes. A second pass gave all 298 affected level-4 reasons their own lines, so
