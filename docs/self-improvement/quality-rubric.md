@@ -13,7 +13,10 @@ hypothesis; don't check whether it is true.
 ## Causal
 
 Does the reason explain why the last reason in the chain happens? For level 1,
-the question is why the problem occurs.
+the question is why the problem occurs. For five-ws trees that ask what, when,
+where or how (the packet item's `question`), score whether the answer answers
+that question about the item above it: a fact or component, a time or
+condition, a place, or a mechanism. The key stays `causal`.
 
 - **0:** Not a cause. It restates the parent, describes a symptom or effect,
   proposes a fix, or gives an opinion.

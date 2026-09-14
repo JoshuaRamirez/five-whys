@@ -45,7 +45,28 @@ every gate has a status that allows the bump (see Evidence).
 - RELEASING.md gates releases by kind of change and documents
   `claude --plugin-dir .` and `usage.py` (IMP-35, IMP-36).
 
-Requested by the maintainer on 2026-09-14:
+Requested by the maintainer on 2026-09-14, the product change:
+
+- The plugin is now **five-ws**. `/five-ws` asks any combination of why, what,
+  when, where and how, chosen with `--ask` (why by default) or with a leading
+  phrase such as "ask how and where for:". Each input gets one tree per
+  question, and every answer is asked the same question again down to `--depth`.
+- `/five-whys` stays as a shortcut for `/five-ws --ask why`.
+- `--model-level 1-5` sets a model mix from all haiku to all opus. Root agents
+  step up first, at levels 2 and 4.
+- Output is `five-ws.json` (schema `five-ws/1`) in `.five-ws/`. Nodes hold
+  `answer` and `answers`, and ids carry the input and the question, as in
+  `2.how.4.1`. Hygiene marks leads `across_questions` as well as
+  `across_inputs`, and `show`, `usage.py`, `quality.py` and `ledger.py` read
+  both five-ws and five-whys files.
+- The agent is `five-ws:expander`, with guidance for each question, and the
+  script is `scripts/fivews.py`.
+- A fourth eval case asks what and how at depth 1. The first two cases run
+  through `/five-whys`, and the input-list case through `/five-ws`.
+- The rename changes the RedJay marketplace entry, so existing five-whys
+  installs need `/plugin install five-ws@RedJay`.
+
+Requested by the maintainer earlier on 2026-09-14:
 
 - `--depth` accepts 1 to 5.
 - A run takes a list of inputs, one per line, with list markers removed.
@@ -94,6 +115,7 @@ From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 ### Removed
 
+- `--model NAME`, replaced by `--model-level 1-5` (2026-09-14).
 - `init --root-model` and `--branch-model` (IMP-40). They were unmeasured and
   unreachable from `/five-whys`. Runs created by v0.2.0 with separate tiers
   still plan with them.
