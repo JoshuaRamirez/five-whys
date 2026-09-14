@@ -86,10 +86,10 @@ Each run lives in `.five-whys/<timestamp>-<slug>/`:
 | `five-whys.json` | The tree, one reason per line |
 | `index.md` | The settings used, levels 1-2 with ids, and the Read windows for loading the whole tree |
 | `hygiene.json` | Mechanical flags, each with the texts involved: exact duplicates, near-duplicates, reasons restating a parent or ancestor, cross-branch leads, over-long reasons |
-| `run.json` | Plugin version, options given, shape, model, estimate shown, dispatch attempts, timing, output size |
+| `run.json` | Plugin version, options given, shape, model, estimate shown, dispatch attempts, each wave's start time and ids, duration, output size |
 | `fragments/` | Raw agent output |
 | `prompts/` | The full prompt each agent was dispatched with |
-| `check-log.jsonl` | Every check an agent ran, so repair cycles are countable |
+| `check-log.jsonl` | Every check an agent ran, with the kinds of errors and warnings, so repair cycles are countable |
 
 `.five-whys/.gitignore` keeps runs out of git, since problem statements can be sensitive.
 
@@ -106,7 +106,8 @@ An excerpt from a self-run:
   "Why <that node's reason>?".
 - `id` is the dotted path from the top. `2.4.1` is the 1st reason under `2.4`.
 - The header records the plugin version, shape, model, per-level counts and
-  average words, duration from creation to the last fragment, any assumptions
+  average words, duration from creation to the last fragment, each wave's
+  fragment count and seconds, any assumptions
   the agents stated, and whether the tree is complete.
 
 To load a tree, ask Claude to read it. The skill reads `index.md`, then the
@@ -166,7 +167,7 @@ scoring in `scripts/hygiene.py`:
 | `parse` (arguments on stdin) | Split `/five-whys` arguments into the problem, `init` flags and skill options, with errors for unknown or invalid options |
 | `init` (problem on stdin) | Create a run: `--preset`, `--breadth`, `--depth`, `--split`, `--model`, `--max-parallel`, `--context-file`, `--base`; prints the estimate and whether to confirm |
 | `plan <run>` | Next wave of missing fragments with prompts; `--record` counts attempts; `--only` selects branches; `--max-parallel` changes the wave size |
-| `status <run>` | Done, missing and stuck fragments, check cycles per fragment, and the plugin version that created the run |
+| `status <run>` | Done, missing and stuck fragments, check cycles and error kinds per fragment, each wave's seconds, and the plugin version that created the run |
 | `check <fragment> --breadth N --depth N` | Validate one fragment; warnings never block |
 | `assemble <run>` | Write `five-whys.json`, `index.md`, `hygiene.json`; `--partial` allows missing branches |
 | `show <tree-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`) |

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -452,7 +453,30 @@ class StatusAndShowTests(RunCase):
         self.fill_root(run_dir, 3, 1)
         run("check", root, "--breadth", 3, "--depth", 1)
         status = json.loads(run("status", run_dir).stdout)
-        self.assertEqual(status["checks"], {"root.json": {"checks": 2, "failed": 1}})
+        self.assertEqual(status["checks"], {"root.json": {"checks": 2, "failed": 1, "kinds": {"count": 1}}})
+
+    def test_warnings_are_logged_by_kind(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        root = self.fill_root(run_dir, 3, 1)
+        root["whys"][1]["reason"] = root["whys"][0]["reason"]
+        self.write(run_dir / "fragments" / "root.json", root)
+        run("check", run_dir / "fragments" / "root.json", "--breadth", 3, "--depth", 1)
+        entry = json.loads((run_dir / "check-log.jsonl").read_text().splitlines()[-1])
+        self.assertEqual((entry["ok"], entry["warning_kinds"]["exact"]), (True, 1))
+        self.assertEqual(entry["warnings"], sum(entry["warning_kinds"].values()))
+
+    def test_error_kinds_name_the_broken_rule(self):
+        spec = importlib.util.spec_from_file_location("fivewhys", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        cases = {"f.json: item 2's whys: expected 5 reasons, got 4": "count",
+                 "f.json: item 1.2: reason missing or empty": "missing_reason",
+                 "f.json: item 3: deepest reasons must not have whys": "leaf_whys",
+                 "f.json: invalid JSON (Expecting value)": "json",
+                 'f.json: top level must be {"whys": [...]}': "structure",
+                 "f.json: assumptions: must be a list of strings": "assumptions",
+                 "f.json: missing": "missing_file"}
+        self.assertEqual({m: module.error_kind(m) for m in cases}, cases)
 
     def test_show_prints_ancestors_and_limits_levels(self):
         run_dir, _ = self.init("--preset", "smoke")
@@ -505,16 +529,28 @@ class SkillReplayTests(RunCase):
         run_dir = Path(out["run"])
         plan, waves = self.dispatch_until_done(run_dir)
         self.assertEqual((plan["state"], waves), ("ready", [["root"], ["1", "2", "3"]]))
-        self.assertEqual(json.loads(run("status", run_dir).stdout)["done"], 4)
+        status = json.loads(run("status", run_dir).stdout)
+        self.assertEqual(status["done"], 4)
+        self.assertEqual([w["ids"] for w in status["waves"]], [["root"], ["1", "2", "3"]])
+        for wave in status["waves"]:
+            self.assertLessEqual(dt.datetime.fromisoformat(wave["at"]), dt.datetime.fromisoformat(wave["finished"]))
+            self.assertIsInstance(wave["seconds"], int)
+            self.assertGreaterEqual(wave["seconds"], 0)
         summary = json.loads(run("assemble", run_dir).stdout)  # Step 5
         self.assertEqual((summary["complete"], summary["present_reasons"], summary["checks"]),
                          (True, 39, {"runs": 4, "failed": 0}))
+        tree = self.read(run_dir / "five-whys.json")
+        self.assertEqual([w["fragments"] for w in tree["waves"]], [1, 3])
+        self.assertIn("waves of 5 (2 dispatched, ", (run_dir / "index.md").read_text())
 
     def test_failing_agent_ends_stuck_and_partial_assembly_salvages_the_rest(self):
         run_dir, _ = self.init("--preset", "smoke")
         plan, waves = self.dispatch_until_done(run_dir, broken=("2",))
         self.assertEqual((plan["state"], [s["id"] for s in plan["stuck"]]), ("stuck", ["2"]))
         self.assertEqual(waves, [["root"], ["1", "2", "3"], ["2"], ["2"]])
+        timing = json.loads(run("status", run_dir).stdout)["waves"]
+        self.assertEqual([w["ids"] for w in timing], waves)
+        self.assertEqual([w["seconds"] is None for w in timing], [False, True, True, True])
         self.assertNotEqual(run("assemble", run_dir, ok=False).returncode, 0)
         summary = json.loads(run("assemble", run_dir, "--partial").stdout)
         self.assertEqual((summary["missing_branches"], summary["present_reasons"]), (["2"], 27))

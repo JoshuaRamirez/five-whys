@@ -27,6 +27,7 @@ import random
 import re
 import shlex
 import sys
+from collections import Counter
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve()
@@ -81,6 +82,10 @@ def plugin_version() -> str:
         return json.loads(manifest.read_text(encoding="utf-8"))["version"]
     except (OSError, ValueError, KeyError):
         return "unknown"
+
+
+def now_iso() -> str:
+    return dt.datetime.now().astimezone().isoformat(timespec="seconds")
 
 
 # ---------------------------------------------------------------- shape
@@ -490,6 +495,9 @@ def cmd_plan(args) -> None:
     if args.record and wave:
         for task in wave:
             attempts[task["id"]] = task["attempt"]
+        waves = meta.setdefault("waves", [])  # start times, so each wave's wall clock can be measured
+        waves.append({"wave": len(waves) + 1, "at": now_iso(), "ids": [t["id"] for t in wave],
+                      "max_parallel": meta["max_parallel"]})
         write_run(run, meta)
 
     state = ("root" if root is None else "branches") if wave else ("stuck" if stuck else "ready")
@@ -527,6 +535,7 @@ def cmd_status(args) -> None:
         "missing": missing,
         "stuck": [m for m in missing if meta["attempts"].get(m, 0) >= MAX_ATTEMPTS],
         "checks": read_checks(run),
+        "waves": wave_timing(run, meta),
         "assembled": (run / "five-whys.json").exists(),
         "estimate": estimate(breadth, depth, split),
     }, indent=2))
@@ -537,27 +546,75 @@ def run_folder(fragment: Path) -> Path | None:
     return folder.parent if folder.name == "fragments" and (folder.parent / "run.json").exists() else None
 
 
-def log_check(fragment: Path, errors: int, warnings: int) -> None:
+# Which rule a check error broke, so the log shows what agents get wrong, not just how often.
+ERROR_KINDS = (
+    ("count", r"expected \d+ reasons, got \d+"),
+    ("missing_reason", r"reason missing or empty"),
+    ("leaf_whys", r"deepest reasons must not have whys"),
+    ("json", r"invalid JSON"),
+    ("assumptions", r"assumptions: must be"),
+    ("structure", r"top level must be|must be a list|expected an object"),
+    ("missing_file", r": missing$"),
+)
+
+
+def error_kind(message: str) -> str:
+    return next((kind for kind, pattern in ERROR_KINDS if re.search(pattern, message)), "other")
+
+
+def log_check(fragment: Path, errors: list[str], warning_kinds: dict) -> None:
     # Only fragments inside a run directory are logged, so repair cycles are countable.
     run = run_folder(fragment)
     if run is None:
         return
-    entry = {"fragment": fragment.name, "at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
-             "ok": errors == 0, "errors": errors, "warnings": warnings}
+    entry = {"fragment": fragment.name, "at": now_iso(), "ok": not errors,
+             "errors": len(errors), "warnings": sum(warning_kinds.values())}
+    if errors:
+        entry["kinds"] = dict(Counter(map(error_kind, errors)))
+    if warning_kinds:
+        entry["warning_kinds"] = warning_kinds
     with open(run / "check-log.jsonl", "a", encoding="utf-8") as log:
         log.write(json.dumps(entry) + "\n")
 
 
+def read_log(run: Path) -> list[dict]:
+    log = run / "check-log.jsonl"
+    if not log.exists():
+        return []
+    return [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
 def read_checks(run: Path) -> dict:
     checks = {}
-    log = run / "check-log.jsonl"
-    if log.exists():
-        for line in log.read_text(encoding="utf-8").splitlines():
-            entry = json.loads(line)
-            item = checks.setdefault(entry["fragment"], {"checks": 0, "failed": 0})
-            item["checks"] += 1
-            item["failed"] += 0 if entry["ok"] else 1
+    for entry in read_log(run):
+        item = checks.setdefault(entry["fragment"], {"checks": 0, "failed": 0})
+        item["checks"] += 1
+        item["failed"] += 0 if entry["ok"] else 1
+        for field in ("kinds", "warning_kinds"):  # summed across the fragment's checks
+            for kind, count in entry.get(field, {}).items():
+                bucket = item.setdefault(field, {})
+                bucket[kind] = bucket.get(kind, 0) + count
     return checks
+
+
+def fragment_name(node_id: str) -> str:
+    return "root.json" if node_id == "root" else f"branch-{node_id}.json"
+
+
+def wave_timing(run: Path, meta: dict) -> list[dict]:
+    """Recorded waves; a wave finishes when its last fragment first checks OK after the wave began."""
+    passes: dict[str, list] = {}
+    for entry in read_log(run):
+        if entry["ok"]:
+            passes.setdefault(entry["fragment"], []).append(dt.datetime.fromisoformat(entry["at"]))
+    timing = []
+    for wave in meta.get("waves", []):
+        start = dt.datetime.fromisoformat(wave["at"])
+        firsts = [min((t for t in passes.get(fragment_name(i), []) if t >= start), default=None) for i in wave["ids"]]
+        finished = None if any(t is None for t in firsts) else max(firsts)
+        timing.append({**wave, "finished": finished.isoformat() if finished else None,
+                       "seconds": int((finished - start).total_seconds()) if finished else None})
+    return timing
 
 
 def root_context(fragment: Path):
@@ -575,7 +632,7 @@ def cmd_check(args) -> None:
     fragment = Path(args.fragment)
     whys, _, errors = load_fragment(fragment, args.breadth, args.depth)
     if errors:
-        log_check(fragment, len(errors), 0)
+        log_check(fragment, errors, {})
         print("\n".join(errors[:25]))
         if len(errors) > 25:
             print(f"... and {len(errors) - 25} more errors")
@@ -602,7 +659,10 @@ def cmd_check(args) -> None:
     warnings += [f"warning: item {label(f['id'])} restates item {label(f['of'])}"
                  for f in flags["restates_parent"] + flags["restates_ancestor"]]
     warnings += [f"warning: item {label(f['id'])} has {f['words']} words; aim for about 20" for f in flags["over_length"]]
-    log_check(fragment, 0, len(warnings))
+    kinds = {"exact": len(flags["exact_duplicates"]), "near": len(flags["near_duplicates"]),
+             "restates": len(flags["restates_parent"]) + len(flags["restates_ancestor"]),
+             "over_length": len(flags["over_length"])}
+    log_check(fragment, [], {kind: count for kind, count in kinds.items() if count})
     if warnings:
         print("\n".join(warnings[:25]))
         print("Warnings never block. Fix them with Edit when that doesn't mean rewriting the fragment.")
@@ -664,6 +724,7 @@ def cmd_assemble(args) -> None:
         duration = int(finished - dt.datetime.fromisoformat(meta["created"]).timestamp()) if finished else None
     except (KeyError, ValueError, TypeError):
         duration = None
+    timing = wave_timing(run, meta)
     tiers = {} if meta["root_model"] == meta["branch_model"] == meta["model"] else \
         {"root_model": meta["root_model"], "branch_model": meta["branch_model"]}
     header = {
@@ -673,6 +734,7 @@ def cmd_assemble(args) -> None:
         "created": meta.get("created"),
         "assembled": now.isoformat(timespec="seconds"),
         "duration_seconds": duration,
+        "waves": [{"wave": w["wave"], "fragments": len(w["ids"]), "seconds": w["seconds"]} for w in timing],
         "plugin_version": meta.get("plugin_version", "before 0.3.0"),
         "breadth": breadth,
         "depth": depth,
@@ -703,7 +765,9 @@ def cmd_assemble(args) -> None:
     index = ["# Five Whys index", "", f"Problem: {meta['problem']}", "",
              f"Settings: {breadth} wide x {depth} deep, root writes {split} level(s), model {meta['model']}"
              + (f" (root {meta['root_model']}, branches {meta['branch_model']})" if tiers else "")
-             + f", waves of {meta['max_parallel']}, plugin {header['plugin_version']}.", ""]
+             + f", waves of {meta['max_parallel']}"
+             + (f" ({len(timing)} dispatched, {round(duration / 60)} min)" if timing and duration is not None else "")
+             + f", plugin {header['plugin_version']}.", ""]
     span = "Level 1" if split == 1 else f"Levels 1-{split}"
     if split < depth:
         index += [f"{span} of {depth}. Each level-{split} reason heads a branch of "
