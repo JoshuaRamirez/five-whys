@@ -5,7 +5,7 @@ The script that manages runs never sees token usage; Claude Code records it in
 each subagent's log. This reads those logs, keeps the latest completed agent per
 fragment of one run, and fits the estimate constants used by fivewhys.py.
 
-  usage.py <run-dir> [--logs GLOB]
+  usage.py <run-dir> [--logs GLOB] [--out FILE]
 
 Default GLOB: ~/.claude/projects/*/*/subagents/*.jsonl
 """
@@ -32,7 +32,7 @@ def read_agent(path: str, run_name: str):
     if run_name not in opening or not match:
         return None
     turns = output = cumulative = 0
-    final = None
+    final = first_context = None
     completed = False
     for entry in lines:
         message = entry.get("message") or {}
@@ -49,19 +49,22 @@ def read_agent(path: str, run_name: str):
             + usage.get("cache_read_input_tokens", 0)
         output += usage.get("output_tokens", 0)
         cumulative += context
+        if first_context is None:  # what the agent inherited before doing anything
+            first_context = context
         final = context + usage.get("output_tokens", 0)
         for part in message.get("content") or []:
             if isinstance(part, dict) and part.get("type") == "text" and part.get("text", "").startswith("OK "):
                 completed = True
     return {"id": match.group(1), "log": os.path.basename(path), "started": lines[0].get("timestamp"),
             "completed": completed, "turns": turns, "output_tokens": output,
-            "reported_total": final, "cumulative_context": cumulative}
+            "reported_total": final, "cumulative_context": cumulative, "first_turn_context": first_context}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("run")
     parser.add_argument("--logs", default=os.path.expanduser("~/.claude/projects/*/*/subagents/*.jsonl"))
+    parser.add_argument("--out", help="also write the JSON to this file")
     args = parser.parse_args()
     run = Path(args.run).resolve()
     meta = json.loads((run / "run.json").read_text(encoding="utf-8"))
@@ -79,6 +82,9 @@ def main() -> None:
     interrupted = sorted({a["id"] for a in agents if a["id"] not in latest})
     result = {"run": str(run), "agent_logs": len(agents), "completed_fragments": len(latest),
               "interrupted_without_completed_retry": interrupted}
+    first = [a["first_turn_context"] for a in latest.values() if a["first_turn_context"] is not None]
+    if first:  # set mostly by the session that dispatched the agents
+        result["first_turn_context"] = {"min": min(first), "mean": round(statistics.mean(first)), "max": max(first)}
     if root and branches:
         root_reasons, branch_reasons = reasons(breadth, split), reasons(breadth, depth - split)
         branch_mean = statistics.mean(a["reported_total"] for a in branches)
@@ -97,7 +103,10 @@ def main() -> None:
     if output.exists():
         result["fit_output"] = {"OUTPUT_TOKENS_PER_REASON": round(output.stat().st_size / 4 / reasons(breadth, depth))}
     result["agents"] = sorted(latest.values(), key=lambda a: [int(x) if x.isdigit() else -1 for x in a["id"].split(".")])
-    print(json.dumps(result, indent=2))
+    text = json.dumps(result, indent=2)
+    if args.out:  # keep the measurement with the round's evidence, not only in the terminal
+        Path(args.out).write_text(text + "\n", encoding="utf-8")
+    print(text)
 
 
 if __name__ == "__main__":
