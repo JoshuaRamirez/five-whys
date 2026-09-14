@@ -132,7 +132,8 @@ changes files a gate covers.
   First-turn context was 4.7k tokens, and the branch wrote 14.3k output tokens.
   Waves took 73 and 224 seconds, and both fragments passed their first check.
   RELEASING.md calls for a full measurement when either total is more than 15%
-  off, and the root is, but that run has not been done. Files:
+  off, and the root is. The maintainer deferred that run for this version as a
+  one-time exception (2026-09-13); the rule is unchanged. Files:
   `docs/self-improvement/round-3/gates/measured-branch-5ee0915/`.
 - [blocked] eval @5ee0915 2026-09-13: the only machine available has Docker
   Desktop. The RELEASING.md preflight found 32 symbolic links under
@@ -143,6 +144,12 @@ changes files a gate covers.
 
 ### Deferred
 
+- A full measurement in the low-cost setting. The measured root came in 22%
+  below the estimate's low end, past RELEASING.md's 15% trigger, while the
+  implied full run was 7% below. The maintainer made a one-time exception for
+  this version; the rule stands for the next.
+- Release of 0.3.0 is on hold until the eval runs on a machine without Docker
+  Desktop and the maintainer has reviewed the audit and quality packets.
 - Model-tier quality and same-model variance (R-18).
 - A multi-domain benchmark of problems (R-18).
 - Grader reliability for the eval cases (R-18).
