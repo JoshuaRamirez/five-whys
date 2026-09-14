@@ -6,6 +6,7 @@ levels deep. Generation is split into agent-sized fragments: one root agent
 writes levels 1..split, and one branch agent per level-`split` reason writes the
 levels beneath it. This script owns everything deterministic:
 
+  parse     split raw /five-whys arguments (stdin) into options and the problem
   init      create a run (problem statement on stdin) and print its size estimate
   plan      list the next wave of missing fragments, each with a dispatch prompt
   status    report done, missing and stuck fragments
@@ -14,7 +15,7 @@ levels beneath it. This script owns everything deterministic:
   show      print a subtree, the top levels, or a random sample, with ancestor chains
 
 Run metadata lives in <run>/run.json and fragments in <run>/fragments/.
-Nothing here ranks, prunes or summarizes reasons; hygiene flags are mechanical.
+Nothing here ranks, prunes or summarizes reasons; hygiene flags (hygiene.py) are mechanical.
 """
 
 from __future__ import annotations
@@ -24,32 +25,56 @@ import datetime as dt
 import json
 import random
 import re
+import shlex
 import sys
-from collections import Counter, defaultdict
 from pathlib import Path
 
-SCHEMA = "five-whys/2"
 SCRIPT = Path(__file__).resolve()
+sys.path.insert(0, str(SCRIPT.parent))
+from hygiene import hygiene  # noqa: E402
+
+SCHEMA = "five-whys/2"
 AGENT = "five-whys:why-expander"
 PRESETS = {"full": (5, 5), "smoke": (3, 3)}
 MODELS = ("inherit", "sonnet", "opus", "haiku")
-MAX_PARALLEL = 20  # Claude Code's default cap on concurrent subagents
+MAX_PARALLEL = 5  # default wave size, well under Claude Code's cap
+PLATFORM_PARALLEL_CAP = 20  # Claude Code runs at most 20 subagents at once by default
 MAX_ATTEMPTS = 3
-LONG_REASON_WORDS = 25
-SIMILARITY = 0.6
+CONFIRM_AGENTS = 5  # runs needing more agents than this ask the user before dispatching
+READ_WINDOW_BYTES = 48_000  # Read accepted about 64 KB of five-whys.json and rejected about 89 KB
 
-# Measured on the 2026-09-13 self-run (26 agents, 3,905 reasons): about 36.6k
-# tokens of per-agent overhead, 67 generation tokens per reason, and 33 tokens
-# per reason in the assembled file.
-AGENT_OVERHEAD_TOKENS = 36_600
-TOKENS_PER_REASON = 67
-OUTPUT_TOKENS_PER_REASON = 33
+# Measured on the v0.2.0 full run (2026-09-13, claude-opus-5) with
+# docs/self-improvement/usage.py. The root agent reported 44.1k tokens for 30
+# reasons; 18 branch agents with logged checks reported 57.5k-72.5k (mean 63.1k)
+# for 155 reasons. That fits 39.6k per agent plus 152 per reason. The assembled
+# file held 38 tokens per reason.
+MEASURED = {"version": "0.2.0", "date": "2026-09-13", "model": "claude-opus-5"}
+AGENT_OVERHEAD_TOKENS = 39_600
+TOKENS_PER_REASON = 152
+OUTPUT_TOKENS_PER_REASON = 38
 
-STOPWORDS = frozenset(
-    "a an and are as at be because been but by can for from has have how in into is it its "
-    "not no of on or so than that the their them then there they this to was were what when "
-    "which while who why will with without".split()
-)
+# Options /five-whys accepts. "init" is the init flag an option becomes; None means
+# the skill consumes it. The README and SKILL.md document exactly these.
+OPTIONS = [
+    {"flag": "--smoke", "value": None, "init": "--preset"},
+    {"flag": "--model", "value": "NAME", "init": "--model"},
+    {"flag": "--breadth", "value": "N", "init": "--breadth"},
+    {"flag": "--depth", "value": "N", "init": "--depth"},
+    {"flag": "--split", "value": "N", "init": "--split"},
+    {"flag": "--max-parallel", "value": "N", "init": "--max-parallel"},
+    {"flag": "--context-file", "value": "PATH", "init": "--context-file"},
+    {"flag": "--base", "value": "DIR", "init": "--base"},
+    {"flag": "--yes", "value": None, "init": None},
+    {"flag": "--resume", "value": "RUN_DIR", "init": None},
+]
+
+
+def plugin_version() -> str:
+    try:
+        manifest = SCRIPT.parents[1] / ".claude-plugin" / "plugin.json"
+        return json.loads(manifest.read_text(encoding="utf-8"))["version"]
+    except (OSError, ValueError, KeyError):
+        return "unknown"
 
 
 # ---------------------------------------------------------------- shape
@@ -79,7 +104,81 @@ def estimate(breadth: int, depth: int, split: int) -> dict:
         "reasons": total,
         "agent_tokens": agents * AGENT_OVERHEAD_TOKENS + total * TOKENS_PER_REASON,
         "output_tokens": total * OUTPUT_TOKENS_PER_REASON,
-        "basis": "scaled from the measured 2026-09-13 self-run; actual use varies by model and problem",
+        "basis": f"scaled from the measured v{MEASURED['version']} full run ({MEASURED['date']}, "
+                 f"{MEASURED['model']}); agent_tokens sums each agent's reported total, and context "
+                 "re-read on every turn is billed on top, mostly as cache reads. Varies by model and problem.",
+    }
+
+
+# ---------------------------------------------------------------- invocation
+
+
+def parse_invocation(text: str) -> dict:
+    """Split leading options from the problem statement, exactly as SKILL.md documents."""
+    by_flag = {option["flag"]: option for option in OPTIONS}
+    rest, given, errors, notes = text.strip(), {}, [], []
+    while rest.startswith("--"):
+        match = re.match(r"(\S+)\s*", rest)
+        token, rest = match.group(1), rest[match.end():]
+        if token == "--":
+            break
+        flag, _, inline = token.partition("=")
+        option = by_flag.get(flag)
+        if option is None:
+            errors.append(f"unknown option {flag}; options: {', '.join(by_flag)}")
+            continue
+        value = True
+        if option["value"]:
+            if inline:
+                value = inline
+            else:
+                quoted = re.match(r"""(["'])(.*?)\1\s*""", rest, re.S) or re.match(r"(\S+)\s*", rest)
+                if not quoted or rest.startswith("--"):
+                    errors.append(f"{flag} needs a value ({option['value']})")
+                    continue
+                value, rest = quoted.group(quoted.lastindex), rest[quoted.end():]
+        if flag in given:
+            errors.append(f"{flag} given twice")
+        given[flag] = value
+    problem = rest.strip()
+
+    for flag in ("--breadth", "--depth", "--split", "--max-parallel"):
+        if flag in given and not (str(given[flag]).isdigit() and int(given[flag]) >= 1):
+            errors.append(f"{flag} must be a whole number of at least 1")
+    if "--model" in given and given["--model"] not in MODELS:
+        errors.append(f"--model must be one of {', '.join(MODELS)}")
+    if "--context-file" in given and not Path(given["--context-file"]).is_file():
+        errors.append(f"--context-file {given['--context-file']} does not exist")
+    if "--smoke" in given and ({"--breadth", "--depth"} & set(given)):
+        notes.append("--breadth/--depth override the smoke preset's 3x3 shape")
+    if "--resume" in given:
+        others = set(given) - {"--resume", "--yes", "--max-parallel"}
+        if others:
+            errors.append(f"--resume continues an existing run and takes no {', '.join(sorted(others))}")
+        if problem:
+            errors.append("--resume takes no problem statement")
+        if not (Path(given["--resume"]) / "run.json").is_file():
+            errors.append(f"--resume {given['--resume']} is not a five-whys run directory")
+    elif not problem:
+        errors.append("no problem statement after the options")
+
+    plan_args = ["--max-parallel", str(given["--max-parallel"])] if "--resume" in given and "--max-parallel" in given else []
+    init_args = []
+    for flag, value in given.items():
+        target = by_flag[flag]["init"]
+        if flag == "--smoke":
+            init_args += ["--preset", "smoke"]
+        elif target:
+            init_args += [target, str(value)]
+    return {
+        "problem": problem,
+        "options": given,
+        "init_flags": "" if "--resume" in given else shlex.join(init_args),
+        "plan_flags": shlex.join(plan_args),
+        "yes": "--yes" in given,
+        "resume": given.get("--resume"),
+        "errors": errors,
+        "notes": notes,
     }
 
 
@@ -139,9 +238,9 @@ def read_run(run: Path) -> dict:
     meta = json.loads(path.read_text(encoding="utf-8"))
     meta.setdefault("shape", {"breadth": 5, "depth": 5, "split": 2})  # v0.1 runs
     meta.setdefault("model", "inherit")
-    meta.setdefault("root_model", meta["model"])
+    meta.setdefault("root_model", meta["model"])  # v0.2 runs could split tiers
     meta.setdefault("branch_model", meta["model"])
-    meta.setdefault("max_parallel", MAX_PARALLEL)
+    meta.setdefault("max_parallel", 20)  # the v0.1 and v0.2 default
     meta.setdefault("attempts", {})
     return meta
 
@@ -183,6 +282,11 @@ def node_at(nodes, node_id: str) -> dict:
         node = nodes[int(step) - 1]
         nodes = node.get("whys") or []
     return node
+
+
+def flatten(nodes, prefix: str = "", depth: int = 1, parent: str | None = None) -> list[dict]:
+    return [{"id": i, "depth": d, "parent": p, "reason": n["reason"].strip()}
+            for i, d, p, n in walk(nodes, prefix, depth, parent)]
 
 
 # ---------------------------------------------------------------- prompts
@@ -257,82 +361,27 @@ def branch_prompt(meta: dict, chain: tuple, fragment: Path, written: list) -> st
     return "\n".join(lines + output_section(fragment, breadth, depth - split, top_note))
 
 
-# ---------------------------------------------------------------- hygiene
-
-
-def tokens(text: str) -> set[str]:
-    return {w for w in re.findall(r"[a-z0-9]+(?:['-][a-z0-9]+)*", text.lower()) if w not in STOPWORDS}
-
-
-def jaccard(a: set, b: set) -> float:
-    return len(a & b) / len(a | b) if a and b else 0.0
-
-
-def hygiene(flat: list[dict]) -> dict:
-    """Mechanical flags over every reason. Annotates only; removes nothing."""
-    by_id = {r["id"]: r for r in flat}
-    toks = {r["id"]: tokens(r["reason"]) for r in flat}
-
-    groups = defaultdict(list)
-    for r in flat:
-        groups[" ".join(re.findall(r"[a-z0-9]+", r["reason"].lower()))].append(r["id"])
-    exact = [ids for ids in groups.values() if len(ids) > 1]
-    exact_pairs = {frozenset((a, b)) for ids in exact for a in ids for b in ids if a != b}
-
-    # Candidate pairs share at least two informative tokens; very common tokens
-    # (over 5% of reasons) are skipped so the index stays near-linear.
-    df = Counter(t for s in toks.values() for t in s)
-    common = max(5, len(flat) // 20)
-    index = defaultdict(list)
-    for r in flat:
-        for t in toks[r["id"]]:
-            if df[t] <= common:
-                index[t].append(r["id"])
-    shared = Counter()
-    for ids in index.values():
-        for i in range(len(ids)):
-            for j in range(i + 1, len(ids)):
-                shared[(ids[i], ids[j])] += 1
-    near = []
-    for (a, b), count in shared.items():
-        if count < 2 or frozenset((a, b)) in exact_pairs:
-            continue
-        ta, tb = toks[a], toks[b]
-        parent = by_id[a]["parent"]
-        if parent and parent == by_id[b]["parent"]:  # siblings share their parent's topic words
-            ta, tb = ta - toks[parent], tb - toks[parent]
-        similarity = jaccard(ta, tb)
-        if similarity >= SIMILARITY:
-            near.append({"a": a, "b": b, "similarity": round(similarity, 2)})
-    near.sort(key=lambda p: -p["similarity"])
-
-    restates_parent, restates_ancestor = [], []
-    for r in flat:
-        ancestor, k = r["parent"], 0
-        while ancestor:
-            similarity = jaccard(toks[r["id"]], toks[ancestor])
-            if similarity >= SIMILARITY:
-                flag = {"id": r["id"], "of": ancestor, "similarity": round(similarity, 2)}
-                (restates_parent if k == 0 else restates_ancestor).append(flag)
-                break
-            ancestor, k = by_id[ancestor]["parent"], k + 1
-
-    over_length = [{"id": r["id"], "words": len(r["reason"].split())}
-                   for r in flat if len(r["reason"].split()) > LONG_REASON_WORDS]
-    flags = {"exact_duplicates": exact, "near_duplicates": near, "restates_parent": restates_parent,
-             "restates_ancestor": restates_ancestor, "over_length": over_length}
-    return {
-        "note": "Mechanical flags only. Nothing was removed, rewritten, ranked or summarized; "
-                "whether a flag matters is the reader's call.",
-        "method": "word-overlap (Jaccard) on lowercased words minus stopwords; sibling pairs ignore their "
-                  "parent's words. Catches copies and close rewordings, misses paraphrases.",
-        "thresholds": {"similarity": SIMILARITY, "long_reason_words": LONG_REASON_WORDS},
-        "counts": {name: len(items) for name, items in flags.items()},
-        **flags,
-    }
+def read_plan(lines: list[str], budget: int = READ_WINDOW_BYTES) -> list[tuple[int, int]]:
+    """(offset, limit) windows covering every line, each under `budget` bytes."""
+    windows, start, size = [], 1, 0
+    for n, line in enumerate(lines, 1):
+        cost = len(line.encode("utf-8")) + 1
+        if size and size + cost > budget:
+            windows.append((start, n - start))
+            start, size = n, 0
+        size += cost
+    windows.append((start, len(lines) - start + 1))
+    return windows
 
 
 # ---------------------------------------------------------------- commands
+
+
+def cmd_parse(args) -> None:
+    result = parse_invocation(sys.stdin.read())
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+    if result["errors"]:
+        sys.exit(1)
 
 
 def cmd_init(args) -> None:
@@ -346,8 +395,8 @@ def cmd_init(args) -> None:
     split = args.split or default_split(depth)
     if not 1 <= split <= depth:
         sys.exit(f"init: split must be between 1 and {depth}")
-    if args.max_parallel < 1:
-        sys.exit("init: max-parallel must be at least 1")
+    if not 1 <= args.max_parallel <= PLATFORM_PARALLEL_CAP:
+        sys.exit(f"init: max-parallel must be between 1 and {PLATFORM_PARALLEL_CAP}")
     context = Path(args.context_file).read_text(encoding="utf-8").strip() if args.context_file else ""
 
     slug = re.sub(r"[^a-z0-9]+", "-", problem.lower()).strip("-")[:40].strip("-") or "problem"
@@ -362,23 +411,25 @@ def cmd_init(args) -> None:
     if not ignore.exists():  # problem statements and reasons can be sensitive
         ignore.write_text("# Five Whys runs can hold sensitive details; keep them out of git.\n*\n", encoding="utf-8")
 
+    size = estimate(breadth, depth, split)
     meta = {
         "schema": SCHEMA,
         "problem": problem,
         "created": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
+        "plugin_version": plugin_version(),
+        "options": sys.argv[2:],
         "shape": {"breadth": breadth, "depth": depth, "split": split},
         "model": args.model,
-        "root_model": args.root_model or args.model,
-        "branch_model": args.branch_model or args.model,
         "max_parallel": args.max_parallel,
+        "estimate": size,
         "attempts": {},
     }
     if context:
         meta["context"] = context
     write_run(run, meta)
     print(json.dumps({"run": str(run), "shape": meta["shape"], "model": args.model,
-                      "root_model": meta["root_model"], "branch_model": meta["branch_model"],
-                      "estimate": estimate(breadth, depth, split)}, indent=2))
+                      "max_parallel": args.max_parallel, "plugin_version": meta["plugin_version"],
+                      "estimate": size, "confirm": size["agents"] > CONFIRM_AGENTS}, indent=2))
 
 
 def cmd_plan(args) -> None:
@@ -387,6 +438,11 @@ def cmd_plan(args) -> None:
     breadth, depth, split = shape_of(meta)
     only = {i.strip() for i in args.only.split(",")} if args.only else None
     attempts = meta["attempts"]
+    if args.max_parallel:  # a resumed run can change its wave size
+        if not 1 <= args.max_parallel <= PLATFORM_PARALLEL_CAP:
+            sys.exit(f"plan: max-parallel must be between 1 and {PLATFORM_PARALLEL_CAP}")
+        meta["max_parallel"] = args.max_parallel
+        write_run(run, meta)
 
     root, _, root_errors = load_fragment(root_path(run), breadth, split)
     pending = []
@@ -394,13 +450,18 @@ def cmd_plan(args) -> None:
         pending.append({"id": "root", "fragment": str(root_path(run)), "errors": root_errors,
                         "prompt": root_prompt(meta, root_path(run))})
     elif split < depth:
-        written = [(node_id, node["reason"].strip()) for node_id, _, _, node in walk(root)]
+        branches = []
         for node_id, chain in frontier(root, split):
-            if only and node_id not in only:
-                continue
             path = branch_path(run, node_id)
             branch, _, errors = load_fragment(path, breadth, depth - split)
-            if branch is None:
+            branches.append((node_id, chain, path, branch, errors))
+        # Later waves also see the first-level reasons of branches that are already done.
+        written = [(node_id, node["reason"].strip()) for node_id, _, _, node in walk(root)]
+        for node_id, _, _, branch, _ in branches:
+            if branch is not None:
+                written += [(f"{node_id}.{i}", node["reason"].strip()) for i, node in enumerate(branch, 1)]
+        for node_id, chain, path, branch, errors in branches:
+            if branch is None and (not only or node_id in only):
                 pending.append({"id": node_id, "fragment": str(path), "errors": errors,
                                 "prompt": branch_prompt(meta, chain, path, written)})
 
@@ -449,6 +510,9 @@ def cmd_status(args) -> None:
         "run": str(run),
         "shape": meta["shape"],
         "model": meta["model"],
+        "max_parallel": meta["max_parallel"],
+        "plugin_version": meta.get("plugin_version", "before 0.3.0"),
+        "installed_plugin_version": plugin_version(),
         "done": done,
         "total": total,
         "missing": missing,
@@ -459,14 +523,19 @@ def cmd_status(args) -> None:
     }, indent=2))
 
 
+def run_folder(fragment: Path) -> Path | None:
+    folder = fragment.resolve().parent
+    return folder.parent if folder.name == "fragments" and (folder.parent / "run.json").exists() else None
+
+
 def log_check(fragment: Path, errors: int, warnings: int) -> None:
     # Only fragments inside a run directory are logged, so repair cycles are countable.
-    folder = fragment.resolve().parent
-    if folder.name != "fragments" or not (folder.parent / "run.json").exists():
+    run = run_folder(fragment)
+    if run is None:
         return
     entry = {"fragment": fragment.name, "at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
              "ok": errors == 0, "errors": errors, "warnings": warnings}
-    with open(folder.parent / "check-log.jsonl", "a", encoding="utf-8") as log:
+    with open(run / "check-log.jsonl", "a", encoding="utf-8") as log:
         log.write(json.dumps(entry) + "\n")
 
 
@@ -482,6 +551,17 @@ def read_checks(run: Path) -> dict:
     return checks
 
 
+def root_context(fragment: Path):
+    """For a branch fragment inside a run: (node id, the root's reasons as flat entries)."""
+    run, match = run_folder(fragment), re.fullmatch(r"branch-(\d+(?:\.\d+)*)\.json", fragment.name)
+    if run is None or not match:
+        return None
+    meta = read_run(run)
+    breadth, _, split = shape_of(meta)
+    root, _, _ = load_fragment(root_path(run), breadth, split)
+    return (match.group(1), flatten(root)) if root is not None else None
+
+
 def cmd_check(args) -> None:
     fragment = Path(args.fragment)
     whys, _, errors = load_fragment(fragment, args.breadth, args.depth)
@@ -492,13 +572,27 @@ def cmd_check(args) -> None:
             print(f"... and {len(errors) - 25} more errors")
         sys.exit(1)
     print("OK")
-    flags = hygiene([{"id": i, "depth": d, "parent": p, "reason": n["reason"].strip()} for i, d, p, n in walk(whys)])
-    warnings = [f"warning: items {', '.join(ids)} repeat the same text" for ids in flags["exact_duplicates"]]
-    warnings += [f"warning: items {f['a']} and {f['b']} are near-duplicates (similarity {f['similarity']})"
+
+    context = root_context(fragment)
+    if context:  # compare against the real ancestors and the root's reasons
+        node_id, root_flat = context
+        mine = flatten(whys, node_id, node_id.count(".") + 2, node_id)
+        flags = hygiene(root_flat + mine, report={r["id"] for r in mine})
+        prefix = node_id + "."
+
+        def label(i):
+            return i[len(prefix):] if i.startswith(prefix) else f"{i} (written by the root)"
+    else:
+        flags = hygiene(flatten(whys))
+
+        def label(i):
+            return i
+    warnings = [f"warning: items {', '.join(map(label, g['ids']))} repeat the same text" for g in flags["exact_duplicates"]]
+    warnings += [f"warning: items {label(f['a'])} and {label(f['b'])} are near-duplicates (similarity {f['similarity']})"
                  for f in flags["near_duplicates"]]
-    warnings += [f"warning: item {f['id']} restates item {f['of']}"
+    warnings += [f"warning: item {label(f['id'])} restates item {label(f['of'])}"
                  for f in flags["restates_parent"] + flags["restates_ancestor"]]
-    warnings += [f"warning: item {f['id']} has {f['words']} words; aim for about 20" for f in flags["over_length"]]
+    warnings += [f"warning: item {label(f['id'])} has {f['words']} words; aim for about 20" for f in flags["over_length"]]
     log_check(fragment, 0, len(warnings))
     if warnings:
         print("\n".join(warnings[:25]))
@@ -548,17 +642,21 @@ def cmd_assemble(args) -> None:
     if problems:
         sys.exit("cannot assemble; run plan and re-dispatch, or assemble --partial:\n" + "\n".join(problems))
 
-    flat = [{"id": i, "depth": d, "parent": p, "reason": n["reason"].strip()} for i, d, p, n in walk(root)]
+    flat = flatten(root)
     levels = []
     for level in range(1, depth + 1):
         at = [len(r["reason"].split()) for r in flat if r["depth"] == level]
         levels.append({"level": level, "reasons": len(at), "avg_words": round(sum(at) / len(at), 1) if at else 0})
 
     now = dt.datetime.now().astimezone()
+    # From creation to the newest fragment, so assembling again later doesn't stretch it.
+    finished = max((p.stat().st_mtime for p in (run / "fragments").glob("*.json")), default=None)
     try:
-        duration = int((now - dt.datetime.fromisoformat(meta["created"])).total_seconds())
+        duration = int(finished - dt.datetime.fromisoformat(meta["created"]).timestamp()) if finished else None
     except (KeyError, ValueError, TypeError):
         duration = None
+    tiers = {} if meta["root_model"] == meta["branch_model"] == meta["model"] else \
+        {"root_model": meta["root_model"], "branch_model": meta["branch_model"]}
     header = {
         "schema": SCHEMA,
         "problem": meta["problem"],
@@ -566,12 +664,12 @@ def cmd_assemble(args) -> None:
         "created": meta.get("created"),
         "assembled": now.isoformat(timespec="seconds"),
         "duration_seconds": duration,
+        "plugin_version": meta.get("plugin_version", "before 0.3.0"),
         "breadth": breadth,
         "depth": depth,
         "split": split,
         "model": meta["model"],
-        "root_model": meta["root_model"],
-        "branch_model": meta["branch_model"],
+        **tiers,
         "total_reasons": reasons(breadth, depth),
         "present_reasons": len(flat),
         "complete": not missing,
@@ -581,7 +679,7 @@ def cmd_assemble(args) -> None:
         "reading": "Top-level whys answer 'Why does the problem occur?'. Each node's whys answer "
                    "'Why <that node's reason>?'. An id is the dotted path from the top, so 2.4.1 is the "
                    "1st reason under 2.4, which is the 4th reason under 2. index.md lists the top "
-                   f"{split} level(s); hygiene.json holds mechanical flags only.",
+                   f"{split} level(s) and the Read windows for this file; hygiene.json holds mechanical flags only.",
     }
     head = json.dumps(header, ensure_ascii=False, separators=(",", ":"))
     lines = [f'{head[:-1]},"whys":[']
@@ -592,7 +690,11 @@ def cmd_assemble(args) -> None:
     out = run / "five-whys.json"
     out.write_text(text, encoding="utf-8")
 
-    index = ["# Five Whys index", "", f"Problem: {meta['problem']}", ""]
+    windows = read_plan(lines)
+    index = ["# Five Whys index", "", f"Problem: {meta['problem']}", "",
+             f"Settings: {breadth} wide x {depth} deep, root writes {split} level(s), model {meta['model']}"
+             + (f" (root {meta['root_model']}, branches {meta['branch_model']})" if tiers else "")
+             + f", waves of {meta['max_parallel']}, plugin {header['plugin_version']}.", ""]
     span = "Level 1" if split == 1 else f"Levels 1-{split}"
     if split < depth:
         index += [f"{span} of {depth}. Each level-{split} reason heads a branch of "
@@ -600,6 +702,9 @@ def cmd_assemble(args) -> None:
                   "```", f"python3 {SCRIPT} show {run} --id <id>", "```", ""]
     index += [f"{'  ' * (r['depth'] - 1)}- {r['id']} {r['reason']}" + (" (branch missing)" if r["id"] in missing else "")
               for r in flat if r["depth"] <= split]
+    index += ["", "## Reading five-whys.json whole", "",
+              f"Read these {len(windows)} windows in order; each stays under the Read tool's size limit:", ""]
+    index += [f"- offset {offset}, limit {limit}" for offset, limit in windows]
     (run / "index.md").write_text("\n".join(index) + "\n", encoding="utf-8")
 
     flags = hygiene(flat)
@@ -621,6 +726,7 @@ def cmd_assemble(args) -> None:
         "total_reasons": reasons(breadth, depth),
         "bytes": size,
         "approx_tokens": size // 4,
+        "read_windows": len(windows),
         "duration_seconds": duration,
         "hygiene_counts": flags["counts"],
         "checks": totals,
@@ -675,6 +781,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
 
+    p = sub.add_parser("parse", help="split raw /five-whys arguments (stdin) into options and the problem")
+    p.set_defaults(func=cmd_parse)
+
     p = sub.add_parser("init", help="create a run; problem statement on stdin")
     p.add_argument("--base", default=".five-whys", help="parent directory for runs")
     p.add_argument("--preset", choices=sorted(PRESETS), default="full", help="full = 5x5, smoke = 3x3")
@@ -682,8 +791,6 @@ def main() -> None:
     p.add_argument("--depth", type=int, help="levels of why (overrides the preset)")
     p.add_argument("--split", type=int, help="levels written by the root agent (default: depth // 2)")
     p.add_argument("--model", choices=MODELS, default="inherit", help="model for the expander agents")
-    p.add_argument("--root-model", choices=MODELS, help="model for the root task (default: --model)")
-    p.add_argument("--branch-model", choices=MODELS, help="model for branch tasks (default: --model)")
     p.add_argument("--max-parallel", type=int, default=MAX_PARALLEL, help="largest dispatch wave")
     p.add_argument("--context-file", help="file of user-supplied context included in every prompt")
     p.set_defaults(func=cmd_init)
@@ -692,6 +799,7 @@ def main() -> None:
     p.add_argument("run")
     p.add_argument("--record", action="store_true", help="count this wave as a dispatch attempt")
     p.add_argument("--only", help="comma-separated branch ids to plan (root is always planned first)")
+    p.add_argument("--max-parallel", type=int, help="change the run's wave size, for example when resuming")
     p.set_defaults(func=cmd_plan)
 
     p = sub.add_parser("status", help="done, missing and stuck fragments")

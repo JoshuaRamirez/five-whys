@@ -2,15 +2,21 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import hashlib
 import json
+import os
+import re
+import shlex
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "fivewhys.py"
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = ROOT / "scripts" / "fivewhys.py"
+READ_WINDOW_BYTES = int(re.search(r"READ_WINDOW_BYTES = ([\d_]+)", SCRIPT.read_text()).group(1).replace("_", ""))
 
 
 def run(*args, stdin: str = "", ok: bool = True) -> subprocess.CompletedProcess:
@@ -47,6 +53,19 @@ def tree_ids(nodes) -> list[str]:
     return ids
 
 
+def fake_agent(task: dict, tag: str, broken: bool = False) -> subprocess.CompletedProcess:
+    """Do what why-expander does: read the prompt file, write the fragment, run the check it names."""
+    lines = Path(task["prompt_file"]).read_text().splitlines()
+    path = Path(lines[lines.index("Write them as JSON to:") + 1])
+    command = shlex.split(lines[lines.index("Then run:") + 1])
+    breadth, levels = (int(command[command.index(flag) + 1]) for flag in ("--breadth", "--depth"))
+    data = fragment(breadth, levels, tag)
+    if broken:
+        data["whys"].pop()
+    path.write_text(json.dumps(data))
+    return subprocess.run([sys.executable, *command[1:]], capture_output=True, text=True)
+
+
 class RunCase(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -61,6 +80,9 @@ class RunCase(unittest.TestCase):
 
     def plan(self, run_dir, *flags) -> dict:
         return json.loads(run("plan", run_dir, *flags).stdout)
+
+    def parse(self, text: str) -> dict:
+        return json.loads(run("parse", stdin=text, ok=False).stdout)
 
     def write(self, path, data) -> None:
         Path(path).write_text(json.dumps(data))
@@ -82,23 +104,68 @@ class RunCase(unittest.TestCase):
                 self.write(run_dir / "fragments" / f"branch-{node_id}.json", fragment(breadth, levels, f"b{node_id}"))
 
 
+class ParseTests(RunCase):
+    def test_leading_options_become_init_flags(self):
+        out = self.parse("--smoke --model sonnet Our deploys fail on Fridays")
+        self.assertEqual((out["problem"], out["init_flags"], out["yes"], out["errors"]),
+                         ("Our deploys fail on Fridays", "--preset smoke --model sonnet", False, []))
+
+    def test_separator_equals_and_quoted_values(self):
+        context = self.base / "my context.md"
+        context.write_text("Kubernetes")
+        out = self.parse(f"--depth=3 --context-file '{context}' -- --verbose logs aren't kept")
+        self.assertEqual(out["problem"], "--verbose logs aren't kept")
+        self.assertEqual(shlex.split(out["init_flags"]), ["--depth", "3", "--context-file", str(context)])
+
+    def test_problem_text_is_kept_verbatim_after_the_options(self):
+        out = self.parse("--yes The team's `make deploy` fails with $HOME unset")
+        self.assertEqual((out["problem"], out["yes"]), ("The team's `make deploy` fails with $HOME unset", True))
+
+    def test_bad_options_are_errors_not_problem_text(self):
+        self.assertIn("unknown option --smok", self.parse("--smok Deploys fail")["errors"][0])
+        self.assertIn("--model must be one of", self.parse("--model gpt Deploys fail")["errors"][0])
+        self.assertIn("no problem statement", self.parse("--yes")["errors"][0])
+        self.assertNotEqual(run("parse", stdin="--yes", ok=False).returncode, 0)
+
+    def test_resume_rules(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        ok = self.parse(f"--resume {run_dir} --max-parallel 2")
+        self.assertEqual((ok["errors"], ok["resume"], ok["plan_flags"], ok["init_flags"]),
+                         ([], str(run_dir), "--max-parallel 2", ""))
+        self.assertTrue(self.parse(f"--resume {run_dir} --depth 3")["errors"])
+        self.assertTrue(self.parse(f"--resume {run_dir} extra words")["errors"])
+        self.assertTrue(self.parse(f"--resume {self.base}")["errors"])
+
+    def test_smoke_with_shape_overrides_is_noted(self):
+        self.assertTrue(self.parse("--smoke --depth 4 Deploys fail")["notes"])
+
+
 class InitTests(RunCase):
-    def test_full_default_shape_and_estimate(self):
+    def test_full_default_shape_estimate_and_confirmation(self):
         run_dir, out = self.init()
         self.assertEqual(out["shape"], {"breadth": 5, "depth": 5, "split": 2})
-        self.assertEqual((out["estimate"]["agents"], out["estimate"]["reasons"]), (26, 3905))
+        self.assertEqual((out["estimate"]["agents"], out["estimate"]["reasons"], out["confirm"]), (26, 3905, True))
         meta = self.read(run_dir / "run.json")
-        self.assertEqual((meta["model"], meta["problem"]), ("inherit", "Deploys fail on Friday afternoons"))
+        self.assertEqual((meta["model"], meta["problem"], meta["max_parallel"]),
+                         ("inherit", "Deploys fail on Friday afternoons", 5))
 
-    def test_smoke_preset(self):
+    def test_smoke_preset_needs_no_confirmation(self):
         _, out = self.init("--preset", "smoke")
         self.assertEqual(out["shape"], {"breadth": 3, "depth": 3, "split": 1})
-        self.assertEqual((out["estimate"]["agents"], out["estimate"]["reasons"]), (4, 39))
+        self.assertEqual((out["estimate"]["agents"], out["estimate"]["reasons"], out["confirm"]), (4, 39, False))
 
-    def test_rejects_empty_problem_and_bad_split(self):
+    def test_run_records_version_options_and_estimate(self):
+        run_dir, out = self.init("--preset", "smoke", "--model", "sonnet")
+        meta = self.read(run_dir / "run.json")
+        version = self.read(ROOT / ".claude-plugin" / "plugin.json")["version"]
+        self.assertEqual((meta["plugin_version"], out["plugin_version"]), (version, version))
+        self.assertEqual(meta["options"][-4:], ["--preset", "smoke", "--model", "sonnet"])
+        self.assertEqual(meta["estimate"], out["estimate"])
+
+    def test_rejects_empty_problem_bad_split_and_oversized_waves(self):
         self.assertNotEqual(run("init", "--base", self.base, stdin="  ", ok=False).returncode, 0)
-        bad = run("init", "--base", self.base, "--depth", "3", "--split", "4", stdin="x", ok=False)
-        self.assertNotEqual(bad.returncode, 0)
+        for flags in (("--depth", "3", "--split", "4"), ("--max-parallel", "21"), ("--root-model", "opus")):
+            self.assertNotEqual(run("init", "--base", self.base, *flags, stdin="x", ok=False).returncode, 0, flags)
 
     def test_same_problem_twice_gets_distinct_runs(self):
         first, _ = self.init("--preset", "smoke")
@@ -136,11 +203,18 @@ class PlanTests(RunCase):
         self.assertEqual([t["id"] for t in second["tasks"]], ["1", "2"])
         self.assertEqual(second["waiting"], ["3"])
 
-    def test_full_run_waves_respect_default_cap(self):
+    def test_full_run_waves_default_to_five(self):
         run_dir, _ = self.init()
         self.fill_root(run_dir, 5, 2)
         plan = self.plan(run_dir)
-        self.assertEqual((len(plan["tasks"]), len(plan["waiting"])), (20, 5))
+        self.assertEqual((len(plan["tasks"]), len(plan["waiting"])), (5, 20))
+
+    def test_resumed_run_can_change_its_wave_size(self):
+        run_dir, _ = self.init()
+        self.fill_root(run_dir, 5, 2)
+        self.assertEqual(len(self.plan(run_dir, "--max-parallel", "3")["tasks"]), 3)
+        self.assertEqual(self.read(run_dir / "run.json")["max_parallel"], 3)
+        self.assertNotEqual(run("plan", run_dir, "--max-parallel", "40", ok=False).returncode, 0)
 
     def test_only_filters_branches(self):
         run_dir, _ = self.init("--preset", "smoke")
@@ -157,15 +231,26 @@ class PlanTests(RunCase):
         self.assertIn(f"Why level 1 (id 2): {root['whys'][1]['reason']}", prompt)
         self.assertIn("--breadth 3 --depth 2", prompt)
 
+    def test_later_waves_see_first_level_reasons_of_finished_branches(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        self.fill_root(run_dir, 3, 1)
+        self.fill_branches(run_dir, 3, 2, skip=("2", "3"))
+        finished = self.read(run_dir / "fragments" / "branch-1.json")
+        prompt = self.prompt(next(t for t in self.plan(run_dir)["tasks"] if t["id"] == "2"))
+        self.assertIn(f"- 1.1: {finished['whys'][0]['reason']}", prompt)
+        self.assertNotIn(finished["whys"][0]["whys"][0]["reason"], prompt)
+
     def test_model_override_is_emitted_only_when_chosen(self):
         chosen, _ = self.init("--preset", "smoke", "--model", "sonnet")
         self.assertEqual(self.plan(chosen)["tasks"][0]["model"], "sonnet")
         inherited, _ = self.init("--preset", "smoke")
         self.assertIsNone(self.plan(inherited)["tasks"][0]["model"])
 
-    def test_root_and_branch_models_can_differ(self):
-        run_dir, out = self.init("--preset", "smoke", "--model", "opus", "--branch-model", "sonnet")
-        self.assertEqual((out["root_model"], out["branch_model"]), ("opus", "sonnet"))
+    def test_v02_run_with_separate_tier_models_still_plans_them(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        meta = self.read(run_dir / "run.json")
+        meta.update({"model": "opus", "root_model": "opus", "branch_model": "sonnet"})
+        self.write(run_dir / "run.json", meta)
         self.assertEqual(self.plan(run_dir)["tasks"][0]["model"], "opus")
         self.fill_root(run_dir, 3, 1)
         self.assertEqual({t["model"] for t in self.plan(run_dir)["tasks"]}, {"sonnet"})
@@ -220,6 +305,18 @@ class CheckTests(RunCase):
         self.assertEqual((proc.returncode, proc.stdout.splitlines()[0]), (0, "OK"))
         self.assertIn("warning: items 1.1, 1.2 repeat the same text", proc.stdout)
 
+    def test_branch_check_compares_against_the_roots_reasons(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        root = self.fill_root(run_dir, 3, 1)
+        data = fragment(3, 2, "b2")
+        data["whys"][0]["reason"] = root["whys"][1]["reason"]  # restates its own ancestor, node 2
+        data["whys"][1]["whys"][0]["reason"] = root["whys"][2]["reason"]  # copies another root reason
+        path = run_dir / "fragments" / "branch-2.json"
+        self.write(path, data)
+        out = run("check", path, "--breadth", 3, "--depth", 2).stdout
+        self.assertIn("warning: item 1 restates item 2 (written by the root)", out)
+        self.assertIn("warning: items 3 (written by the root), 2.1 repeat the same text", out)
+
 
 class AssembleTests(RunCase):
     def smoke_run(self):
@@ -237,8 +334,32 @@ class AssembleTests(RunCase):
         ids = tree_ids(tree["whys"])
         self.assertEqual((len(ids), len(set(ids))), (3905, 3905))
         self.assertEqual([level["reasons"] for level in tree["levels"]], [5, 25, 125, 625, 3125])
-        self.assertTrue((run_dir / "index.md").exists())
         self.assertEqual(self.read(run_dir / "run.json")["output"]["bytes"], summary["bytes"])
+
+        index = (run_dir / "index.md").read_text()
+        self.assertIn("Settings: 5 wide x 5 deep, root writes 2 level(s), model inherit, waves of 5", index)
+        windows = [tuple(map(int, w)) for w in re.findall(r"- offset (\d+), limit (\d+)", index)]
+        lines = (run_dir / "five-whys.json").read_text().splitlines()
+        self.assertEqual(summary["read_windows"], len(windows))
+        expected_start = 1
+        for offset, limit in windows:
+            self.assertEqual(offset, expected_start)
+            chunk = lines[offset - 1: offset - 1 + limit]
+            self.assertLessEqual(sum(len(line.encode()) + 1 for line in chunk), READ_WINDOW_BYTES)
+            expected_start += limit
+        self.assertEqual(expected_start - 1, len(lines))
+
+    def test_duration_ends_at_the_newest_fragment(self):
+        run_dir, _ = self.smoke_run()
+        self.fill_branches(run_dir, 3, 2)
+        meta = self.read(run_dir / "run.json")
+        created = dt.datetime(2026, 9, 13, 12, 0, tzinfo=dt.timezone.utc)
+        meta["created"] = created.isoformat()
+        self.write(run_dir / "run.json", meta)
+        for path in (run_dir / "fragments").glob("*.json"):
+            os.utime(path, (created.timestamp() + 120, created.timestamp() + 120))
+        self.assertEqual(json.loads(run("assemble", run_dir).stdout)["duration_seconds"], 120)
+        self.assertEqual(json.loads(run("assemble", run_dir).stdout)["duration_seconds"], 120)
 
     def test_hygiene_flags_duplicates_and_restatements_without_removing_them(self):
         run_dir, root = self.smoke_run()
@@ -251,8 +372,8 @@ class AssembleTests(RunCase):
         self.write(fragments / "branch-3.json", b3)
         run("assemble", run_dir)
         flags = self.read(run_dir / "hygiene.json")
-        self.assertIn(["2.2", "3.2"], flags["exact_duplicates"])
-        self.assertIn({"id": "1.1", "of": "1", "similarity": 1.0}, flags["restates_parent"])
+        self.assertIn(["2.2", "3.2"], [group["ids"] for group in flags["exact_duplicates"]])
+        self.assertIn(("1.1", "1", 1.0), [(f["id"], f["of"], f["similarity"]) for f in flags["restates_parent"]])
         self.assertEqual(self.read(run_dir / "five-whys.json")["present_reasons"], 39)
 
     def test_hygiene_catches_close_rewording_across_branches(self):
@@ -265,8 +386,23 @@ class AssembleTests(RunCase):
         self.write(fragments / "branch-1.json", b1)
         self.write(fragments / "branch-2.json", b2)
         run("assemble", run_dir)
-        pairs = {(p["a"], p["b"]) for p in self.read(run_dir / "hygiene.json")["near_duplicates"]}
-        self.assertIn(("1.1", "2.3"), pairs)
+        near = self.read(run_dir / "hygiene.json")["near_duplicates"]
+        self.assertIn(("1.1", "2.3"), {(p["a"], p["b"]) for p in near})
+        self.assertEqual(len(near[0]["texts"]), 2)
+
+    def test_word_variants_across_branches_are_listed_as_leads(self):
+        run_dir, _ = self.smoke_run()
+        self.fill_branches(run_dir, 3, 2)
+        fragments = run_dir / "fragments"
+        b1, b2 = self.read(fragments / "branch-1.json"), self.read(fragments / "branch-2.json")
+        b1["whys"][0]["reason"] = "Release estimates were never revisited after the migration changed scope."
+        b2["whys"][2]["reason"] = "Nobody revisited the release estimate when migration scope changed again later."
+        self.write(fragments / "branch-1.json", b1)
+        self.write(fragments / "branch-2.json", b2)
+        run("assemble", run_dir)
+        flags = self.read(run_dir / "hygiene.json")
+        self.assertIn(("1.1", "2.3"), {(p["a"], p["b"]) for p in flags["cross_branch"]})
+        self.assertEqual(flags["counts"]["cross_branch"], len(flags["cross_branch"]))
 
     def test_partial_assembly_marks_missing_branch(self):
         run_dir, _ = self.smoke_run()
@@ -279,7 +415,7 @@ class AssembleTests(RunCase):
         self.assertEqual(tree["present_reasons"], 3 + 2 * 12)
         self.assertIn("(branch missing)", (run_dir / "index.md").read_text())
 
-    def test_assumptions_are_carried_into_output(self):
+    def test_assumptions_and_version_are_carried_into_output(self):
         run_dir, root = self.smoke_run()
         root["assumptions"] = ["Deploys run through a single CI pipeline."]
         self.write(run_dir / "fragments" / "root.json", root)
@@ -287,6 +423,7 @@ class AssembleTests(RunCase):
         run("assemble", run_dir)
         tree = self.read(run_dir / "five-whys.json")
         self.assertEqual(tree["assumptions"], {"root": ["Deploys run through a single CI pipeline."]})
+        self.assertEqual(tree["plugin_version"], self.read(ROOT / ".claude-plugin" / "plugin.json")["version"])
 
     def test_breadth_ten_uses_multi_digit_ids(self):
         run_dir, out = self.init("--breadth", "10", "--depth", "2")
@@ -300,11 +437,12 @@ class AssembleTests(RunCase):
 
 
 class StatusAndShowTests(RunCase):
-    def test_status_counts_fragments(self):
+    def test_status_counts_fragments_and_versions(self):
         run_dir, _ = self.init("--preset", "smoke")
         self.fill_root(run_dir, 3, 1)
         status = json.loads(run("status", run_dir).stdout)
         self.assertEqual((status["done"], status["total"], status["missing"]), (1, 4, ["1", "2", "3"]))
+        self.assertEqual(status["plugin_version"], status["installed_plugin_version"])
 
     def test_checks_inside_a_run_are_logged_per_fragment(self):
         run_dir, _ = self.init("--preset", "smoke")
@@ -334,6 +472,55 @@ class StatusAndShowTests(RunCase):
         first = run("show", run_dir, "--sample", "3", "--seed", "7").stdout
         self.assertEqual(first, run("show", run_dir, "--sample", "3", "--seed", "7").stdout)
         self.assertEqual(len(first.strip().split("\n\n")), 3)
+
+
+class SkillReplayTests(RunCase):
+    """Walk SKILL.md's steps with fake agents standing in for why-expander."""
+
+    def dispatch_until_done(self, run_dir, broken=()):
+        waves = []
+        for _ in range(10):  # Step 4: plan --record, dispatch every task, report status, repeat
+            plan = self.plan(run_dir, "--record")
+            if plan["state"] in ("ready", "stuck"):
+                return plan, waves
+            waves.append([task["id"] for task in plan["tasks"]])
+            for task in plan["tasks"]:
+                self.assertIn(task["prompt_file"], task["prompt"])
+                self.assertEqual(plan["agent"], "five-whys:why-expander")
+                proc = fake_agent(task, task["id"], broken=task["id"] in broken)
+                self.assertEqual(proc.returncode != 0, task["id"] in broken, proc.stdout)
+            json.loads(run("status", run_dir).stdout)
+        self.fail("the dispatch loop did not terminate")
+
+    def test_smoke_invocation_runs_to_an_assembled_tree(self):
+        parsed = self.parse("--smoke --yes Deploys fail on Friday afternoons")  # Step 1
+        self.assertEqual((parsed["errors"], parsed["yes"], parsed["resume"]), ([], True, None))
+        init = run("init", "--base", self.base, *shlex.split(parsed["init_flags"]), stdin=parsed["problem"])  # Step 2
+        out = json.loads(init.stdout)
+        self.assertFalse(out["confirm"])  # Step 3 is skipped
+        run_dir = Path(out["run"])
+        plan, waves = self.dispatch_until_done(run_dir)
+        self.assertEqual((plan["state"], waves), ("ready", [["root"], ["1", "2", "3"]]))
+        self.assertEqual(json.loads(run("status", run_dir).stdout)["done"], 4)
+        summary = json.loads(run("assemble", run_dir).stdout)  # Step 5
+        self.assertEqual((summary["complete"], summary["present_reasons"], summary["checks"]),
+                         (True, 39, {"runs": 4, "failed": 0}))
+
+    def test_failing_agent_ends_stuck_and_partial_assembly_salvages_the_rest(self):
+        run_dir, _ = self.init("--preset", "smoke")
+        plan, waves = self.dispatch_until_done(run_dir, broken=("2",))
+        self.assertEqual((plan["state"], [s["id"] for s in plan["stuck"]]), ("stuck", ["2"]))
+        self.assertEqual(waves, [["root"], ["1", "2", "3"], ["2"], ["2"]])
+        self.assertNotEqual(run("assemble", run_dir, ok=False).returncode, 0)
+        summary = json.loads(run("assemble", run_dir, "--partial").stdout)
+        self.assertEqual((summary["missing_branches"], summary["present_reasons"]), (["2"], 27))
+
+    def test_resume_continues_with_a_new_wave_size(self):
+        run_dir, _ = self.init()
+        self.fill_root(run_dir, 5, 2)
+        parsed = self.parse(f"--resume {run_dir} --max-parallel 2")
+        plan = self.plan(parsed["resume"], "--record", *shlex.split(parsed["plan_flags"]))
+        self.assertEqual((len(plan["tasks"]), len(plan["waiting"])), (2, 23))
 
 
 if __name__ == "__main__":
