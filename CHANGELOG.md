@@ -45,6 +45,23 @@ every gate has a status that allows the bump (see Evidence).
 - RELEASING.md gates releases by kind of change and documents
   `claude --plugin-dir .` and `usage.py` (IMP-35, IMP-36).
 
+Requested by the maintainer on 2026-09-14:
+
+- `--depth` accepts 1 to 5.
+- A run takes a list of inputs, one per line, with list markers removed.
+  Each input gets its own tree to the chosen depth, and all of them assemble
+  into one `five-whys.json` (schema `five-whys/3`). Inputs sit at the top, and
+  ids start with the input number. When the split into inputs is unclear,
+  `parse` returns `input_hints` and the skill asks which items to use.
+- Root agents take groups of inputs, and the default split keeps every agent at
+  155 reasons or fewer. Depths 1-3 need at most one agent per input, and depth
+  4 drops from 26 agents per input to 6. Depth 5 keeps its 26.
+- Hygiene marks leads between inputs as `across_inputs`. `usage.py`,
+  `quality.py` and `ledger.py` read trees with inputs.
+- A third eval case runs a three-item list at depth 1.
+- Runs started by earlier versions can't be resumed or assembled; `show`
+  still reads their trees.
+
 From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 - `parse` prints the script's absolute path, and the skill uses it for every
@@ -89,8 +106,9 @@ From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 ### Evidence
 
-Statuses as defined in RELEASING.md, run against 5ee0915, the last commit that
-changes files a gate covers.
+Statuses as defined in RELEASING.md, run against 5ee0915. The depth and
+input-list change came later and touches the files every gate covers, so
+these results are stale. Every gate runs again before release.
 
 - [passed] unit @5ee0915 2026-09-13: 84 unit tests pass, including the replay,
   labeled-pair, rubric, ledger, quality and usage tests (Python 3.14 locally;

@@ -1,7 +1,8 @@
 # five-whys
 
-A Claude Code plugin that runs an **exhaustive** Five Whys. It asks "why?" five
-levels deep, and every answer is five reasons, each asked "why?" again:
+A Claude Code plugin that runs an **exhaustive** Five Whys on one problem or a
+list of problems. It asks "why?" up to five levels deep, and every answer is
+five reasons, each asked "why?" again. At the full depth, each problem gets:
 
 ```
 5 + 25 + 125 + 625 + 3,125 = 3,905 reasons
@@ -24,16 +25,37 @@ It never ranks, prunes, summarizes or picks root causes. Analysis is up to you.
 /five-whys Our deploys keep failing on Friday afternoons
 ```
 
-Options go before the problem statement; `--` ends them if the problem itself
-starts with dashes. The script parses them, so a typo is an error rather than
-part of the problem.
+A list of problems, one per line, each asked why two levels deep:
+
+```
+/five-whys --depth 2
+1. Deploys keep failing on Friday afternoons
+2. Login is slow after 9am
+3. Nightly backups skip runs
+```
+
+`--depth` sets the levels for every input, from 1 to 5:
+
+| Depth | Reasons per input | 10 inputs |
+|-------|-------------------|-----------|
+| 1 | 5 | 50 |
+| 2 | 5 + 25 = 30 | 300 |
+| 3 | 155 | 1,550 |
+| 4 | 780 | 7,800 |
+| 5 | 3,905 | 39,050 |
+
+Options go before the inputs; `--` ends them if an input itself starts with
+dashes. The script parses them, so a typo is an error rather than part of an
+input. Each line is one input, and list markers such as `- ` or `2. ` are
+dropped. When it's unclear whether the text is one problem or several, the
+skill shows the items it sees and asks which should get their own five whys.
 
 | Option | Effect | Why it exists |
 |--------|--------|---------------|
 | `--smoke` | 3 wide x 3 deep: 39 reasons from 4 agents | Rehearse cheaply before paying for a full run |
 | `--model NAME` | Run the expander agents on `sonnet`, `opus` or `haiku` | Trade cost against depth; the quality effect is unmeasured |
 | `--breadth N` | Reasons per why | Size the tree to the problem |
-| `--depth N` | Levels of why | Size the tree to the problem |
+| `--depth N` | Levels of why for every input, 1 to 5 | Size the tree to the problem |
 | `--split N` | Levels the root agent writes (default: half the depth) | Balance fragment size against agent count for unusual shapes |
 | `--max-parallel N` | Agents per wave, 5 by default, up to 20 | Choose between speed and machine load; smaller waves also let later branches see earlier ones |
 | `--context-file PATH` | Put a file's text in every agent prompt | Give specifics without being asked for them |
@@ -41,9 +63,14 @@ part of the problem.
 | `--yes` | Skip the context question and the cost confirmation | Unattended runs such as the eval |
 | `--resume RUN_DIR` | Continue an interrupted run; add `--max-parallel N` to change the wave size | Recover without losing finished fragments |
 
-If the problem statement is thin, the skill asks once for specifics (the
-system, the symptoms, what has been tried) and puts them in every agent prompt.
-Runs of more than five agents show an estimate and ask before dispatching.
+If the inputs are thin, the skill asks once for specifics (the system, the
+symptoms, what has been tried) and puts them in every agent prompt. Runs of
+more than five agents show how many inputs get the initial whys, the reasons,
+the agents and an estimate, and ask before dispatching.
+
+Agents are packed so each writes at most 155 reasons. At depths 1 and 2, one
+agent covers several inputs, and at depth 3 each input gets one agent. Depth 4
+takes 6 agents per input and depth 5 takes 26.
 
 ### Test an unpublished checkout
 
@@ -76,7 +103,8 @@ tokens. Expect the low end from a headless or lightly loaded session on a
 self-contained problem. Expect the high end from an interactive session with
 many plugins and MCP servers, inside a large project whose files agents read.
 Starting a full run from `claude -p` in a fresh session keeps inherited
-context small.
+context small. These figures are for one input; a list multiplies them, and the
+skill shows the total before dispatching.
 
 Claude Code runs at most 20 subagents at once by default. This plugin sends
 waves of 5 unless you choose otherwise, so a full run takes six waves. When
@@ -99,18 +127,20 @@ Each run lives in `.five-whys/<timestamp>-<slug>/`:
 
 `.five-whys/.gitignore` keeps runs out of git, since problem statements can be sensitive.
 
-An excerpt from a self-run:
+The layout, shown with reasons from an earlier self-run:
 
 ```json
-{"schema":"five-whys/2","problem":"The five-whys Claude Code plugin (v0.2.0) is rated 8/10 instead of 10/10.", ... ,"whys":[
- {"id":"3","depth":1,"reason":"Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.","whys":[
-  {"id":"3.4","depth":2,"reason":"Branch agents in one wave run concurrently, so sibling-aware prompts cannot show reasons being written simultaneously elsewhere.","whys":[
-   {"id":"3.4.1","depth":3,"reason":"plan builds the written list only from the root fragment, so later-wave branches never see finished wave-one branch reasons.","whys":[
+{"schema":"five-whys/3", ... ,"input_count":1, ... ,"inputs":[
+{"id":"1","depth":0,"input":"The five-whys Claude Code plugin (v0.2.0) is rated 8/10 instead of 10/10.","whys":[
+ {"id":"1.3","depth":1,"reason":"Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.","whys":[
+  {"id":"1.3.4","depth":2,"reason":"Branch agents in one wave run concurrently, so sibling-aware prompts cannot show reasons being written simultaneously elsewhere.","whys":[
+   {"id":"1.3.4.1","depth":3,"reason":"plan builds the written list only from the root fragment, so later-wave branches never see finished wave-one branch reasons.","whys":[
 ```
 
-- Top-level `whys` answer "Why does the problem occur?". A node's `whys` answer
-  "Why <that node's reason>?".
-- `id` is the dotted path from the top. `2.4.1` is the 1st reason under `2.4`.
+- An input's `whys` answer "Why does this happen?" about that input. A reason's
+  `whys` answer "Why <that reason>?".
+- `id` is the dotted path from the top and starts with the input number.
+  `2.4.1` is the 1st reason under `2.4`, the 4th reason about input 2.
 - The header records the plugin version, shape, model, per-level counts and
   average words, duration from creation to the last fragment, each wave's
   fragment count and seconds, any assumptions
@@ -147,6 +177,12 @@ ancestors.
 - Hygiene sees shared wording only; paraphrases in different words go unflagged.
 - Branches in the same wave can't see each other. Later waves see only the
   first-level reasons of finished branches.
+- One input's agents never see another input's reasons. A cause shared by
+  several inputs appears once per input; hygiene lists close wordings as
+  `cross_branch` leads marked `across_inputs`.
+- Runs started before 0.3.0 can't be resumed or assembled by this version,
+  because their fragments are laid out differently. `show` still reads their
+  finished trees.
 - Deep levels drift toward systemic causes. Agents are told to stay specific,
   name concrete things from their chain and state their assumptions, which
   reduces generic reasons but doesn't prevent them.
@@ -173,8 +209,8 @@ scoring in `scripts/hygiene.py`:
 
 | Command | Does |
 |---------|------|
-| `parse` (arguments on stdin) | Split `/five-whys` arguments into the problem, `init` flags and skill options, with errors for unknown or invalid options |
-| `init` (problem on stdin) | Create a run: `--preset`, `--breadth`, `--depth`, `--split`, `--model`, `--max-parallel`, `--context-file`, `--base`; prints the estimate and whether to confirm |
+| `parse` (arguments on stdin) | Split `/five-whys` arguments into inputs, `init` flags and skill options, with errors for unknown or invalid options and hints when the split into inputs is unclear |
+| `init` (inputs on stdin, one per line) | Create a run: `--preset`, `--breadth`, `--depth` (1-5), `--split`, `--model`, `--max-parallel`, `--context-file`, `--base`; prints the estimate and whether to confirm |
 | `plan <run>` | Next wave of missing fragments with prompts; `--record` counts attempts; `--only` selects branches; `--max-parallel` changes the wave size |
 | `status <run>` | Done, missing and stuck fragments, check cycles and error kinds per fragment, each wave's seconds, and the plugin version that created the run |
 | `check <fragment> --breadth N --depth N` | Validate one fragment; warnings never block |

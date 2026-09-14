@@ -5,10 +5,11 @@ tools: Write, Edit, Read, Bash
 model: inherit
 ---
 
-You generate one fragment of a Five Whys tree. Your prompt names the problem,
-any context from the user, the chain of reasons above your node, reasons already
-written for other parts of the tree, the levels to produce, the output file and
-a check command.
+You generate one fragment of a Five Whys tree. Your prompt names the input (a
+root prompt may name several), any context from the user, the chain of reasons
+above your node, reasons already written for other parts of the input's tree,
+the levels to produce, the output file and a check command. When a root prompt
+lists several inputs, answer each input on its own, in the order listed.
 
 ## How to answer each "why"
 
@@ -58,7 +59,8 @@ a check command.
    count; the deepest reasons have no `whys` key.
 4. Run the check command exactly as given. If it reports errors, repair the
    named items with Edit (ids such as `3.1.2` are positions inside your
-   fragment) and check again. Stop after 3 fix cycles. Warnings printed after
+   fragment; errors in a root fragment with several inputs name the input
+   first) and check again. Stop after 3 fix cycles. Warnings printed after
    `OK` never block; fix them with Edit when that doesn't mean rewriting.
 5. Reply with one line: `OK <path>`, or `FAILED <path>: <first error>`.
 

@@ -1,19 +1,21 @@
 ---
 name: five-whys
 description: >-
-  Run an exhaustive Five Whys root-cause expansion: ask "why?" five levels deep
-  with five reasons at every step (5x5x5x5x5 = 3,905 reasons) and write the
-  full tree to a single JSON file, plus an index and mechanical hygiene flags.
+  Run an exhaustive Five Whys root-cause expansion for one problem or a list of
+  problems: ask "why?" up to five levels deep with five reasons at every step
+  (5x5x5x5x5 = 3,905 reasons per problem) and write the full tree to a single
+  JSON file, plus an index and mechanical hygiene flags.
   Use when the user says "five whys", "5 whys", "why tree", "exhaustive root
   cause tree", or runs /five-whys with a problem statement. Supports a cheap
   --smoke rehearsal and --model choice. Generates the tree only; analysis is
   left to the user.
-argument-hint: "[--smoke] [--model sonnet|opus|haiku] [--breadth N --depth N] [--yes] [--resume <run-dir>] <problem statement>"
+argument-hint: "[--smoke] [--model sonnet|opus|haiku] [--depth 1-5] [--yes] [--resume <run-dir>] <problem, or one problem per line>"
 ---
 
 # Five Whys (5 x 5 x 5 x 5 x 5)
 
-Build the complete why-tree for the problem in `$ARGUMENTS`:
+Build the complete why-tree for each input in `$ARGUMENTS`: one problem, or a
+list with one problem per line. At the full depth of 5, each input gets:
 
 | Level | Question asked                 | Reasons |
 |-------|--------------------------------|---------|
@@ -45,9 +47,10 @@ $ARGUMENTS
 FIVE_WHYS_ARGS
 ```
 
-It prints `script`, `problem`, `init_flags`, `plan_flags`, `yes`, `resume`,
-`errors` and `notes`. Leading options come first; everything after them (or
-after `--`) is the problem statement. `script` is the absolute path of
+It prints `script`, `problem`, `inputs`, `input_hints`, `init_flags`,
+`plan_flags`, `yes`, `resume`, `errors` and `notes`. Leading options come
+first; everything after them (or after `--`) is the input text. Each non-empty
+line is one input, with list markers such as `- ` or `2. ` removed. `script` is the absolute path of
 `fivewhys.py`: use it as `$S` in every later command, never a shortened
 relative path such as `scripts/fivewhys.py`.
 
@@ -55,7 +58,8 @@ relative path such as `scripts/fivewhys.py`.
 |--------|--------|
 | `--smoke` | 3 wide x 3 deep: 39 reasons, 4 agents |
 | `--model NAME` | `sonnet`, `opus` or `haiku` for the expander agents |
-| `--breadth N`, `--depth N` | Any complete shape |
+| `--breadth N` | Reasons per why (5 by default) |
+| `--depth N` | Levels of why for every input, 1 to 5 (5 by default) |
 | `--split N` | Levels the root agent writes |
 | `--max-parallel N` | Agents per wave (5 by default) |
 | `--context-file PATH` | Context included in every prompt |
@@ -67,7 +71,13 @@ relative path such as `scripts/fivewhys.py`.
 - If `notes` is not empty, mention them in one line and continue.
 - If `resume` is set, go to Step 4 with that run directory, adding `plan_flags`
   to the first `plan` call.
-- If `yes` is false and the problem is thin, ask the user once, in one message,
+- Settle the inputs. If `yes` is false and `input_hints` is not empty, or the
+  text reads differently from `inputs` (several problems on one line, or one
+  problem broken across lines), ask the user once, in one friendly message:
+  show the items you see as a numbered list and ask whether each should get
+  its own five whys, or which items to use. Stop until they answer, then use
+  their list. With `yes` true, use `inputs` as parsed.
+- If `yes` is false and the inputs are thin, ask the user once, in one message,
   for specifics about the system, the symptoms and what has been tried, then
   stop. Thin: "Deploys fail." Specific enough: "Deploys of the payments service
   fail on Friday afternoons since CI moved to self-hosted runners; retries pass."
@@ -76,21 +86,24 @@ relative path such as `scripts/fivewhys.py`.
 
 ## Step 2: Create the run
 
-`init_flags` is already shell-quoted; paste it as is:
+`init_flags` is already shell-quoted; paste it as is, then the settled inputs,
+one per line:
 
 ```bash
-python3 "$S" init <init_flags> [--context-file .five-whys/context.md] <<'FIVE_WHYS_PROBLEM'
-<problem>
-FIVE_WHYS_PROBLEM
+python3 "$S" init <init_flags> [--context-file .five-whys/context.md] <<'FIVE_WHYS_INPUTS'
+<input 1>
+<input 2>
+FIVE_WHYS_INPUTS
 ```
 
-It prints JSON with `run`, `shape`, `model`, `max_parallel`, `estimate` and
-`confirm`.
+It prints JSON with `run`, `inputs`, `shape`, `model`, `max_parallel`,
+`estimate` and `confirm`.
 
 ## Step 3: Confirm when init asks
 
 `confirm` is true for runs of more than 5 agents. If it is true and `yes` is
-false, tell the user in one line: agents, reasons, the agent-token range from
+false, tell the user in one line: how many inputs get the initial whys and how
+deep, agents, reasons, the agent-token range from
 `estimate.agent_tokens_low` to `estimate.agent_tokens`, and
 `estimate.output_tokens` (scaled from measured runs), and ask whether to
 proceed. Stop until they answer. Mention `--smoke` as the cheap alternative.
@@ -120,7 +133,8 @@ Repeat:
 python3 "$S" assemble <run>
 ```
 
-Report in two to four lines: the `file` path, `present_reasons`/`total_reasons`,
+Report in two to four lines: the `file` path, the number of `inputs`,
+`present_reasons`/`total_reasons`,
 `approx_tokens`, and the hygiene counts as plain counts (for example
 "hygiene flags: 0 exact duplicates, 3 near-duplicates, 0 restatements, 11
 cross-branch leads"). Do **not** read, summarize or analyze the tree unless the
@@ -139,7 +153,9 @@ user asks.
 When the user asks to load or analyze a tree, read `index.md` in the run
 directory first, then read `five-whys.json` **whole** before drawing any
 conclusion, using the Read windows listed at the end of `index.md` (each stays
-under Read's size limit). For one branch, `python3 "$S" show <run> --id <id>`
+under Read's size limit). Ids start with the input number, so `2.4.1` is the
+1st reason under `2.4`, the 4th reason about input 2. For one input or branch,
+`python3 "$S" show <run> --id <id>`
 prints it with its ancestors, and `python3 "$S" show <run> --sample 10` prints
 random reasons with their ancestors for spot checks. `hygiene.json` lists
 mechanical flags, including `cross_branch` pairs that may state one cause in
