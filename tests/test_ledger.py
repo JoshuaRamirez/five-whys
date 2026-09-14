@@ -114,6 +114,28 @@ class AuditTests(LedgerCase):
         self.assertIn("independent: must be true or false", out)
 
 
+class InputTreeTests(unittest.TestCase):
+    def test_levels_ignore_the_input_number_at_the_start_of_ids(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "round-9"
+            (folder / "ledger").mkdir(parents=True)
+            (folder / "tree.json").write_text(json.dumps({"schema": "five-whys/3", "inputs": [
+                {"id": str(k), "depth": 0, "input": f"Input {k}", "whys": tree(2, 2, str(k))} for k in (1, 2)]}))
+            (folder / "catalog.json").write_text(json.dumps({
+                "improvements": [], "dispositions": [{"code": "X-HIST", "title": "History", "detail": "d"}]}))
+            (folder / "ledger" / "a.txt").write_text("".join(f"{k}.{i} X-HIST note\n" for k in (1, 2) for i in (1, 2)))
+
+            def cli(*args):
+                return subprocess.run([sys.executable, str(LEDGER), str(folder), *map(str, args)],
+                                      capture_output=True, text=True, check=True).stdout
+            self.assertEqual(json.loads(cli("merge"))["reasons"], 12)
+            packet = json.loads(cli("sample", 20, "--seed", 1, "--level", 2, "--json"))
+            self.assertEqual(len(packet["entries"]), 8)
+            self.assertTrue(all(e["level"] == 2 and e["id"].count(".") == 2 for e in packet["entries"]))
+            self.assertEqual(set(json.loads(cli("sample", 20, "--seed", 1, "--stratify", "--json"))["groups"]),
+                             {"level 1 own", "level 2 inherited"})
+
+
 class VerifyAndDeferralTests(LedgerCase):
     def write_verification(self, records):
         (self.round / "verification.json").write_text(json.dumps({"improvements": records}))

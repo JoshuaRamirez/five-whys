@@ -49,5 +49,23 @@ class UsageTests(unittest.TestCase):
             self.assertEqual(result["root_reported_total"], 6100)
 
 
+    def test_root_groups_count_every_input_they_wrote(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            run = tmp / "20260914-100000-2-inputs-deploys-fail"
+            run.mkdir()
+            (run / "run.json").write_text(json.dumps({"shape": {"breadth": 5, "depth": 5, "split": 2}}))
+            logs = tmp / "logs"
+            logs.mkdir()
+            for node, contexts in {"roots-1-2": [5000, 20000], "1.1": [5000, 40000]}.items():
+                (logs / f"agent-{node}.jsonl").write_text(
+                    "\n".join(json.dumps(line) for line in log_lines(run, node, contexts)) + "\n")
+            result = json.loads(subprocess.run([sys.executable, str(USAGE), str(run), "--logs", str(logs / "*.jsonl")],
+                                               capture_output=True, text=True, check=True).stdout)
+            # The root group wrote 2 x 30 reasons, the branch 155: (40100 - 20100) / (155 - 60) per reason.
+            self.assertEqual(result["root_reported_total"], 20100)
+            self.assertEqual(result["fit"], {"AGENT_OVERHEAD_TOKENS": 7500.0, "TOKENS_PER_REASON": 211})
+
+
 if __name__ == "__main__":
     unittest.main()

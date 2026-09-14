@@ -28,7 +28,7 @@ def reasons(breadth: int, levels: int) -> int:
 def read_agent(path: str, run_name: str):
     lines = [json.loads(line) for line in open(path, encoding="utf-8") if line.strip()]
     opening = json.dumps(lines[:3])
-    match = re.search(r"prompts/(root|\d+(?:\.\d+)*)\.md", opening)
+    match = re.search(r"prompts/(roots-\d+(?:-\d+)?|root|\d+(?:\.\d+)*)\.md", opening)
     if run_name not in opening or not match:
         return None
     turns = output = cumulative = 0
@@ -75,8 +75,10 @@ def main() -> None:
     for agent in sorted(agents, key=lambda a: a["started"] or ""):
         if agent["completed"]:
             latest[agent["id"]] = agent
-    root = latest.get("root")
-    branches = [a for i, a in latest.items() if i != "root"]
+    # Root agents are "root" before 0.3.0 and "roots-A-B" (one per group of inputs) after.
+    root_ids = sorted(i for i in latest if i == "root" or i.startswith("roots-"))
+    root = latest[root_ids[0]] if root_ids else None
+    branches = [a for i, a in latest.items() if i not in root_ids]
     # Agents stopped before their check returned (for example by a restart) may still have
     # written a valid fragment; their totals are incomplete, so they are listed, not fitted.
     interrupted = sorted({a["id"] for a in agents if a["id"] not in latest})
@@ -86,7 +88,9 @@ def main() -> None:
     if first:  # set mostly by the session that dispatched the agents
         result["first_turn_context"] = {"min": min(first), "mean": round(statistics.mean(first)), "max": max(first)}
     if root and branches:
-        root_reasons, branch_reasons = reasons(breadth, split), reasons(breadth, depth - split)
+        span = re.fullmatch(r"roots-(\d+)(?:-(\d+))?", root["id"])
+        root_inputs = int(span.group(2) or span.group(1)) - int(span.group(1)) + 1 if span else 1
+        root_reasons, branch_reasons = root_inputs * reasons(breadth, split), reasons(breadth, depth - split)
         branch_mean = statistics.mean(a["reported_total"] for a in branches)
         per_reason = (branch_mean - root["reported_total"]) / (branch_reasons - root_reasons)
         result.update({

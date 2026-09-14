@@ -84,5 +84,23 @@ class QualityTests(unittest.TestCase):
         self.assertEqual(report["agreement"]["mean_abs_difference"]["specific"], 0.5)
 
 
+class InputTreeTests(unittest.TestCase):
+    def test_items_from_a_tree_with_inputs_carry_their_input(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tree = Path(tmp) / "five-whys.json"
+            tree.write_text(json.dumps({"schema": "five-whys/3", "inputs": [
+                {"id": "1", "depth": 0, "input": "Deploys fail.", "whys": nodes(2, 2, "1")},
+                {"id": "2", "depth": 0, "input": "Login is slow.", "whys": nodes(2, 2, "2")}]}))
+            packet = Path(tmp) / "packet.json"
+            subprocess.run([sys.executable, str(QUALITY), "draw", str(tree), "--n", "12", "--seed", "1",
+                            "--out", str(packet)], check=True, capture_output=True)
+            items = json.loads(packet.read_text())["items"]
+            key = json.loads((Path(tmp) / "packet.key.json").read_text())["items"]
+            self.assertEqual({i["input"] for i in items}, {"Deploys fail.", "Login is slow."})
+            self.assertEqual(len(items), 12)
+            self.assertIn("2.2.2", {k["id"] for k in key})
+            self.assertEqual({k["level"] for k in key}, {1, 2})
+
+
 if __name__ == "__main__":
     unittest.main()

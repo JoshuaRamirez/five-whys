@@ -57,12 +57,13 @@ def walk(nodes, parent=None):
         yield from walk(node.get("whys", []), node["id"])
 
 
-def level_of(node_id: str) -> int:
-    return node_id.count(".") + 1
+def level_of(node_id: str, offset: int = 0) -> int:
+    """Depth of a reason; offset is 1 when ids start with an input number (trees from 0.3.0 on)."""
+    return node_id.count(".") + 1 - offset
 
 
-def group_of(entry: dict) -> tuple[int, str]:
-    return level_of(entry["id"]), "inherited" if entry.get("via") else "own"
+def group_of(entry: dict, offset: int = 0) -> tuple[int, str]:
+    return level_of(entry["id"], offset), "inherited" if entry.get("via") else "own"
 
 
 def wilson(k: int, n: int, z: float = 1.96) -> list[float]:
@@ -97,7 +98,10 @@ class Round:
     def __init__(self, folder: Path):
         self.folder = folder
         self.nodes, self.parent = {}, {}
-        for node, parent in walk(load(folder / "tree.json")["whys"]):
+        tree = load(folder / "tree.json")
+        self.offset = 1 if "inputs" in tree else 0
+        tops = [n for entry in tree["inputs"] for n in entry.get("whys") or []] if self.offset else tree["whys"]
+        for node, parent in walk(tops):
             self.nodes[node["id"]] = node
             self.parent[node["id"]] = parent
         catalog = load(folder / "catalog.json")
@@ -235,14 +239,14 @@ def cmd_merge(ledger: Round, args) -> None:
                       "x_cited": f"{x_cited}/{x_total}", "counts": dict(counts)}, indent=2))
 
 
-def draw(pool: list[dict], n: int, seed, stratify: bool) -> list[dict]:
+def draw(pool: list[dict], n: int, seed, stratify: bool, offset: int = 0) -> list[dict]:
     """Uniform draw, or an equal share per (level, own or inherited); a small group gives all it has."""
     rng = random.Random(seed)
     if not stratify:
         return rng.sample(pool, min(n, len(pool)))
     groups: dict[tuple, list] = {}
     for entry in pool:
-        groups.setdefault(group_of(entry), []).append(entry)
+        groups.setdefault(group_of(entry, offset), []).append(entry)
     share, extra = divmod(n, len(groups)) if groups else (0, 0)
     picked = []
     for k, key in enumerate(sorted(groups)):
@@ -252,22 +256,23 @@ def draw(pool: list[dict], n: int, seed, stratify: bool) -> list[dict]:
 
 
 def cmd_sample(ledger: Round, args) -> None:
+    offset = ledger.offset
     pool = [e for e in ledger.ledger()
             if (not args.code or e["d"] == args.code)
             and (not args.via or group_of(e)[1] == args.via)
-            and (not args.level or level_of(e["id"]) == args.level)]
-    picked = draw(pool, args.n, args.seed, args.stratify)
+            and (not args.level or level_of(e["id"], offset) == args.level)]
+    picked = draw(pool, args.n, args.seed, args.stratify, offset)
     if args.json:  # what an independent reviewer gets: no ledger files, no session history
         print(json.dumps({
             "round": ledger.folder.name,
             "seed": args.seed,
             "stratified": args.stratify,
             "filters": {"code": args.code, "via": args.via, "level": args.level},
-            "groups": dict(Counter(f"level {lvl} {kind}" for lvl, kind in map(group_of, picked))),
+            "groups": dict(Counter(f"level {lvl} {kind}" for lvl, kind in (group_of(e, offset) for e in picked))),
             "rules": ledger.rules,
             "codes": {code: {"title": item["title"], "detail": item.get("detail", "")}
                       for code, item in ledger.catalog.items()},
-            "entries": [{"id": e["id"], "level": level_of(e["id"]), "inherited_from": e.get("via"),
+            "entries": [{"id": e["id"], "level": level_of(e["id"], offset), "inherited_from": e.get("via"),
                          "chain": [{"id": a, "reason": ledger.nodes[a]["reason"]} for a in ledger.chain(e["id"])[:-1]],
                          "reason": e["reason"], "code": e["d"], "note": e["note"]} for e in picked],
         }, indent=1, ensure_ascii=False))
@@ -318,10 +323,10 @@ def read_verdicts(path: Path, known: set) -> tuple[dict | None, list[str]]:
     return (None if errors else data), [f"{path.name}: {e}" for e in errors]
 
 
-def summarize(entries: list[dict], by_id: dict) -> dict:
+def summarize(entries: list[dict], by_id: dict, offset: int = 0) -> dict:
     groups: dict[str, Counter] = {}
     for entry in entries:
-        level, kind = group_of(by_id[entry["id"]])
+        level, kind = group_of(by_id[entry["id"]], offset)
         groups.setdefault(f"level {level} {kind}", Counter())[entry["verdict"]] += 1
     counts = Counter(e["verdict"] for e in entries)
     return {"n": len(entries), **{v: counts[v] for v in VERDICTS},
@@ -341,7 +346,8 @@ def cmd_audit(ledger: Round, args) -> None:
         print("\n".join(errors[:40]))
         sys.exit(1)
     result = {"files": [{"file": name, "reviewer": data["reviewer"], "independent": data["independent"],
-                         "stratified": data["stratified"], **summarize(data["entries"], by_id)} for name, data in files]}
+                         "stratified": data["stratified"], **summarize(data["entries"], by_id, ledger.offset)}
+                        for name, data in files]}
     if len(files) == 2:
         a, b = ({e["id"]: e["verdict"] for e in data["entries"]} for _, data in files)
         common = sorted(set(a) & set(b), key=lambda i: [int(x) for x in i.split(".")])

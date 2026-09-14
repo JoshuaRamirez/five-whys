@@ -31,7 +31,7 @@ class DocsConsistencyTests(unittest.TestCase):
     def test_smoke_numbers_match_preset(self):
         breadth, depth = fivewhys.PRESETS["smoke"]
         reasons = fivewhys.reasons(breadth, depth)
-        agents = fivewhys.agent_count(breadth, depth, fivewhys.default_split(depth))
+        agents = fivewhys.agent_count(breadth, depth, fivewhys.SMOKE_SPLIT)
         self.assertIn(f"{reasons} reasons, {agents} agents", SKILL)
         self.assertIn(f"{reasons} reasons from {agents} agents", README)
 

@@ -48,12 +48,20 @@ def reasons_in_context(nodes, chain=()) -> list[dict]:
     return out
 
 
+def tree_reasons(tree: dict) -> list[dict]:
+    """Reasons in context from a tree assembled with inputs (0.3.0 on) or without them (earlier)."""
+    if "inputs" not in tree:
+        return reasons_in_context(tree["whys"])
+    return [dict(item, input=entry["input"]) for entry in tree["inputs"] if not entry.get("missing")
+            for item in reasons_in_context(entry.get("whys") or [])]
+
+
 def cmd_draw(args) -> None:
     source = Path(args.tree)
     if source.is_dir():
         source = source / "five-whys.json"
     tree = load(source)
-    pool = reasons_in_context(tree["whys"])
+    pool = tree_reasons(tree)
     rng = random.Random(args.seed)
     if args.stratify == "level":
         levels: dict[int, list] = {}
@@ -68,12 +76,13 @@ def cmd_draw(args) -> None:
     rng.shuffle(picked)  # packet order says nothing about position in the tree
     out = Path(args.out)
     packet = {
-        "problem": tree.get("problem"),
+        **({"problem": tree["problem"]} if tree.get("problem") else {}),
         **({"context": tree["context"]} if tree.get("context") else {}),
-        "instructions": "Score each item with quality-rubric.md. chain lists the reasons above it, from the top; "
-                        "siblings are the other reasons answering the same why.",
-        "items": [{"n": k, "chain": item["chain"], "reason": item["reason"], "siblings": item["siblings"]}
-                  for k, item in enumerate(picked, 1)],
+        "instructions": "Score each item with quality-rubric.md. input, when present, is the problem the item's "
+                        "tree answers; chain lists the reasons above it, from the top; siblings are the other "
+                        "reasons answering the same why.",
+        "items": [{"n": k, **({"input": item["input"]} if "input" in item else {}), "chain": item["chain"],
+                   "reason": item["reason"], "siblings": item["siblings"]} for k, item in enumerate(picked, 1)],
     }
     key = {"tree": str(source), "seed": args.seed, "stratify": args.stratify,
            "items": [{"n": k, "id": item["id"], "level": item["level"]} for k, item in enumerate(picked, 1)]}
