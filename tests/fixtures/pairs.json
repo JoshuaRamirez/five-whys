@@ -1,0 +1,200 @@
+{
+ "source": "docs/self-improvement/round-2/tree.json (the v0.2.0 full run)",
+ "note": "Pairs labeled by reading: convergent pairs state the same cause in two places; distinct pairs share vocabulary but state different causes.",
+ "convergent": [
+  {
+   "a": "1.5.5.4.1",
+   "b": "2.4.4.4.2",
+   "texts": [
+    "summary.md reports counts per IMP item, with no column for verification status.",
+    "summary.md tables count reasons per improvement item, with no column for verification status."
+   ]
+  },
+  {
+   "a": "2.4.4.1",
+   "b": "4.1.5.5.5",
+   "texts": [
+    "five-whys is a personal RedJay plugin with no other contributors or reviewers.",
+    "Five-whys is a personal plugin in the RedJay marketplace, which has no contributor pool to draw reviewers from."
+   ]
+  },
+  {
+   "a": "1.2.4.3.2",
+   "b": "2.4.3.1",
+   "texts": [
+    "Version bumps are hand edits to plugin.json and the marketplace entry, so no tool invokes the checklist.",
+    "Version bumps are hand edits to plugin.json and the RedJay marketplace entry, with no release script."
+   ]
+  },
+  {
+   "a": "2.1.3.1.4",
+   "b": "5.2.2.2.5",
+   "texts": [
+    "test_docs.py confirms flags named in SKILL.md exist, not that a reader maps them correctly.",
+    "test_docs.py checks that flags named in SKILL.md exist in the script, not that omissions are intentional."
+   ]
+  },
+  {
+   "a": "1.3.5.2",
+   "b": "4.1.2.3.2",
+   "texts": [
+    "The v0.2.0 branch was merged locally into main with no pull request, so no review thread could flag the gap.",
+    "The feature branch was merged locally into main with no pull request that could gather review."
+   ]
+  },
+  {
+   "a": "3.1.1",
+   "b": "5.5.2.1",
+   "texts": [
+    "Claude Code's /plugin install copies the repository into a cache with no step that installs Python packages.",
+    "Plugin installation copies the repository into the cache and runs no build or pip step."
+   ]
+  },
+  {
+   "a": "1.2.4.5.1",
+   "b": "3.1.5",
+   "texts": [
+    "tests.yml runs only unittest on Python 3.9 and 3.12, with no benchmarking or size-tracking job.",
+    "The tests.yml CI matrix runs bare unittest on Python 3.9 and 3.12 with no requirements file."
+   ]
+  },
+  {
+   "a": "4.2.1.2",
+   "b": "5.1.3.1.4",
+   "texts": [
+    "The ledger entry schema holds only id, d and note, with no field for a covering code.",
+    "The ledger row holds only id, code, note and text, with no weight or secondary code field."
+   ]
+  },
+  {
+   "a": "1.3.5.2.2",
+   "b": "4.1.5.5.4",
+   "texts": [
+    "Branch protection on GitHub is not configured, so main accepts pushes without required reviews or checks.",
+    "main accepts direct local merges with no branch protection, so no reviewer is structurally required."
+   ]
+  },
+  {
+   "a": "1.1.2.1.2",
+   "b": "4.1.2.3.1",
+   "texts": [
+    "Merge commit b54d36d landed seconds after its feature commit c768cb2, leaving no review step between them.",
+    "b54d36d merged 11 seconds after c768cb2 committed, leaving no interval for inspection between them."
+   ]
+  },
+  {
+   "a": "3.1.3.4.2",
+   "b": "3.5.1.1",
+   "texts": [
+    "3,905 reasons yield about 7.6 million pairs, too many for pure-Python cosine loops at assembly.",
+    "Labeling paraphrases means comparing reasons pairwise, and 3,905 reasons yield about 7.6 million pairs to consider."
+   ]
+  },
+  {
+   "a": "2.1.5.5.1",
+   "b": "5.2.5.2.1",
+   "texts": [
+    "The Agent tool is available to models, not to Python, so fivewhys.py cannot dispatch subagents.",
+    "fivewhys.py can emit task lists but cannot launch Claude subagents, so dispatch is inherently a model tool call."
+   ]
+  },
+  {
+   "a": "3.5.5.5.2",
+   "b": "4.3.4.2.2",
+   "texts": [
+    "RedJay is the author's own marketplace, so no maintainer outside the project reviews submissions.",
+    "The RedJay marketplace is the author's own listing, so it brings no outside reviewers."
+   ]
+  },
+  {
+   "a": "1.2.2.4.1",
+   "b": "1.2.2.2.4",
+   "texts": [
+    "The repository root holds README, RELEASING and LICENSE only, with no CHANGELOG file.",
+    "No CHANGELOG exists, so readers have no release timestamps to compare with the table's date."
+   ]
+  },
+  {
+   "a": "1.1.4.1.5",
+   "b": "4.4.5.2.3",
+   "texts": [
+    "The show subcommand prints requested subtrees but offers no random sample for spot review.",
+    "index.md presents the tree by level but offers no sampling view for spot-checking quickly."
+   ]
+  },
+  {
+   "a": "1.1.1.2.1",
+   "b": "4.5.5.1",
+   "texts": [
+    "Every branch prompt repeats the full user context and evidence list instead of referencing one shared copy.",
+    "fivewhys.py copies one identical problem and context block into all 26 generated prompts."
+   ]
+  }
+ ],
+ "distinct": [
+  {
+   "a": "2.1.2.3.5",
+   "b": "3.5.3.4.4",
+   "texts": [
+    "RELEASING.md item 4 requires reading the tree, so reaching readable output quickly took priority.",
+    "RELEASING.md item 4 requires reading the tree but not recording what the reading found."
+   ]
+  },
+  {
+   "a": "4.1.5",
+   "b": "5.4.5.1",
+   "texts": [
+    "RELEASING.md gates version bumps on tests, validation and smoke runs, with no item reviewing a release's motivating evidence.",
+    "RELEASING.md gates releases on tests, validation, smoke runs and version matching, never on surface area."
+   ]
+  },
+  {
+   "a": "1.4.4.5",
+   "b": "3.4.5.2.4",
+   "texts": [
+    "Cost estimates and sibling-aware prompts were separate catalog items, implemented and reviewed independently.",
+    "Wave capping and sibling-aware prompts were separate catalog items implemented without examining their interaction."
+   ]
+  },
+  {
+   "a": "1.4.5.5.5",
+   "b": "2.2.3.5.2",
+   "texts": [
+    "The split default came from v0.1.0 and was not revisited when sibling-aware prompts arrived in v0.2.0.",
+    "v0.1.0 split script-for-data from skill-for-flow, and v0.2.0 extended that split without revisiting it."
+   ]
+  },
+  {
+   "a": "3.3.3.2.1",
+   "b": "3.3.3.2.3",
+   "texts": [
+    "The regex tokenizer does no stemming, so estimate, estimates and estimated count as different tokens.",
+    "Lexical matching has no synonym table, so pairs like cost and tokens or eval and test never link."
+   ]
+  },
+  {
+   "a": "1.2.1.5.4",
+   "b": "3.5.5.5.1",
+   "texts": [
+    "Item 6 compares plugin.json with the marketplace entry only, never with the version behind the measurements.",
+    "Item 6 requires only matching versions in plugin.json and the RedJay marketplace entry to publish."
+   ]
+  },
+  {
+   "a": "2.3.2.5.1",
+   "b": "2.3.2.5.3",
+   "texts": [
+    "GitHub deliberately hides repository secrets from pull_request workflows triggered by forks.",
+    "pull_request_target would expose secrets to untrusted code, unsafe for an agent holding Bash."
+   ]
+  },
+  {
+   "a": "1.1.4.1.2",
+   "b": "1.1.4.1.5",
+   "texts": [
+    "index.md lays out levels but no sampled view, so reading beyond it means opening the raw tree.",
+    "The show subcommand prints requested subtrees but offers no random sample for spot review."
+   ]
+  }
+ ]
+}
