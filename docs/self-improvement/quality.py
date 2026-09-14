@@ -36,20 +36,32 @@ def key_path(packet: Path) -> Path:
     return packet.with_name(packet.stem + ".key.json")
 
 
+def text_of(node: dict) -> str:
+    return node.get("answer", node.get("reason"))  # five-ws answers, five-whys reasons
+
+
+def children_of(node: dict) -> list:
+    return node.get("answers") or node.get("whys") or []
+
+
 def reasons_in_context(nodes, chain=()) -> list[dict]:
-    """Every reason with its ancestors' texts and its siblings' texts."""
+    """Every answer with its ancestors' texts and its siblings' texts."""
     out = []
     for node in nodes:
         if node.get("missing"):
             continue
-        out.append({"id": node["id"], "level": len(chain) + 1, "chain": [c["reason"] for c in chain],
-                    "reason": node["reason"], "siblings": [n["reason"] for n in nodes if n is not node]})
-        out += reasons_in_context(node.get("whys") or [], chain + (node,))
+        out.append({"id": node["id"], "level": len(chain) + 1, "chain": [text_of(c) for c in chain],
+                    "reason": text_of(node), "siblings": [text_of(n) for n in nodes if n is not node]})
+        out += reasons_in_context(children_of(node), chain + (node,))
     return out
 
 
 def tree_reasons(tree: dict) -> list[dict]:
-    """Reasons in context from a tree assembled with inputs (0.3.0 on) or without them (earlier)."""
+    """Answers in context from five-ws files, and from five-whys trees with or without inputs."""
+    if str(tree.get("schema", "")).startswith("five-ws/"):
+        return [dict(item, input=entry["input"], question=t["question"]) for entry in tree["inputs"]
+                for t in entry.get("trees") or [] if not t.get("missing")
+                for item in reasons_in_context(t.get("answers") or [])]
     if "inputs" not in tree:
         return reasons_in_context(tree["whys"])
     return [dict(item, input=entry["input"]) for entry in tree["inputs"] if not entry.get("missing")
@@ -81,7 +93,7 @@ def cmd_draw(args) -> None:
         "instructions": "Score each item with quality-rubric.md. input, when present, is the problem the item's "
                         "tree answers; chain lists the reasons above it, from the top; siblings are the other "
                         "reasons answering the same why.",
-        "items": [{"n": k, **({"input": item["input"]} if "input" in item else {}), "chain": item["chain"],
+        "items": [{"n": k, **{key: item[key] for key in ("input", "question") if key in item}, "chain": item["chain"],
                    "reason": item["reason"], "siblings": item["siblings"]} for k, item in enumerate(picked, 1)],
     }
     key = {"tree": str(source), "seed": args.seed, "stratify": args.stratify,

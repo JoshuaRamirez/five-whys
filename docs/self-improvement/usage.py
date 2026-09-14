@@ -28,7 +28,7 @@ def reasons(breadth: int, levels: int) -> int:
 def read_agent(path: str, run_name: str):
     lines = [json.loads(line) for line in open(path, encoding="utf-8") if line.strip()]
     opening = json.dumps(lines[:3])
-    match = re.search(r"prompts/(roots-\d+(?:-\d+)?|root|\d+(?:\.\d+)*)\.md", opening)
+    match = re.search(r"prompts/(roots-\d+(?:-\d+)?|root|\d+(?:\.(?:\d+|[a-z]+))*)\.md", opening)
     if run_name not in opening or not match:
         return None
     turns = output = cumulative = 0
@@ -103,8 +103,8 @@ def main() -> None:
             "fit": {"AGENT_OVERHEAD_TOKENS": round(root["reported_total"] - root_reasons * per_reason, -2),
                     "TOKENS_PER_REASON": round(per_reason)},
         })
-    output = run / "five-whys.json"
-    if output.exists():
+    output = next((run / name for name in ("five-ws.json", "five-whys.json") if (run / name).exists()), None)
+    if output:
         result["fit_output"] = {"OUTPUT_TOKENS_PER_REASON": round(output.stat().st_size / 4 / reasons(breadth, depth))}
     result["agents"] = sorted(latest.values(), key=lambda a: [int(x) if x.isdigit() else -1 for x in a["id"].split(".")])
     text = json.dumps(result, indent=2)

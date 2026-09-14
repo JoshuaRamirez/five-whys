@@ -66,8 +66,9 @@ def hygiene(flat: list[dict], report=None, branch_level: int = 1) -> dict:
     fragments, passing the root's reasons as context).
 
     `branch_level` is how many id segments name a level-1 reason: 1 for trees
-    assembled before 0.3.0, 2 when ids start with the input number. Pairs from
-    different inputs are then leads too, marked across_inputs.
+    assembled before 0.3.0, 2 when ids start with the input number, 3 when they
+    also carry the question (five-ws). Pairs from different inputs or questions
+    are then leads too, marked across_inputs and across_questions.
     """
     by_id = {r["id"]: r for r in flat}
     toks = {r["id"]: tokens(r["reason"]) for r in flat}
@@ -108,6 +109,8 @@ def hygiene(flat: list[dict], report=None, branch_level: int = 1) -> dict:
         elif score >= CROSS_BRANCH_SIMILARITY and branch_of(a, branch_level) != branch_of(b, branch_level):
             if branch_level > 1:
                 pair["across_inputs"] = branch_of(a) != branch_of(b)
+            if branch_level > 2:  # five-ws ids: input, question, positions
+                pair["across_questions"] = a.split(".")[1] != b.split(".")[1]
             cross.append(pair)
     near.sort(key=lambda p: -p["similarity"])
     cross.sort(key=lambda p: -p["similarity"])
@@ -136,7 +139,7 @@ def hygiene(flat: list[dict], report=None, branch_level: int = 1) -> dict:
         "method": "Word overlap (Jaccard) on lowercased, stemmed words minus stopwords; sibling pairs ignore "
                   "their parent's words. Candidate pairs must share min_shared_tokens words that each appear "
                   "in at most common_token_share of reasons. cross_branch lists pairs under different level-1 "
-                  "reasons, including pairs from different inputs (across_inputs), scoring between cross_branch_similarity and similarity, as leads for convergence. "
+                  "reasons, including pairs from different inputs (across_inputs) or questions (across_questions), scoring between cross_branch_similarity and similarity, as leads for convergence. "
                   "Catches copies, close rewordings and word variants; misses paraphrases in different words.",
         "thresholds": {"similarity": SIMILARITY, "cross_branch_similarity": CROSS_BRANCH_SIMILARITY,
                        "long_reason_words": LONG_REASON_WORDS, "min_shared_tokens": MIN_SHARED_TOKENS,

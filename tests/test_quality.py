@@ -101,6 +101,24 @@ class InputTreeTests(unittest.TestCase):
             self.assertIn("2.2.2", {k["id"] for k in key})
             self.assertEqual({k["level"] for k in key}, {1, 2})
 
+    def test_items_from_a_five_ws_file_carry_input_and_question(self):
+        def answers(breadth, depth, prefix, level=1):
+            return [{"id": f"{prefix}.{i}", "depth": level, "answer": f"Answer {prefix}.{i} {'x' * i}.",
+                     **({"answers": answers(breadth, depth, f"{prefix}.{i}", level + 1)} if level < depth else {})}
+                    for i in range(1, breadth + 1)]
+        with tempfile.TemporaryDirectory() as tmp:
+            tree = Path(tmp) / "five-ws.json"
+            tree.write_text(json.dumps({"schema": "five-ws/1", "inputs": [
+                {"id": "1", "depth": 0, "input": "Deploys fail.", "trees": [
+                    {"id": "1.why", "question": "why", "answers": answers(2, 2, "1.why")},
+                    {"id": "1.how", "question": "how", "answers": answers(2, 2, "1.how")}]}]}))
+            packet = Path(tmp) / "packet.json"
+            subprocess.run([sys.executable, str(QUALITY), "draw", str(tree), "--n", "12", "--seed", "1",
+                            "--out", str(packet)], check=True, capture_output=True)
+            items = json.loads(packet.read_text())["items"]
+            self.assertEqual({(i["input"], i["question"]) for i in items}, {("Deploys fail.", "why"), ("Deploys fail.", "how")})
+            self.assertEqual(len(items), 12)
+
 
 if __name__ == "__main__":
     unittest.main()

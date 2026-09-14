@@ -54,7 +54,11 @@ def load(path: Path):
 def walk(nodes, parent=None):
     for node in nodes:
         yield node, parent
-        yield from walk(node.get("whys", []), node["id"])
+        yield from walk(node.get("answers") or node.get("whys") or [], node["id"])
+
+
+def text_of(node: dict) -> str:
+    return node.get("answer", node.get("reason"))  # five-ws answers, five-whys reasons
 
 
 def level_of(node_id: str, offset: int = 0) -> int:
@@ -99,8 +103,14 @@ class Round:
         self.folder = folder
         self.nodes, self.parent = {}, {}
         tree = load(folder / "tree.json")
-        self.offset = 1 if "inputs" in tree else 0
-        tops = [n for entry in tree["inputs"] for n in entry.get("whys") or []] if self.offset else tree["whys"]
+        if str(tree.get("schema", "")).startswith("five-ws/"):  # ids: input, question, positions
+            self.offset = 2
+            tops = [n for entry in tree["inputs"] for t in entry.get("trees") or [] for n in t.get("answers") or []]
+        elif "inputs" in tree:  # five-whys/3 ids: input, positions
+            self.offset = 1
+            tops = [n for entry in tree["inputs"] for n in entry.get("whys") or []]
+        else:
+            self.offset, tops = 0, tree["whys"]
         for node, parent in walk(tops):
             self.nodes[node["id"]] = node
             self.parent[node["id"]] = parent
@@ -220,7 +230,7 @@ def cmd_merge(ledger: Round, args) -> None:
             x_total += 1
             x_cited += bool(CITED.search(entry["note"]))
         record = {"id": node_id, "d": entry["d"], "note": entry["note"].strip(),
-                  **({"via": via} if via else {}), "reason": node["reason"]}
+                  **({"via": via} if via else {}), "reason": text_of(node)}
         lines.append(json.dumps(record, ensure_ascii=False, separators=(",", ":")))
     (ledger.folder / "ledger.json").write_text('{"entries":[\n' + ",\n".join(lines) + "\n]}\n", encoding="utf-8")
 
@@ -273,7 +283,7 @@ def cmd_sample(ledger: Round, args) -> None:
             "codes": {code: {"title": item["title"], "detail": item.get("detail", "")}
                       for code, item in ledger.catalog.items()},
             "entries": [{"id": e["id"], "level": level_of(e["id"], offset), "inherited_from": e.get("via"),
-                         "chain": [{"id": a, "reason": ledger.nodes[a]["reason"]} for a in ledger.chain(e["id"])[:-1]],
+                         "chain": [{"id": a, "reason": text_of(ledger.nodes[a])} for a in ledger.chain(e["id"])[:-1]],
                          "reason": e["reason"], "code": e["d"], "note": e["note"]} for e in picked],
         }, indent=1, ensure_ascii=False))
         return
@@ -281,7 +291,7 @@ def cmd_sample(ledger: Round, args) -> None:
         if k:
             print()
         for ancestor in ledger.chain(entry["id"])[:-1]:
-            print(f"^ {ancestor}  {ledger.nodes[ancestor]['reason']}")
+            print(f"^ {ancestor}  {text_of(ledger.nodes[ancestor])}")
         print(f"{entry['id']}  {entry['reason']}")
         item = ledger.catalog[entry["d"]]
         print(f"=> {entry['d']} ({item['title']}){' via ' + entry['via'] if entry.get('via') else ''}")

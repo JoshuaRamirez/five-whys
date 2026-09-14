@@ -136,6 +136,33 @@ class InputTreeTests(unittest.TestCase):
                              {"level 1 own", "level 2 inherited"})
 
 
+class FiveWsTreeTests(unittest.TestCase):
+    def test_levels_ignore_the_input_and_question_at_the_start_of_ids(self):
+        def answers(prefix, level=1):
+            return [{"id": f"{prefix}.{i}", "depth": level, "answer": f"Answer {prefix}.{i}.",
+                     **({"answers": answers(f"{prefix}.{i}", level + 1)} if level < 2 else {})} for i in (1, 2)]
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "round-9"
+            (folder / "ledger").mkdir(parents=True)
+            (folder / "tree.json").write_text(json.dumps({"schema": "five-ws/1", "inputs": [
+                {"id": "1", "depth": 0, "input": "Input 1", "trees": [
+                    {"id": "1.why", "question": "why", "answers": answers("1.why")},
+                    {"id": "1.how", "question": "how", "answers": answers("1.how")}]}]}))
+            (folder / "catalog.json").write_text(json.dumps({
+                "improvements": [], "dispositions": [{"code": "X-HIST", "title": "History", "detail": "d"}]}))
+            (folder / "ledger" / "a.txt").write_text(
+                "".join(f"1.{q}.{i} X-HIST note\n" for q in ("why", "how") for i in (1, 2)))
+
+            def cli(*args):
+                return subprocess.run([sys.executable, str(LEDGER), str(folder), *map(str, args)],
+                                      capture_output=True, text=True, check=True).stdout
+            self.assertEqual(json.loads(cli("merge"))["reasons"], 12)
+            packet = json.loads(cli("sample", 20, "--seed", 1, "--level", 2, "--json"))
+            self.assertEqual(len(packet["entries"]), 8)
+            self.assertTrue(all(e["level"] == 2 for e in packet["entries"]))
+            self.assertIn("Answer 1.how.1.", [c["reason"] for e in packet["entries"] for c in e["chain"]])
+
+
 class VerifyAndDeferralTests(LedgerCase):
     def write_verification(self, records):
         (self.round / "verification.json").write_text(json.dumps({"improvements": records}))
