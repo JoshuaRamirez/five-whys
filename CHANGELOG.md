@@ -53,9 +53,23 @@ Evidence).
 - Reassembling the v0.2.0 run with the new hygiene: 3 near-duplicates and 11
   cross-branch leads, where v0.2.0 reported 0 flags.
 - Labeled pairs: 7 of 16 convergent pairs detected, 2 of 8 distinct pairs listed.
-- Not yet done: a model-invoked run of the checkout, an interactive run without
-  `--yes`, the eval, and a measured branch with the new prompts. These gates
-  need agent runs.
+- Model-invoked run of the checkout (2026-09-13, headless `claude -p --plugin-dir .`,
+  claude-opus-5): `/five-whys --smoke --yes` on the nightly-backup problem ran
+  `parse`, `init`, two waves and `assemble` from the checkout. 39 of 39 reasons,
+  complete, 4 checks with 0 failures, 11 stated assumptions, 0 hygiene flags,
+  58 seconds from creation to the last fragment. The orchestrator wrote no
+  fragments; branches 2 and 3 removed empty `whys` lists from their own leaves.
+  A 20-reason `show --sample` read found concrete mechanisms such as
+  `flock -n ... || exit 0` and debug-level skip logging. The reply left analysis
+  to the user.
+- Interactive checks without `--yes`, with the Agent tool blocked as a safeguard:
+  "Deploys fail." got one question about system, symptoms and attempts, and no
+  run was created. A specific full-size problem ran `parse` and `init`, showed
+  26 agents, 3,905 reasons and about 1.62M agent tokens, asked before
+  dispatching, and dispatched nothing.
+- Eval: blocked on this machine. `claude plugin eval` refuses Bash-granting
+  cases because `~/.docker/cli-plugins` holds symbolic links (created by Docker
+  Desktop). Both cases recorded 0 turns.
 
 ### Deferred
 
