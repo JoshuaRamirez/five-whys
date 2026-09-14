@@ -168,7 +168,7 @@ scoring in `scripts/hygiene.py`:
 
 Tests: `python3 -m unittest discover tests`. They include a replay of the
 skill's dispatch loop with stand-in agents and the labeled hygiene pairs.
-Eval: `claude plugin eval . --allow-tools Bash Write Edit --judge-model sonnet --runs 1`.
+Eval: `claude plugin eval . --allow-tools Bash Write Edit --judge-model sonnet --runs 1 --ablation none --no-publish`.
 CI runs the unit tests on every push. Release steps: [RELEASING.md](RELEASING.md).
 Changes: [CHANGELOG.md](CHANGELOG.md).
 

@@ -37,7 +37,9 @@ evidence in the version's entry in [CHANGELOG.md](CHANGELOG.md).
   It passes when `parse` and `init` ran from the checkout, 39/39 reasons
   assemble, `index.md` and `hygiene.json` exist, and the reply leaves analysis
   to the user. Record the run directory.
-- **Eval.** `claude plugin eval . --allow-tools Bash Write Edit --judge-model sonnet --runs 1`.
+- **Eval.** `claude plugin eval . --allow-tools Bash Write Edit --judge-model sonnet --runs 1 --ablation none --no-publish`.
+  `--ablation none` skips the no-plugin comparison arm, which can't pass and doubles the cost.
+  The eval's Bash sandbox refuses to start when `~/.docker` holds symbolic links.
   The cases and their pass criteria are in `evals/*/graders/criteria.md`; the
   eval passes when every case passes. Record the date and result.
 - **Measured single branch.** Create a full-shape run, dispatch the root and
