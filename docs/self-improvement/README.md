@@ -9,11 +9,17 @@ reason it produces. Each round lives in its own folder.
 | [round-2](round-2/README.md) | v0.2.0 full run on "rated 8/10" | 8/10 | v0.3.0 changes: 22 improvements, 2 options removed |
 | [round-3](round-3/design.md) | v0.3.0 checkout full run on "rated 7.4/10" | 7.4 (no fixed rubric) | Design written; fixes not yet coded, no per-reason ledger |
 
+Each round's rating is graded against [rubric.md](rubric.md), one file per
+grader, committed before the self-run starts. Scoring happens here, in
+development measurement, never inside a run (see the README's design
+decisions).
+
 Tools shared by the rounds:
 
 | File | Does |
 |------|------|
+| `rubric.md` | Criteria, weights, anchors and the rating file format |
 | `ledger.py <round> check <fragment>` | Validate one ledger fragment (per-reason JSON or rule lines) |
 | `ledger.py <round> merge` | Prove every reason in the round's tree has exactly one disposition; write `ledger.json` and `summary.md` |
 | `ledger.py <round> sample N --seed S` | Print random ledger entries with their ancestor chain, code and note, for audits |
-| `usage.py <run-dir>` | Read Claude Code's subagent logs for a run and fit the estimate constants |
+| `usage.py <run-dir> [--out FILE]` | Read Claude Code's subagent logs for a run, report each agent's first-turn context and fit the estimate constants; `--out` keeps the JSON with the round |
