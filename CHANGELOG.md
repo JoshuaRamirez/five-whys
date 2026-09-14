@@ -105,6 +105,18 @@ changes files a gate covers.
   agents ran 4 Bash commands, all checks, and none touched the network. The
   reply left analysis to the user. Output and transcript:
   `docs/self-improvement/round-3/gates/model-run-5ee0915/`.
+- [passed] quality-sample @5ee0915 2026-09-13: 22 reasons from the model-run
+  tree, drawn with `quality.py draw --stratify level --seed 7`, were scored by
+  a fresh-context agent that saw only the packet and `quality-rubric.md`.
+  Means: causal 1.68, specific 1.95, distinct 1.82 of 2. Only one item scored
+  0: it restated its parent. The round-3 baseline (29 reasons from the 5x5 tree
+  written before these fixes, same scorer setup) had causal 1.72, specific
+  2.00 and distinct 1.69. On the levels both trees have, the changes run in
+  both directions: level 2 causal 1.50 to 1.56 and distinct 1.83 to 1.67;
+  level 3 causal 2.00 to 1.70 and distinct 1.83 to 1.90. With 3-10 items per
+  level, different problems and one scorer, this shows no measurable
+  regression, and no improvement either. The maintainer's scores of both
+  packets are pending. Files are in `docs/self-improvement/round-3/quality/`.
 - [passed] interactive @5ee0915 2026-09-13: headless `claude -p --plugin-dir`
   in fresh directories, without `--yes`, with the Agent tool blocked as a
   safeguard. "Deploys fail." got one question about the system, the symptoms and
@@ -112,13 +124,16 @@ changes files a gate covers.
   `parse` and `init` through the absolute script path. It showed 26 agents,
   3,905 reasons and 601k-1.62M agent tokens, asked before dispatching, and
   dispatched nothing.
-- [passed] measured-branch @76dbd37 2026-09-13: headless, clean directory, the
-  payments-deploy problem. Root 11.3k and branch 1.1 23.6k reported tokens,
-  63-74% below the v0.2.0 constants; branch output 14.9k tokens, inside
-  v0.2.0's range. First-turn context was 4.6k tokens against 20.9k in the
-  repository session, with no evidence reading and 5 turns instead of 12, so
-  the gap comes from the setting, not the new prompts. The estimate became a
-  range instead of a full remeasurement.
+- [passed] measured-branch @7c8cd8f 2026-09-13: the covered files are identical
+  to 5ee0915. Headless `claude -p` in a clean directory, on the payments-deploy
+  problem, ran `plan --only 1.1`. The root reported 8.8k tokens and branch 1.1
+  reported 22.1k, against 11.3k and 23.6k at the estimate's low end: 22% and 6%
+  below. The implied full run is about 0.56M, 7% below the 0.60M low end.
+  First-turn context was 4.7k tokens, and the branch wrote 14.3k output tokens.
+  Waves took 73 and 224 seconds, and both fragments passed their first check.
+  RELEASING.md calls for a full measurement when either total is more than 15%
+  off, and the root is, but that run has not been done. Files:
+  `docs/self-improvement/round-3/gates/measured-branch-5ee0915/`.
 - [blocked] eval @5ee0915 2026-09-13: the only machine available has Docker
   Desktop. The RELEASING.md preflight found 32 symbolic links under
   `~/.docker`, which `claude plugin eval` refuses for Bash-granting cases; at

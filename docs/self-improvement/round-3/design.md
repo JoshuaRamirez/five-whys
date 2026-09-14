@@ -1,7 +1,9 @@
 # Round 3 design: fixes from the v0.3.0 self-run
 
-Status: design only. Nothing here is coded yet. Written 2026-09-13 on branch
-`improve/v0.3.0`, where 0.3.0 is still unreleased.
+Status: written 2026-09-13 on branch `improve/v0.3.0`. Work-order steps 1-12
+were coded and committed the same day; gate results are in CHANGELOG.md.
+The optional 4b tool waits until after 0.3.0, as decided, and 0.3.0 is still
+unreleased.
 
 Ids like 2.4.1.3 refer to reasons in `tree.json` in this folder.
 

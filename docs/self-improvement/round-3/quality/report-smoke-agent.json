@@ -1,0 +1,36 @@
+{
+  "packet": "docs/self-improvement/round-3/quality/smoke-5ee0915.json",
+  "tree": "docs/self-improvement/round-3/gates/model-run-5ee0915/five-whys.json",
+  "items": 22,
+  "scorers": [
+    {
+      "scorer": "fresh-context Claude agent (Claude Opus 5, claude-opus-5[1m]), saw only the packet and quality-rubric.md",
+      "independent": true,
+      "means": {
+        "causal": 1.682,
+        "specific": 1.955,
+        "distinct": 1.818
+      },
+      "by_level": {
+        "1": {
+          "items": 3,
+          "causal": 2,
+          "specific": 2,
+          "distinct": 2
+        },
+        "2": {
+          "items": 9,
+          "causal": 1.556,
+          "specific": 1.889,
+          "distinct": 1.667
+        },
+        "3": {
+          "items": 10,
+          "causal": 1.7,
+          "specific": 2,
+          "distinct": 1.9
+        }
+      }
+    }
+  ]
+}
