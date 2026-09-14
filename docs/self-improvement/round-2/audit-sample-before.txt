@@ -1,0 +1,233 @@
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.3  v0.2.0 shipped the same day as v0.1.0's self-run, leaving no window for a second full run.
+^ 1.3.3  Analyzing the v0.1.0 tree consumed the time and tokens a second full run would have needed that afternoon.
+^ 1.3.3.3  Reading the full 511 KB tree before drafting catalog.json filled the fifty minutes between 14:14 and 15:04.
+1.3.3.3.2  v0.1.0 lacked index.md and show, so reading meant working through every line of five-whys.json.
+=> X-DONE (Already resolved)
+   note: index.md and show exist in v0.2.0.
+
+^ 4  The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.
+^ 4.2  1,298 reasons were dispositioned as outside the plugin's control or past history, possibly discarding actionable causes.
+^ 4.2.2  1,162 of the 1,298 X codes sit on level-5 reasons, where v0.1.0 agents drifted into author psychology and industry trends.
+^ 4.2.2.3  Each Five Whys level moves further from artifacts, so level 5 lands on circumstances that preceded any code.
+4.2.2.3.3  The user's fixed 5x5x5x5x5 requirement stops chains from ending at the last actionable level.
+=> X-ENV (Outside the plugin's control) via 4.2.2.3
+   note: Five levels deep reach circumstances by the method's nature (R-04).
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.4  No usage telemetry exists, so rarely used options cannot be identified and removed.
+^ 5.4.4  The author is effectively the only user so far, so even perfect records would show one developer's building habits.
+^ 5.4.4.3  The author's local claude-code-telemetry plugin records hook events but was never queried for five-whys invocations.
+5.4.4.3.1  That telemetry tracks tool calls generally, not skill arguments tied to a particular plugin.
+=> X-ENV (Outside the plugin's control) via 5.4.4
+   note: The author is the only user so far.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.1  Many of the 31 catalog items were implemented as separate options or commands rather than consolidated behaviors.
+^ 5.1.3  The ledger's success test was that every reason maps to exactly one code, which rewards distinct deliverables over merged ones.
+^ 5.1.3.5  The ledger existed to prove the self-run produced v0.2.0, so traceability outweighed interface economy.
+5.1.3.5.1  Publishing the ledger aimed to show the plugin can improve itself, a claim served by many traceable changes.
+=> X-HIST (Past motivation or process, nothing further to change) via 5.1.3
+   note: The round-1 ledger rewarded distinct deliverables.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.5  Per-tier model choice multiplied configurations, yet no run compared tier outputs on the same problem.
+^ 1.5.5  IMP-28 was implemented from a single ledger reason, and the ledger required no evidence of benefit first.
+^ 1.5.5.5  Per-tier flags are reachable only through fivewhys.py init, so /five-whys users cannot try them and report back.
+1.5.5.5.2  The skill's argument-hint advertises --model sonnet|opus|haiku with no tier flags.
+=> IMP-40 (Per-tier model flags removed) via 1.5.5
+   note: The single-reason tier flags are removed.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.4  No usage telemetry exists, so rarely used options cannot be identified and removed.
+^ 5.4.4  The author is effectively the only user so far, so even perfect records would show one developer's building habits.
+^ 5.4.4.5  Exhaustive Five Whys runs are infrequent by nature, so even adopted installs accumulate few runs each.
+5.4.4.5.2  Reading 3,905 reasons takes far longer than generating them, spacing out repeat runs.
+=> X-ENV (Outside the plugin's control) via 5.4.4
+   note: The author is the only user so far.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.2  The 35 unit tests exercise fivewhys.py functions and docs, but prose instructions in SKILL.md cannot be unit-tested.
+^ 2.2.1  SKILL.md takes effect only inside Claude Code, which substitutes $ARGUMENTS and ${CLAUDE_PLUGIN_ROOT} and supplies the Agent tool.
+^ 2.2.1.3  Claude Code routes requests to the skill by matching its description, a step no unit test reaches.
+2.2.1.3.1  Skill triggering depends on the model comparing description phrases with the request, a probabilistic judgment.
+=> X-ENV (Outside the plugin's control) via 2.2.1
+   note: SKILL.md takes effect only inside Claude Code; IMP-36 tests it there.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.2  Configurable shape, the smoke preset and per-tier models each add flags SKILL.md must parse in prose, not code.
+^ 5.2.2  SKILL.md renames options between layers, so --smoke becomes --preset smoke through a prose translation table.
+^ 5.2.2.4  Per-tier models were added as init flags, leaving SKILL.md to decide separately whether and how to surface them.
+5.2.2.4.1  Root and branch tiers become per-task model fields in plan output, a script concern the skill merely relays.
+=> IMP-40 (Per-tier model flags removed) via 5.2.2.4
+   note: Tier flags are removed, so SKILL.md has nothing extra to surface.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.4  No usage telemetry exists, so rarely used options cannot be identified and removed.
+^ 5.4.3  SKILL.md maps typed flags to script arguments in prose, so no record separates options users chose from defaults.
+^ 5.4.3.1  run.json stores resolved values like model inherit and depth 5, identical whether typed or defaulted.
+5.4.3.1.4  No unit test asserts that invocation flags are preserved, so their loss went unnoticed.
+=> IMP-39 (Settings recorded and shown) via 5.4.3
+   note: run.json records the options given; parse records how they were read (IMP-37).
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.2  Configurable shape, the smoke preset and per-tier models each add flags SKILL.md must parse in prose, not code.
+^ 5.2.5  --yes and --resume steer SKILL.md's own steps rather than init, so the invocation cannot simply be forwarded to argparse.
+^ 5.2.5.2  The wave loop runs in the model because only it can call the Agent tool, so the loop's controls live in prose.
+5.2.5.2.3  Retries after failed fragments are decided by reading plan output in prose, so --resume enters that loop directly.
+=> R-19 (Declined: a headless runner owning the dispatch loop) via 5.2.5.2
+   note: The wave loop stays with the model.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.1  Many of the 31 catalog items were implemented as separate options or commands rather than consolidated behaviors.
+^ 5.1.4  The leave-analysis-to-the-user requirement was extended to run configuration, so size, model and dispatch choices became user options.
+^ 5.1.4.3  Model access and pricing change outside the plugin, so tier choice was exposed as flags rather than fixed.
+5.1.4.3.1  MODELS is a hard-coded list of inherit, sonnet, opus and haiku that new releases can outdate.
+=> X-ENV (Outside the plugin's control) via 5.1.4.3
+   note: Model access and pricing change outside the plugin.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.2  Configurable shape, the smoke preset and per-tier models each add flags SKILL.md must parse in prose, not code.
+^ 5.2.1  Claude Code hands the skill its invocation as one raw $ARGUMENTS string, with no typed option schema to validate against.
+5.2.1.3  Natural-language triggers invoke the skill without slash syntax, so shape or model wishes may arrive embedded in sentences.
+=> X-ENV (Outside the plugin's control)
+   note: Natural-language triggers bring free text; parse handles slash arguments only.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.5  Interactive paths like the thin-context question and cost confirmation are skipped by --yes, the only scripted invocation.
+^ 2.5.4  The thin-context judgment exists only as SKILL.md prose with no script command, so nothing scripted can trigger it deterministically.
+^ 2.5.4.4  Scripted invocations need determinism, and a model deciding whether to ask adds an unpredictable branch.
+2.5.4.4.5  No prompt fixture labels statements as expected-thin or expected-rich to make the branch predictable.
+=> X-HIST (Past motivation or process, nothing further to change) via 2.5.4.4
+   note: --yes was chosen for a reproducible gate; IMP-50 adds a thin-problem case.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.5  Interactive paths like the thin-context question and cost confirmation are skipped by --yes, the only scripted invocation.
+^ 2.5.5  RELEASING.md item 3 prescribes the literal /five-whys --smoke --yes command, making --yes the only documented verification path.
+2.5.5.2  The eval's prompt.md reuses the checklist command verbatim, so both verification routes skip the same paths.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: The eval reused the checklist command; IMP-50 adds a different case.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.2  Hygiene was deliberately kept mechanical and non-blocking so interpretation stays with the user, limiting its detection ambition.
+^ 3.2.1  R-01 grouped convergence detection with ranking and root-cause selection, so it was declined as plugin-side synthesis.
+^ 3.2.1.1  The requirement 'analysis is up to the user' never defined where mechanical aids end and analysis begins.
+3.2.1.1.1  The requirement was a one-line constraint in the v0.1.0 brief, never elaborated with examples of allowed aids.
+=> X-HIST (Past motivation or process, nothing further to change) via 3.2.1.1
+   note: The aid boundary was undefined; round 2 treats verifiable pairs as mechanical aids.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.4  RELEASING.md item 3 accepts a smoke run done by hand, so the eval was never required to pass.
+^ 2.4.4  The author alone writes, verifies and approves releases, so the lenient either-or clause faced no challenge.
+^ 2.4.4.3  No orchestration failure had been reported, so the hand path looked low risk.
+2.4.4.3.3  Prose instruction failures degrade quietly, like a skipped question, rather than crashing visibly.
+=> IMP-38 (Confirmation decided in code)
+   note: Code-made decisions make quiet degradation visible.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.2  The date mark is satisfied by 2026-09-13, which is also v0.2.0's release date, so it conceals the version gap.
+1.2.2.4  Readers must cross-reference the date with release history, but the repository publishes release dates nowhere.
+=> IMP-34 (Changelog with evidence)
+   note: CHANGELOG.md publishes release dates next to versions.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.5  Interactive paths like the thin-context question and cost confirmation are skipped by --yes, the only scripted invocation.
+^ 2.5.3  Smoke runs dispatch 4 agents, under Step 3's more-than-5 threshold, so confirmation never fires for smoke even without --yes.
+^ 2.5.3.4  Smoke was defined as the release verification shape, placing the confirmation branch outside the checklist's scope.
+2.5.3.4.4  The checklist grew from steps the author actually performed, and those skipped confirmation.
+=> IMP-35 (Release gates by change kind) via 2.5.3.4
+   note: RELEASING.md adds an interactive check for the confirmation path.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.1  fivewhys.py is restricted to the Python standard library, ruling out embeddings or semantic similarity models.
+^ 3.1.2  Catalog disposition R-02 declined embeddings and third-party packages outright, filing 85 reasons without any experiment.
+^ 3.1.2.5  R-02's rationale weighed install friction but not the cost of missed convergence that users sift through by hand.
+3.1.2.5.1  Missed paraphrases raise no error or failed check, so their cost never appears in any log.
+=> IMP-45 (Stemmed and cross-branch hygiene) via 3.1.2.5
+   note: The measured misses motivated stemming and cross-branch leads.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.3  Status, show and partial assembly were built for recovery before any failed v0.2.0 run showed they were needed.
+^ 5.3.2  Agent dispatch failures cannot be triggered on demand, so recovery paths were designed from imagined interruptions, not reproduced ones.
+^ 5.3.2.4  RELEASING.md never asks for a smoke run with a deliberately removed fragment, the cheapest way to rehearse recovery.
+5.3.2.4.2  IMP-21 drew only 2 reasons, so the release checklist was drafted with a deliberately minimal scope.
+=> IMP-44 (Orchestration replay test) via 5.3.2.4
+   note: The replay test rehearses recovery without a hand-deleted fragment.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.1  The author drove fivewhys.py and why-expander by hand while building, bypassing SKILL.md flag parsing and confirmation.
+^ 2.1.3  The authoring session carried its own intent for every SKILL.md step, so a hand run tested its understanding, not the prose.
+^ 2.1.3.2  SKILL.md was treated as a record of the author's workflow rather than a program that needs executing.
+2.1.3.2.3  Hard logic was deliberately moved into fivewhys.py, framing SKILL.md as mere glue.
+=> X-HIST (Past motivation or process, nothing further to change) via 2.1.3.2
+   note: SKILL.md was treated as a record; IMP-37 and IMP-38 move its checkable steps into code.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.5  The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module.
+^ 5.5.1  SKILL.md reaches every command through one `S` path variable, so a second module would need extra invocation wiring.
+5.5.1.5  Deterministic steps were moved out of SKILL.md prose into script commands, all landing behind the same path.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: Moving deterministic steps into the script was deliberate.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.5  The 39-reason smoke tree was the only test data, too small to tune thresholds or count missed paraphrases.
+^ 3.5.2  SIMILARITY = 0.6 was set in commit a9a05f9 and never had to justify itself against a measured miss rate.
+3.5.2.1  Commit a9a05f9 listed hygiene as one feature bullet with no calibration note or data source.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: The commit had no calibration note.
+
+^ 4  The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.
+^ 4.4  The plugin's own rating was the only problem analyzed, so failures on unrelated user problems stayed invisible.
+^ 4.4.1  The self-run was framed as the source of v0.2.0's backlog, so it was judged by improvements yielded, not failures exposed.
+^ 4.4.1.2  Success was defined as ledger coverage of all 3,905 reasons, so completeness substituted for breadth of testing.
+4.4.1.2.2  Accounting for every reason was chosen to rule out cherry-picking, absorbing the effort another run would need.
+=> X-HIST (Past motivation or process, nothing further to change) via 4.4.1
+   note: The self-run served as backlog source.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.4  Token estimates scale linearly from one v0.1.0 run, missing the longer sibling-aware branch prompts added in v0.2.0.
+^ 1.4.3  fivewhys.py never sees subagent usage, so check-log.jsonl records errors and warnings but no tokens.
+^ 1.4.3.3  check-log.jsonl was built to count repair cycles, so its entries hold only ok, errors and warnings.
+1.4.3.3.4  Fragment byte size is computed at assembly rather than logged per check, so per-agent output is missing too.
+=> R-11 (Declined: token usage relayed through the orchestrator) via 1.4.3
+   note: Usage stays outside the script; relaying it through prose is declined and logs are read per release.
+
+^ 4  The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.
+^ 4.4  The plugin's own rating was the only problem analyzed, so failures on unrelated user problems stayed invisible.
+^ 4.4.1  The self-run was framed as the source of v0.2.0's backlog, so it was judged by improvements yielded, not failures exposed.
+^ 4.4.1.1  The 6/10 rating was the author's most pressing question, so running the plugin on it doubled as dogfooding and planning.
+4.4.1.1.5  The skill accepts one problem per invocation, so choosing the planning problem excluded every other input from that run.
+=> X-HIST (Past motivation or process, nothing further to change) via 4.4.1
+   note: The self-run served as backlog source.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.5  The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module.
+^ 5.5.2  The goal "installs anywhere python3 exists" favored one self-contained file needing no packaging or path setup.
+^ 5.5.2.3  Multi-file imports were assumed fragile, though running a script already puts its directory on sys.path.
+5.5.2.3.5  The single-file v0.1.0 had worked without incident, so no failure prompted reconsidering the layout.
+=> IMP-52 (Hygiene in its own module) via 5.5.2.3
+   note: A sibling import works because the script's directory is on sys.path.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.5  Per-tier model choice multiplied configurations, yet no run compared tier outputs on the same problem.
+^ 1.5.2  The catalog dispositioned model-tier quality as a known limitation, so no item scheduled a comparison run.
+^ 1.5.2.3  Comparison needed post-release runs, but the ledger only scheduled work that could land in v0.2.0.
+1.5.2.3.1  The ledger was built as a one-shot backlog for a single release, not a roadmap.
+=> R-18 (Deferred: studies needing many paid runs) via 1.5.2
+   note: The limitation stays deferred under an explicit deferral code.
+
+^ 4  The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.
+^ 4.4  The plugin's own rating was the only problem analyzed, so failures on unrelated user problems stayed invisible.
+^ 4.4.1  The self-run was framed as the source of v0.2.0's backlog, so it was judged by improvements yielded, not failures exposed.
+4.4.1.5  The ledger tied every change to counted reasons, which made wider trials before release seem unnecessary.
+=> X-HIST (Past motivation or process, nothing further to change) via 4.4.1
+   note: The self-run served as backlog source.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.3  RELEASING.md was created mid-build in commit df581b5 by the author about to ship, so item 5 fit that release's plan.
+^ 1.2.3.2  An unconditional remeasure rule would have blocked the release the author had already scoped for that session.
+1.2.3.2.5  The catalog framed success as items implemented, not as published figures validated.
+=> X-HIST (Past motivation or process, nothing further to change) via 1.2.3
+   note: The checklist was written mid-build by the releaser; IMP-35 rewrites it.

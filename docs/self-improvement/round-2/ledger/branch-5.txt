@@ -1,0 +1,76 @@
+# Branch 5: surface area grew without evidence. A line covers its node and every descendant without its own line.
+5 IMP-41 Options now state their purpose and their count is pinned; IMP-40 removes two flags and IMP-52 splits out hygiene.
+5.1 IMP-40 Separate tier flags are removed, and IMP-37 routes all options through one definition.
+5.1.1 X-HIST Round-1 catalog details prescribed flags.
+5.1.1.5 IMP-41 A docs test now pins the option count, so each addition has a visible cost.
+5.1.2 X-HIST Round-1 NEW reconciliation added codes.
+5.1.2.4 IMP-40 --root-model and --branch-model are removed in favor of --model.
+5.1.2.5 IMP-40 Round 2 revisits the item boundaries and removes the tier flags.
+5.1.3 X-HIST The round-1 ledger rewarded distinct deliverables.
+5.1.4 IMP-43 Round 2 picks an opinionated default wave size instead of leaving every setting to flags.
+5.1.4.2 X-ENV The script cannot see a user's budget or problem size.
+5.1.4.3 X-ENV Model access and pricing change outside the plugin.
+5.1.4.4 X-HIST Options avoided defending defaults.
+5.1.4.5 X-HIST Asking users set the pattern.
+5.1.5 X-HIST Additive flags were the cheapest landing.
+5.1.5.5.2 IMP-41 README and SKILL.md now list every skill option with its purpose.
+5.1.5.5.4 IMP-40 An option is actually removed in this release.
+5.2 IMP-37 parse moves flag handling out of SKILL.md prose into code.
+5.2.1 IMP-37 parse gives the raw $ARGUMENTS a deterministic parser inside the plugin.
+5.2.1.1 X-ENV argument-hint is display text by platform design.
+5.2.1.2 X-ENV Skills are prose read by a model; IMP-37 makes parse the first call.
+5.2.1.3 X-ENV Natural-language triggers bring free text; parse handles slash arguments only.
+5.2.1.4 IMP-37 parse reads a quoted heredoc and splits with shell rules, reporting quoting errors.
+5.2.1.5.3 X-HIST init keeps stdin for the problem; parse also reads stdin.
+5.2.1.5.5 X-HIST One more Bash call is accepted for deterministic parsing.
+5.2.2 IMP-37 One OPTIONS definition feeds parse, SKILL.md and README through a docs test.
+5.2.2.1 X-HIST --smoke stays as the user-facing name for --preset smoke.
+5.2.2.4 IMP-40 Tier flags are removed, so SKILL.md has nothing extra to surface.
+5.2.2.5.2 X-ENV Plugins install static files with no build step.
+5.2.3 IMP-37 parse separates options from the statement, honors --, and rejects unknown leading options.
+5.2.3.1 X-HIST Problems travel on stdin to avoid shell interpretation.
+5.2.3.3 X-HIST The question comes before init by design.
+5.2.3.4 IMP-37 parse checks that a --resume path is a run directory and rejects shape options beside it.
+5.2.3.5 IMP-39 run.json records the options given, so later steps need not remember them.
+5.2.3.5.2 IMP-38 init returns confirm, putting the policy in one place.
+5.2.4 R-16 Persistent settings files and environment defaults are declined.
+5.2.5 IMP-37 parse classifies orchestration flags and init flags in code.
+5.2.5.1 X-ENV Conversational pauses happen only in the model.
+5.2.5.2 R-19 The wave loop stays with the model.
+5.2.5.5 X-HIST Keeping orchestration in prose preserved the script contract in v0.2.0.
+5.3 X-DONE The recovery commands were needed and used when a restart stopped the v0.2.0 full run.
+5.3.1 X-HIST Round 1 had no minimum reason count.
+5.3.2 X-DONE A real interruption exercised resume and status; IMP-44 adds deterministic stuck and partial tests.
+5.3.2.2 IMP-44 The replay test drives failure through repeated invalid fragments, not only absence.
+5.3.2.4 IMP-44 The replay test rehearses recovery without a hand-deleted fragment.
+5.3.2.5 IMP-44 The replay test reaches stuck by recording three failed dispatches.
+5.3.3 X-DONE Stuck, status and partial assembly exist, and the full run needed resume.
+5.3.4 X-HIST show came from reading needs.
+5.3.5 X-HIST Low build cost justified the commands; IMP-41 now counts options.
+5.4 R-17 Telemetry is declined; IMP-39 records settings locally in each run.
+5.4.1.4 X-HIST Runs sit beside the project they analyze by design.
+5.4.1.5 IMP-39 index.md now opens with the settings that produced the tree.
+5.4.2 X-ENV A marketplace plugin has no backend and must not phone home (R-17).
+5.4.3 IMP-39 run.json records the options given; parse records how they were read (IMP-37).
+5.4.3.3 IMP-37 parse exposes every init option through /five-whys.
+5.4.3.4 IMP-37 parse handles the mixed string in code.
+5.4.3.5 X-HIST Recording intent was never an item before round 2.
+5.4.4 X-ENV The author is the only user so far.
+5.4.5 IMP-41 Options state their purpose and RELEASING.md reviews the option count each release.
+5.4.5.4 IMP-34 CHANGELOG.md announces removed options.
+5.4.5.5 X-HIST Self-runs surface shortfalls; IMP-41 adds a subtraction check.
+5.5 IMP-52 Hygiene moves to its own module while fivewhys.py stays the single entry point.
+5.5.1 X-ENV One stable script path is what skills and agents can call; IMP-52 splits internals behind it.
+5.5.1.3 IMP-52 The largest self-contained concern gets its own file.
+5.5.1.5 X-HIST Moving deterministic steps into the script was deliberate.
+5.5.2 X-HIST Self-contained installs favored one file; a sibling module still needs no packaging.
+5.5.2.3 IMP-52 A sibling import works because the script's directory is on sys.path.
+5.5.2.4 X-ENV The standard library has no templating or CLI helpers beyond argparse.
+5.5.2.5 X-HIST Schema knowledge stays with its readers and writers.
+5.5.3 IMP-52 A restructuring pass lands with round 2.
+5.5.3.5 X-HIST Structure had no success criterion; IMP-52 acts on it.
+5.5.4 IMP-52 Tests load the split modules through the same entry point.
+5.5.4.4 R-20 Lint and complexity tooling are declined.
+5.5.4.5 X-HIST Tests restate conventions like fragment names.
+5.5.5 X-HIST Prompt builders share helpers with validation on purpose, so a prompt never advertises a shape the checker rejects.
+5.5.5.4 IMP-52 Hygiene moves out of the command module.

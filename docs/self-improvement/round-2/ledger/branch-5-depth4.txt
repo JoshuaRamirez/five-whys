@@ -1,0 +1,90 @@
+# Branch 5, second pass after the sample audit: every level-4 reason that inherited from level 1-3 gets its own line.
+5.1.1.1 X-HIST Round-1 remedies were lifted from reasons naming flags.
+5.1.1.2 X-HIST Complaint clusters split overlapping remedies in round 1.
+5.1.1.3 X-HIST Named flags were easy acceptance criteria.
+5.1.1.4 X-HIST Details followed v0.1.0's command layout.
+5.1.2.1 X-HIST NEW proposals arrived narrow.
+5.1.2.2 X-HIST Reconciliation favored new codes.
+5.1.2.3 X-HIST Accepted single-reason proposals shipped; IMP-40 removes one of them.
+5.1.3.1 X-HIST One disposition per reason stays for exact coverage.
+5.1.3.2 X-HIST Per-code counts looked like demand.
+5.1.3.3 X-HIST Completeness was not minimality.
+5.1.3.4 X-HIST Work was tracked by code.
+5.1.3.5 X-HIST Traceability outweighed interface economy in round 1.
+5.1.4.1 IMP-43 Round 2 reads R-01 as covering analysis only and chooses a default wave size.
+5.1.5.1 X-HIST One-line flags were cheap.
+5.1.5.2 X-HIST Additive changes kept tests passing.
+5.1.5.3 X-HIST Features attached to the nearest subcommand.
+5.1.5.4 X-HIST Sequential implementation favored finishing items.
+5.1.5.5 IMP-41 The pinned option count makes each option's cost visible even when users ignore it.
+5.2.1.5 IMP-37 parse is the wrapper that splits $ARGUMENTS in code.
+5.2.2.2 IMP-37 parse accepts every init flag, so the table is no longer a hand-curated subset.
+5.2.2.3 IMP-37 parse reports conflicting shape options, and init's resolved shape is echoed back.
+5.2.2.5 IMP-37 One OPTIONS definition drives parse, with docs tests binding README and SKILL.md to it.
+5.2.3.2 IMP-37 parse chooses the boundary between options and problem in code.
+5.2.4.1 R-16 Defaults stay in constants; no settings file.
+5.2.4.2 R-16 Model stays a per-run flag.
+5.2.4.2.4 IMP-40 Per-tier values are removed, so one model value per run suffices.
+5.2.4.3 R-16 Smoke stays a per-call flag.
+5.2.4.4 R-16 Shape stays per problem.
+5.2.4.5 R-16 No stable preference exists to store.
+5.2.5.3 IMP-37 parse classifies each token's destination.
+5.2.5.4 IMP-37 parse applies resume's rules and rejects shape options beside it.
+5.3.1.1 X-HIST Counts arrived after the round-1 catalog was fixed.
+5.3.1.2 X-HIST Hypothetical failures were read as demand; the full run's restart later made recovery real.
+5.3.1.3 X-HIST Round-1 items prescribed commands.
+5.3.1.4 X-HIST Building every item protected the coverage claim.
+5.3.1.5 X-HIST Small counts read as niche needs.
+5.3.2.1 X-ENV Agent failures happen inside Claude Code; IMP-44 simulates them at the file level.
+5.3.2.3 X-HIST v0.1.0 kept no failure record.
+5.3.2.4.2 X-HIST IMP-21's minimal scope is history; IMP-35 redesigns the checklist.
+5.3.3.1 X-DONE assemble --partial already salvages completed branches.
+5.3.3.2 X-HIST Failure features were designed as a set.
+5.3.3.3 X-HIST The attempt cap was set before measurement; the full run needed no retries beyond the restart.
+5.3.3.4 X-DONE status already reads attempts and files together.
+5.3.3.5 X-DONE The missing marker already lives in the assembler.
+5.3.4.1 X-HIST Paging needs justified show; IMP-48 adds a read plan.
+5.3.4.2 X-HIST Reading demand justified show.
+5.3.4.3 X-HIST show supports the missing marker.
+5.3.4.4 X-HIST show came from ledger work.
+5.3.4.5 X-HIST The catalog recorded features, not problems.
+5.3.5.1 IMP-41 The pinned option count now weighs documentation cost, not just code size.
+5.3.5.2 X-HIST status exposed facts already on disk.
+5.3.5.3 X-HIST Agent-written code made commands cheap.
+5.3.5.4 X-HIST Off-path commands looked harmless.
+5.3.5.5 X-DONE Manual recovery was avoided, and the restart proved the automation.
+5.4.1.1 R-17 Cross-run summaries are declined.
+5.4.1.2 R-17 A cross-run tally command is declined.
+5.4.1.3 R-17 Runs are not sent back to the author.
+5.4.2.1 X-ENV No backend budget exists (R-17).
+5.4.2.2 R-17 Phoning home is declined for privacy.
+5.4.2.3 X-ENV The plugin system reports no install statistics.
+5.4.2.4 X-ENV Runs happen only on the user's machine.
+5.4.2.5 X-ENV The user base is tiny or unknown.
+5.4.3.1 IMP-39 run.json now records the options given to init, separately from resolved values.
+5.4.3.2 IMP-37 parse replaces model translation, so script arguments reflect what the user typed.
+5.4.4.1 X-ENV All runs so far were development or release checks.
+5.4.4.2 X-ENV The author cannot observe a newcomer's discoverability problems (R-06).
+5.4.4.3 X-ENV Personal telemetry covers one machine and general tool calls, not five-whys options.
+5.4.4.4 R-06 Recruiting testers is out of scope.
+5.4.4.5 X-ENV Exhaustive runs are infrequent by nature.
+5.4.5.1 IMP-35 RELEASING.md now checks the option count each release.
+5.4.5.2 IMP-40 The round-2 catalog includes a removal, IMP-40.
+5.4.5.2.1 X-HIST The 6/10 tree described missing features, so round-1 items were phrased as additions.
+5.4.5.3 IMP-41 The README options table now states each option's purpose.
+5.5.1.1 X-HIST The control-surface principle stays; IMP-52 splits internals behind it.
+5.5.1.2 X-ENV CLAUDE_PLUGIN_ROOT is the stable anchor for skill text.
+5.5.1.4 X-ENV Agents need one stable check path; IMP-52 keeps it.
+5.5.2.1 X-ENV Installation runs no build step.
+5.5.2.2 IMP-52 Splitting hygiene out keeps each file short enough to audit.
+5.5.3.1 IMP-52 A structural pass now groups hygiene by concern.
+5.5.3.2 IMP-52 With tests in place, restructuring is safe now.
+5.5.3.3 IMP-52 Cumulative growth now justifies the split.
+5.5.3.4 IMP-52 A new file is created deliberately this round.
+5.5.4.1 IMP-52 Docs tests now read option definitions from the module, not raw script text.
+5.5.4.2 IMP-52 Tests keep loading fivewhys.py by path, which imports hygiene.py beside it.
+5.5.4.3 IMP-52 Subprocess tests treat the entry point as the unit, unaffected by the split.
+5.5.5.1 X-HIST Prompts and validation share shape helpers on purpose.
+5.5.5.2 X-HIST Prompt building needs run-reading code.
+5.5.5.3 X-HIST Inline prompt strings stay beside their variables.
+5.5.5.5 X-HIST The check-log format spans check and status.

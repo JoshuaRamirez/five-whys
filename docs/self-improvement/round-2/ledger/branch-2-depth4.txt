@@ -1,0 +1,61 @@
+# Branch 2, second pass after the sample audit: every level-4 reason that inherited from level 1-3 gets its own line.
+2.1.1.1 IMP-36 README and RELEASING.md now document loading the checkout with --plugin-dir alongside the marketplace install.
+2.1.2.1 X-HIST Seconds-long script checks beat minutes-long agent runs; IMP-44 keeps that speed for orchestration.
+2.1.2.3 X-HIST A passing smoke tree was the build goal; IMP-35 now requires a model-invoked run.
+2.1.2.4 X-HIST Hand judgment recovered errors a skill run would halt on; IMP-44 tests the scripted recovery path.
+2.1.4.1 X-HIST Round-1 headline items were script features.
+2.1.4.2 X-HIST Verification effort went to reading fragments; IMP-35 adds orchestration checks.
+2.1.4.5 IMP-44 The replay test is the orchestration check the docs test only appeared to be.
+2.1.4.5.2 X-HIST The docs test arrived late in v0.2.0.
+2.1.4.5.3 X-HIST A green CI signal spanning skill files is history; IMP-44 gives it substance.
+2.1.4.5.5 IMP-35 RELEASING.md now lists orchestration checks beside the unit tests.
+2.1.5.2 IMP-37 Options and questions now go through parse, treated as code rather than routine prose.
+2.2.1.1 X-ENV Claude Code offers no library to render a skill from Python.
+2.2.1.2 X-ENV Agent dispatch exists only inside a model's tool loop; IMP-44 stubs the agents.
+2.2.1.3 X-ENV Description-based skill routing happens inside Claude Code.
+2.2.1.4 X-ENV Dispatch values are validated by the harness at call time.
+2.2.1.5 X-ENV Tool grants are enforced by the harness from frontmatter.
+2.2.4.1 X-ENV Tool-call order and wording vary between model runs.
+2.2.5.1 IMP-44 The replay test exercises commands in SKILL.md's order across steps.
+2.2.5.2 IMP-44 The replay test drives a scripted stuck scenario through to assemble --partial.
+2.2.5.3 IMP-44 A cheap scripted replay now sits between unit tests and the live eval.
+2.2.5.4 IMP-44 The replay test loops plan until ready or stuck, simulating the termination contract.
+2.3.1.1 R-13 CI stays scoped to deterministic unit tests; evals are local.
+2.3.1.2 R-13 A Python-only runner covers deterministic code; model-dependent checks stay local.
+2.3.1.3 R-13 A fast-moving CLI in CI would make eval runs unreproducible; declined.
+2.3.1.4 R-13 Registering the plugin in CI serves only a live eval, which is declined.
+2.3.2.1 R-13 Subscription logins cannot serve unattended runners; no CI credential is added.
+2.3.2.2 R-13 A paid API key for a free plugin is declined.
+2.3.2.3 R-13 A leaked key reachable by Bash-capable agents is a risk that rules out CI evals.
+2.3.2.4 R-13 No repository secrets are added.
+2.3.2.5 R-13 Fork pull requests cannot see secrets, one more reason evals stay local.
+2.3.3.1 R-13 The minimal unittest workflow stays as it is.
+2.3.3.2 R-13 Minutes-long paid evals do not belong in the per-push job.
+2.3.3.3 R-13 Per-push paid evals would multiply cost; declined.
+2.3.3.4 IMP-35 RELEASING.md is the once-per-version point where the eval runs, locally.
+2.3.3.5 R-13 Scheduled paid evals are declined; RELEASING.md reruns the eval each release.
+2.3.4.3 R-13 Infrastructure failures would make CI evals flaky, another reason they stay local.
+2.3.4.5 R-13 CI stays deterministic.
+2.3.5.1 IMP-35 RELEASING.md now requires the eval or a model-invoked run, so its runtime needs get observed.
+2.4.1.1 X-HIST Checklist and eval were separate round-1 items; IMP-50 now links them.
+2.4.1.5 X-HIST The bundled merge gave item 3 no scrutiny; IMP-34 records gate evidence per version.
+2.4.2.1 IMP-35 The gate now requires evidence that /five-whys dispatched the run, not only artifacts.
+2.4.2.3 IMP-35 The reply criterion now counts only in model-invoked runs.
+2.4.3.2 IMP-34 Evidence goes to CHANGELOG.md, which a docs test checks for the version.
+2.4.3.3 IMP-34 CHANGELOG.md records when the eval last ran and its result.
+2.4.4.1 R-06 Other contributors or reviewers are outside plugin changes.
+2.4.5.1 R-18 Sharpening fuzzy criteria needs example transcripts from paid runs.
+2.4.5.2 IMP-50 A second eval case exists; repeated runs stay deferred (R-18).
+2.4.5.2.1 R-18 Nondeterminism across 40 turns needs replicate runs to measure.
+2.4.5.2.3 R-18 More runs per case are a deferred cost.
+2.4.5.2.4 R-18 A flake policy needs a pass-rate history first.
+2.4.5.2.5 X-ENV Repair cycles vary with the model's output.
+2.4.5.4 R-18 Grader trust needs a track record of runs.
+2.4.5.5 R-18 Whether the eval format supports deterministic graders was not verified; deferred.
+2.5.1.1 X-ENV The prompt.md format holds one prompt.
+2.5.1.3 X-ENV Question wording is nondeterministic model output.
+2.5.2.1 X-HIST criteria.md grades output and hands-off behavior by design.
+2.5.2.2 X-HIST A flaky interactive eval would have stalled release; IMP-35 now names a separate interactive check.
+2.5.3.2 IMP-38 The confirm flag is unit-tested for a shape above the threshold without a new preset.
+2.5.3.3 IMP-38 The comparison against the threshold now happens in init.
+2.5.4.1 X-ENV Thinness is semantic; IMP-37 adds example statements.

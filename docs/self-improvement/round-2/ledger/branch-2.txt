@@ -1,0 +1,227 @@
+# Branch 2: SKILL.md orchestration and the eval never executed by a model. A line covers its node and every descendant without its own line.
+2 IMP-44 An orchestration replay test now walks SKILL.md's loop, and RELEASING.md requires a model-invoked run of the checkout (IMP-36).
+2.1 IMP-36 The checkout can be loaded with --plugin-dir, so SKILL.md parsing and confirmation run in a real session before release.
+2.1.1 IMP-36 --plugin-dir removes the dependence on the marketplace cache for testing new skill text.
+2.1.1.1.2 X-HIST The v0.1.0 self-run needed the registered agent type; that constraint is past.
+2.1.1.1.3 X-ENV Name collisions between installed and loaded copies are platform behavior; RELEASING.md says to test in a fresh session.
+2.1.1.2 X-ENV Skills register at session start; IMP-36 uses a fresh session with --plugin-dir.
+2.1.1.2.1 X-HIST All commits shared one session.
+2.1.1.2.2 X-HIST Restarting would have dropped the loaded tree.
+2.1.1.2.5 X-HIST Stand-in agents masked stale definitions in v0.2.0 development.
+2.1.1.3 IMP-36 Publishing is no longer the only way to exercise new skill text.
+2.1.1.3.1 IMP-35 RELEASING.md now runs the model-invoked check before the version bump.
+2.1.1.3.3 X-ENV The marketplace has no prerelease channel; IMP-36 avoids needing one.
+2.1.1.3.5 X-HIST The cache timestamp is history.
+2.1.1.4 X-HIST The cached 0.1.0 skill could not exercise v0.2.0 orchestration.
+2.1.1.4.3 X-ENV CLAUDE_PLUGIN_ROOT follows the loaded copy; with --plugin-dir it points at the checkout (IMP-36).
+2.1.1.4.5 IMP-36 --plugin-dir is the workaround that was not sought.
+2.1.1.5 IMP-33 run.json records plugin_version and init and status print it, so the copy that ran is visible.
+2.1.1.5.4 IMP-35 RELEASING.md states that the model-invoked run must load the checkout being released.
+2.1.2 X-HIST Hand-driving gave fast feedback; IMP-44 keeps that speed while covering the loop.
+2.1.2.2 IMP-39 Parse output, recorded options and the confirm flag leave inspectable state for orchestration decisions.
+2.1.2.2.1 X-HIST One status line per wave keeps the orchestrator's context small.
+2.1.2.2.2 X-ENV Agent calls return only the final reply.
+2.1.2.2.3 IMP-37 parse prints the options it recognized, and run.json keeps them.
+2.1.2.2.5 X-ENV Skill runs are diagnosed from transcripts by platform design.
+2.1.2.3.3 IMP-35 The eval or a model-invoked run is now a release gate rather than a future check.
+2.1.2.4.4 IMP-44 The replay test exercises the stuck guidance that hand runs never tried.
+2.1.2.5 IMP-36 A fresh --plugin-dir session separates verification from the building conversation.
+2.1.2.5.1 X-ENV The Skill tool loads text into the current turn.
+2.1.2.5.4 X-HIST Five commits in 70 minutes is history.
+2.1.2.5.5 X-DONE init --base already lets verification runs use a separate directory.
+2.1.3 IMP-36 A fresh session executes SKILL.md's prose instead of the author's memory of it.
+2.1.3.1 IMP-37 Flag mapping now happens in parse code rather than in a model's reading of a table.
+2.1.3.1.1 X-HIST The table and flags were written together.
+2.1.3.1.3 R-06 A cold reviewer is a second person.
+2.1.3.2 X-HIST SKILL.md was treated as a record; IMP-37 and IMP-38 move its checkable steps into code.
+2.1.3.2.4 IMP-35 Gates now require that /five-whys actually reaches changed features.
+2.1.3.3 IMP-36 A second, fresh session now consumes the instructions before release.
+2.1.3.3.1 R-06 A teammate trying /five-whys is a social remedy.
+2.1.3.3.2 X-HIST Smoke subagents never see SKILL.md by design.
+2.1.3.3.4 X-HIST Same-family behavior was the assumption.
+2.1.3.3.5 X-ENV The user's attention budget is theirs.
+2.1.3.4 IMP-50 A thin one-line problem eval case exercises weak statements, and the question path needs an interactive run (IMP-35).
+2.1.3.4.2 IMP-37 The Step 1 rewrite gives example thin and specific statements.
+2.1.3.4.3 X-HIST Context was written directly during hand runs.
+2.1.3.4.4 X-HIST The question was judged low-risk.
+2.1.3.4.5 X-ENV A turn that asks must end; that is how skills converse.
+2.1.3.5 IMP-44 The replay test follows SKILL.md's command order step by step.
+2.1.3.5.3 IMP-37 parse returns resume separately, and SKILL.md skips init for it.
+2.1.3.5.5 IMP-37 SKILL.md is rewritten around parse, and its step references are re-walked in the replay test.
+2.1.4 X-HIST Round-1 items targeted the script; round 2 adds orchestration items IMP-37, IMP-38 and IMP-44.
+2.1.4.3 IMP-37 A misparsed option now fails as a parse error instead of silently changing the run.
+2.1.4.3.1 X-DONE plan's stuck state and attempt tracking exist and surface dispatch failures.
+2.1.4.3.3 IMP-38 The confirmation decision is now in init's output, not skipped silently.
+2.1.4.3.5 IMP-44 The replay test is a written walk through the skill's failure paths.
+2.1.4.4 IMP-39 run.json records the options given and the plugin version.
+2.1.4.4.2 X-HIST Claims came from check-log.jsonl.
+2.1.4.4.3 X-HIST Zero flags read as success.
+2.1.4.4.4 X-HIST Measurements were what assemble computed.
+2.1.4.4.5 X-ENV Transcripts are outside the run directory; the script does not read them.
+2.1.4.5.4 IMP-44 The replay test is named and placed apart from docs consistency tests.
+2.1.5 IMP-37 The decisions left in prose that code can make, parsing and confirmation, move into the script.
+2.1.5.1 X-HIST plan's ready-made prompts made the skill look thin.
+2.1.5.1.4 IMP-44 The replay test passes the model field only when it is not null.
+2.1.5.1.5 X-ENV Agent registration is platform behavior.
+2.1.5.2.5 IMP-38 The threshold is now a script constant returned as confirm.
+2.1.5.3 IMP-38 Checkable prose decisions move to code; the rest are named in SKILL.md.
+2.1.5.3.5 X-ENV Thin-wrapper guidance is general advice outside the plugin.
+2.1.5.4 IMP-44 The replay test consumes plan and status JSON the way SKILL.md describes.
+2.1.5.4.4 X-ENV Orchestrator transcripts are not stored in the repository.
+2.1.5.5 X-ENV Only models can call the Agent tool.
+2.1.5.5.2 X-DONE The full run dispatched real waves of 20 and then 5.
+2.1.5.5.3 X-DONE The full run exercised waves far larger than smoke's.
+2.1.5.5.4 X-DONE The full run waited on full waves and resumed.
+2.1.5.5.5 IMP-40 Per-tier overrides are removed; one model value travels in tasks.
+2.2 IMP-44 The replay test covers the orchestration contract, and IMP-37 and IMP-38 move testable decisions into code.
+2.2.1 X-ENV SKILL.md takes effect only inside Claude Code; IMP-36 tests it there.
+2.2.1.1.4 X-HIST No precedent plugin with skill tests was available.
+2.2.1.1.5 X-HIST Substitution was treated as stable.
+2.2.1.2.2 R-02 Calling the API directly adds credentials and network access.
+2.2.1.2.4 IMP-44 A fake agent stub now stands in for why-expander in the replay test.
+2.2.1.4.3 IMP-44 The replay test asserts null models are omitted from dispatch.
+2.2.1.5.2 IMP-36 A fresh --plugin-dir session registers the current agent definition.
+2.2.1.5.3 IMP-44 A docs test now checks the agent's tools cover the Write, Edit, Read and Bash its steps use.
+2.2.1.5.5 IMP-50 RELEASING.md now quotes the eval command with tools matching the case's allowed_tools.
+2.2.2 IMP-37 Option handling becomes executable code with tests.
+2.2.2.1 X-HIST Regex checks were the cheapest start.
+2.2.2.1.4 IMP-44 The replay test is the behavioral check that was missing.
+2.2.2.2 X-HIST Tests mirrored round-1 failures.
+2.2.2.2.4 IMP-44 The replay test is organized by skill steps.
+2.2.2.3 IMP-37 One OPTIONS table drives parse, and a docs test compares it with SKILL.md and README.
+2.2.2.4 X-ENV Regexes cannot test obedience; IMP-38 moves the conditions into flags a model copies.
+2.2.2.4.2 R-18 Tier-dependent instruction following needs paid replicate runs.
+2.2.2.4.4 X-HIST No rubric marked behavioral sentences.
+2.2.2.4.5 X-HIST Rewording was the past fix pattern.
+2.2.2.5 IMP-48 assemble computes Read offsets from byte sizes, replacing the fixed 400-line rule.
+2.2.3 IMP-38 Confirmation and parsing are code now; the wave loop stays with the model (R-19).
+2.2.3.1 R-19 The loop stays with the model because only it can dispatch agents.
+2.2.3.1.1 X-ENV A Python process cannot pause for model tool calls.
+2.2.3.1.2 X-ENV Claude Code offers no script callback for subagents.
+2.2.3.1.3 X-HIST Avoiding a stateful protocol was deliberate.
+2.2.3.1.5 IMP-44 The replay test checks that repeating plan terminates in ready or stuck.
+2.2.3.2 X-ENV Judging thin context is semantic and stays with the model.
+2.2.3.2.2 R-01 Having the script judge statement quality would be analysis.
+2.2.3.2.4 R-01 Statement-quality judgment stays out of the script by principle.
+2.2.3.2.5 IMP-37 The Step 1 rewrite adds example thin and specific statements.
+2.2.3.3 IMP-38 init now returns confirm, backed by a named constant.
+2.2.3.3.4 X-ENV The message itself still needs natural language.
+2.2.3.4 X-ENV Progress lines are composed by the model in chat.
+2.2.3.4.2 X-HIST The check log's scope is validation.
+2.2.3.4.4 X-HIST No transcript was saved from the hand run.
+2.2.3.5 X-HIST fivewhys.py was scoped as a helper; R-19 keeps the loop in the model.
+2.2.3.5.4 IMP-38 Moving confirmation into code is the testability trade-off now made.
+2.2.4 X-ENV Step-following varies by run; IMP-44 tests the deterministic parts and R-18 defers compliance rates.
+2.2.4.2 R-18 Graded compliance needs several paid samples.
+2.2.4.2.5 IMP-44 Deterministic facts such as 39 of 39 are checked in Python by the replay test.
+2.2.4.3 R-18 Repeated smoke sessions for compliance rates are deferred.
+2.2.4.3.3 X-ENV Runs bill the author's own subscription.
+2.2.4.3.4 X-ENV Usage limits are platform behavior.
+2.2.4.4 IMP-38 Moving decisions into script output makes skipped steps visible in JSON.
+2.2.4.4.1 IMP-38 The confirm flag makes a skipped confirmation detectable.
+2.2.4.4.2 X-ENV The script cannot see the Agent call's prompt.
+2.2.4.4.3 R-21 Authorship markers prove nothing.
+2.2.4.4.4 X-ENV Agent call fields are recorded only in transcripts.
+2.2.4.4.5 R-21 Session provenance in the check log would be unverifiable.
+2.2.4.5 X-ENV Golden transcripts depend on an undocumented log format; IMP-44 tests script-level behavior instead.
+2.2.5 IMP-44 A replay test now runs parse, init, plan --record, status and assemble end to end.
+2.2.5.1.3 X-FALSE The CLI tests already call every subcommand through subprocess.
+2.2.5.1.4 X-FALSE Tests already pass the problem on stdin with input=.
+2.2.5.4.2 X-ENV Whether agents returned is a harness condition.
+2.2.5.4.3 X-ENV plan cannot see running tasks.
+2.2.5.4.4 X-FALSE MAX_ATTEMPTS bounds every task, so the loop ends in ready or stuck.
+2.2.5.5 X-DONE In the full run 25 branch agents followed their pointer prompts and wrote valid fragments.
+2.2.5.5.4 X-ENV Absolute paths are how prompts reach agents.
+2.3 R-13 Live evals in CI are declined; the eval runs locally per RELEASING.md.
+2.3.1.5 X-ENV Few public examples of eval CI exist.
+2.3.4.1 X-ENV Judging interpretation needs a model grader.
+2.3.4.2 R-21 Fragment provenance cannot be proven from files.
+2.3.4.4 R-18 Multiple eval samples are deferred paid runs.
+2.3.5 IMP-35 RELEASING.md now requires the eval or a model-invoked run, so it will be observed locally.
+2.3.5.2 X-HIST The live-session belief came from interactive use.
+2.3.5.3 X-ENV Linux sandbox behavior matters only for CI, which R-13 declines.
+2.3.5.4 X-HIST No spike was scheduled in v0.2.0.
+2.3.5.5 X-ENV Credential sources are platform behavior.
+2.4 IMP-35 RELEASING.md no longer accepts a hand-driven smoke run for orchestration changes.
+2.4.1 X-HIST The checklist and eval were added together in v0.2.0.
+2.4.1.2 IMP-50 RELEASING.md references criteria.md directly, so criteria and gate cannot drift.
+2.4.1.2.2 X-HIST Smoke results went to the self-improvement README.
+2.4.1.2.3 X-HIST max_turns was an estimate.
+2.4.1.3 IMP-35 The hand-run fallback is removed for orchestration and prompt changes.
+2.4.1.4 IMP-35 Changes to RELEASING.md or evals now require running the eval.
+2.4.1.4.4 IMP-50 A docs test checks every eval case has a prompt and graders.
+2.4.1.5.3 IMP-34 CHANGELOG.md records unrun checks visibly per version.
+2.4.2 IMP-35 The gate now requires /five-whys invocation evidence, not artifacts alone.
+2.4.2.1.4 X-ENV Orchestration events happen outside the script.
+2.4.2.2 X-HIST Output-only checks were v0.1.0's habit.
+2.4.2.4 IMP-50 RELEASING.md cites criteria.md instead of paraphrasing it, restoring criterion 5.
+2.4.2.4.2 R-21 Fragment provenance cannot be told from disk.
+2.4.2.4.3 X-HIST Fabricated fragments seemed unrealistic.
+2.4.2.5 X-HIST Counts were cheap to verify; IMP-44 adds orchestration assertions.
+2.4.2.5.3 IMP-44 The replay test asserts waves and parsed options, an orchestration-fidelity measure.
+2.4.3 IMP-34 Evidence goes into CHANGELOG.md, which a docs test checks for the manifest version.
+2.4.3.1 X-ENV Publishing stays a manual edit to two manifests.
+2.4.3.1.3 X-HIST A release script seemed excessive.
+2.4.3.1.4 X-HIST Version matching by eye was practice.
+2.4.3.4 X-ENV A solo maintainer's checklist is honor-system; IMP-34 makes skipped items visible.
+2.4.3.4.4 R-06 A second sign-off is a social remedy.
+2.4.3.4.5 X-HIST Attention went to the ledger.
+2.4.3.5 X-HIST The catalog wording shaped item 3.
+2.4.3.5.4 IMP-35 Wiring the eval into the release gate is now done.
+2.4.3.5.5 IMP-51 The ledger now audits by sample, not only coverage.
+2.4.4 R-06 The sole author approves releases; outside review is out of scope.
+2.4.4.1.1 X-ENV The plugin was built for the author's own needs.
+2.4.4.1.3 X-HIST The fast release timing is history.
+2.4.4.1.5 R-06 An issue route for users is outreach the author has not chosen.
+2.4.4.2 X-ENV Eval runs spend the author's usage.
+2.4.4.2.4 IMP-35 RELEASING.md gives the exact eval command and flags.
+2.4.4.3 X-HIST No failure had been reported.
+2.4.4.3.3 IMP-38 Code-made decisions make quiet degradation visible.
+2.4.4.3.4 X-ENV Users may delete failed runs.
+2.4.4.3.5 X-ENV Model updates change behavior; IMP-35 runs real invocations each release.
+2.4.4.4 IMP-34 CHANGELOG.md records verification status per version, separate from ledger coverage.
+2.4.4.4.1 X-HIST The commit title is history.
+2.4.4.4.5 X-HIST The self-run framing is history.
+2.4.4.5 X-HIST Reading the smoke tree built confidence.
+2.4.4.5.3 IMP-35 Gates now separate content reading from orchestration checks.
+2.4.5 R-18 Grader reliability is a deferred study; the eval remains one gate option.
+2.4.5.2.2 IMP-50 A second eval case now exists.
+2.4.5.3 R-21 Fragment provenance cannot be proven, so criterion 5 stays inferential.
+2.4.5.3.2 X-ENV Transcript summarization is harness behavior.
+2.4.5.3.3 X-ENV Orchestrator file writes are legitimate.
+2.4.5.4.3 IMP-35 RELEASING.md pins the grader with --judge-model.
+2.4.5.5.3 X-ENV Sandbox cleanup is harness behavior.
+2.5 IMP-35 RELEASING.md requires an interactive run when Steps 1 or 3 change, since the eval must use --yes.
+2.5.1 X-ENV The eval harness sends one prompt with no scripted replies.
+2.5.1.1.2 IMP-50 A second eval file now exists.
+2.5.1.1.4 X-HIST No catalog item named multi-turn coverage.
+2.5.1.2 X-HIST Stopping to ask protects the user's budget by design.
+2.5.1.2.4 X-ENV Skills receive identical text in every session.
+2.5.1.2.5 X-ENV No signal tells a skill whether a human is attached.
+2.5.1.4 X-HIST The eval targeted assembly; IMP-50 adds a thin-problem case.
+2.5.1.5 IMP-37 parse forwards --context-file, so context can arrive without a question.
+2.5.1.5.3 X-HIST Consent stays a yes or no.
+2.5.1.5.4 IMP-38 init returns confirm, so consent is decided from script output.
+2.5.1.5.5 X-HIST The option count discouraged more flags; --context-file already existed.
+2.5.2 X-HIST The eval scored the happy path; IMP-50 adds a second case.
+2.5.2.3 X-HIST Asking before init avoids abandoned run directories by design.
+2.5.2.4 IMP-50 A one-line non-software problem case is added.
+2.5.2.5 R-18 Averaging variable dialog needs paid replicate runs.
+2.5.3 IMP-38 The confirm flag is computed in code and unit-tested for shapes above and below the threshold.
+2.5.3.1 X-HIST Smoke was designed to proceed silently.
+2.5.3.4 IMP-35 RELEASING.md adds an interactive check for the confirmation path.
+2.5.3.5 X-HIST Frictionless rehearsal was intended.
+2.5.4 X-ENV Thin-context judgment is semantic; IMP-37 adds examples to guide it.
+2.5.4.1.2 R-01 The script does not judge statement quality.
+2.5.4.2 X-HIST fivewhys.py sees the problem at init by design.
+2.5.4.3 IMP-37 parse output carries the options, so the next turn can rerun init with them plus the reply.
+2.5.4.3.3 X-ENV A plain reply does not re-invoke the skill.
+2.5.4.3.5 X-HIST --resume covers dispatch only.
+2.5.4.4 X-HIST --yes was chosen for a reproducible gate; IMP-50 adds a thin-problem case.
+2.5.4.5 X-HIST The question was judged by output quality.
+2.5.5 IMP-35 RELEASING.md lists interactive checks for Steps 1 and 3 beside the --yes eval.
+2.5.5.1 X-HIST Unattended checks were intended.
+2.5.5.2 X-HIST The eval reused the checklist command; IMP-50 adds a different case.
+2.5.5.3 X-HIST Questions leave no artifacts.
+2.5.5.4 IMP-35 RELEASING.md now maps SKILL.md steps to checks.
+2.5.5.5 X-HIST --yes was introduced for automation.

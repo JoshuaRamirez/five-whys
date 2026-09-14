@@ -1,0 +1,234 @@
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.4  RELEASING.md item 3 accepts a smoke run done by hand, so the eval was never required to pass.
+^ 2.4.3  Nothing enforces item 3; evidence is free text, and no script checks which path satisfied it.
+2.4.3.3  No stored eval report is expected, so the absence of a passing report goes unnoticed.
+=> IMP-34 (Changelog with evidence)
+   note: CHANGELOG.md records when the eval last ran and its result.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.5  The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module.
+^ 5.5.5  Prompt builders share helpers like shape_example and check_command with validation, binding prompt text to checking code.
+^ 5.5.5.2  Branch prompts need the ancestor chain and written sibling reasons, which only the run-reading code can supply.
+5.5.5.2.1  Sibling-aware prompts call frontier() and walk() over the root fragment to list reasons already written.
+=> X-HIST (Past motivation or process, nothing further to change) via 5.5.5.2
+   note: Prompt building needs run-reading code.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.4  Token estimates scale linearly from one v0.1.0 run, missing the longer sibling-aware branch prompts added in v0.2.0.
+^ 1.4.5  Every branch prompt repeats all 28 other root reasons, so total prompt text grows with agents times siblings.
+^ 1.4.5.4  Root reasons are full sentences of up to 20 words, so each copied sibling line costs dozens of tokens.
+1.4.5.4.4  The specificity rule rewards naming components and files, adding tokens to sentences reused 25 times.
+=> R-12 (Declined: prompt-length term in the estimate) via 1.4.5.4
+   note: Copied sibling sentences cost tokens, but the whole prompt is a small share of each agent's work.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.1  fivewhys.py is restricted to the Python standard library, ruling out embeddings or semantic similarity models.
+^ 3.1.2  Catalog disposition R-02 declined embeddings and third-party packages outright, filing 85 reasons without any experiment.
+^ 3.1.2.4  Classifiers applied R-02 whenever a proposal mentioned packages, never separating optional or opt-in designs.
+3.1.2.4.3  No code existed for opt-in extras, so an agent could not record an optional dependency with stdlib fallback.
+=> R-02 (Declined: embeddings, third-party packages, API keys or network calls)
+   note: Optional extras with a stdlib fallback would still ship a second, untested detection path.
+
+^ 4  The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.
+^ 4.3  The 31-item catalog was drafted from the same 6/10 tree, so it could only name causes that tree surfaced.
+^ 4.3.1  The catalog's stated purpose was giving every tree reason exactly one disposition code, not finding what the tree omitted.
+^ 4.3.1.2  Each change needed a cited tree reason for traceability, so changes without one were excluded by design.
+4.3.1.2.2  The requirement that analysis stays with the user discouraged the lead from injecting self-originated causes.
+=> X-HIST (Past motivation or process, nothing further to change) via 4.3.1.2
+   note: Traceability excluded untraced changes in round 1; IMP-53 records outside findings.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.2  The date mark is satisfied by 2026-09-13, which is also v0.2.0's release date, so it conceals the version gap.
+^ 1.2.2.2  v0.1.0 and v0.2.0 were committed within about 80 minutes, so day-level resolution cannot tell them apart.
+1.2.2.2.1  The v0.1.0 commit 7caa159 and the v0.2.0 commits all fall between 14:04 and 15:25 on 2026-09-13.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: The commit times are history.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.5  Item 5 names no code change that invalidates measured figures, so v0.2.0's prompt and dispatch changes never triggered it.
+^ 1.2.5.3  Item 4 already covered prompt and agent changes with a smoke run, so a cost trigger seemed redundant.
+1.2.5.3.1  Smoke runs report reason counts and files but no token totals, so item 4 carries no cost signal.
+=> R-11 (Declined: token usage relayed through the orchestrator)
+   note: Token totals are not recorded by the script; the RELEASING procedure reads subagent logs.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.2  Configurable shape, the smoke preset and per-tier models each add flags SKILL.md must parse in prose, not code.
+^ 5.2.3  init reads the problem from stdin, so SKILL.md must separate options from the statement before building the command.
+5.2.3.4  --resume skips init entirely, so its run-directory value is consumed only by SKILL.md prose.
+=> IMP-37 (Invocation parsed in code)
+   note: parse checks that a --resume path is a run directory and rejects shape options beside it.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.5  The 39-reason smoke tree was the only test data, too small to tune thresholds or count missed paraphrases.
+^ 3.5.1  The 3,905-reason v0.1.0 tree sat in .five-whys but was never labeled with known paraphrase pairs to serve as a benchmark.
+^ 3.5.1.1  Labeling paraphrases means comparing reasons pairwise, and 3,905 reasons yield about 7.6 million pairs to consider.
+3.5.1.1.5  No written definition separates a paraphrase from a closely related but distinct cause, so labels had no rule.
+=> R-18 (Deferred: studies needing many paid runs) via 3.5.1.1
+   note: Labeling all 7.6 million pairs is a deferred study; the fixture samples a handful.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.3  v0.2.0 shipped the same day as v0.1.0's self-run, leaving no window for a second full run.
+^ 1.3.3  Analyzing the v0.1.0 tree consumed the time and tokens a second full run would have needed that afternoon.
+^ 1.3.3.2  The session had already spent about 1.2M subagent tokens generating the v0.1.0 tree itself.
+1.3.3.2.2  Usage limits apply over a rolling window, so another 1.2M tokens risked exhausting them the same day.
+=> X-ENV (Outside the plugin's control)
+   note: Rolling usage windows are platform limits.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.5  Interactive paths like the thin-context question and cost confirmation are skipped by --yes, the only scripted invocation.
+^ 2.5.3  Smoke runs dispatch 4 agents, under Step 3's more-than-5 threshold, so confirmation never fires for smoke even without --yes.
+^ 2.5.3.5  --smoke was meant as a frictionless rehearsal, so no gate was placed in its path.
+2.5.3.5.3  The thin-context question still applies to smoke, but the eval's --yes removed that remaining gate too.
+=> X-HIST (Past motivation or process, nothing further to change) via 2.5.3.5
+   note: Frictionless rehearsal was intended.
+
+^ 4  The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.
+^ 4.1  Agents classified all 3,905 reasons against the catalog and no human sample checked their dispositions.
+^ 4.1.2  IMP-01 to IMP-19 were committed at 15:17, before classification finished, so dispositions never gated what was built.
+^ 4.1.2.2  Classification and coding ran concurrently in one session, from catalog at 15:04 to merge at 15:25.
+4.1.2.2.4  A continuous agent loop has no natural checkpoint where work pauses until a person responds.
+=> X-HIST (Past motivation or process, nothing further to change) via 4.1.2.2
+   note: Round 1 classified and coded concurrently.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.3  RELEASING.md was created mid-build in commit df581b5 by the author about to ship, so item 5 fit that release's plan.
+^ 1.2.3.3  No independent reviewer read RELEASING.md before it governed the release it was written for.
+1.2.3.3.4  RELEASING.md was committed alongside feature code, so it was never reviewed as a policy by itself.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: Committed with features in v0.2.0.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.4  No usage telemetry exists, so rarely used options cannot be identified and removed.
+^ 5.4.5  Neither RELEASING.md nor the ledger defines when an option should be removed, so no one sought usage evidence.
+^ 5.4.5.2  The ledger maps reasons to catalog additions and has no disposition meaning an option should be deleted.
+5.4.5.2.1  Catalog items were phrased as capabilities to add because the 6/10 tree described missing features.
+=> IMP-40 (Per-tier model flags removed) via 5.4.5.2
+   note: The round-2 catalog includes a removal, IMP-40.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.4  Branch agents in one wave run concurrently, so sibling-aware prompts cannot show reasons being written simultaneously elsewhere.
+^ 3.4.2  Each why-expander writes its whole fragment in one final Write call, so no partial reasons exist on disk mid-wave.
+^ 3.4.2.3  The run directory has no shared scratch file where agents could append reasons as they settle them.
+3.4.2.3.2  Twenty agents appending to one file concurrently would risk interleaved or lost writes.
+=> X-HIST (Past motivation or process, nothing further to change) via 3.4.2.3
+   note: A shared scratch file was declined in round 1 (R-07) for serializing runs.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.1  The author drove fivewhys.py and why-expander by hand while building, bypassing SKILL.md flag parsing and confirmation.
+^ 2.1.4  The verification target came from catalog items that mostly changed fivewhys.py and why-expander, not orchestration.
+^ 2.1.4.1  Headline improvements like IMP-06 hygiene and IMP-07 sibling-aware prompts live entirely in script code.
+2.1.4.1.2  Script features leave observable artifacts like hygiene.json that a hand run fully reveals.
+=> X-HIST (Past motivation or process, nothing further to change) via 2.1.4.1
+   note: Round-1 headline items were script features.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.1  A full 26-agent run costs hours and many tokens, so RELEASING.md requires only a smoke run before release.
+^ 1.1.5  RELEASING.md offers only two sizes, 39 or 3,905 reasons, with no intermediate gate such as one full-depth branch.
+^ 1.1.5.5  No v0.1.0 bug was traced to a size between smoke and full, so a middle tier had no demonstrated purpose.
+1.1.5.5.2  The ledger captured causes of the 6/10 rating, not incidents from executing the pipeline.
+=> X-HIST (Past motivation or process, nothing further to change) via 1.1.5.5
+   note: No scale bug had been traced; the full run has now been done.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.3  v0.2.0 shipped the same day as v0.1.0's self-run, leaving no window for a second full run.
+^ 1.3.2  RELEASING.md gates a version bump on six checks but sets no waiting period or soak time after changes land.
+1.3.2.2  Every checklist item is a pass-fail check completable in minutes, so none imposes any waiting.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: Quick items suited the author; IMP-35 adds full-run gates where they matter.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.2  Hygiene was deliberately kept mechanical and non-blocking so interpretation stays with the user, limiting its detection ambition.
+^ 3.2.2  R-03 declined a model judge in the blocking fix loop, and a non-blocking model review pass was never catalogued separately.
+3.2.2.5  R-03 named non-blocking lexical flags as its alternative, merging 'non-blocking' and 'non-model' into one decision.
+=> X-HIST (Past motivation or process, nothing further to change)
+   note: The merged decision is now separated and recorded as R-14.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.1  fivewhys.py is restricted to the Python standard library, ruling out embeddings or semantic similarity models.
+^ 3.1.5  The tests.yml CI matrix runs bare unittest on Python 3.9 and 3.12 with no requirements file.
+^ 3.1.5.4  No requirements file, lockfile or pyproject exists, so the repository has no packaging scaffold to extend.
+3.1.5.4.5  Dependabot or similar update tooling would need configuration the repo currently has no reason to carry.
+=> X-HIST (Past motivation or process, nothing further to change) via 3.1.5.4
+   note: The project ships as a plugin, not a Python package.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.5  Item 5 names no code change that invalidates measured figures, so v0.2.0's prompt and dispatch changes never triggered it.
+^ 1.2.5.1  The checklist ties measurements to release events rather than to the inputs that actually drive token use.
+1.2.5.1.3  Item 4 ties prompt edits to a read-through smoke run, casting them as quality risks rather than cost risks.
+=> IMP-35 (Release gates by change kind) via 1.2.5.1
+   note: RELEASING.md now ties remeasurement to the inputs that drive tokens: prompts, agent instructions, dispatch and estimate code.
+
+^ 2  The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.
+^ 2.2  The 35 unit tests exercise fivewhys.py functions and docs, but prose instructions in SKILL.md cannot be unit-tested.
+^ 2.2.2  test_docs.py only asserts that numbers and flag names in SKILL.md match the script, never how steps are followed.
+^ 2.2.2.3  No test compares SKILL.md's Step 1 option table with the init flags it claims to pass.
+2.2.2.3.2  The --yes and --resume rows map to nothing, a behavior that regexes over flag names cannot express.
+=> IMP-37 (Invocation parsed in code) via 2.2.2.3
+   note: One OPTIONS table drives parse, and a docs test compares it with SKILL.md and README.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.3  v0.2.0 shipped the same day as v0.1.0's self-run, leaving no window for a second full run.
+^ 1.3.2  RELEASING.md gates a version bump on six checks but sets no waiting period or soak time after changes land.
+^ 1.3.2.5  The checklist applies the same bar to every bump, so v0.2.0's 31 improvements cleared it like a typo fix.
+1.3.2.5.1  The six items stay identical regardless of lines changed, options added or orchestration rewritten.
+=> IMP-35 (Release gates by change kind) via 1.3.2.5
+   note: Gates now depend on what changed, not on a flat six items.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.5  The 39-reason smoke tree was the only test data, too small to tune thresholds or count missed paraphrases.
+^ 3.5.3  The unit tests check hygiene with hand-written reworded pairs rather than paraphrases collected from real trees.
+3.5.3.2  The author wrote both the detector and its test pairs, so the pairs reflect the author's own idea of rewording.
+=> IMP-47 (Paraphrase pairs from a real tree)
+   note: The pairs come from agent-written reasons, not the author's rewordings.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.2  Hygiene was deliberately kept mechanical and non-blocking so interpretation stays with the user, limiting its detection ambition.
+^ 3.2.1  R-01 grouped convergence detection with ranking and root-cause selection, so it was declined as plugin-side synthesis.
+^ 3.2.1.3  The catalog bundled ranking, synthesis, pruning and root-cause selection into one decline code with no finer category.
+3.2.1.3.5  Declines were written to protect the user's requirement, so drawing them broadly felt safer than risking a steering feature.
+=> X-HIST (Past motivation or process, nothing further to change) via 3.2.1.3
+   note: Broad round-1 decline codes are history; round-2 codes separate the cases.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.2  RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement.
+^ 1.2.3  RELEASING.md was created mid-build in commit df581b5 by the author about to ship, so item 5 fit that release's plan.
+^ 1.2.3.4  The checklist codified what v0.2.0 had already done rather than setting a standard ahead of it.
+1.2.3.4.3  The only measured numbers available were v0.1.0's, so item 5 had to admit them for the checklist to pass.
+=> X-HIST (Past motivation or process, nothing further to change) via 1.2.3.4
+   note: The checklist described v0.2.0's own practice; IMP-35 sets the standard before v0.3.0 is bumped.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.2  Configurable shape, the smoke preset and per-tier models each add flags SKILL.md must parse in prose, not code.
+^ 5.2.4  No settings file or environment default exists, so shape and model preferences must be retyped as flags each invocation.
+^ 5.2.4.2  Model choice is set per dispatch because Agent calls accept a model parameter, not a plugin-wide user default.
+5.2.4.2.4  Separate root and branch tiers need distinct per-task values, which one frontmatter model field cannot express.
+=> R-16 (Declined: persistent settings files or environment defaults) via 5.2.4.2
+   note: Model stays a per-run flag.
+
+^ 3  Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.
+^ 3.5  The 39-reason smoke tree was the only test data, too small to tune thresholds or count missed paraphrases.
+^ 3.5.5  RELEASING.md item 3 requires only that hygiene.json exists after a smoke run, so bigger test data was never demanded.
+^ 3.5.5.1  The checklist grew from the 31-item catalog, which named features to add rather than accuracy levels to reach.
+3.5.5.1.3  A feature can be ticked off on merge, while an accuracy target needs measurement after merge.
+=> X-HIST (Past motivation or process, nothing further to change) via 3.5.5.1
+   note: The checklist grew from features.
+
+^ 1  v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.
+^ 1.4  Token estimates scale linearly from one v0.1.0 run, missing the longer sibling-aware branch prompts added in v0.2.0.
+^ 1.4.2  AGENT_OVERHEAD_TOKENS is one constant measured on v0.1.0's 26 agents, before sibling lists existed.
+^ 1.4.2.1  The only measured full run was the self-run on v0.1.0's 6/10 rating, predating every v0.2.0 prompt change.
+1.4.2.1.5  Constants were copied into fivewhys.py with a dated comment, not a marker saying they predate v0.2.0 prompts.
+=> IMP-32 (Remeasured cost) via 1.4.2.1
+   note: The v0.2.0 full run, carrying every v0.2.0 prompt change, now supplies the constants.
+
+^ 5  Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.
+^ 5.5  The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module.
+^ 5.5.5  Prompt builders share helpers like shape_example and check_command with validation, binding prompt text to checking code.
+^ 5.5.5.1  Prompts must show agents the exact shape validate() enforces, so both derive from the same breadth and depth.
+5.5.5.1.5  Co-locating them prevents a prompt from advertising a shape the checker would reject.
+=> X-HIST (Past motivation or process, nothing further to change) via 5.5.5.1
+   note: Prompts and validation share shape helpers on purpose.

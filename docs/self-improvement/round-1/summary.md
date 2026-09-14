@@ -2,6 +2,8 @@
 
 3905 reasons, each with exactly one disposition.
 
+X dispositions whose note cites an IMP or R code: 292 of 1570.
+
 | Code | Title | Reasons |
 |------|-------|---------|
 | IMP-01 | Parameterized shape | 135 |

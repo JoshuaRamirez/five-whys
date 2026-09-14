@@ -1,0 +1,50 @@
+# Branch 1, second pass after the sample audit: every level-4 reason that inherited from level 1-3 gets its own line.
+1.2.1.1 IMP-35 RELEASING.md items now demand evidence before the bump instead of describing what a release had done.
+1.2.1.2 IMP-35 RELEASING.md now distinguishes release kinds, so prompt and dispatch changes carry stricter gates than wording fixes.
+1.2.2.1 IMP-33 Measurements are now labeled with the plugin version instead of a date.
+1.2.2.2 IMP-33 Version labels tell apart releases that share a calendar day.
+1.2.3.1 X-HIST IMP-21's thin backing explains the minimal checklist; IMP-35 redesigns it.
+1.2.3.2 X-HIST The session's scope made a blocking rule unwelcome; IMP-35 now makes remeasurement a gate for listed change kinds.
+1.2.3.4 X-HIST The checklist described v0.2.0's own practice; IMP-35 sets the standard before v0.3.0 is bumped.
+1.2.3.5 X-HIST Item 5 was tuned to the table in one commit; IMP-32 and IMP-33 replace both.
+1.2.4.1 IMP-33 The docs test's scope now includes the measured version behind README figures.
+1.2.5.1 IMP-35 RELEASING.md now ties remeasurement to the inputs that drive tokens: prompts, agent instructions, dispatch and estimate code.
+1.3.1.1 X-HIST One continuous session held the tree and catalog in context.
+1.3.1.3 X-HIST The fast v0.1.0 run made same-day compression feel safe; v0.2.0 measurements now show real per-agent cost.
+1.3.1.4 X-HIST The ledger merge felt like a finish line; IMP-35 now adds a full-run pass criterion.
+1.3.3.1 X-HIST Round 1 needed a second fan-out and hand reconciliation.
+1.3.3.2 X-HIST The v0.1.0 tree had already consumed about 1.2M subagent tokens that afternoon.
+1.3.3.3 X-HIST Reading the tree before drafting the catalog took the hour.
+1.3.3.4 X-HIST The eight-minute implementation window is history.
+1.3.3.5 X-HIST Late polish consumed the last minutes; IMP-35 adds a freeze point.
+1.3.4.1 IMP-36 --plugin-dir loads the checkout, so a user-style /five-whys run no longer needs a marketplace update.
+1.3.4.3 IMP-36 --plugin-dir breaks the commit-then-run precedent by running the checkout before a version is declared.
+1.3.5.2 R-06 A pull request review needs a second person; the solo merge habit stays.
+1.4.1.1 R-12 A text-aware estimate after the root would add little: measured prompts are about 1.7k of 63k tokens per branch.
+1.4.1.2 R-12 Context length is a small share of per-agent tokens, so estimate() does not take it.
+1.4.1.3 R-12 Prompt files of about 6.8 KB are too small a share to change the estimate materially.
+1.4.2.1 IMP-32 The v0.2.0 full run, carrying every v0.2.0 prompt change, now supplies the constants.
+1.4.3.2 R-11 Recording Agent-reported tokens through the wave loop is declined; subagent logs are read per release.
+1.4.3.3 R-11 The check log keeps its validation role; tokens come from subagent logs.
+1.4.3.4 IMP-39 run.json now stores the estimate shown at init, so a release measurement can be compared against it.
+1.4.3.4.3 R-11 The eval does not check usage; RELEASING.md measures from subagent logs.
+1.4.3.4.4 R-11 No after-run usage report is produced, because the script cannot see usage.
+1.4.4.1 IMP-33 A docs test now checks the README's token figures against estimate() for the default shape.
+1.4.5.2 R-12 Sibling growth with split or breadth is a small per-prompt share.
+1.4.5.2.4 IMP-32 The estimate basis now names the shape, model and version measured.
+1.4.5.4 R-12 Copied sibling sentences cost tokens, but the whole prompt is a small share of each agent's work.
+1.5.1.1 R-01 A quality score would judge reasons, which the plugin leaves to the user.
+1.5.2.1 R-18 Round-2 codes now include an explicit deferral category for experiments.
+1.5.2.2 IMP-35 RELEASING.md now asks that Known limitations be reviewed each release, so disclosure is not the end.
+1.5.2.2.2 IMP-34 CHANGELOG.md keeps a Deferred list that gives limitations a place to be tracked.
+1.5.2.2.4 X-HIST The rating evidence restated the limitation.
+1.5.2.3 IMP-34 CHANGELOG.md keeps a Deferred list, so measurement work outlives a single release.
+1.5.2.3.4 X-HIST The merge commit framed v0.2.0 as complete.
+1.5.2.5 R-18 Leaving tier choice to users stands until a paid comparison runs.
+1.5.3.1 IMP-40 The independent tier flags are removed rather than turned into presets.
+1.5.4.1 R-18 Same-model variance needs repeated paid runs; the v0.2.0 full run adds one data point.
+1.5.4.4 R-18 Comparing stochastic trees needs replicate runs and a method, both deferred.
+1.5.4.5 R-18 Separating root variance from branch variance needs frozen-root replicate runs, deferred.
+1.5.5.2 IMP-40 Easy-to-add tier flags are removed; IMP-41 makes later additions deliberate.
+1.5.5.3 IMP-40 The unmeasured intuition behind tiers no longer ships as flags.
+1.5.5.5 IMP-40 Unreachable tier flags are removed, and parse exposes every remaining init option (IMP-37).

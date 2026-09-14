@@ -1,0 +1,142 @@
+# Branch 4: changes rest on one self-run and unaudited classification. A line covers its node and every descendant without its own line.
+4 IMP-51 Ledger tooling now samples entries and reports cited codes, and round 2 records a sample audit; one model family still wrote everything (X-ENV).
+4.1 IMP-51 ledger.py sample prints entries with ancestors and code detail, and round 2 records an audit made with it.
+4.1.1 IMP-51 merge reports X notes citing codes and inheritance, and sample supports the semantic check a script cannot make.
+4.1.1.1 X-ENV Whether a code fits needs a reader; IMP-51 sample makes that reading cheap.
+4.1.1.1.2 IMP-51 sample prints each entry with its ancestor chain.
+4.1.1.1.3 R-18 A labeled gold ledger is a deferred study.
+4.1.1.1.4 IMP-51 The round-2 catalog adds precedence rules between IMP, R and X codes.
+4.1.1.2 X-HIST ledger.py copied fivewhys.py's structure-check pattern.
+4.1.1.3 R-18 A second independent classification is a deferred paid study; sampling replaces it.
+4.1.1.3.4 X-HIST Round 1 reviewed only NEW entries.
+4.1.1.4 IMP-51 Catalog rules now require X notes to cite covering codes, and merge counts them.
+4.1.1.4.2 IMP-51 The round-2 catalog allows 30-word notes.
+4.1.1.4.3 X-ENV One author chooses and justifies; the recorded sample audit is the check.
+4.1.1.4.4 X-HIST Distinct notes were mistaken for diligence.
+4.1.1.5 IMP-53 The round-2 record reports the sample audit next to coverage.
+4.1.1.5.2 X-HIST The user's completeness demand shaped the measure.
+4.1.2 IMP-53 Round 2 finished and merged its ledger before any code changed.
+4.1.2.1 X-HIST Round 1 built from the catalog directly.
+4.1.2.2 X-HIST Round 1 classified and coded concurrently.
+4.1.2.3 X-HIST One merge bundled round 1; round 2 commits the ledger first (IMP-53).
+4.1.2.4 IMP-34 CHANGELOG.md lists the IMP codes behind each change, linking dispositions to code.
+4.1.2.4.5 X-HIST Tests are named by behavior; CHANGELOG.md carries the codes.
+4.1.2.5 X-HIST Round 1 was one agent session with no handoff.
+4.1.2.5.5 X-ENV The permission mode is the user's choice.
+4.1.3 IMP-51 sample now reads ledger.json with the tree.
+4.1.3.2 X-HIST --sample was framed for tree readers.
+4.1.3.3 X-HIST The ledger merged minutes after --sample existed.
+4.1.3.4 X-HIST Classification was treated as bookkeeping; IMP-51 samples it now.
+4.1.3.5 IMP-53 Round 2 records the sample size and every disagreement found.
+4.1.3.5.2 R-18 A statistically sized audit of about 350 entries is deferred.
+4.1.3.5.3 X-HIST Codes carry no severity weight.
+4.1.3.5.4 IMP-51 Rule lines let a sampled error be fixed on one line and re-merged.
+4.1.4 IMP-53 An actual sample check is recorded instead of only inviting one.
+4.1.4.1.2 R-06 A feedback channel for disputes is outreach.
+4.1.4.1.3 IMP-51 sample prints the catalog detail and chain the grep example lacked.
+4.1.4.1.5 X-ENV Few people read another project's ledger.
+4.1.4.2 IMP-51 Rule fragments keep the written ledger small, and sample --code gives a per-code view.
+4.1.4.2.3 X-HIST Reading 3,905 entries takes hours.
+4.1.4.3 IMP-51 sample --code shows the entries behind each count.
+4.1.4.3.3 X-HIST The six-bucket table compressed the story.
+4.1.4.3.5 X-HIST The commit message reported counts.
+4.1.4.4 X-HIST Transparency was treated as verification; IMP-53 now records an audit.
+4.1.4.5 IMP-53 Round-2 verification covers the ledger with a sampled audit.
+4.1.5 IMP-35 RELEASING.md asks for a reviewed ledger sample when a release derives from a self-run.
+4.1.5.1 X-HIST RELEASING.md was added mid-pass.
+4.1.5.2 X-HIST Executable gates were favored; IMP-35 adds the sample review.
+4.1.5.4 X-ENV A solo checklist is honor-system; IMP-34 makes gaps visible in CHANGELOG.md.
+4.1.5.5 R-06 A second party is out of scope.
+4.2 IMP-51 Precedence and citation rules keep actionable causes from hiding under X codes, and merge reports the share.
+4.2.1 IMP-51 merge now reports how many X notes cite an IMP or R code.
+4.2.1.2 X-HIST The schema keeps one code; the covering code is cited in the note.
+4.2.1.4 X-HIST A passing check was read as correct classification.
+4.2.1.5 X-HIST ledger.py stays documentation tooling outside the plugin's tests.
+4.2.2 IMP-49 Agent guidance now asks leaves to keep a concrete tie to their chain.
+4.2.2.1 X-DONE v0.2.0 dropped "assume typical context" and added evidence reading.
+4.2.2.2 X-DONE v0.2.0 replaced the fixed cause kinds with kinds drawn from the problem.
+4.2.2.3 X-ENV Five levels deep reach circumstances by the method's nature (R-04).
+4.2.2.5 X-HIST The round-1 problem was retrospective.
+4.2.3 IMP-51 The catalog's precedence rule sends mitigated external facts to the IMP code.
+4.2.3.1 X-HIST One code per reason is kept for exact coverage.
+4.2.3.5 X-HIST Single codes kept the totals clean.
+4.2.4 X-HIST NEW friction shaped round 1; round 2 had one reader and no NEW step.
+4.2.4.5 IMP-51 merge now reports how many X notes point at remedies.
+4.2.5 IMP-51 Catalog rules now cover mitigated external facts and ongoing constraints.
+4.2.5.2 X-ENV Model updates and aliases are platform behavior; measuring their effect is R-18.
+4.2.5.3 R-01 Shaping how readers weigh causes is analysis.
+4.2.5.3.3 IMP-48 index.md now carries a read plan, practical reading guidance that is not interpretation.
+4.2.5.4 R-06 Publishing practices for the industry is outward-facing work.
+4.2.5.4.4 X-HIST IMP-14's association is round-1 history.
+4.3 IMP-53 Round 2 adds a review of the plugin made outside the tree.
+4.3.1 X-HIST Round 1 defined completeness over the tree; IMP-53 adds an outside review.
+4.3.1.3.3 IMP-53 The outside review checks quality attributes the tree may skip.
+4.3.1.5.5 IMP-53 A step for improvements the tree never mentioned is now in the record.
+4.3.2 X-DONE v0.2.0 added context intake, and this round's run carried seven evidence points.
+4.3.2.3.2 R-18 Rerunning the 6/10 problem with context is a paid study.
+4.3.2.4 X-HIST Round-1 prompts lacked constraints.
+4.3.2.5 X-HIST Round-1 generic reasons mapped to broad items.
+4.3.3 X-DONE v0.2.0 removed the fixed cause-kind list.
+4.3.3.4 X-HIST Round-1 catalog weights followed counts.
+4.3.3.5 X-DONE Round 2's tree came from the rewritten instructions.
+4.3.4 IMP-53 The round-2 record includes a review of code and docs made outside the tree.
+4.3.4.1 X-HIST Round 1 was pure dogfooding.
+4.3.4.2 X-ENV No issues or reviews existed.
+4.3.4.3 IMP-53 The outside review checks the design against known Five Whys failure modes.
+4.3.4.3.3 X-HIST No web research was done in round 2 either.
+4.3.4.3.5 X-ENV Guidance on judging generated cause trees is sparse.
+4.3.4.5 X-HIST Digesting the tree consumed round 1.
+4.3.5 X-HIST Round-1 NEW admitted only reason-attached proposals; IMP-53's outside review covers omissions.
+4.4 IMP-50 A thin, non-software eval case is added; a multi-domain benchmark stays deferred (R-18).
+4.4.1 X-HIST The self-run served as backlog source.
+4.4.1.2.5 IMP-50 A non-software eval case adds problem breadth to the gates.
+4.4.1.3.5 IMP-50 A second problem case now exists.
+4.4.2 X-ENV No outside users exist; outreach is R-06.
+4.4.2.1 R-06 Distribution and announcement are outreach.
+4.4.2.2 R-06 Soliciting quality reports is outreach.
+4.4.2.2.5 X-ENV Confidential problems cannot be shared.
+4.4.2.3 X-ENV An exhaustive unanalyzed tree is an unfamiliar deliverable by requirement.
+4.4.2.3.2 R-06 Marketing excerpts are outreach.
+4.4.2.4 R-06 Recruiting testers is out of scope.
+4.4.2.5 X-ENV Installing agents with Write and Bash needs trust.
+4.4.3 R-18 A multi-domain benchmark is a deferred paid study.
+4.4.3.1 IMP-50 A second eval case broadens the gate.
+4.4.3.5 IMP-50 A non-software, one-line problem varies the smoke input.
+4.4.4 IMP-49 Agent guidance now covers problems with nothing to read and non-software domains.
+4.4.4.3 IMP-50 The thin one-line eval case exercises sparse input.
+4.4.4.3.5 R-18 With and without context comparisons are paid runs.
+4.4.4.4 X-ENV Self-referential runs give agents inside knowledge; IMP-50 adds an outside problem.
+4.4.4.5 X-ENV Bounded repository problems are easier; IMP-49 guides open-ended ones.
+4.4.5 R-18 Grading trees in unfamiliar domains is deferred.
+4.4.5.1 R-01 The plugin does not score truth.
+4.4.5.2 IMP-48 A byte-sized read plan plus show --sample make partial reading practical.
+4.4.5.2.3 X-FALSE show --sample already offers a sampling view.
+4.4.5.2.4 IMP-35 RELEASING.md names a sampled read of 20 reasons as the release read.
+4.4.5.3 R-06 Recruiting experts is out of scope.
+4.4.5.4 X-ENV Five Whys has no ground truth.
+4.4.5.5 IMP-49 Agents are told to list ungrounded premises as assumptions.
+4.4.5.5.3 X-HIST The 117 false premises were caught by insider knowledge.
+4.5 X-ENV Claude Code subagents are one vendor's models; other vendors need network access (R-02).
+4.5.1.1 X-HIST v0.1.0 had no model option.
+4.5.1.2 R-02 Other vendors need keys and network calls.
+4.5.1.3 X-HIST One session read and classified round 1.
+4.5.1.4 X-HIST Uniformity looked safe.
+4.5.2 R-06 A sole author has no human co-reviewers.
+4.5.2.2 X-HIST Speed won over human review.
+4.5.2.3 X-HIST The catalog synthesis mediated reading.
+4.5.2.4 X-ENV Ratings are self-assessed.
+4.5.2.5 X-ENV Agents are Claude Code's built-in reviewers.
+4.5.3 IMP-51 Citation counts and sampled audits check dispositions; inter-rater studies are R-18.
+4.5.3.1 X-HIST Coverage was the first property automated.
+4.5.3.2 X-ENV Semantic correctness needs judgment.
+4.5.3.3 R-18 Inter-rater classification is a deferred paid study.
+4.5.3.4 X-HIST Round 1's only rework trigger was NEW.
+4.5.3.5 X-ENV Code and note come from one author.
+4.5.4 X-HIST The pass was framed as accounting.
+4.5.4.2 IMP-51 X-FALSE now covers causal links that do not hold.
+4.5.4.5 X-ENV Five Whys presupposes a real problem.
+4.5.5 X-ENV Every agent shares the problem framing by design.
+4.5.5.2 X-HIST Round-1 facts were not rechecked; round-2 facts were verified against the repository.
+4.5.5.3 X-DONE v0.2.0 removed "assume typical context" and requires stated assumptions and evidence reading.
+4.5.5.4 X-HIST Requirements are fixed by the user.
+4.5.5.5.2 X-HIST Web tools are excluded from the agent on purpose.
