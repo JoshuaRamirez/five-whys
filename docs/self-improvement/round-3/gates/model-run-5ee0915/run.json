@@ -1,0 +1,65 @@
+{
+  "schema": "five-whys/2",
+  "problem": "Our nightly database backup job silently skips some nights; the cron entry and the backup script have not changed in months.",
+  "created": "2026-09-13T22:54:47-07:00",
+  "plugin_version": "0.2.0",
+  "options": [
+    "--preset",
+    "smoke"
+  ],
+  "shape": {
+    "breadth": 3,
+    "depth": 3,
+    "split": 1
+  },
+  "model": "inherit",
+  "max_parallel": 5,
+  "estimate": {
+    "agents": 4,
+    "reasons": 39,
+    "agent_tokens_low": 37422,
+    "agent_tokens": 164328,
+    "output_tokens": 1482,
+    "basis": "range from two claude-opus-5 runs measured on 2026-09-13: the low end is a headless session on a problem naming no local files; the high end (agent_tokens) is the v0.2.0 self-run dispatched from an interactive session with many tools loaded, where agents inherited about 21k tokens of context and read files as evidence. The dispatching session's context drives the base cost. Each figure sums agents' reported totals; context re-read on every turn is billed on top, mostly as cache reads."
+  },
+  "attempts": {
+    "root": 1,
+    "1": 1,
+    "2": 1,
+    "3": 1
+  },
+  "root_model": "inherit",
+  "branch_model": "inherit",
+  "waves": [
+    {
+      "wave": 1,
+      "at": "2026-09-13T22:55:06-07:00",
+      "ids": [
+        "root"
+      ],
+      "max_parallel": 5
+    },
+    {
+      "wave": 2,
+      "at": "2026-09-13T22:57:04-07:00",
+      "ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "max_parallel": 5
+    }
+  ],
+  "assembled": "2026-09-13T22:59:21-07:00",
+  "duration_seconds": 210,
+  "output": {
+    "bytes": 8297,
+    "approx_tokens": 2074,
+    "lines": 53,
+    "complete": true
+  },
+  "checks": {
+    "runs": 4,
+    "failed": 0
+  }
+}

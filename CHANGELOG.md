@@ -89,26 +89,29 @@ From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 ### Evidence
 
-Statuses as defined in RELEASING.md. These results predate the round-3 fixes
-and go stale as those land, so every gate runs again on the final commit.
+Statuses as defined in RELEASING.md, run against 5ee0915, the last commit that
+changes files a gate covers.
 
-- [passed] unit @ed42be1 2026-09-13: 61 unit tests pass, including the replay
-  and labeled-pair tests (Python 3.14 locally; CI covers 3.9 and 3.12).
-- [passed] validate @76dbd37 2026-09-13: `claude plugin validate .` passes.
-- [passed] model-run @76dbd37 2026-09-13: headless `claude -p --plugin-dir .`,
-  claude-opus-5. `/five-whys --smoke --yes` on the nightly-backup problem ran
-  `parse`, `init`, two waves and `assemble` from the checkout. 39 of 39 reasons,
-  complete, 4 checks with 0 failures, 11 stated assumptions, 0 hygiene flags,
-  58 seconds from creation to the last fragment. The orchestrator wrote no
-  fragments; branches 2 and 3 removed empty `whys` lists from their own leaves.
-  A 20-reason `show --sample` read found concrete mechanisms such as
-  `flock -n ... || exit 0` and debug-level skip logging. The reply left analysis
-  to the user.
-- [passed] interactive @76dbd37 2026-09-13: without `--yes`, with the Agent
-  tool blocked as a safeguard, "Deploys fail." got one question about system, symptoms and attempts, and no
-  run was created. A specific full-size problem ran `parse` and `init`, showed
-  26 agents, 3,905 reasons and about 1.62M agent tokens, asked before
-  dispatching, and dispatched nothing.
+- [passed] unit @5ee0915 2026-09-13: 84 unit tests pass, including the replay,
+  labeled-pair, rubric, ledger, quality and usage tests (Python 3.14 locally;
+  CI covers 3.9 and 3.12).
+- [passed] validate @5ee0915 2026-09-13: `claude plugin validate .` passes.
+- [passed] model-run @5ee0915 2026-09-13: headless `claude -p --plugin-dir`
+  in a fresh directory, claude-opus-5. `/five-whys --smoke --yes` on the
+  nightly-backup problem ran `parse`, `init`, `plan`, `status` and `assemble`
+  through the absolute script path. 39 of 39 reasons assembled, and all 4
+  fragments passed their first check. There were 14 stated assumptions and 0
+  hygiene flags. Waves took 69 and 90 seconds, 210 seconds in total. The 4
+  agents ran 4 Bash commands, all checks, and none touched the network. The
+  reply left analysis to the user. Output and transcript:
+  `docs/self-improvement/round-3/gates/model-run-5ee0915/`.
+- [passed] interactive @5ee0915 2026-09-13: headless `claude -p --plugin-dir`
+  in fresh directories, without `--yes`, with the Agent tool blocked as a
+  safeguard. "Deploys fail." got one question about the system, the symptoms and
+  what has been tried, and no run was created. The payments-deploy problem ran
+  `parse` and `init` through the absolute script path. It showed 26 agents,
+  3,905 reasons and 601k-1.62M agent tokens, asked before dispatching, and
+  dispatched nothing.
 - [passed] measured-branch @76dbd37 2026-09-13: headless, clean directory, the
   payments-deploy problem. Root 11.3k and branch 1.1 23.6k reported tokens,
   63-74% below the v0.2.0 constants; branch output 14.9k tokens, inside
@@ -116,10 +119,12 @@ and go stale as those land, so every gate runs again on the final commit.
   repository session, with no evidence reading and 5 turns instead of 12, so
   the gap comes from the setting, not the new prompts. The estimate became a
   range instead of a full remeasurement.
-- [blocked] eval @91b5637 2026-09-13: `claude plugin eval` refuses Bash-granting
-  cases on this machine because `~/.docker/cli-plugins` holds symbolic links
-  (created by Docker Desktop). Both cases recorded 0 turns. Not waived; it runs
-  again where Docker Desktop isn't installed.
+- [blocked] eval @5ee0915 2026-09-13: the only machine available has Docker
+  Desktop. The RELEASING.md preflight found 32 symbolic links under
+  `~/.docker`, which `claude plugin eval` refuses for Bash-granting cases; at
+  91b5637 both cases recorded 0 turns for that reason. Docker configuration was
+  not altered. Not waived: it needs a machine or account without Docker
+  Desktop, or the maintainer's written waiver.
 
 ### Deferred
 
