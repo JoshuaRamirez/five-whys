@@ -14,14 +14,21 @@ Fragments come in two forms:
   ledger.py <round> check <fragment> [--scope S]  validate one fragment
   ledger.py <round> merge [--allow-new]           prove every reason is covered
                                                   once; write ledger.json and summary.md
-  ledger.py <round> sample N [--seed S] [--code C]  print random entries with their
-                                                  ancestor chain and code detail
+  ledger.py <round> sample N [--seed S] [--code C] [--via own|inherited] [--level L]
+                             [--stratify] [--json]
+                                                  print random entries with their ancestor
+                                                  chain and code detail; --stratify draws
+                                                  equally per (level, own or inherited);
+                                                  --json prints a reviewer packet
+  ledger.py <round> audit VERDICTS [VERDICTS]     validate reviewer verdict files and report
+                                                  wrong-code rates; two files add agreement
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import re
 import sys
@@ -30,6 +37,7 @@ from pathlib import Path
 
 MAX_NOTE_WORDS = 25
 CITED = re.compile(r"\b(?:IMP|R)-\d+\b")
+VERDICTS = ("fit", "adjacent", "wrong")
 
 
 def load(path: Path):
@@ -42,6 +50,24 @@ def walk(nodes, parent=None):
         yield from walk(node.get("whys", []), node["id"])
 
 
+def level_of(node_id: str) -> int:
+    return node_id.count(".") + 1
+
+
+def group_of(entry: dict) -> tuple[int, str]:
+    return level_of(entry["id"]), "inherited" if entry.get("via") else "own"
+
+
+def wilson(k: int, n: int, z: float = 1.96) -> list[float]:
+    """95% Wilson score interval for k of n."""
+    if n == 0:
+        return [0.0, 1.0]
+    p, denom = k / n, 1 + z * z / n
+    center = (p + z * z / (2 * n)) / denom
+    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denom
+    return [round(max(0.0, center - half), 4), round(min(1.0, center + half), 4)]
+
+
 class Round:
     def __init__(self, folder: Path):
         self.folder = folder
@@ -50,6 +76,7 @@ class Round:
             self.nodes[node["id"]] = node
             self.parent[node["id"]] = parent
         catalog = load(folder / "catalog.json")
+        self.rules = catalog.get("rules", [])
         self.catalog = {item["code"]: item for item in catalog["improvements"] + catalog["dispositions"]}
         self.max_words = catalog.get("max_note_words", MAX_NOTE_WORDS)
 
@@ -113,6 +140,12 @@ class Round:
                 resolved[node_id] = (direct[owner], None if owner == node_id else owner)
         return resolved, missing
 
+    def ledger(self) -> list[dict]:
+        path = self.folder / "ledger.json"
+        if not path.exists():
+            sys.exit(f"{path} does not exist; run merge first")
+        return load(path)["entries"]
+
 
 def cmd_check(ledger: Round, args) -> None:
     path = Path(args.fragment)
@@ -175,10 +208,44 @@ def cmd_merge(ledger: Round, args) -> None:
                       "x_cited": f"{x_cited}/{x_total}", "counts": dict(counts)}, indent=2))
 
 
+def draw(pool: list[dict], n: int, seed, stratify: bool) -> list[dict]:
+    """Uniform draw, or an equal share per (level, own or inherited); a small group gives all it has."""
+    rng = random.Random(seed)
+    if not stratify:
+        return rng.sample(pool, min(n, len(pool)))
+    groups: dict[tuple, list] = {}
+    for entry in pool:
+        groups.setdefault(group_of(entry), []).append(entry)
+    share, extra = divmod(n, len(groups)) if groups else (0, 0)
+    picked = []
+    for k, key in enumerate(sorted(groups)):
+        want = share + (1 if k < extra else 0)
+        picked += rng.sample(groups[key], min(want, len(groups[key])))
+    return picked
+
+
 def cmd_sample(ledger: Round, args) -> None:
-    data = load(ledger.folder / "ledger.json")["entries"]
-    pool = [e for e in data if not args.code or e["d"] == args.code]
-    for k, entry in enumerate(random.Random(args.seed).sample(pool, min(args.n, len(pool)))):
+    pool = [e for e in ledger.ledger()
+            if (not args.code or e["d"] == args.code)
+            and (not args.via or group_of(e)[1] == args.via)
+            and (not args.level or level_of(e["id"]) == args.level)]
+    picked = draw(pool, args.n, args.seed, args.stratify)
+    if args.json:  # what an independent reviewer gets: no ledger files, no session history
+        print(json.dumps({
+            "round": ledger.folder.name,
+            "seed": args.seed,
+            "stratified": args.stratify,
+            "filters": {"code": args.code, "via": args.via, "level": args.level},
+            "groups": dict(Counter(f"level {lvl} {kind}" for lvl, kind in map(group_of, picked))),
+            "rules": ledger.rules,
+            "codes": {code: {"title": item["title"], "detail": item.get("detail", "")}
+                      for code, item in ledger.catalog.items()},
+            "entries": [{"id": e["id"], "level": level_of(e["id"]), "inherited_from": e.get("via"),
+                         "chain": [{"id": a, "reason": ledger.nodes[a]["reason"]} for a in ledger.chain(e["id"])[:-1]],
+                         "reason": e["reason"], "code": e["d"], "note": e["note"]} for e in picked],
+        }, indent=1, ensure_ascii=False))
+        return
+    for k, entry in enumerate(picked):
         if k:
             print()
         for ancestor in ledger.chain(entry["id"])[:-1]:
@@ -187,6 +254,77 @@ def cmd_sample(ledger: Round, args) -> None:
         item = ledger.catalog[entry["d"]]
         print(f"=> {entry['d']} ({item['title']}){' via ' + entry['via'] if entry.get('via') else ''}")
         print(f"   note: {entry['note']}")
+
+
+def read_verdicts(path: Path, known: set) -> tuple[dict | None, list[str]]:
+    try:
+        data = load(path)
+    except (OSError, json.JSONDecodeError) as exc:
+        return None, [f"{path.name}: {exc}"]
+    if not isinstance(data, dict):
+        return None, [f"{path.name}: expected a JSON object"]
+    errors = []
+    if not isinstance(data.get("reviewer"), str) or not data["reviewer"].strip():
+        errors.append("reviewer: required, naming who reviewed and what they could see")
+    for field in ("independent", "stratified"):
+        if not isinstance(data.get(field), bool):
+            errors.append(f"{field}: must be true or false")
+    entries = data.get("entries")
+    if not isinstance(entries, list) or not entries:
+        errors.append("entries: must be a non-empty list")
+        entries = []
+    seen = Counter()
+    for k, entry in enumerate(entries):
+        where = f"entries[{k}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{where}: expected an object")
+            continue
+        seen[entry.get("id")] += 1
+        if entry.get("id") not in known:
+            errors.append(f"{where}: no ledger entry {entry.get('id')!r}")
+        verdict = entry.get("verdict")
+        if verdict not in VERDICTS:
+            errors.append(f"{where}: verdict must be one of {', '.join(VERDICTS)}")
+        elif verdict != "fit" and not str(entry.get("note") or "").strip():
+            errors.append(f"{where}: a {verdict} verdict needs a note naming the better code")
+    errors += [f"{i}: listed {c} times" for i, c in seen.items() if c > 1]
+    return (None if errors else data), [f"{path.name}: {e}" for e in errors]
+
+
+def summarize(entries: list[dict], by_id: dict) -> dict:
+    groups: dict[str, Counter] = {}
+    for entry in entries:
+        level, kind = group_of(by_id[entry["id"]])
+        groups.setdefault(f"level {level} {kind}", Counter())[entry["verdict"]] += 1
+    counts = Counter(e["verdict"] for e in entries)
+    return {"n": len(entries), **{v: counts[v] for v in VERDICTS},
+            "wrong_rate": round(counts["wrong"] / len(entries), 4), "wrong_rate_95": wilson(counts["wrong"], len(entries)),
+            "groups": {key: {"n": sum(c.values()), **{v: c[v] for v in VERDICTS}} for key, c in sorted(groups.items())}}
+
+
+def cmd_audit(ledger: Round, args) -> None:
+    by_id = {e["id"]: e for e in ledger.ledger()}
+    files, errors = [], []
+    for name in args.verdicts:
+        data, errs = read_verdicts(Path(name), set(by_id))
+        errors += errs
+        if data:
+            files.append((name, data))
+    if errors:
+        print("\n".join(errors[:40]))
+        sys.exit(1)
+    result = {"files": [{"file": name, "reviewer": data["reviewer"], "independent": data["independent"],
+                         "stratified": data["stratified"], **summarize(data["entries"], by_id)} for name, data in files]}
+    if len(files) == 2:
+        a, b = ({e["id"]: e["verdict"] for e in data["entries"]} for _, data in files)
+        common = sorted(set(a) & set(b), key=lambda i: [int(x) for x in i.split(".")])
+        if common:
+            result["agreement"] = {
+                "common": len(common),
+                "exact": round(sum(a[i] == b[i] for i in common) / len(common), 4),
+                "disagreements": [{"id": i, "a": a[i], "b": b[i]} for i in common if a[i] != b[i]],
+            }
+    print(json.dumps(result, indent=2))
 
 
 def main() -> None:
@@ -204,8 +342,17 @@ def main() -> None:
     p.add_argument("n", type=int)
     p.add_argument("--seed", type=int)
     p.add_argument("--code")
+    p.add_argument("--via", choices=("own", "inherited"))
+    p.add_argument("--level", type=int)
+    p.add_argument("--stratify", action="store_true")
+    p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_sample)
+    p = sub.add_parser("audit")
+    p.add_argument("verdicts", nargs="+")
+    p.set_defaults(func=cmd_audit)
     args = parser.parse_args()
+    if args.command == "audit" and len(args.verdicts) > 2:
+        parser.error("audit takes one or two verdict files")
     args.func(Round(Path(args.round)), args)
 
 

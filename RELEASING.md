@@ -29,7 +29,7 @@ version's entry in [CHANGELOG.md](CHANGELOG.md).
 | Agent instructions or prompt text | A model-invoked smoke run whose tree was read with `show --sample 20`, and a measured single branch (below) |
 | Dispatch, waves or estimate constants | A measured single branch, or a full run when wave logic changed |
 | `evals/` or this file | Run the eval |
-| A release derived from a self-run | Review `ledger.py <round> sample 30` and record wrong codes in the round's `audit.md` |
+| A release derived from a self-run | An independent ledger audit (below) |
 
 ## How to run each check
 
@@ -93,6 +93,15 @@ gate runs again. Until a tool does this, check by hand with
   naming no files in a clean directory is low; a run inside a large repository
   whose files agents read is high). If they differ from that end by more than
   15%, run a full measurement in that setting.
+- **Independent ledger audit.** Draw a packet with
+  `python3 docs/self-improvement/ledger.py <round> sample 30 --stratify --seed S --json`.
+  Give it, with `docs/self-improvement/reviewer-prompt.md`, to a fresh-context
+  reviewer that never saw the ledger being written, and to the maintainer when
+  available. Commit each verdict file under `<round>/audit/`, then run
+  `ledger.py <round> audit <files>` and commit its output. It passes when at
+  least one file has `independent: true` and `stratified: true`, and every
+  `wrong` verdict is either fixed in the ledger or answered in the round's
+  `audit.md`.
 - **Full measurement.** A full run in a dedicated session, then `usage.py`.
   It passes when the tree is complete, nothing got stuck and `check-log.jsonl`
   shows every fragment checked. Update `MEASURED` and the three token

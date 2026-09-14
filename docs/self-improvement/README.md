@@ -21,5 +21,7 @@ Tools shared by the rounds:
 | `rubric.md` | Criteria, weights, anchors and the rating file format |
 | `ledger.py <round> check <fragment>` | Validate one ledger fragment (per-reason JSON or rule lines) |
 | `ledger.py <round> merge` | Prove every reason in the round's tree has exactly one disposition; write `ledger.json` and `summary.md` |
-| `ledger.py <round> sample N --seed S` | Print random ledger entries with their ancestor chain, code and note, for audits |
+| `ledger.py <round> sample N --seed S [--via own\|inherited] [--level L] [--stratify] [--json]` | Print random ledger entries with their ancestor chain, code and note; `--stratify` draws equally per level and own or inherited line, `--json` prints a reviewer packet |
+| `ledger.py <round> audit VERDICTS [VERDICTS]` | Validate reviewer verdict files and report wrong-code rates with a 95% interval per group; two files add agreement |
+| `reviewer-prompt.md` | What an independent ledger reviewer receives, and the verdict file format |
 | `usage.py <run-dir> [--out FILE]` | Read Claude Code's subagent logs for a run, report each agent's first-turn context and fit the estimate constants; `--out` keeps the JSON with the round |
