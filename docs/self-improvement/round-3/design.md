@@ -32,18 +32,22 @@ recurring causes. Full accounting can follow once Fix 3's audit tooling exists.
 
 ## Release sequencing
 
-Shipping everything in one version makes every release gate apply at once
-(4.1.1.3, 4.2.3). Instead:
+Decided 2026-09-13: every fix goes into 0.3.0 on this branch, and 0.3.0 is
+released once. Bundling makes every applicable gate apply (4.1.1.3, 4.2.3).
+To pay that cost once, the gates run together on the final commit, after the
+last behavior change:
 
-1. **Release 0.3.0 as it stands** once the eval gate is resolved (Fix 1).
-2. **0.3.1, docs and maintainer tooling only:** Fixes 2, 3, 4, 5c, 5g. Gates:
-   the every-release gates, plus the eval because RELEASING.md changes.
-3. **0.4.0, plugin behavior:** Fixes 5a, 5b, 5e, 5f. Gates:
-   - a model-invoked run
-   - an interactive run, since SKILL.md steps change
-   - a measured branch
-   - a scored quality sample (Fix 3)
-   - the eval
+- the every-release gates
+- a model-invoked run
+- an interactive run
+- a measured branch
+- a scored quality sample by both scorers (Fix 3c)
+- the independent ledger audit (Fix 3b)
+- the eval (Fix 1)
+
+Gate evidence goes stale when a later commit touches that gate's paths, and
+stale evidence is rerun (4.1.4.4). Until the tool in 4b exists, check this by
+hand with `git log <commit>..HEAD -- <paths>`.
 
 ---
 
@@ -68,27 +72,28 @@ reports that `~/.docker` holds symbolic links (2.1, 2.4).
 | Option | What | Verdict |
 |--------|------|---------|
 | A | Replace all 32 links with copies | Rejected. Plugin copies go stale after Desktop updates (2.4.1.5), Desktop may restore the links (2.1.3.3), and `cliPluginsExtraDirs` covers only the 16 plugin links, not the dylibs |
-| **B** | Run the eval with `DOCKER_CONFIG` pointing at a plain folder holding only a copy of `config.json` | **Recommended.** Changes nothing Docker uses day to day. The folder has no links, and since no credentials are on disk, the real `~/.docker` exposes nothing to evaluated agents |
-| C | Run the eval under a second macOS account or on a machine without Docker Desktop | Fallback if B is still refused |
+| B | Run the eval with `DOCKER_CONFIG` pointing at a plain folder holding only a copy of `config.json` | Rejected by the maintainer, 2026-09-13: no Docker workarounds |
+| **C** | Run the eval where Docker Desktop isn't installed: a second macOS account or another machine | **Chosen** |
 
-**Procedure for B.** Needs the maintainer's approval, because it creates a
-folder in the home directory:
+**Procedure for C.** Nothing under `~/.docker` on this Mac changes.
 
-```bash
-mkdir -p ~/.docker-eval && cp ~/.docker/config.json ~/.docker-eval/config.json
-find ~/.docker-eval -type l | wc -l        # must print 0
-DOCKER_CONFIG=~/.docker-eval claude plugin eval . --allow-tools Bash Write Edit \
-  --judge-model sonnet --runs 1 --ablation none --no-publish
-```
+1. On the eval machine or account, confirm the guard has nothing to refuse:
+   `find "${DOCKER_CONFIG:-$HOME/.docker}" -type l 2>/dev/null | head` prints nothing.
+2. Check out the release commit and run the eval command from RELEASING.md.
+3. Record the result with its commit, machine and date, in the Fix 4a format.
 
-- **Unverified:** that the eval's check follows `DOCKER_CONFIG`. A refusal
-  costs nothing (0 turns), so trying B is free. If it's refused, use C.
+If no such environment exists once every other gate has passed, the eval is
+recorded `[blocked]` and the maintainer decides whether to waive it (Fix 4a).
+A waiver is never assumed.
+
 - **Repository change:**
-  - The RELEASING.md eval bullet gains a preflight step: `find
-    "${DOCKER_CONFIG:-$HOME/.docker}" -type l | head`.
-  - It also documents remedy B, with its condition: use it only when
-    `config.json` holds no inline credentials.
+  - The RELEASING.md eval bullet gains the preflight check from step 1.
+  - It says the eval runs where Docker Desktop's links are absent, and that
+    Docker configuration is not altered to get there.
   - The note naming the symlink refusal moves under that preflight.
+  - Eval results may be public (maintainer, 2026-09-13). The eval command in
+    RELEASING.md and README.md drops `--no-publish`, and the recorded evidence
+    links to the published result.
 - **Acceptance:**
   - Both cases record more than 0 turns and receive a verdict.
   - Each verdict is recorded in CHANGELOG.md with the gate statuses from Fix 4.
@@ -187,12 +192,17 @@ SKILL.md refers to them.
 - **First use:** audit the round-2 ledger, whose inherited leaves are the gap
   cause 5 names.
 
-**Tests.** Filter and group counts are deterministic for a seed, verdict
-validation works, and the Wilson interval matches known values.
+**Reviewers (decided 2026-09-13): both.**
+- A fresh-context Claude agent reviews every audit draw and quality sample.
+- The maintainer reviews the same draw when available.
+- Each reviewer writes a separate verdict or score file. Given two files,
+  `audit a.json b.json` prints per-id agreement next to each file's wrong rate.
+- A fresh Claude agent is the same model family as the author (5.5), and its
+  file records that.
 
-**Limit to state honestly.** A fresh Claude agent is the same model family
-(5.5). The verdict file records the family. A human reviewer is preferred
-whenever one is available.
+**Tests.** Filter and group counts are deterministic for a seed, verdict
+validation works, the Wilson interval matches known values, and two-file
+agreement is computed on fixed inputs.
 
 ### 3c. Scored quality sample
 
@@ -299,7 +309,7 @@ never came back (3.4.5.2, 4.4.5.2, 2.3.5.5).
 
 ## Fix 5: Small concrete fixes
 
-### 5a. Per-wave timing (plugin behavior, 0.4.0)
+### 5a. Per-wave timing
 
 **Problem.** No wave timestamps exist, so per-wave time can't be measured (1.4).
 
@@ -320,7 +330,7 @@ never came back (3.4.5.2, 4.4.5.2, 2.3.5.5).
 **Tests.** The replay test asserts the waves are `[root]` then `[1, 2, 3]`,
 with ISO timestamps; status reports seconds as a non-negative integer or null.
 
-### 5b. Check log records error kinds (0.4.0)
+### 5b. Check log records error kinds
 
 **Problem.** The check log keeps only totals (3.5.4.3).
 
@@ -334,7 +344,7 @@ with ISO timestamps; status reports seconds as a non-negative integer or null.
 
 **Tests.** A miscounted fragment logs `count: 1`; a duplicate logs `exact: 1`.
 
-### 5c. Usage report kept with evidence; README cost correction (0.3.1)
+### 5c. Usage report kept with evidence; README cost correction
 
 **Problem.**
 - Measurements printed to the terminal only (5.2.5.5).
@@ -364,7 +374,7 @@ with ISO timestamps; status reports seconds as a non-negative integer or null.
 
 Covered by Fix 3b.
 
-### 5e. Agents stay off the network (0.4.0)
+### 5e. Agents stay off the network
 
 **Problem.** Subagent logs show branch agents 4.3, 5.1 and 5.2 ran `gh`
 commands through Bash, 8 in all:
@@ -380,10 +390,10 @@ The README says the plugin is local-only; nothing in the tree covers this.
 - A new README Known limitations line: the rule is an instruction, not
   enforced, because agents have Bash.
 
-**Gate.** Agent text changed, so a model-invoked smoke run with no network
-commands in its transcript, a measured branch and a quality sample.
+**Gate.** Covered by the final gates. The model-invoked run's agent logs must
+show no network commands.
 
-### 5f. One script path everywhere (0.4.0)
+### 5f. One script path everywhere
 
 **Problem.** The orchestrator shortened `$S` to the relative
 `scripts/fivewhys.py`. That works only when running inside the repository.
@@ -398,7 +408,7 @@ commands in its transcript, a measured branch and a quality sample.
 - A docs test checks that SKILL.md never invokes `scripts/fivewhys.py` without
   a variable prefix.
 
-### 5g. Correct the documentation behind false premises (0.3.1)
+### 5g. Correct the documentation behind false premises
 
 - **Replay test.** Several reasons assumed it replays recorded v0.2.0
   fragments (1.1.2.1.3, 1.1.2.3.2, 1.3.5.2.4). The README and CHANGELOG will
@@ -423,30 +433,33 @@ commands in its transcript, a measured branch and a quality sample.
 
 ## Work order
 
-Each step is one commit on its own branch from `main` after 0.3.0 ships, and
-tests pass before each commit.
+All work happens on `improve/v0.3.0`, one commit per step, with tests passing
+before each commit. Code and text changes come first, so the studies and gates
+run once, against the final code.
 
 | # | Change | Depends on |
 |---|--------|-----------|
-| 1 | Fix 1 procedure B, eval run, statuses recorded | Maintainer approval |
-| 2 | Release 0.3.0: bump, dated entry, merge, marketplace | Step 1 passed, or waived under 4a |
-| 3 | 5g documentation corrections | 2 |
-| 4 | Fix 2 boundary zones and docs test | 2 |
-| 5 | 4a gate statuses and docs test | 2 |
-| 6 | 3a rubric, rating format and tests | 4 |
-| 7 | 3b ledger filters, `audit`, reviewer prompt and tests; then run the independent audit of round 2 | 6 |
-| 8 | 3c `quality.py`, quality rubric and tests; first scored study on this tree | 4, 7 |
-| 9 | 4c verification records (round 2 filled in), 4d deferral schema | 5 |
-| 10 | 5c `usage.py --out` and README cost correction; release 0.3.1 | 3-9 |
-| 11 | 5a wave timing, 5b check-log kinds | 10 |
-| 12 | 5e agent network rule, 5f script path | 10 |
-| 13 | 0.4.0 gates, then release | 11, 12 |
-| 14 | 4b `tools/release_gates.py` (optional) | 5 |
+| 1 | 5g documentation corrections | none |
+| 2 | Fix 2 boundary zones and docs test | none |
+| 3 | 4a gate statuses and docs test; rewrite the existing Unreleased evidence in the new format | none |
+| 4 | 3a rubric, rating format and tests | 2 |
+| 5 | 3b ledger filters, `audit` with two-file agreement, reviewer prompt and tests | 4 |
+| 6 | 3c `quality.py`, quality rubric and tests | 2 |
+| 7 | 4c verification records (round 2 filled in), 4d deferral schema | 3 |
+| 8 | 5c `usage.py --out` and first-turn context | none |
+| 9 | 5a wave timing, 5b check-log kinds | none |
+| 10 | 5e agent network rule, 5f script path | none |
+| 11 | README cost section; CHANGELOG Unreleased entries for steps 1-10 | 8-10 |
+| 12 | Studies, both reviewers: independent audit of the round-2 ledger; scored baseline sample of this round's tree | 5, 6 |
+| 13 | Gates on the final commit: every-release, model-invoked run, interactive run, measured branch, scored sample of the new run's tree against the step-12 baseline by level, eval per Fix 1 | 11, 12 |
+| 14 | Release 0.3.0: bump, dated entry, merge, marketplace entry | 13 all passed, or blocked items waived by the maintainer |
+| After 0.3.0 | 4b `tools/release_gates.py` | 3 |
 
-## Decisions needed
+## Decisions (2026-09-13)
 
-1. **Docker fix:** approve option B, or choose A or C.
-2. **Release order:** ship 0.3.0 before these fixes (recommended), or bundle them.
-3. **Independent reviewer for Fix 3:** a fresh-context Claude agent (same
-   family, recorded as such), you, or both.
-4. **Optional tool:** build 4b's `tools/release_gates.py` now or later.
+1. **Eval:** no Docker workarounds. The eval runs where Docker Desktop isn't
+   installed. Otherwise it's recorded as blocked, for the maintainer to decide
+   (Fix 1).
+2. **Release:** all fixes bundle into 0.3.0.
+3. **Reviewers:** both a fresh-context Claude agent and the maintainer.
+4. **Stale-evidence tool (4b):** after 0.3.0.
