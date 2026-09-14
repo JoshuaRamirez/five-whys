@@ -15,6 +15,7 @@ accounted for here, and the unreleased changes in `CHANGELOG.md` came out of it.
 | `ledger.json` | One line per reason: id, code, note, `via` when inherited from the parent's line, and the reason text |
 | `summary.md` | Reasons per code |
 | `audit.md`, `audit-sample-*.txt` | Two sampled audits of the ledger and what they found |
+| `verification.json` | Written in round 3: whether each improvement's effect was observed, blocked or never run (`ledger.py <round> verify`) |
 
 ## How it was done
 

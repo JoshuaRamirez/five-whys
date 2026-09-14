@@ -22,6 +22,11 @@ Fragments come in two forms:
                                                   --json prints a reviewer packet
   ledger.py <round> audit VERDICTS [VERDICTS]     validate reviewer verdict files and report
                                                   wrong-code rates; two files add agreement
+  ledger.py <round> verify                        report which improvements were observed
+                                                  working, from verification.json
+
+A catalog with "schema": 3 must give every disposition titled "Deferred..." a
+deferral: {"kind": "one-off-run" | "study", "trigger": ..., "cost": ...}.
 """
 
 from __future__ import annotations
@@ -38,6 +43,8 @@ from pathlib import Path
 MAX_NOTE_WORDS = 25
 CITED = re.compile(r"\b(?:IMP|R)-\d+\b")
 VERDICTS = ("fit", "adjacent", "wrong")
+VERIFICATION = ("observed", "blocked", "not-run")
+DEFERRAL_KINDS = ("one-off-run", "study")
 
 
 def load(path: Path):
@@ -68,6 +75,24 @@ def wilson(k: int, n: int, z: float = 1.96) -> list[float]:
     return [round(max(0.0, center - half), 4), round(min(1.0, center + half), 4)]
 
 
+def deferral_errors(catalog: dict) -> list[str]:
+    """A deferral names what kind of work it waits for, what brings it back and what that costs."""
+    errors = []
+    for item in catalog["dispositions"]:
+        if not item["title"].lower().startswith("deferred"):
+            continue
+        deferral = item.get("deferral")
+        if not isinstance(deferral, dict):
+            errors.append(f"catalog {item['code']}: a deferred disposition needs a deferral object")
+            continue
+        if deferral.get("kind") not in DEFERRAL_KINDS:
+            errors.append(f"catalog {item['code']}: deferral kind must be one of {', '.join(DEFERRAL_KINDS)}")
+        for field in ("trigger", "cost"):
+            if not str(deferral.get(field) or "").strip():
+                errors.append(f"catalog {item['code']}: deferral {field} is required")
+    return errors
+
+
 class Round:
     def __init__(self, folder: Path):
         self.folder = folder
@@ -77,8 +102,10 @@ class Round:
             self.parent[node["id"]] = parent
         catalog = load(folder / "catalog.json")
         self.rules = catalog.get("rules", [])
+        self.improvements = [item["code"] for item in catalog["improvements"]]
         self.catalog = {item["code"]: item for item in catalog["improvements"] + catalog["dispositions"]}
         self.max_words = catalog.get("max_note_words", MAX_NOTE_WORDS)
+        self.catalog_errors = deferral_errors(catalog) if catalog.get("schema", 2) >= 3 else []
 
     def chain(self, node_id: str) -> list[str]:
         ids = []
@@ -150,7 +177,7 @@ class Round:
 def cmd_check(ledger: Round, args) -> None:
     path = Path(args.fragment)
     entries, errors = ledger.read_fragment(path)
-    errors += ledger.validate(entries)
+    errors += ledger.catalog_errors + ledger.validate(entries)
     if args.scope:
         expected = set(ledger.scope_ids(args.scope))
         if not expected:
@@ -166,7 +193,7 @@ def cmd_check(ledger: Round, args) -> None:
 
 
 def cmd_merge(ledger: Round, args) -> None:
-    entries, errors = [], []
+    entries, errors = [], list(ledger.catalog_errors)
     for fragment in sorted((ledger.folder / "ledger").glob("*.*")):
         found, errs = ledger.read_fragment(fragment)
         entries += found
@@ -327,6 +354,30 @@ def cmd_audit(ledger: Round, args) -> None:
     print(json.dumps(result, indent=2))
 
 
+def cmd_verify(ledger: Round, args) -> None:
+    """An improvement counts as done only when its effect was observed, not when its code or text exists."""
+    path = ledger.folder / "verification.json"
+    if not path.exists():
+        sys.exit(f"{path} does not exist")
+    records = load(path).get("improvements", {})
+    errors = list(ledger.catalog_errors)
+    errors += [f"{code}: no verification record" for code in ledger.improvements if code not in records]
+    errors += [f"{code}: not an improvement in catalog.json" for code in records if code not in ledger.improvements]
+    for code, record in records.items():
+        if not isinstance(record, dict) or record.get("status") not in VERIFICATION:
+            errors.append(f"{code}: status must be one of {', '.join(VERIFICATION)}")
+        elif not str(record.get("evidence") or "").strip():
+            errors.append(f"{code}: evidence is required, saying what was or wasn't seen")
+        elif record["status"] == "observed" and not re.fullmatch(r"[0-9a-f]{7,40}", str(record.get("commit"))):
+            errors.append(f"{code}: an observed improvement needs the commit it was observed on")
+    if errors:
+        print("\n".join(errors[:40]))
+        sys.exit(1)
+    by_status = {s: [c for c in ledger.improvements if records[c]["status"] == s] for s in VERIFICATION}
+    print(json.dumps({"improvements": len(ledger.improvements), "observed": len(by_status["observed"]),
+                      "blocked": by_status["blocked"], "not_run": by_status["not-run"]}, indent=2))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("round", help="round directory, e.g. docs/self-improvement/round-2")
@@ -350,6 +401,8 @@ def main() -> None:
     p = sub.add_parser("audit")
     p.add_argument("verdicts", nargs="+")
     p.set_defaults(func=cmd_audit)
+    p = sub.add_parser("verify")
+    p.set_defaults(func=cmd_verify)
     args = parser.parse_args()
     if args.command == "audit" and len(args.verdicts) > 2:
         parser.error("audit takes one or two verdict files")

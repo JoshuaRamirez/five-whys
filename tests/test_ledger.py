@@ -114,5 +114,30 @@ class AuditTests(LedgerCase):
         self.assertIn("independent: must be true or false", out)
 
 
+class VerifyAndDeferralTests(LedgerCase):
+    def write_verification(self, records):
+        (self.round / "verification.json").write_text(json.dumps({"improvements": records}))
+
+    def test_verify_counts_statuses_and_requires_every_improvement(self):
+        self.write_verification({})
+        self.assertIn("IMP-1: no verification record", self.cli("verify", ok=False).stdout)
+        self.write_verification({"IMP-1": {"status": "observed", "evidence": "seen in a run"}})
+        self.assertIn("needs the commit", self.cli("verify", ok=False).stdout)
+        self.write_verification({"IMP-1": {"status": "blocked", "evidence": "eval refused"}})
+        self.assertEqual(json.loads(self.cli("verify").stdout),
+                         {"improvements": 1, "observed": 0, "blocked": ["IMP-1"], "not_run": []})
+
+    def test_schema_3_catalog_needs_deferral_triggers(self):
+        catalog = json.loads((self.round / "catalog.json").read_text())
+        catalog["schema"] = 3
+        catalog["dispositions"].append({"code": "R-1", "title": "Deferred: a study", "detail": "d"})
+        (self.round / "catalog.json").write_text(json.dumps(catalog))
+        out = self.cli("check", self.round / "ledger" / "a.txt", ok=False).stdout
+        self.assertIn("R-1: a deferred disposition needs a deferral object", out)
+        catalog["dispositions"][-1]["deferral"] = {"kind": "study", "trigger": "two outside users", "cost": "10 runs"}
+        (self.round / "catalog.json").write_text(json.dumps(catalog))
+        self.assertIn("OK", self.cli("check", self.round / "ledger" / "a.txt").stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

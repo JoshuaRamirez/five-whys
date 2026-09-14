@@ -23,6 +23,7 @@ Tools shared by the rounds:
 | `ledger.py <round> merge` | Prove every reason in the round's tree has exactly one disposition; write `ledger.json` and `summary.md` |
 | `ledger.py <round> sample N --seed S [--via own\|inherited] [--level L] [--stratify] [--json]` | Print random ledger entries with their ancestor chain, code and note; `--stratify` draws equally per level and own or inherited line, `--json` prints a reviewer packet |
 | `ledger.py <round> audit VERDICTS [VERDICTS]` | Validate reviewer verdict files and report wrong-code rates with a 95% interval per group; two files add agreement |
+| `ledger.py <round> verify` | Report which of the round's improvements were observed working, blocked or never run, from `verification.json` |
 | `reviewer-prompt.md` | What an independent ledger reviewer receives, and the verdict file format |
 | `quality.py draw\|score\|report` | Draw a shuffled packet of reasons without ids, validate a scorer's file, and report means per criterion and level, with agreement between two scorers |
 | `quality-rubric.md` | Anchors for scoring a reason 0-2 as causal, specific and distinct, and the score file format |
