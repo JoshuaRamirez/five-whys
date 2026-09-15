@@ -136,7 +136,7 @@ class InputTreeTests(unittest.TestCase):
                              {"level 1 own", "level 2 inherited"})
 
 
-class FiveWsTreeTests(unittest.TestCase):
+class QuestionTreeTests(unittest.TestCase):
     def test_levels_ignore_the_input_and_question_at_the_start_of_ids(self):
         def answers(prefix, level=1):
             return [{"id": f"{prefix}.{i}", "depth": level, "answer": f"Answer {prefix}.{i}.",

@@ -137,7 +137,7 @@ Repeat:
 3. Otherwise dispatch every task in `tasks` in a single message, one Agent call
    per task, all in parallel:
    - `subagent_type`: the plan's `agent` value (`five-whys:expander`)
-   - `description`: `five ws <task id>`
+   - `description`: `five whys <task id>`
    - `prompt`: the task's `prompt`, verbatim (a short pointer to the full prompt file)
    - `model`: the task's `model`, only when it is not null
 
