@@ -107,8 +107,8 @@ class InputTreeTests(unittest.TestCase):
                      **({"answers": answers(breadth, depth, f"{prefix}.{i}", level + 1)} if level < depth else {})}
                     for i in range(1, breadth + 1)]
         with tempfile.TemporaryDirectory() as tmp:
-            tree = Path(tmp) / "five-ws.json"
-            tree.write_text(json.dumps({"schema": "five-ws/1", "inputs": [
+            tree = Path(tmp) / "five-whys.json"
+            tree.write_text(json.dumps({"schema": "five-whys/4", "inputs": [
                 {"id": "1", "depth": 0, "input": "Deploys fail.", "trees": [
                     {"id": "1.why", "question": "why", "answers": answers(2, 2, "1.why")},
                     {"id": "1.how", "question": "how", "answers": answers(2, 2, "1.how")}]}]}))

@@ -1,6 +1,6 @@
-# five-ws
+# five-whys
 
-A Claude Code plugin that runs an **exhaustive** Five Ws on one problem or a
+A Claude Code plugin that runs an **exhaustive** Five Whys on one problem or a
 list of problems. Choose any combination of five questions (why, what, when,
 where and how), and each problem gets one tree per question. Each question is
 asked up to five levels deep: every answer gets five answers of its own, each
@@ -10,8 +10,7 @@ asked the same question again. At the full depth, each tree holds:
 5 + 25 + 125 + 625 + 3,125 = 3,905 answers
 ```
 
-Asking only why gives a classic exhaustive Five Whys, and `/five-whys` stays
-as a shortcut for exactly that.
+By default it asks only why, which is a classic exhaustive Five Whys.
 
 The whole run goes into one JSON file you can read into context in full. The
 plugin also writes mechanical aids: an index, hygiene flags and measurements.
@@ -21,20 +20,20 @@ It never ranks, prunes, summarizes or picks answers. Analysis is up to you.
 
 ```
 /plugin marketplace add JoshuaRamirez/claude-code-plugins
-/plugin install five-ws@RedJay
+/plugin install five-whys@RedJay
 ```
 
 ## Use
 
 ```
-/five-ws Our deploys keep failing on Friday afternoons
+/five-whys Our deploys keep failing on Friday afternoons
 ```
 
 That asks why. Name other questions with `--ask`, or in words at the start:
 
 ```
-/five-ws --ask what,when,how Our deploys keep failing on Friday afternoons
-/five-ws ask how and where for: Our deploys keep failing on Friday afternoons
+/five-whys --ask what,when,how Our deploys keep failing on Friday afternoons
+/five-whys ask how and where for: Our deploys keep failing on Friday afternoons
 ```
 
 When the questions come from your words, the skill says which set it understood.
@@ -42,7 +41,7 @@ When the questions come from your words, the skill says which set it understood.
 A list of problems, one per line, each asked why and how two levels deep:
 
 ```
-/five-ws --ask why,how --depth 2
+/five-whys --ask why,how --depth 2
 1. Deploys keep failing on Friday afternoons
 2. Login is slow after 9am
 3. Nightly backups skip runs
@@ -101,7 +100,7 @@ skill shows the items it sees and asks which should get their own trees.
 | `--split N` | Levels root agents write (default: sized so no agent writes more than 155 answers) | Balance fragment size against agent count for unusual shapes |
 | `--max-parallel N` | Agents per wave, 5 by default, up to 20 | Choose between speed and machine load; smaller waves also let later branches see earlier ones |
 | `--context-file PATH` | Put a file's text in every agent prompt | Give specifics without being asked for them |
-| `--base DIR` | Write runs somewhere other than `.five-ws/` | Keep test runs apart from real ones |
+| `--base DIR` | Write runs somewhere other than `.five-whys/` | Keep test runs apart from real ones |
 | `--yes` | Skip the questions about inputs and context, and the cost confirmation | Unattended runs such as the eval |
 | `--resume RUN_DIR` | Continue an interrupted run; add `--max-parallel N` to change the wave size | Recover without losing finished fragments |
 
@@ -118,7 +117,7 @@ takes 6 agents per tree and depth 5 takes 26.
 
 Claude Code loads installed plugins from its cache. To run the skill and agent
 text in a working copy instead, start a fresh session with
-`claude --plugin-dir /path/to/five-ws`.
+`claude --plugin-dir /path/to/five-whys`.
 
 ## What a full run costs
 
@@ -156,11 +155,11 @@ the totals.
 
 ## Output
 
-Each run lives in `.five-ws/<timestamp>-<slug>/`:
+Each run lives in `.five-whys/<timestamp>-<slug>/`:
 
 | File | Contents |
 |------|----------|
-| `five-ws.json` | Every input, its trees and their answers, one answer per line |
+| `five-whys.json` | Every input, its trees and their answers, one answer per line |
 | `index.md` | The settings used, each input's trees to level 2 with ids, and the Read windows for loading the whole file |
 | `hygiene.json` | Mechanical flags, each with the texts involved: exact duplicates, near-duplicates, answers restating a parent or ancestor, cross-branch leads, over-long answers |
 | `run.json` | Plugin version, options given, inputs, questions, shape, model level, estimate shown, dispatch attempts, each wave's start time and ids, duration, output size |
@@ -168,12 +167,12 @@ Each run lives in `.five-ws/<timestamp>-<slug>/`:
 | `prompts/` | The full prompt each agent was dispatched with |
 | `check-log.jsonl` | Every check an agent ran, with the kinds of errors and warnings, so repair cycles are countable |
 
-`.five-ws/.gitignore` keeps runs out of git, since problem statements can be sensitive.
+`.five-whys/.gitignore` keeps runs out of git, since problem statements can be sensitive.
 
 The layout, shown with answers from an earlier self-run:
 
 ```json
-{"schema":"five-ws/1", ... ,"input_count":1,"questions":["why"], ... ,"inputs":[
+{"schema":"five-whys/4", ... ,"input_count":1,"questions":["why"], ... ,"inputs":[
 {"id":"1","depth":0,"input":"The five-whys Claude Code plugin (v0.2.0) is rated 8/10 instead of 10/10.","trees":[
  {"id":"1.why","question":"why","answers":[
   {"id":"1.why.3","depth":1,"answer":"Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.","answers":[
@@ -210,7 +209,7 @@ branch with its ancestors.
 - **References (advisory):** file paths and commit hashes the answers cite are
   checked against the project the run was assembled in (`assemble --root`).
   Ones not found are listed under `references` in `hygiene.json`, with how many
-  answers in each tree cite something concrete. In the first five-ws run,
+  answers in each tree cite something concrete. In the first five-whys run,
   every cited path and commit existed, and the answers later found wrong cited
   nothing.
 - **Measured on a real tree:** among 16 pairs from the v0.2.0 self-run that
@@ -232,7 +231,7 @@ branch with its ancestors.
   `cross_branch` leads.
 - Only why trees have been measured for cost and scored for quality. What,
   when, where and how are new, and so are model levels.
-- Runs started by earlier versions (five-whys) can't be resumed or assembled,
+- Runs started by 0.2.0 and earlier can't be resumed or assembled,
   because their fragments are laid out differently. `show` still reads their
   finished trees.
 - Deep levels drift toward generic answers. Agents are told to stay specific,
@@ -251,7 +250,7 @@ branch with its ancestors.
 
 ## Resuming, subsets and partial runs
 
-- `/five-ws --resume <run-dir>` continues an interrupted run; `plan` skips
+- `/five-whys --resume <run-dir>` continues an interrupted run; `plan` skips
   fragments that already validate. A task that fails 3 dispatches is reported
   as stuck.
 - `plan --only 1.why.2,2.how.4` dispatches selected branches.
@@ -259,18 +258,18 @@ branch with its ancestors.
 
 ## Script
 
-`scripts/fivews.py` (Python 3.9+, standard library only), with similarity
+`scripts/fivewhys.py` (Python 3.9+, standard library only), with similarity
 scoring in `scripts/hygiene.py`:
 
 | Command | Does |
 |---------|------|
-| `parse` (arguments on stdin) | Split `/five-ws` arguments into questions, inputs, `init` flags and skill options, with errors for unknown or invalid options and hints when the split into inputs is unclear |
+| `parse` (arguments on stdin) | Split `/five-whys` arguments into questions, inputs, `init` flags and skill options, with errors for unknown or invalid options and hints when the split into inputs is unclear |
 | `init` (inputs on stdin, one per line) | Create a run: `--preset`, `--ask`, `--model-level`, `--breadth`, `--depth` (1-5), `--split`, `--max-parallel`, `--context-file`, `--base`; prints the estimate and whether to confirm |
 | `plan <run>` | Next wave of missing fragments with prompts and models; `--record` counts attempts; `--only` selects branches; `--max-parallel` changes the wave size |
 | `status <run>` | Done, missing and stuck fragments, check cycles and error kinds per fragment, each wave's seconds, and the plugin version that created the run |
 | `check <fragment> --breadth N --depth N` | Validate one fragment; warnings never block |
-| `assemble <run>` | Write `five-ws.json`, `index.md`, `hygiene.json`; `--partial` allows missing trees and branches; `--root` sets the project cited references are checked against (default: the current directory) |
-| `show <file-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`); reads five-whys files too |
+| `assemble <run>` | Write `five-whys.json`, `index.md`, `hygiene.json`; `--partial` allows missing trees and branches; `--root` sets the project cited references are checked against (default: the current directory) |
+| `show <file-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`); reads trees from earlier versions too |
 
 Tests: `python3 -m unittest discover tests`. They include the labeled hygiene
 pairs and a replay of the skill's dispatch loop. The replay's fragments are
@@ -300,7 +299,7 @@ Changes: [CHANGELOG.md](CHANGELOG.md).
 
 | Zone | For | Allowed | Not allowed |
 |------|-----|---------|-------------|
-| Run output: `five-ws.json`, `index.md`, `hygiene.json`, the skill's final reply | You | Answers verbatim, counts, mechanical flags, measurements | Ranking, summaries, selecting or pruning answers |
+| Run output: `five-whys.json`, `index.md`, `hygiene.json`, the skill's final reply | You | Answers verbatim, counts, mechanical flags, measurements | Ranking, summaries, selecting or pruning answers |
 | Reading aids: this README, the skill's loading section, `show` | You | How to load and navigate a run, and a generic reading method | Examples that pick answers from a real run |
 | Development measurement: `docs/self-improvement/` | The maintainer | Scored samples, audits, reviews by a model or a person | Writing a score into a run directory or anything a run shows you |
 

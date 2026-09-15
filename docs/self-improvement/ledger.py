@@ -58,7 +58,7 @@ def walk(nodes, parent=None):
 
 
 def text_of(node: dict) -> str:
-    return node.get("answer", node.get("reason"))  # five-ws answers, five-whys reasons
+    return node.get("answer", node.get("reason"))  # five-whys answers, five-whys reasons
 
 
 def level_of(node_id: str, offset: int = 0) -> int:
@@ -103,7 +103,7 @@ class Round:
         self.folder = folder
         self.nodes, self.parent = {}, {}
         tree = load(folder / "tree.json")
-        if str(tree.get("schema", "")).startswith("five-ws/"):  # ids: input, question, positions
+        if tree.get("inputs") and "trees" in tree["inputs"][0]:  # five-whys/4 ids: input, question, positions
             self.offset = 2
             tops = [n for entry in tree["inputs"] for t in entry.get("trees") or [] for n in t.get("answers") or []]
         elif "inputs" in tree:  # five-whys/3 ids: input, positions

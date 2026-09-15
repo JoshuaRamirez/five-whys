@@ -45,26 +45,37 @@ every gate has a status that allows the bump (see Evidence).
 - RELEASING.md gates releases by kind of change and documents
   `claude --plugin-dir .` and `usage.py` (IMP-35, IMP-36).
 
-Requested by the maintainer on 2026-09-14, the product change:
+From the goal run on 2026-09-14 (`docs/self-improvement/round-3/goal-2026-09-14.md`):
 
-- The plugin is now **five-ws**. `/five-ws` asks any combination of why, what,
-  when, where and how, chosen with `--ask` (why by default) or with a leading
-  phrase such as "ask how and where for:". Each input gets one tree per
-  question, and every answer is asked the same question again down to `--depth`.
-- `/five-whys` stays as a shortcut for `/five-ws --ask why`.
+- Agent guidance says where-answers name where things happen rather than the
+  files that describe them, what-answers name things, and how-answers lead
+  with the action. On the same 8 inputs × 5 questions, where-answers citing a
+  file fell from 47.5% to 2.5%, and hygiene leads from 8 to 1.
+- `assemble` checks every file path and commit hash an answer cites against
+  the project (`--root`) and lists the ones not found in `hygiene.json`, with
+  a per-tree count of concrete answers.
+- `check` rejects answers over 30 words. Haiku's how-answers had run to 34.
+- Agents skip hidden and git-ignored folders unless the input names them,
+  after one read the session notes in `.remember/`.
+
+Requested by the maintainer on 2026-09-14, the question change:
+
+- `/five-whys` asks why, or any combination of why, what, when, where and how,
+  chosen with `--ask` (why by default) or with a leading phrase such as "ask
+  how and where for:". Each input gets one tree per question, and every answer
+  is asked the same question again down to `--depth`.
 - `--model-level 1-5` sets a model mix from all haiku to all opus. Root agents
   step up first, at levels 2 and 4.
-- Output is `five-ws.json` (schema `five-ws/1`) in `.five-ws/`. Nodes hold
-  `answer` and `answers`, and ids carry the input and the question, as in
-  `2.how.4.1`. Hygiene marks leads `across_questions` as well as
-  `across_inputs`, and `show`, `usage.py`, `quality.py` and `ledger.py` read
-  both five-ws and five-whys files.
-- The agent is `five-ws:expander`, with guidance for each question, and the
-  script is `scripts/fivews.py`.
-- A fourth eval case asks what and how at depth 1. The first two cases run
-  through `/five-whys`, and the input-list case through `/five-ws`.
-- The rename changes the RedJay marketplace entry, so existing five-whys
-  installs need `/plugin install five-ws@RedJay`.
+- Output is still `five-whys.json` in `.five-whys/`, now with schema
+  `five-whys/4`: inputs hold one tree per question, nodes hold `answer` and
+  `answers`, and ids carry the input and the question, as in `2.how.4.1`.
+  Hygiene marks leads `across_questions` as well as `across_inputs`, and
+  `show`, `usage.py`, `quality.py` and `ledger.py` read every earlier layout.
+- The agent is `five-whys:expander`, with guidance for each question.
+- A fourth eval case asks what and how at depth 1.
+- On the branch, the plugin was briefly renamed five-ws. The maintainer kept
+  the name five-whys before release, so the command, the install and the
+  marketplace entry are unchanged.
 
 Requested by the maintainer earlier on 2026-09-14:
 

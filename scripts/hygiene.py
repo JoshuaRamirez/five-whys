@@ -67,7 +67,7 @@ def hygiene(flat: list[dict], report=None, branch_level: int = 1) -> dict:
 
     `branch_level` is how many id segments name a level-1 reason: 1 for trees
     assembled before 0.3.0, 2 when ids start with the input number, 3 when they
-    also carry the question (five-ws). Pairs from different inputs or questions
+    also carry the question (five-whys). Pairs from different inputs or questions
     are then leads too, marked across_inputs and across_questions.
     """
     by_id = {r["id"]: r for r in flat}
@@ -109,7 +109,7 @@ def hygiene(flat: list[dict], report=None, branch_level: int = 1) -> dict:
         elif score >= CROSS_BRANCH_SIMILARITY and branch_of(a, branch_level) != branch_of(b, branch_level):
             if branch_level > 1:
                 pair["across_inputs"] = branch_of(a) != branch_of(b)
-            if branch_level > 2:  # five-ws ids: input, question, positions
+            if branch_level > 2:  # five-whys ids: input, question, positions
                 pair["across_questions"] = a.split(".")[1] != b.split(".")[1]
             cross.append(pair)
     near.sort(key=lambda p: -p["similarity"])

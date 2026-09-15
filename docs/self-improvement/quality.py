@@ -37,7 +37,7 @@ def key_path(packet: Path) -> Path:
 
 
 def text_of(node: dict) -> str:
-    return node.get("answer", node.get("reason"))  # five-ws answers, five-whys reasons
+    return node.get("answer", node.get("reason"))  # five-whys answers, five-whys reasons
 
 
 def children_of(node: dict) -> list:
@@ -57,8 +57,8 @@ def reasons_in_context(nodes, chain=()) -> list[dict]:
 
 
 def tree_reasons(tree: dict) -> list[dict]:
-    """Answers in context from five-ws files, and from five-whys trees with or without inputs."""
-    if str(tree.get("schema", "")).startswith("five-ws/"):
+    """Answers in context from five-whys files, and from five-whys trees with or without inputs."""
+    if tree.get("inputs") and "trees" in tree["inputs"][0]:  # five-whys/4: one tree per question
         return [dict(item, input=entry["input"], question=t["question"]) for entry in tree["inputs"]
                 for t in entry.get("trees") or [] if not t.get("missing")
                 for item in reasons_in_context(t.get("answers") or [])]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Five Ws run manager.
+"""Five Whys run manager.
 
 A run takes one or more inputs and one or more questions: why, what, when, where
 and how. Each input gets one tree per question. The question is asked of the
@@ -9,12 +9,12 @@ fragments: root agents write levels 1..split for a group of trees, and one branc
 agent per level-`split` answer writes the levels beneath it. This script owns
 everything deterministic:
 
-  parse     split raw /five-ws arguments (stdin) into options, questions and inputs
+  parse     split raw /five-whys arguments (stdin) into options, questions and inputs
   init      create a run (inputs on stdin, one per line) and print its size estimate
   plan      list the next wave of missing fragments, each with a dispatch prompt
   status    report done, missing and stuck fragments
   check     validate one fragment against its expected shape
-  assemble  merge fragments into five-ws.json plus index.md and hygiene.json
+  assemble  merge fragments into five-whys.json plus index.md and hygiene.json
   show      print a subtree, the top levels, or a random sample, with ancestor chains
 
 Run metadata lives in <run>/run.json and fragments in <run>/fragments/.
@@ -38,10 +38,10 @@ SCRIPT = Path(__file__).resolve()
 sys.path.insert(0, str(SCRIPT.parent))
 from hygiene import hygiene  # noqa: E402
 
-SCHEMA = "five-ws/1"
-AGENT = "five-ws:expander"
-OUTPUT = "five-ws.json"
-DEFAULT_BASE = ".five-ws"
+SCHEMA = "five-whys/4"
+AGENT = "five-whys:expander"
+OUTPUT = "five-whys.json"
+DEFAULT_BASE = ".five-whys"
 PRESETS = {"full": (5, 5), "smoke": (3, 3)}
 SMOKE_SPLIT = 1  # the smoke preset keeps a root and branches, so it rehearses both kinds of dispatch
 MAX_DEPTH = 5
@@ -99,7 +99,7 @@ AGENT_OVERHEAD_TOKENS_LOW = 8_400
 TOKENS_PER_ANSWER_LOW = 98
 OUTPUT_TOKENS_PER_ANSWER = 38
 
-# Options /five-ws accepts. "init" is the init flag an option becomes; None means
+# Options /five-whys accepts. "init" is the init flag an option becomes; None means
 # the skill consumes it. The README and SKILL.md document exactly these.
 OPTIONS = [
     {"flag": "--smoke", "value": None, "init": "--preset"},
@@ -295,7 +295,7 @@ def parse_invocation(text: str) -> dict:
         if problem:
             errors.append("--resume takes no inputs")
         if not (Path(given["--resume"]) / "run.json").is_file():
-            errors.append(f"--resume {given['--resume']} is not a five-ws run directory")
+            errors.append(f"--resume {given['--resume']} is not a five-whys run directory")
     elif not inputs:
         errors.append("no input after the options")
 
@@ -401,7 +401,7 @@ def load_fragment(path: Path, breadth: int, depth: int):
 def read_run(run: Path) -> dict:
     path = run / "run.json"
     if not path.exists():
-        sys.exit(f"not a five-ws run directory: {run}")
+        sys.exit(f"not a five-whys run directory: {run}")
     meta = json.loads(path.read_text(encoding="utf-8"))
     if meta.get("schema") != SCHEMA:
         sys.exit(f"{run} was created by an older version ({meta.get('plugin_version', 'before 0.3.0')}), "
@@ -535,7 +535,7 @@ def root_prompt(meta: dict, first: int, last: int, fragment: Path) -> str:
     trees, inputs = trees_of(meta), meta["inputs"]
     count = last - first + 1
     which = f"tree {first}" if count == 1 else f"trees {first}-{last}"
-    lines = [f"Five Ws — ROOT expansion of {which} of {len(trees)} (levels 1-{split} of {depth}).", ""]
+    lines = [f"Five Whys — ROOT expansion of {which} of {len(trees)} (levels 1-{split} of {depth}).", ""]
     for number in range(first, last + 1):
         k, question = tree_parts(trees[number - 1])
         lines += [f"Tree {number}: input {k}, question {question.upper()}",
@@ -559,7 +559,7 @@ def branch_prompt(meta: dict, tree_id: str, chain: tuple, fragment: Path, writte
     k, question = tree_parts(tree_id)
     node_id, text = chain[-1]
     first = split + 1
-    lines = [f"Five Ws — BRANCH expansion of node {node_id} (levels {first}-{depth} of {depth}).", "",
+    lines = [f"Five Whys — BRANCH expansion of node {node_id} (levels {first}-{depth} of {depth}).", "",
              f"Input {k}: {meta['inputs'][k - 1]}",
              f"Question: {question.upper()}. Answers are {QUESTIONS[question]['answers']}."]
     lines += context_lines(meta)
@@ -640,7 +640,7 @@ def cmd_init(args) -> None:
     (run / "fragments").mkdir(parents=True)
     ignore = Path(args.base) / ".gitignore"
     if not ignore.exists():  # problem statements and answers can be sensitive
-        ignore.write_text("# Five Ws runs can hold sensitive details; keep them out of git.\n*\n", encoding="utf-8")
+        ignore.write_text("# Five Whys runs can hold sensitive details; keep them out of git.\n*\n", encoding="utf-8")
 
     trees = len(inputs) * len(questions)
     size = estimate(breadth, depth, split, trees)
@@ -716,7 +716,7 @@ def cmd_plan(args) -> None:
         prompt_file.parent.mkdir(exist_ok=True)
         prompt_file.write_text(task["prompt"] + "\n", encoding="utf-8")
         task["prompt_file"] = str(prompt_file)
-        task["prompt"] = f"Read {prompt_file} and carry out the Five Ws task it describes, exactly as written."
+        task["prompt"] = f"Read {prompt_file} and carry out the Five Whys task it describes, exactly as written."
     if args.record and wave:
         for task in wave:
             attempts[task["id"]] = task["attempt"]
@@ -1077,7 +1077,7 @@ def cmd_assemble(args) -> None:
         if meta.get("model_level") else "models inherit"
     count = f"{len(inputs)} input{'s' if len(inputs) != 1 else ''} × {len(questions)} " \
             f"question{'s' if len(questions) != 1 else ''} ({', '.join(questions)})"
-    index = ["# Five Ws index", "",
+    index = ["# Five Whys index", "",
              f"{count}, each asked {depth} level(s) deep with {breadth} answers per question: {total:,} answers.", "",
              f"Settings: {breadth} wide x {depth} deep, root writes {split} level(s), {models}"
              + f", waves of {meta['max_parallel']}"
@@ -1130,11 +1130,11 @@ def cmd_assemble(args) -> None:
 
 
 def show_nodes(data: dict) -> list[dict]:
-    """Every tree layout as nodes with id, kind, text and children: five-ws, and five-whys before it."""
+    """Every tree layout as nodes with id, kind, text and children: five-whys, and five-whys before it."""
     def answers(nodes):
         return [{"id": n["id"], "kind": "answer", "text": n.get("answer", n.get("reason")), "missing": n.get("missing"),
                  "children": answers(n.get("answers") or n.get("whys") or [])} for n in nodes]
-    if str(data.get("schema", "")).startswith("five-ws/"):
+    if data.get("inputs") and "trees" in data["inputs"][0]:  # five-whys/4: one tree per question
         return [{"id": i["id"], "kind": "input", "text": f"[input] {i['input']}", "children": [
                     {"id": t["id"], "kind": "tree", "text": f"[{t['question']}]", "missing": t.get("missing"),
                      "children": answers(t.get("answers") or [])} for t in i.get("trees", [])]}
@@ -1194,7 +1194,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p = sub.add_parser("parse", help="split raw /five-ws arguments (stdin) into options, questions and inputs")
+    p = sub.add_parser("parse", help="split raw /five-whys arguments (stdin) into options, questions and inputs")
     p.set_defaults(func=cmd_parse)
 
     p = sub.add_parser("init", help="create a run; inputs on stdin, one per line")

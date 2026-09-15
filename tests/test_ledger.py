@@ -144,7 +144,7 @@ class FiveWsTreeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp) / "round-9"
             (folder / "ledger").mkdir(parents=True)
-            (folder / "tree.json").write_text(json.dumps({"schema": "five-ws/1", "inputs": [
+            (folder / "tree.json").write_text(json.dumps({"schema": "five-whys/4", "inputs": [
                 {"id": "1", "depth": 0, "input": "Input 1", "trees": [
                     {"id": "1.why", "question": "why", "answers": answers("1.why")},
                     {"id": "1.how", "question": "how", "answers": answers("1.how")}]}]}))

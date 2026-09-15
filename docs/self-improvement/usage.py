@@ -103,7 +103,7 @@ def main() -> None:
             "fit": {"AGENT_OVERHEAD_TOKENS": round(root["reported_total"] - root_reasons * per_reason, -2),
                     "TOKENS_PER_REASON": round(per_reason)},
         })
-    output = next((run / name for name in ("five-ws.json", "five-whys.json") if (run / name).exists()), None)
+    output = next((run / name for name in ("five-whys.json", "five-whys.json") if (run / name).exists()), None)
     if output:
         result["fit_output"] = {"OUTPUT_TOKENS_PER_REASON": round(output.stat().st_size / 4 / reasons(breadth, depth))}
     result["agents"] = sorted(latest.values(), key=lambda a: [int(x) if x.isdigit() else -1 for x in a["id"].split(".")])

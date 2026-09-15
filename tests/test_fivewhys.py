@@ -1,4 +1,4 @@
-"""Tests for scripts/fivews.py. Run from the repo root: python3 -m unittest discover tests"""
+"""Tests for scripts/fivewhys.py. Run from the repo root: python3 -m unittest discover tests"""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "fivews.py"
+SCRIPT = ROOT / "scripts" / "fivewhys.py"
 READ_WINDOW_BYTES = int(re.search(r"READ_WINDOW_BYTES = ([\d_]+)", SCRIPT.read_text()).group(1).replace("_", ""))
 PROBLEM = "Deploys fail on Friday afternoons"
 
@@ -463,9 +463,9 @@ class AssembleTests(RunCase):
         self.assertEqual(self.plan(run_dir)["state"], "ready")
         summary = json.loads(run("assemble", run_dir).stdout)
         self.assertTrue(summary["complete"])
-        tree = self.read(run_dir / "five-ws.json")
+        tree = self.read(run_dir / "five-whys.json")
         self.assertEqual((tree["schema"], tree["input_count"], tree["questions"], tree["inputs"][0]["input"]),
-                         ("five-ws/1", 1, ["why"], PROBLEM))
+                         ("five-whys/4", 1, ["why"], PROBLEM))
         ids = answer_ids(tree["inputs"][0]["trees"][0]["answers"])
         self.assertEqual((len(ids), len(set(ids)), ids[0]), (3905, 3905, "1.why.1"))
         self.assertEqual([level["answers"] for level in tree["levels"]], [5, 25, 125, 625, 3125])
@@ -476,7 +476,7 @@ class AssembleTests(RunCase):
         self.assertIn(f"- 1 [input] {PROBLEM}", index)
         self.assertIn("  - 1.why [why]", index)
         windows = [tuple(map(int, w)) for w in re.findall(r"- offset (\d+), limit (\d+)", index)]
-        lines = (run_dir / "five-ws.json").read_text().splitlines()
+        lines = (run_dir / "five-whys.json").read_text().splitlines()
         self.assertEqual(summary["read_windows"], len(windows))
         expected_start = 1
         for offset, limit in windows:
@@ -493,7 +493,7 @@ class AssembleTests(RunCase):
         summary = json.loads(run("assemble", run_dir).stdout)
         self.assertEqual((summary["inputs"], summary["questions"], summary["present_answers"], summary["total_answers"]),
                          (3, ["why", "how"], 180, 180))
-        tree = self.read(run_dir / "five-ws.json")
+        tree = self.read(run_dir / "five-whys.json")
         second = tree["inputs"][1]
         self.assertEqual((second["input"], [t["id"] for t in second["trees"]]), ("Login is slow", ["2.why", "2.how"]))
         self.assertEqual(answer_ids(second["trees"][1]["answers"])[:2], ["2.how.1", "2.how.1.1"])
@@ -527,7 +527,7 @@ class AssembleTests(RunCase):
         flags = self.read(run_dir / "hygiene.json")
         self.assertIn(["1.why.2.2", "1.why.3.2"], [g["ids"] for g in flags["exact_duplicates"]])
         self.assertIn(("1.why.1.1", "1.why.1", 1.0), [(f["id"], f["of"], f["similarity"]) for f in flags["restates_parent"]])
-        self.assertEqual(self.read(run_dir / "five-ws.json")["present_answers"], 39)
+        self.assertEqual(self.read(run_dir / "five-whys.json")["present_answers"], 39)
 
     def test_hygiene_catches_close_rewording_across_branches(self):
         run_dir, _ = self.smoke_run()
@@ -605,7 +605,7 @@ class AssembleTests(RunCase):
         self.assertNotEqual(run("assemble", run_dir, ok=False).returncode, 0)
         summary = json.loads(run("assemble", run_dir, "--partial").stdout)
         self.assertEqual((summary["complete"], summary["missing_branches"]), (False, ["1.why.2"]))
-        tree = self.read(run_dir / "five-ws.json")
+        tree = self.read(run_dir / "five-whys.json")
         self.assertTrue(tree["inputs"][0]["trees"][0]["answers"][1]["missing"])
         self.assertEqual(tree["present_answers"], 3 + 2 * 12)
         self.assertIn("(branch missing)", (run_dir / "index.md").read_text())
@@ -618,7 +618,7 @@ class AssembleTests(RunCase):
         summary = json.loads(run("assemble", run_dir, "--partial").stdout)
         self.assertEqual((summary["missing_branches"], summary["present_answers"], summary["total_answers"]),
                          (["roots-2"], 155, 310))
-        tree = self.read(run_dir / "five-ws.json")
+        tree = self.read(run_dir / "five-whys.json")
         self.assertTrue(tree["inputs"][1]["trees"][0]["missing"])
         self.assertIn("  - 2.why [why] (missing)", (run_dir / "index.md").read_text())
 
@@ -629,7 +629,7 @@ class AssembleTests(RunCase):
         self.write(run_dir / "fragments" / "roots-1.json", data)
         self.fill_branches(run_dir, 3, 2)
         run("assemble", run_dir)
-        tree = self.read(run_dir / "five-ws.json")
+        tree = self.read(run_dir / "five-whys.json")
         self.assertEqual(tree["assumptions"], {"roots-1": ["Deploys run through a single CI pipeline."]})
         self.assertEqual(tree["plugin_version"], self.read(ROOT / ".claude-plugin" / "plugin.json")["version"])
 
@@ -676,7 +676,7 @@ class StatusAndShowTests(RunCase):
         self.assertEqual(entry["warnings"], sum(entry["warning_kinds"].values()))
 
     def test_error_kinds_name_the_broken_rule(self):
-        spec = importlib.util.spec_from_file_location("fivews", SCRIPT)
+        spec = importlib.util.spec_from_file_location("fivewhys", SCRIPT)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         cases = {"roots-1-2.json: trees: expected 2 trees, got 1": "tree_count",
@@ -740,7 +740,7 @@ class SkillReplayTests(RunCase):
             waves.append([task["id"] for task in plan["tasks"]])
             for task in plan["tasks"]:
                 self.assertIn(task["prompt_file"], task["prompt"])
-                self.assertEqual(plan["agent"], "five-ws:expander")
+                self.assertEqual(plan["agent"], "five-whys:expander")
                 proc = fake_agent(task, task["id"], broken=task["id"] in broken)
                 self.assertEqual(proc.returncode != 0, task["id"] in broken, proc.stdout)
             self.status(run_dir)
@@ -770,7 +770,7 @@ class SkillReplayTests(RunCase):
         summary = json.loads(run("assemble", run_dir).stdout)  # Step 5
         self.assertEqual((summary["complete"], summary["present_answers"], summary["checks"]),
                          (True, 39, {"runs": 4, "failed": 0}))
-        tree = self.read(run_dir / "five-ws.json")
+        tree = self.read(run_dir / "five-whys.json")
         self.assertEqual([w["fragments"] for w in tree["waves"]], [1, 3])
         self.assertIn("waves of 5 (2 dispatched, ", (run_dir / "index.md").read_text())
 
@@ -796,7 +796,7 @@ class SkillReplayTests(RunCase):
         self.assertEqual((plan["state"], waves), ("ready", [["roots-1-2"]]))
         summary = json.loads(run("assemble", run_dir).stdout)
         self.assertEqual((summary["questions"], summary["present_answers"]), (["how", "when"], 10))
-        trees = self.read(run_dir / "five-ws.json")["inputs"][0]["trees"]
+        trees = self.read(run_dir / "five-whys.json")["inputs"][0]["trees"]
         self.assertEqual([(t["id"], len(t["answers"])) for t in trees], [("1.how", 5), ("1.when", 5)])
 
     def test_failing_agent_ends_stuck_and_partial_assembly_salvages_the_rest(self):

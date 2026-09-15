@@ -1,15 +1,15 @@
 {
-  "name": "five-ws",
+  "name": "five-whys",
   "version": "0.2.0",
-  "description": "Exhaustive Five Ws: asks any combination of why, what, when, where and how about one problem or a list, each up to five levels deep with five answers at every step (3,905 per tree at full depth), using parallel sub-agents in capped waves and a 1-5 model level, then assembles one JSON file plus an index and mechanical hygiene flags. /five-whys stays as a why-only shortcut. Resumable and partial runs. Generation only; analysis is up to you.",
+  "description": "Exhaustive Five Whys: asks why, or any combination of why, what, when, where and how, about one problem or a list, each up to five levels deep with five answers at every step (3,905 per tree at full depth), using parallel sub-agents in capped waves and a 1-5 model level, then assembles one JSON file plus an index and mechanical hygiene flags. Resumable and partial runs. Generation only; analysis is up to you.",
   "author": {
     "name": "Joshua Ramirez"
   },
   "repository": "https://github.com/JoshuaRamirez/five-whys",
   "license": "MIT",
   "keywords": [
-    "five-ws",
     "five-whys",
+    "five-ws",
     "5w1h",
     "root-cause",
     "causal-analysis",

@@ -9,13 +9,12 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("fivews", ROOT / "scripts" / "fivews.py")
-fivews = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(fivews)
+spec = importlib.util.spec_from_file_location("fivewhys", ROOT / "scripts" / "fivewhys.py")
+fivewhys = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(fivewhys)
 
 README = (ROOT / "README.md").read_text()
-SKILL = (ROOT / "skills" / "five-ws" / "SKILL.md").read_text()
-SHORTCUT = (ROOT / "skills" / "five-whys" / "SKILL.md").read_text()
+SKILL = (ROOT / "skills" / "five-whys" / "SKILL.md").read_text()
 AGENT = (ROOT / "agents" / "expander.md").read_text()
 CHANGELOG = (ROOT / "CHANGELOG.md").read_text()
 RELEASING = (ROOT / "RELEASING.md").read_text()
@@ -28,72 +27,68 @@ def flat(text: str) -> str:
 
 class DocsConsistencyTests(unittest.TestCase):
     def test_headline_total_matches_default_shape(self):
-        breadth, depth = fivews.PRESETS["full"]
-        total = f"{fivews.answer_count(breadth, depth):,}"
+        breadth, depth = fivewhys.PRESETS["full"]
+        total = f"{fivewhys.answer_count(breadth, depth):,}"
         self.assertIn(total, README)
         self.assertIn(total, SKILL)
 
     def test_smoke_numbers_match_preset(self):
-        breadth, depth = fivews.PRESETS["smoke"]
-        answers = fivews.answer_count(breadth, depth)
-        agents = fivews.agent_count(breadth, depth, fivews.SMOKE_SPLIT)
+        breadth, depth = fivewhys.PRESETS["smoke"]
+        answers = fivewhys.answer_count(breadth, depth)
+        agents = fivewhys.agent_count(breadth, depth, fivewhys.SMOKE_SPLIT)
         self.assertIn(f"{answers} answers, {agents} agents", SKILL)
         self.assertIn(f"{answers} answers from {agents} agents", README)
 
     def test_option_count_is_pinned(self):
-        # Adding or removing a /five-ws option is a deliberate change: update this
+        # Adding or removing a /five-whys option is a deliberate change: update this
         # number, the README table, SKILL.md and CHANGELOG.md together.
-        self.assertEqual(len(fivews.OPTIONS), 11)
+        self.assertEqual(len(fivewhys.OPTIONS), 11)
 
     def test_every_option_is_documented_with_a_purpose(self):
         rows = re.findall(r"^\| `(--[a-z-]+)[^|]*\|[^|]+\|([^|]+)\|$", README, re.M)
-        self.assertEqual([flag for flag, _ in rows], [o["flag"] for o in fivews.OPTIONS])
+        self.assertEqual([flag for flag, _ in rows], [o["flag"] for o in fivewhys.OPTIONS])
         self.assertTrue(all(purpose.strip() for _, purpose in rows))
-        for option in fivews.OPTIONS:
+        for option in fivewhys.OPTIONS:
             self.assertIn(f"`{option['flag']}", SKILL, option["flag"])
 
     def test_argument_hints_name_only_real_options(self):
-        flags = {o["flag"] for o in fivews.OPTIONS}
-        for text in (SKILL, SHORTCUT):
+        flags = {o["flag"] for o in fivewhys.OPTIONS}
+        for text in (SKILL,):
             hint = re.search(r"argument-hint: \"(.*)\"", text).group(1)
             for option in re.findall(r"--[a-z-]+", hint):
                 self.assertIn(option, flags)
 
     def test_every_question_is_documented_everywhere(self):
-        for question, wording in fivews.QUESTIONS.items():
+        for question, wording in fivewhys.QUESTIONS.items():
             self.assertRegex(README, rf"(?m)^\| `{question}` \|", question)
             self.assertIn(wording["top"], README, question)
             self.assertIn(f"`{question}`", SKILL, question)
             self.assertIn(f"**{question}:**", AGENT, question)
 
     def test_model_levels_match_the_docs(self):
-        for level, (roots, branches) in fivews.MODEL_LEVELS.items():
+        for level, (roots, branches) in fivewhys.MODEL_LEVELS.items():
             self.assertIn(f"| {level} | {roots} | {branches} |", README)
             self.assertIn(f"| {level} | {roots} | {branches} |", SKILL)
 
     def test_names_agree_across_manifest_agent_and_script(self):
         agent_name = re.search(r"^name: (.*)$", AGENT, re.M).group(1)
-        self.assertEqual(f"{MANIFEST['name']}:{agent_name}", fivews.AGENT)
+        self.assertEqual(f"{MANIFEST['name']}:{agent_name}", fivewhys.AGENT)
         self.assertEqual(re.search(r"^name: (.*)$", SKILL, re.M).group(1), MANIFEST["name"])
-        self.assertIn(f"`{fivews.OUTPUT}`", README)
-
-    def test_five_whys_shortcut_defers_to_the_five_ws_skill(self):
-        self.assertIn("skills/five-ws/SKILL.md", SHORTCUT)
-        self.assertIn("--ask why", SHORTCUT)
+        self.assertIn(f"`{fivewhys.OUTPUT}`", README)
 
     def test_confirmation_threshold_matches_skill(self):
-        self.assertIn(f"more than {fivews.CONFIRM_AGENTS} agents", SKILL)
+        self.assertIn(f"more than {fivewhys.CONFIRM_AGENTS} agents", SKILL)
 
     def test_wave_size_and_platform_cap_match_docs(self):
-        self.assertIn(f"({fivews.MAX_PARALLEL} by default)", SKILL)
-        self.assertIn(f"waves of {fivews.MAX_PARALLEL}", README)
-        self.assertIn(f"at most {fivews.PLATFORM_PARALLEL_CAP} subagents", README)
+        self.assertIn(f"({fivewhys.MAX_PARALLEL} by default)", SKILL)
+        self.assertIn(f"waves of {fivewhys.MAX_PARALLEL}", README)
+        self.assertIn(f"at most {fivewhys.PLATFORM_PARALLEL_CAP} subagents", README)
 
     def test_measured_cost_matches_the_constants(self):
-        measured = fivews.MEASURED
+        measured = fivewhys.MEASURED
         self.assertIn(f"v{measured['version']} full run", README)
         self.assertIn(f"{measured['date']} with {measured['model']}", flat(README))
-        full = fivews.estimate(5, 5, 2)
+        full = fivewhys.estimate(5, 5, 2)
         self.assertIn(f"about {full['agent_tokens_low'] / 1e6:.2f}M-{full['agent_tokens'] / 1e6:.2f}M agent tokens "
                       f"and {full['output_tokens'] // 1000}k output tokens", flat(README))
         self.assertIn("agent_tokens_low", SKILL)
@@ -139,12 +134,12 @@ class DocsConsistencyTests(unittest.TestCase):
 
     def test_agent_skips_private_folders_and_knows_the_length_limit(self):
         self.assertIn("anything git ignores", flat(AGENT))
-        self.assertIn(f"over {fivews.MAX_ANSWER_WORDS} words", flat(AGENT))
-        self.assertIn(f"no answer over {fivews.MAX_ANSWER_WORDS} words", flat(README))
+        self.assertIn(f"over {fivewhys.MAX_ANSWER_WORDS} words", flat(AGENT))
+        self.assertIn(f"no answer over {fivewhys.MAX_ANSWER_WORDS} words", flat(README))
 
     def test_skill_invokes_the_script_only_through_its_absolute_path(self):
-        for text in (SKILL, SHORTCUT):
-            self.assertIsNone(re.search(r"python3\s+\"?(?!\$)[^\s\"]*scripts/fivews\.py", text))
+        for text in (SKILL,):
+            self.assertIsNone(re.search(r"python3\s+\"?(?!\$)[^\s\"]*scripts/fivewhys\.py", text))
         self.assertIn("`script` is the absolute path", flat(SKILL))
 
     def test_agent_instructions_hold_no_shape_counts(self):
