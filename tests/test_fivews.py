@@ -559,6 +559,37 @@ class AssembleTests(RunCase):
         self.assertIn(("1.why.1", "1.how.1", False, True),
                       [(p["a"], p["b"], p["across_inputs"], p["across_questions"]) for p in leads])
 
+    def test_cited_files_and_commits_are_checked_against_the_project(self):
+        project = self.base / "project"
+        (project / "docs").mkdir(parents=True)
+        (project / "docs" / "real.md").write_text("x")
+        subprocess.run(["git", "init", "-q", str(project)], check=True)
+        subprocess.run(["git", "-C", str(project), "add", "docs/real.md"], check=True)
+        subprocess.run(["git", "-C", str(project), "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "c"],
+                       check=True)
+        sha = subprocess.run(["git", "-C", str(project), "rev-parse", "--short=7", "HEAD"],
+                             capture_output=True, text=True, check=True).stdout.strip()
+        run_dir, _ = self.init("--breadth", "3", "--depth", "1")
+        data = group(3, 1, 1, 1)
+        answers = data["trees"][0]["answers"]
+        answers[0]["answer"] = f"Commit {sha} changed docs/real.md and real.md without a review."
+        answers[1]["answer"] = "The runbook in docs/missing.md was deleted after commit abc1234 landed."
+        answers[2]["answer"] = "Nobody reviews the runbook before a release goes out."
+        self.write(run_dir / "fragments" / "roots-1.json", data)
+        summary = json.loads(run("assemble", run_dir, "--root", project).stdout)
+        refs = self.read(run_dir / "hygiene.json")["references"]
+        self.assertEqual(sorted((r["id"], r["reference"]) for r in refs["not_found"]),
+                         [("1.why.2", "abc1234"), ("1.why.2", "docs/missing.md")])
+        self.assertEqual((refs["checked"], refs["unchecked"]), (5, []))
+        self.assertEqual(refs["concrete_by_tree"]["1.why"], {"answers": 3, "concrete": 2})
+        self.assertEqual(summary["hygiene_counts"]["unverified_references"], 2)
+
+        outside = self.base / "not-a-repo"
+        outside.mkdir()
+        run("assemble", run_dir, "--root", outside)
+        refs = self.read(run_dir / "hygiene.json")["references"]
+        self.assertEqual({r["reference"] for r in refs["unchecked"]}, {sha, "abc1234"})
+
     def test_partial_assembly_marks_missing_branch(self):
         run_dir, _ = self.smoke_run()
         self.fill_branches(run_dir, 3, 2, skip=("1.why.2",))

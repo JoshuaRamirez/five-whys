@@ -19,14 +19,22 @@ the input at level 1, and the parent answer at every level below.
 
 - **why:** a cause. It explains why the thing above happens. It is not a
   restatement, a symptom, a fix or an opinion.
-- **what:** a fact or component. It names what the thing above consists of,
-  involves or produces, concretely enough to point at.
+- **what:** a fact or component. It names a thing the thing above consists of,
+  involves or produces, concretely enough to point at. Name the thing itself,
+  not the steps it goes through.
 - **when:** a time or condition. It says when, how often, in what order or
   under which conditions the thing above occurs.
-- **where:** a location. It names the place, system, stage, team or step where
-  the thing above occurs.
-- **how:** a mechanism. It describes a step or process by which the thing above
-  comes about.
+- **where:** a location. It names where the thing above actually happens: a
+  machine, service, environment, pipeline stage, team, room or step in the
+  flow. Name a file only when the thing happens inside that file, not because
+  the file describes, configures or records it.
+- **how:** a mechanism. It describes, as actions in order, how the thing above
+  comes about: who or what does what, and what that causes. Don't list the
+  parts involved; that is what answers "what".
+
+When one input has trees for several questions, keep each tree to its own
+question. Naming the same artifact under what, where and how makes three trees
+say one thing.
 
 ## How to write each answer
 

@@ -29,6 +29,7 @@ import json
 import random
 import re
 import shlex
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
@@ -57,16 +58,19 @@ QUESTIONS = {
             "answers": "causes: each explains why the thing above it happens"},
     "what": {"top": "What exactly is happening, and what does it involve?",
              "child": "What, specifically, makes up or is involved in this: {text}",
-             "answers": "facts and components: each names what the thing above it consists of or involves"},
+             "answers": "facts and components: each names a thing the thing above it consists of, involves or "
+                        "produces, not the steps it goes through"},
     "when": {"top": "When does this happen, and under what conditions?",
              "child": "When, or under what conditions, does this occur: {text}",
              "answers": "times and conditions: each says when, or under which conditions, the thing above it occurs"},
     "where": {"top": "Where does this happen: in which places, systems, stages or groups?",
               "child": "Where, more specifically, does this occur: {text}",
-              "answers": "locations: each names a place, system, stage or group where the thing above it occurs"},
+              "answers": "locations: each names the machine, service, environment, stage, team or place where "
+                         "the thing above it actually happens, not a file that describes or configures it"},
     "how": {"top": "How does this happen: by what mechanism or sequence of steps?",
             "child": "How does this come about: {text}",
-            "answers": "mechanisms: each describes a step or mechanism by which the thing above it comes about"},
+            "answers": "mechanisms: each describes, as actions in order, how the thing above it comes about, "
+                       "not the parts involved"},
 }
 DEFAULT_QUESTIONS = ["why"]
 
@@ -892,6 +896,63 @@ def cmd_check(args) -> None:
         print("Warnings never block. Fix them with Edit when that doesn't mean rewriting the fragment.")
 
 
+# What answers cite. A file path with an extension, a commit hash (hex with a letter and a digit),
+# an option flag or any number makes an answer concrete; paths and commits are also checked.
+REFERENCE = re.compile(r"(?<![\w@/.-])(?:~/|\.{1,2}/)?(?:[\w.-]+/)*[\w-]+(?:\.[\w-]+)*"
+                       r"\.(?:py|md|json|jsonl|ya?ml|txt|toml|js|ts|sh|html)\b")
+COMMIT = re.compile(r"(?<![\w-])(?=[0-9a-f]*[a-f])(?=[0-9a-f]*\d)[0-9a-f]{7,12}(?![\w-])")
+CONCRETE = re.compile(f"{REFERENCE.pattern}|{COMMIT.pattern}" + r"|(?<![\w-])--[a-z][a-z-]+|\d")
+RUN_FILES = {OUTPUT, "index.md", "hygiene.json", "run.json", "check-log.jsonl", "five-whys.json"}
+
+
+def check_references(flat: list[dict], root: Path) -> dict:
+    """Check the file paths and commit hashes answers cite against the project at `root`.
+
+    Mechanical only: a path counts as found when it exists under root (or at ~) or
+    matches a file git tracks there; a commit when git knows it. Outside a git
+    repository, commits are listed as unchecked.
+    """
+    listing = subprocess.run(["git", "-C", str(root), "ls-files"], capture_output=True, text=True)
+    tracked = [f for f in listing.stdout.split("\n") if f] if listing.returncode == 0 else None
+
+    def path_found(ref: str) -> bool:
+        if Path(ref).name in RUN_FILES:
+            return True
+        target = Path(ref).expanduser() if ref.startswith("~") else root / ref
+        if target.exists():
+            return True
+        name = re.sub(r"^\.{1,2}/", "", ref)
+        return tracked is not None and any(f == name or f.endswith("/" + name) for f in tracked)
+
+    cited = [(r["id"], sha) for r in flat for sha in COMMIT.findall(r["reason"])]
+    known = {}
+    if tracked is not None and cited:  # one git process checks every hash
+        shas = sorted({sha for _, sha in cited})
+        batch = subprocess.run(["git", "-C", str(root), "cat-file", "--batch-check"], capture_output=True, text=True,
+                               input="".join(f"{sha}^{{commit}}\n" for sha in shas))
+        replies = batch.stdout.splitlines()
+        known = {sha: not reply.endswith("missing") for sha, reply in zip(shas, replies)}
+
+    not_found, unchecked, concrete = [], [], {}
+    for r in flat:
+        tree = concrete.setdefault(".".join(r["id"].split(".")[:2]), {"answers": 0, "concrete": 0})
+        tree["answers"] += 1
+        tree["concrete"] += bool(CONCRETE.search(r["reason"]))
+        not_found += [{"id": r["id"], "reference": ref, "kind": "path"}
+                      for ref in REFERENCE.findall(r["reason"]) if not path_found(ref)]
+    for node_id, sha in cited:
+        if tracked is None:
+            unchecked.append({"id": node_id, "reference": sha, "kind": "commit"})
+        elif not known.get(sha, False):
+            not_found.append({"id": node_id, "reference": sha, "kind": "commit"})
+    checked = sum(len(REFERENCE.findall(r["reason"])) for r in flat) + len(cited)
+    return {"note": "File paths and commit hashes the answers cite, checked against the project at root. Not "
+                    "found means not there now, not necessarily wrong; concrete_by_tree counts answers citing a "
+                    "path, commit, option or number.",
+            "root": str(root), "checked": checked, "not_found": not_found, "unchecked": unchecked,
+            "concrete_by_tree": concrete}
+
+
 def emit(nodes, prefix: str, depth: int, max_depth: int, out: list[str]) -> None:
     """One answer per line, indented by depth, so the file pages cleanly."""
     for i, node in enumerate(nodes, 1):
@@ -1034,6 +1095,8 @@ def cmd_assemble(args) -> None:
     (run / "index.md").write_text("\n".join(index) + "\n", encoding="utf-8")
 
     flags = hygiene(flat, branch_level=3)
+    flags["references"] = check_references(flat, Path(args.root).resolve())
+    flags["counts"]["unverified_references"] = len(flags["references"]["not_found"])
     (run / "hygiene.json").write_text(json.dumps(flags, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
     checks = read_checks(run)
@@ -1161,6 +1224,7 @@ def main() -> None:
     p = sub.add_parser("assemble", help=f"write {OUTPUT}, index.md and hygiene.json")
     p.add_argument("run")
     p.add_argument("--partial", action="store_true", help="assemble even with missing fragments, marking them")
+    p.add_argument("--root", default=".", help="project whose files and commits cited answers are checked against")
     p.set_defaults(func=cmd_assemble)
 
     p = sub.add_parser("show", help="print a subtree or the top levels of an assembled run")

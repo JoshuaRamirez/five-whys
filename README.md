@@ -207,6 +207,12 @@ branch with its ancestors.
   leads, because one thing may be stated in two places; leads between inputs or
   questions are marked `across_inputs` and `across_questions`. Flags annotate;
   nothing is removed.
+- **References (advisory):** file paths and commit hashes the answers cite are
+  checked against the project the run was assembled in (`assemble --root`).
+  Ones not found are listed under `references` in `hygiene.json`, with how many
+  answers in each tree cite something concrete. In the first five-ws run,
+  every cited path and commit existed, and the answers later found wrong cited
+  nothing.
 - **Measured on a real tree:** among 16 pairs from the v0.2.0 self-run that
   state the same cause twice, 7 score as leads and 9 use different words and
   are missed; 2 of 8 pairs that only share vocabulary are listed as leads.
@@ -260,7 +266,7 @@ scoring in `scripts/hygiene.py`:
 | `plan <run>` | Next wave of missing fragments with prompts and models; `--record` counts attempts; `--only` selects branches; `--max-parallel` changes the wave size |
 | `status <run>` | Done, missing and stuck fragments, check cycles and error kinds per fragment, each wave's seconds, and the plugin version that created the run |
 | `check <fragment> --breadth N --depth N` | Validate one fragment; warnings never block |
-| `assemble <run>` | Write `five-ws.json`, `index.md`, `hygiene.json`; `--partial` allows missing trees and branches |
+| `assemble <run>` | Write `five-ws.json`, `index.md`, `hygiene.json`; `--partial` allows missing trees and branches; `--root` sets the project cited references are checked against (default: the current directory) |
 | `show <file-or-run>` | Print a subtree (`--id`), the top levels (`--levels`) or a random sample with ancestors (`--sample N --seed S`); reads five-whys files too |
 
 Tests: `python3 -m unittest discover tests`. They include the labeled hygiene
