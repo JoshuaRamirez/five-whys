@@ -146,9 +146,9 @@ five-whys (efac61e) and a label fix. Gates recorded on 07f6439 before the
 rename back passed as well; their files stay under
 `docs/self-improvement/round-3/gates/`.
 
-- [passed] unit @0c210bf 2026-09-14: 109 unit tests pass (Python 3.14 locally;
+- [passed] unit @07d016c 2026-09-14: 109 unit tests pass on the release commit, after the version bump, (Python 3.14 locally;
   CI covers 3.9 and 3.12).
-- [passed] validate @0c210bf 2026-09-14: `claude plugin validate .` passes.
+- [passed] validate @07d016c 2026-09-14: `claude plugin validate .` passes on the release commit.
 - [passed] model-run @0c210bf 2026-09-14: headless `claude -p --plugin-dir` in
   a fresh directory, claude-opus-5. `/five-whys --smoke --yes` on the
   nightly-backup problem ran `parse`, `init`, `plan`, `check`, `status` and
