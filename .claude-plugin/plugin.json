@@ -1,7 +1,7 @@
 {
   "name": "five-whys",
-  "version": "0.2.0",
-  "description": "Exhaustive Five Whys: asks why five levels deep with five reasons at every step (5x5x5x5x5 = 3,905 reasons) using parallel sub-agents in capped waves, then assembles one JSON tree plus an index and mechanical hygiene flags. Smoke preset, model choice, resumable and partial runs. Generation only; analysis is up to you.",
+  "version": "0.3.0",
+  "description": "Exhaustive Five Whys: asks why, or any combination of why, what, when, where and how, about one problem or a list, each up to five levels deep with five answers at every step (3,905 per tree at full depth), using parallel sub-agents in capped waves and a 1-5 model level, then assembles one JSON file plus an index and mechanical hygiene flags. Resumable and partial runs. Generation only; analysis is up to you.",
   "author": {
     "name": "Joshua Ramirez"
   },
@@ -9,6 +9,8 @@
   "license": "MIT",
   "keywords": [
     "five-whys",
+    "five-ws",
+    "5w1h",
     "root-cause",
     "causal-analysis",
     "sub-agents",

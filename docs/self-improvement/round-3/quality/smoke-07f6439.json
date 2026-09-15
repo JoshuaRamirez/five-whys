@@ -1,0 +1,295 @@
+{
+ "instructions": "Score each item with quality-rubric.md. input, when present, is the problem the item's tree answers; chain lists the reasons above it, from the top; siblings are the other reasons answering the same why.",
+ "items": [
+  {
+   "n": 1,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists.",
+    "After noisy backup pages, the team deliberately narrowed alert rules to hard errors, and a heartbeat check was seen as reintroducing noise."
+   ],
+   "reason": "A heartbeat would need maintenance-window silences, and nobody wanted to keep a suppression calendar for the database host current.",
+   "siblings": [
+    "Planned maintenance windows repeatedly paged on-call for expected backup interruptions, prompting the rules to be trimmed to fatal errors only.",
+    "On-call health is measured by page count, so any check that could add pages lacked a sponsor willing to propose it."
+   ]
+  },
+  {
+   "n": 2,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore."
+   ],
+   "reason": "The backup cron was set up by one engineer, and ownership never passed to a team when that engineer moved on.",
+   "siblings": [
+    "Restore drills appear in no team's sprint goals or on-call runbook, so they lose every scheduling contest against feature work.",
+    "No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted."
+   ]
+  },
+  {
+   "n": 3,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.",
+    "The author coded the lock-held and outside-window branches as deliberate exit 0 no-ops to stop cron from mailing on expected overlaps."
+   ],
+   "reason": "The wrapper was reviewed as a small shell utility, so no reviewer questioned what each guard branch's exit status told the scheduler.",
+   "siblings": [
+    "Early versions exited non-zero when a long dump overran the next slot, flooding the ops inbox with cron mail until someone silenced it.",
+    "The start-window guard was added quickly to keep dumps off daytime production load and copied the lock branch's existing exit 0."
+   ]
+  },
+  {
+   "n": 4,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists.",
+    "The schedule lives only in one host's crontab, so monitoring holds no record of which nightly runs are expected."
+   ],
+   "reason": "No inventory of scheduled jobs exists, so reviews of monitoring coverage never list the backup job as needing a heartbeat.",
+   "siblings": [
+    "The job predates the team's adoption of a scheduler with run history, and migrating legacy cron jobs was deprioritized as already working.",
+    "The database team owns the crontab while the platform team owns alerting, and neither backlog includes wiring expected-run checks between them."
+   ]
+  },
+  {
+   "n": 5,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists."
+   ],
+   "reason": "Backup monitoring was built as error-log scraping when the script was written, and no dead-man's-switch service was ever provisioned alongside it.",
+   "siblings": [
+    "After noisy backup pages, the team deliberately narrowed alert rules to hard errors, and a heartbeat check was seen as reintroducing noise.",
+    "The schedule lives only in one host's crontab, so monitoring holds no record of which nightly runs are expected."
+   ]
+  },
+  {
+   "n": 6,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.",
+    "No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted."
+   ],
+   "reason": "Per-team cloud spend caps mean a temporary full-size restore instance would breach the platform team's monthly budget.",
+   "siblings": [
+    "The database outgrew the old staging server's disk gradually, so no single moment prompted a request for a larger instance.",
+    "Restoring needs encryption keys and production credentials held by security, whose access requests take days for each drill."
+   ]
+  },
+  {
+   "n": 7,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists."
+   ],
+   "reason": "The schedule lives only in one host's crontab, so monitoring holds no record of which nightly runs are expected.",
+   "siblings": [
+    "Backup monitoring was built as error-log scraping when the script was written, and no dead-man's-switch service was ever provisioned alongside it.",
+    "After noisy backup pages, the team deliberately narrowed alert rules to hard errors, and a heartbeat check was seen as reintroducing noise."
+   ]
+  },
+  {
+   "n": 8,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.",
+    "No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted."
+   ],
+   "reason": "The database outgrew the old staging server's disk gradually, so no single moment prompted a request for a larger instance.",
+   "siblings": [
+    "Per-team cloud spend caps mean a temporary full-size restore instance would breach the platform team's monthly budget.",
+    "Restoring needs encryption keys and production credentials held by security, whose access requests take days for each drill."
+   ]
+  },
+  {
+   "n": 9,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore."
+   ],
+   "reason": "Restore drills appear in no team's sprint goals or on-call runbook, so they lose every scheduling contest against feature work.",
+   "siblings": [
+    "The backup cron was set up by one engineer, and ownership never passed to a team when that engineer moved on.",
+    "No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted."
+   ]
+  },
+  {
+   "n": 10,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists."
+   ],
+   "reason": "After noisy backup pages, the team deliberately narrowed alert rules to hard errors, and a heartbeat check was seen as reintroducing noise.",
+   "siblings": [
+    "Backup monitoring was built as error-log scraping when the script was written, and no dead-man's-switch service was ever provisioned alongside it.",
+    "The schedule lives only in one host's crontab, so monitoring holds no record of which nightly runs are expected."
+   ]
+  },
+  {
+   "n": 11,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes."
+   ],
+   "reason": "The lock is a bare file with no PID or age check, so a crashed run's leftover lock looks identical to a live run.",
+   "siblings": [
+    "The author coded the lock-held and outside-window branches as deliberate exit 0 no-ops to stop cron from mailing on expected overlaps.",
+    "The wrapper's exit contract has only success and failure, with no distinct skipped status that cron or a dashboard could recognise."
+   ]
+  },
+  {
+   "n": 12,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [],
+   "reason": "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.",
+   "siblings": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.",
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists."
+   ]
+  },
+  {
+   "n": 13,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes."
+   ],
+   "reason": "The wrapper's exit contract has only success and failure, with no distinct skipped status that cron or a dashboard could recognise.",
+   "siblings": [
+    "The author coded the lock-held and outside-window branches as deliberate exit 0 no-ops to stop cron from mailing on expected overlaps.",
+    "The lock is a bare file with no PID or age check, so a crashed run's leftover lock looks identical to a live run."
+   ]
+  },
+  {
+   "n": 14,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [],
+   "reason": "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists.",
+   "siblings": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.",
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore."
+   ]
+  },
+  {
+   "n": 15,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.",
+    "Restore drills appear in no team's sprint goals or on-call runbook, so they lose every scheduling contest against feature work."
+   ],
+   "reason": "Past ad hoc restores happened to find a recent file, so the team treats drills as redundant rather than protective.",
+   "siblings": [
+    "Teams are measured on shipped features and uptime, and a passing drill produces no metric anyone reports upward.",
+    "No audit or customer contract demands proof of recoverability, so nobody outside engineering ever asks for drill results."
+   ]
+  },
+  {
+   "n": 16,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.",
+    "The wrapper's exit contract has only success and failure, with no distinct skipped status that cron or a dashboard could recognise."
+   ],
+   "reason": "The crontab redirects the wrapper's output to /dev/null, so even its 'lock held, skipping' log line reaches nobody.",
+   "siblings": [
+    "The script decides its exit code from guard branches alone and never checks whether a new, non-empty dump file was written tonight.",
+    "Cron's only signal is the exit status, and the wrapper was written for that binary view before any skip paths existed."
+   ]
+  },
+  {
+   "n": 17,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.",
+    "The author coded the lock-held and outside-window branches as deliberate exit 0 no-ops to stop cron from mailing on expected overlaps."
+   ],
+   "reason": "The start-window guard was added quickly to keep dumps off daytime production load and copied the lock branch's existing exit 0.",
+   "siblings": [
+    "Early versions exited non-zero when a long dump overran the next slot, flooding the ops inbox with cron mail until someone silenced it.",
+    "The wrapper was reviewed as a small shell utility, so no reviewer questioned what each guard branch's exit status told the scheduler."
+   ]
+  },
+  {
+   "n": 18,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [],
+   "reason": "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.",
+   "siblings": [
+    "Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists.",
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore."
+   ]
+  },
+  {
+   "n": 19,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.",
+    "No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted."
+   ],
+   "reason": "Restoring needs encryption keys and production credentials held by security, whose access requests take days for each drill.",
+   "siblings": [
+    "The database outgrew the old staging server's disk gradually, so no single moment prompted a request for a larger instance.",
+    "Per-team cloud spend caps mean a temporary full-size restore instance would breach the platform team's monthly budget."
+   ]
+  },
+  {
+   "n": 20,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore."
+   ],
+   "reason": "No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted.",
+   "siblings": [
+    "The backup cron was set up by one engineer, and ownership never passed to a team when that engineer moved on.",
+    "Restore drills appear in no team's sprint goals or on-call runbook, so they lose every scheduling contest against feature work."
+   ]
+  },
+  {
+   "n": 21,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes."
+   ],
+   "reason": "The author coded the lock-held and outside-window branches as deliberate exit 0 no-ops to stop cron from mailing on expected overlaps.",
+   "siblings": [
+    "The lock is a bare file with no PID or age check, so a crashed run's leftover lock looks identical to a live run.",
+    "The wrapper's exit contract has only success and failure, with no distinct skipped status that cron or a dashboard could recognise."
+   ]
+  },
+  {
+   "n": 22,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.",
+    "Restore drills appear in no team's sprint goals or on-call runbook, so they lose every scheduling contest against feature work."
+   ],
+   "reason": "No audit or customer contract demands proof of recoverability, so nobody outside engineering ever asks for drill results.",
+   "siblings": [
+    "Teams are measured on shipped features and uptime, and a passing drill produces no metric anyone reports upward.",
+    "Past ad hoc restores happened to find a recent file, so the team treats drills as redundant rather than protective."
+   ]
+  }
+ ]
+}

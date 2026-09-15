@@ -1,0 +1,63 @@
+{
+  "files": [
+    {
+      "file": "docs/self-improvement/round-2/audit/agent-fresh-context.json",
+      "reviewer": "fresh-context Claude agent (Claude Opus 5, claude-opus-5[1m]), saw only the packet, reviewer-prompt.md and the plugin's code; no ledger files or session history",
+      "independent": true,
+      "stratified": true,
+      "n": 30,
+      "fit": 19,
+      "adjacent": 9,
+      "wrong": 2,
+      "wrong_rate": 0.0667,
+      "wrong_rate_95": [
+        0.0185,
+        0.2132
+      ],
+      "groups": {
+        "level 1 own": {
+          "n": 5,
+          "fit": 3,
+          "adjacent": 2,
+          "wrong": 0
+        },
+        "level 2 own": {
+          "n": 5,
+          "fit": 5,
+          "adjacent": 0,
+          "wrong": 0
+        },
+        "level 3 inherited": {
+          "n": 4,
+          "fit": 3,
+          "adjacent": 1,
+          "wrong": 0
+        },
+        "level 3 own": {
+          "n": 4,
+          "fit": 3,
+          "adjacent": 1,
+          "wrong": 0
+        },
+        "level 4 own": {
+          "n": 4,
+          "fit": 2,
+          "adjacent": 2,
+          "wrong": 0
+        },
+        "level 5 inherited": {
+          "n": 4,
+          "fit": 0,
+          "adjacent": 2,
+          "wrong": 2
+        },
+        "level 5 own": {
+          "n": 4,
+          "fit": 3,
+          "adjacent": 1,
+          "wrong": 0
+        }
+      }
+    }
+  ]
+}

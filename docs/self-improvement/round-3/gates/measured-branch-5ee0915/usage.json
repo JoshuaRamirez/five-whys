@@ -1,0 +1,50 @@
+{
+  "run": "/private/tmp/fivewhys-gate-branch.tWLXTb/.five-whys/20260913-225734-deploys-of-the-payments-service-fail-on",
+  "agent_logs": 2,
+  "completed_fragments": 2,
+  "interrupted_without_completed_retry": [],
+  "first_turn_context": {
+    "min": 4716,
+    "mean": 4717,
+    "max": 4718
+  },
+  "root_reported_total": 8838,
+  "branch_reported_total": {
+    "min": 22065,
+    "mean": 22065,
+    "max": 22065
+  },
+  "branch_output_tokens_mean": 14253,
+  "branch_cumulative_context": {
+    "min": 64009,
+    "max": 64009
+  },
+  "fit": {
+    "AGENT_OVERHEAD_TOKENS": 5700.0,
+    "TOKENS_PER_REASON": 106
+  },
+  "agents": [
+    {
+      "id": "root",
+      "log": "agent-ab82c21ee311fafc8.jsonl",
+      "started": "2026-09-14T05:58:07.467Z",
+      "completed": true,
+      "turns": 6,
+      "output_tokens": 2463,
+      "reported_total": 8838,
+      "cumulative_context": 41046,
+      "first_turn_context": 4716
+    },
+    {
+      "id": "1.1",
+      "log": "agent-ad5fc9b04dc6ab190.jsonl",
+      "started": "2026-09-14T05:59:39.843Z",
+      "completed": true,
+      "turns": 5,
+      "output_tokens": 14253,
+      "reported_total": 22065,
+      "cumulative_context": 64009,
+      "first_turn_context": 4718
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+# Branch 3: lexical hygiene misses paraphrases and convergence. A line covers its node and every descendant without its own line.
+3 IMP-45 Stemmed tokens and cross-branch leads catch 14 pairs in this tree that v0.2.0 missed; paraphrases in different words still escape (R-02).
+3.1 R-02 The script stays stdlib-only, so embeddings and semantic models remain declined.
+3.1.1 X-ENV Plugin installation runs no package step; R-02 keeps the script dependency-free.
+3.1.1.5 X-HIST The zero-dependency promise stands (R-02).
+3.1.2 IMP-47 Detection is now measured on labeled pairs from a real tree rather than refused without an experiment.
+3.1.2.1 X-HIST Round-1 codes were fixed before classification; round 2 measured first.
+3.1.2.3 X-HIST Round-1 tallies gave no weight to recurrence; round 2 reopened the theme with measurement.
+3.1.2.3.5 IMP-35 RELEASING.md now asks to review Known limitations each release.
+3.1.2.4 X-HIST Keyword matching to R-02 was round-1 practice.
+3.1.2.4.3 R-02 Optional extras with a stdlib fallback would still ship a second, untested detection path.
+3.1.2.5 IMP-45 The measured misses motivated stemming and cross-branch leads.
+3.1.3 X-ENV Useful embeddings need network access or heavy packages (R-02).
+3.1.4 X-HIST Deterministic, explainable hygiene is kept on purpose (R-02, R-14).
+3.1.5 X-HIST CI stays stdlib-only (R-20).
+3.1.5.5 IMP-47 Real paraphrase pairs from the v0.2.0 tree now enter the tests.
+3.2 X-HIST Hygiene is non-blocking by design; IMP-45 widens what it reports.
+3.2.1 IMP-45 Cross-branch pairs are listed as mechanical leads, without groups, labels or ranking.
+3.2.1.1 X-HIST The aid boundary was undefined; round 2 treats verifiable pairs as mechanical aids.
+3.2.1.2 R-01 Clusters, labels and frequency counts would decide cause boundaries, so only pairs are listed.
+3.2.1.3 X-HIST Broad round-1 decline codes are history; round-2 codes separate the cases.
+3.2.1.4 X-HIST Pairs stay reproducible textual facts, the property that section guards.
+3.2.2 R-14 A model review pass, blocking or not, is declined: nondeterministic, costly and interpretive.
+3.2.2.5 X-HIST The merged decision is now separated and recorded as R-14.
+3.2.3 IMP-45 A separate 0.45 cross-branch list with both texts adds recall without loosening the 0.6 check.
+3.2.3.1 X-HIST Sibling topic overlap justifies the main threshold.
+3.2.3.2 IMP-45 Flags now carry both reasons' text, so each is judged without show.
+3.2.3.3 X-HIST check warnings keep the 0.6 threshold to avoid needless rewrites.
+3.2.3.4 IMP-47 Labeled pairs from the v0.2.0 tree now calibrate the thresholds.
+3.2.3.5 X-HIST Precision-first flags remain the design.
+3.2.4 IMP-47 Labeled pairs set a detection floor the tests enforce.
+3.2.4.3 X-HIST IMP-06 was specified as a mechanism in round 1.
+3.2.4.5 X-HIST The aggregate completion story is history.
+3.2.5 X-HIST Reading was expected to surface convergence; IMP-45 now hands readers leads.
+3.2.5.2 IMP-45 cross_branch pairs point readers at convergence across distant windows.
+3.2.5.3.5 IMP-45 Flags now include reason text.
+3.2.5.5 R-15 Cross-links stay out of the tree schema.
+3.3 IMP-45 Cross-branch pairs at a lower threshold catch some convergence; chain-level convergence stays undetected (R-14).
+3.3.1 X-HIST Sentence-level comparison is kept; path documents would be noisy and quadratic.
+3.3.1.3 IMP-46 check now loads the root's chain and reasons for branch fragments inside a run.
+3.3.1.3.3 X-ENV Concurrent waves mean later fragments do not exist yet; IMP-42 helps later waves.
+3.3.1.5 R-15 The tree stays strictly nested.
+3.3.2 IMP-45 Cross-branch pairs are listed with texts; grouping them is declined (R-01).
+3.3.2.1 X-HIST Sub-threshold evidence is discarded by design.
+3.3.2.2 R-01 Grouping similar reasons needs boundary choices, which is analysis.
+3.3.2.3 R-01 A branch overlap matrix invites ranking branches.
+3.3.2.4 X-HIST Exact grouping is transitive and near pairs are not.
+3.3.2.5 X-ENV Bag-of-words scoring cannot model one cause split across sentences without semantics (R-02).
+3.3.3 IMP-45 Tokens are stemmed and the common-token cutoff and two-token minimum are reported.
+3.3.3.1 X-HIST The 5% cutoff keeps the index near-linear; IMP-45 reports it.
+3.3.3.2.3 R-02 Synonym tables large enough to matter are external corpora.
+3.3.3.3 X-HIST The two-token minimum stays to cut noise; IMP-45 reports it.
+3.3.3.5 X-HIST An unweighted bag keeps hygiene small and explainable.
+3.3.4 IMP-46 check compares branch fragments against their real ancestors from the root.
+3.3.4.1 X-HIST Restatement was framed as looping in one chain.
+3.3.4.2 X-HIST All-chains ancestor comparison is quadratic.
+3.3.4.3 X-HIST One threshold per flag type stays.
+3.3.4.4.5 X-HIST assemble runs after agents finish; IMP-46 moves the ancestor check earlier.
+3.3.4.5 IMP-45 cross_branch is a new category for convergence that restates nothing in its own chain.
+3.3.5 X-HIST Hygiene targeted literal copies; IMP-45 extends it.
+3.3.5.2 IMP-47 Labeled convergent pairs now define convergence operationally for the tests.
+3.3.5.4 IMP-47 The fixture counts false negatives, not only flags shown.
+3.4 IMP-42 Later waves see finished branches' first-level reasons; agents within one wave still run concurrently.
+3.4.1.4 X-HIST Round-1 findings stopped the fix at level 2.
+3.4.2 X-ENV A single Write and concurrent agents mean no mid-wave sharing; IMP-42 covers later waves.
+3.4.2.3 X-HIST A shared scratch file was declined in round 1 (R-07) for serializing runs.
+3.4.3 X-HIST Frozen prompts keep attempts reproducible; IMP-42 applies per wave.
+3.4.4 X-ENV Subagents have no channel to each other.
+3.4.5 IMP-43 Default waves of 5 with IMP-42 trade some speed for cross-branch awareness.
+3.4.5.3 X-HIST The estimate treats branches as identical units.
+3.4.5.5 X-HIST Cross-branch distinctness stays a soft goal; complete trees are the requirement.
+3.5 IMP-47 Labeled pairs from the real v0.2.0 tree now supply test data.
+3.5.1.1 R-18 Labeling all 7.6 million pairs is a deferred study; the fixture samples a handful.
+3.5.1.2 X-HIST The v0.1.0 tree was used as ledger input.
+3.5.1.4 X-DONE Hygiene was rerun over the v0.1.0 tree in round 2: 1 exact and 15 near duplicates.
+3.5.1.5 R-18 Labeling at scale needs budgeted human or model effort.
+3.5.2 IMP-47 The threshold now has measured behavior on labeled pairs.
+3.5.2.1 X-HIST The commit had no calibration note.
+3.5.2.2 X-HIST Non-blocking flags never failed a run.
+3.5.2.4 X-HIST Per-check thresholds are not added; IMP-45 adds only the cross-branch list.
+3.5.3.3 X-HIST Scale behavior of the cutoff is reported in hygiene.json (IMP-45).
+3.5.3.5 X-ENV Model output varies between runs.
+3.5.4 IMP-53 The round-2 record keeps the tree, hygiene.json and check log in the repository.
+3.5.4.2 X-HIST Reader verdicts stay with the reader.
+3.5.4.3 R-17 Accumulating hygiene history across runs is cross-run collection.
+3.5.4.3.3 X-FALSE run.json stores output size and check totals, not hygiene counts.
+3.5.4.4 X-HIST Unlabeled outputs looked pointless.
+3.5.4.5 IMP-47 A small labeled slice replaces committing whole trees as fixtures.
+3.5.5 IMP-35 RELEASING.md is rewritten with gates by change kind.
+3.5.5.1 X-HIST The checklist grew from features.
+3.5.5.2 X-HIST Short checks were chosen for compliance.
+3.5.5.3 X-HIST The 8/10 evidence came after publishing.
+3.5.5.4 IMP-35 Known limitations are reviewed each release.
+3.5.5.5 X-ENV The personal marketplace has no outside review.

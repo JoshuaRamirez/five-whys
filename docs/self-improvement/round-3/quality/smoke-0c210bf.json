@@ -1,0 +1,295 @@
+{
+ "instructions": "Score each item with quality-rubric.md. input, when present, is the problem the item's tree answers; chain lists the reasons above it, from the top; siblings are the other reasons answering the same why.",
+ "items": [
+  {
+   "n": 1,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup.",
+    "The lockfile has no expiry or liveness check, so a crashed run's lock persists until someone deletes it by hand."
+   ],
+   "reason": "The script tests only whether the lockfile exists, never whether the PID written inside it is still running.",
+   "siblings": [
+    "Lock removal lives in an EXIT trap, which never runs when the dump is SIGKILLed by the OOM killer or the host reboots.",
+    "The lockfile sits on persistent disk rather than tmpfs under /run, so even a reboot does not clear it."
+   ]
+  },
+  {
+   "n": 2,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore."
+   ],
+   "reason": "No team owns the backup's outcome; the cron script was added by one engineer and never assigned to an on-call rotation.",
+   "siblings": [
+    "Backup success was defined as the cron job completing, so nobody set a recovery objective requiring proof that tonight's file is restorable.",
+    "A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating."
+   ]
+  },
+  {
+   "n": 3,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.",
+    "The alert is an on-failure trap inside the backup wrapper script, so it only fires when that script runs and errors."
+   ],
+   "reason": "Guard clauses for an unmounted backup target or full disk log a warning and exit 0, which the failure trap treats as success.",
+   "siblings": [
+    "The backup was set up as a lone cron entry on the database host, with no orchestrator to own run state or alerting.",
+    "The monitoring stack collects host metrics only and offers no job-level check, so the script's own trap was the sole hook available."
+   ]
+  },
+  {
+   "n": 4,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup.",
+    "The dump step has no timeout or watchdog, so a hung run keeps holding the lock into the next night's start."
+   ],
+   "reason": "The script dates from when dumps took minutes, and no upper bound was added as database growth stretched runtimes to hours.",
+   "siblings": [
+    "The dump blocks waiting on a table lock held by a long-running transaction or migration left open overnight.",
+    "Writes to the backup share stall on an unresponsive hard-mounted NFS export, leaving the dump process blocked indefinitely."
+   ]
+  },
+  {
+   "n": 5,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup."
+   ],
+   "reason": "The wrapper deliberately treats \"lock already held\" as a harmless no-op and returns exit 0, to avoid overlapping runs.",
+   "siblings": [
+    "The lockfile has no expiry or liveness check, so a crashed run's lock persists until someone deletes it by hand.",
+    "The dump step has no timeout or watchdog, so a hung run keeps holding the lock into the next night's start."
+   ]
+  },
+  {
+   "n": 6,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.",
+    "A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating."
+   ],
+   "reason": "Dump files move to a cold storage tier with retrieval fees and delays, which discourages routinely pulling one back for testing.",
+   "siblings": [
+    "No staging host has enough disk to hold a restored copy of the production database, so every drill needs provisioning first.",
+    "The restore procedure is an undocumented manual sequence of commands, so there is no script a scheduler could run unattended."
+   ]
+  },
+  {
+   "n": 7,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup."
+   ],
+   "reason": "The dump step has no timeout or watchdog, so a hung run keeps holding the lock into the next night's start.",
+   "siblings": [
+    "The wrapper deliberately treats \"lock already held\" as a harmless no-op and returns exit 0, to avoid overlapping runs.",
+    "The lockfile has no expiry or liveness check, so a crashed run's lock persists until someone deletes it by hand."
+   ]
+  },
+  {
+   "n": 8,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.",
+    "A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating."
+   ],
+   "reason": "No staging host has enough disk to hold a restored copy of the production database, so every drill needs provisioning first.",
+   "siblings": [
+    "Dump files move to a cold storage tier with retrieval fees and delays, which discourages routinely pulling one back for testing.",
+    "The restore procedure is an undocumented manual sequence of commands, so there is no script a scheduler could run unattended."
+   ]
+  },
+  {
+   "n": 9,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore."
+   ],
+   "reason": "Backup success was defined as the cron job completing, so nobody set a recovery objective requiring proof that tonight's file is restorable.",
+   "siblings": [
+    "No team owns the backup's outcome; the cron script was added by one engineer and never assigned to an on-call rotation.",
+    "A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating."
+   ]
+  },
+  {
+   "n": 10,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup."
+   ],
+   "reason": "The lockfile has no expiry or liveness check, so a crashed run's lock persists until someone deletes it by hand.",
+   "siblings": [
+    "The wrapper deliberately treats \"lock already held\" as a harmless no-op and returns exit 0, to avoid overlapping runs.",
+    "The dump step has no timeout or watchdog, so a hung run keeps holding the lock into the next night's start."
+   ]
+  },
+  {
+   "n": 11,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all."
+   ],
+   "reason": "No heartbeat or dead-man's-switch expects a success signal each night, so an absent run looks identical to a quiet night.",
+   "siblings": [
+    "The alert is an on-failure trap inside the backup wrapper script, so it only fires when that script runs and errors.",
+    "After noisy night pages, the backup alert rules were trimmed to hard failures only, dropping warnings for late or skipped runs."
+   ]
+  },
+  {
+   "n": 12,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [],
+   "reason": "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.",
+   "siblings": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.",
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup."
+   ]
+  },
+  {
+   "n": 13,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all."
+   ],
+   "reason": "After noisy night pages, the backup alert rules were trimmed to hard failures only, dropping warnings for late or skipped runs.",
+   "siblings": [
+    "The alert is an on-failure trap inside the backup wrapper script, so it only fires when that script runs and errors.",
+    "No heartbeat or dead-man's-switch expects a success signal each night, so an absent run looks identical to a quiet night."
+   ]
+  },
+  {
+   "n": 14,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [],
+   "reason": "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup.",
+   "siblings": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.",
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore."
+   ]
+  },
+  {
+   "n": 15,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.",
+    "Backup success was defined as the cron job completing, so nobody set a recovery objective requiring proof that tonight's file is restorable."
+   ],
+   "reason": "The earlier restore postmortem closed its action item as a one-off fix instead of a recurring scheduled drill or file-presence check.",
+   "siblings": [
+    "No recovery point or recovery time target was ever agreed with the business, leaving nothing measurable for a drill to check.",
+    "Real restores happen only a few times a year, so the missing-file gap stayed invisible between incidents and never gained priority."
+   ]
+  },
+  {
+   "n": 16,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.",
+    "After noisy night pages, the backup alert rules were trimmed to hard failures only, dropping warnings for late or skipped runs."
+   ],
+   "reason": "The rule changes were reviewed only for noise reduction, with no check that each failure mode of the job kept alert coverage.",
+   "siblings": [
+    "Transient network blips to the backup storage triggered retry warnings that paged at night, so on-call pushed for fewer backup alerts.",
+    "On-call health is measured in pages per week, so deleting alerts looked like progress while missed-backup risk stayed invisible."
+   ]
+  },
+  {
+   "n": 17,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.",
+    "The alert is an on-failure trap inside the backup wrapper script, so it only fires when that script runs and errors."
+   ],
+   "reason": "The monitoring stack collects host metrics only and offers no job-level check, so the script's own trap was the sole hook available.",
+   "siblings": [
+    "The backup was set up as a lone cron entry on the database host, with no orchestrator to own run state or alerting.",
+    "Guard clauses for an unmounted backup target or full disk log a warning and exit 0, which the failure trap treats as success."
+   ]
+  },
+  {
+   "n": 18,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [],
+   "reason": "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.",
+   "siblings": [
+    "A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup.",
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore."
+   ]
+  },
+  {
+   "n": 19,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.",
+    "A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating."
+   ],
+   "reason": "The restore procedure is an undocumented manual sequence of commands, so there is no script a scheduler could run unattended.",
+   "siblings": [
+    "No staging host has enough disk to hold a restored copy of the production database, so every drill needs provisioning first.",
+    "Dump files move to a cold storage tier with retrieval fees and delays, which discourages routinely pulling one back for testing."
+   ]
+  },
+  {
+   "n": 20,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore."
+   ],
+   "reason": "A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating.",
+   "siblings": [
+    "No team owns the backup's outcome; the cron script was added by one engineer and never assigned to an on-call rotation.",
+    "Backup success was defined as the cron job completing, so nobody set a recovery objective requiring proof that tonight's file is restorable."
+   ]
+  },
+  {
+   "n": 21,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all."
+   ],
+   "reason": "The alert is an on-failure trap inside the backup wrapper script, so it only fires when that script runs and errors.",
+   "siblings": [
+    "No heartbeat or dead-man's-switch expects a success signal each night, so an absent run looks identical to a quiet night.",
+    "After noisy night pages, the backup alert rules were trimmed to hard failures only, dropping warnings for late or skipped runs."
+   ]
+  },
+  {
+   "n": 22,
+   "input": "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.",
+   "question": "why",
+   "chain": [
+    "No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.",
+    "Backup success was defined as the cron job completing, so nobody set a recovery objective requiring proof that tonight's file is restorable."
+   ],
+   "reason": "Real restores happen only a few times a year, so the missing-file gap stayed invisible between incidents and never gained priority.",
+   "siblings": [
+    "No recovery point or recovery time target was ever agreed with the business, leaving nothing measurable for a drill to check.",
+    "The earlier restore postmortem closed its action item as a one-off fix instead of a recurring scheduled drill or file-presence check."
+   ]
+  }
+ ]
+}

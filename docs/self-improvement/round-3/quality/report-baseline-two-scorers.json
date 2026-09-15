@@ -1,0 +1,101 @@
+{
+  "packet": "docs/self-improvement/round-3/quality/baseline.json",
+  "tree": "docs/self-improvement/round-3/tree.json",
+  "items": 29,
+  "scorers": [
+    {
+      "scorer": "fresh-context Claude agent (Claude Opus 5, claude-opus-5[1m]), saw only the packet and quality-rubric.md",
+      "independent": true,
+      "means": {
+        "causal": 1.724,
+        "specific": 2,
+        "distinct": 1.69
+      },
+      "by_level": {
+        "1": {
+          "items": 5,
+          "causal": 2,
+          "specific": 2,
+          "distinct": 2
+        },
+        "2": {
+          "items": 6,
+          "causal": 1.5,
+          "specific": 2,
+          "distinct": 1.833
+        },
+        "3": {
+          "items": 6,
+          "causal": 2,
+          "specific": 2,
+          "distinct": 1.833
+        },
+        "4": {
+          "items": 6,
+          "causal": 1.667,
+          "specific": 2,
+          "distinct": 1.5
+        },
+        "5": {
+          "items": 6,
+          "causal": 1.5,
+          "specific": 2,
+          "distinct": 1.333
+        }
+      }
+    },
+    {
+      "scorer": "the implementing Claude session (Claude Opus 5), scoring on the maintainer's instruction of 2026-09-14 in place of the maintainer's own review. It wrote the plugin and had already seen scores-agent.json and report-agent.json, so these scores are neither independent nor blind.",
+      "independent": false,
+      "means": {
+        "causal": 1.724,
+        "specific": 1.966,
+        "distinct": 1.759
+      },
+      "by_level": {
+        "1": {
+          "items": 5,
+          "causal": 2,
+          "specific": 2,
+          "distinct": 2
+        },
+        "2": {
+          "items": 6,
+          "causal": 1.667,
+          "specific": 2,
+          "distinct": 2
+        },
+        "3": {
+          "items": 6,
+          "causal": 2,
+          "specific": 2,
+          "distinct": 2
+        },
+        "4": {
+          "items": 6,
+          "causal": 1.5,
+          "specific": 2,
+          "distinct": 1.5
+        },
+        "5": {
+          "items": 6,
+          "causal": 1.5,
+          "specific": 1.833,
+          "distinct": 1.333
+        }
+      }
+    }
+  ],
+  "agreement": {
+    "exact": {
+      "causal": 0.793,
+      "specific": 0.966,
+      "distinct": 0.931
+    },
+    "mean_abs_difference": {
+      "causal": 0.207,
+      "specific": 0.034,
+      "distinct": 0.069
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "five-ws/1",
+  "inputs": [
+    "Deploys of the payments service fail on Friday afternoons since CI moved to self-hosted runners; retries pass."
+  ],
+  "questions": [
+    "why"
+  ],
+  "created": "2026-09-14T18:29:21-07:00",
+  "plugin_version": "0.2.0",
+  "options": [],
+  "shape": {
+    "breadth": 5,
+    "depth": 5,
+    "split": 2
+  },
+  "model_level": null,
+  "models": null,
+  "max_parallel": 5,
+  "estimate": {
+    "trees": 1,
+    "agents": 26,
+    "answers": 3905,
+    "agent_tokens_low": 601090,
+    "agent_tokens": 1623160,
+    "output_tokens": 148390,
+    "basis": "range from two claude-opus-5 runs of why trees measured on 2026-09-13: the low end is a headless session on a problem naming no local files; the high end (agent_tokens) is the v0.2.0 self-run dispatched from an interactive session with many tools loaded, where agents inherited about 21k tokens of context and read files as evidence. The dispatching session's context drives the base cost. Other questions and model levels are unmeasured. Each figure sums agents' reported totals; context re-read on every turn is billed on top, mostly as cache reads."
+  },
+  "attempts": {
+    "roots-1": 1,
+    "1.why.1.1": 1
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "at": "2026-09-14T18:29:25-07:00",
+      "ids": [
+        "roots-1"
+      ],
+      "max_parallel": 5
+    },
+    {
+      "wave": 2,
+      "at": "2026-09-14T18:31:24-07:00",
+      "ids": [
+        "1.why.1.1"
+      ],
+      "max_parallel": 5
+    }
+  ]
+}

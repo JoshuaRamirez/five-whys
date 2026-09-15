@@ -1,0 +1,46 @@
+{
+  "schema": "five-whys/2",
+  "problem": "Deploys of the payments service fail on Friday afternoons since CI moved to self-hosted runners; retries pass.",
+  "created": "2026-09-13T22:57:34-07:00",
+  "plugin_version": "0.2.0",
+  "options": [],
+  "shape": {
+    "breadth": 5,
+    "depth": 5,
+    "split": 2
+  },
+  "model": "inherit",
+  "max_parallel": 5,
+  "estimate": {
+    "agents": 26,
+    "reasons": 3905,
+    "agent_tokens_low": 601090,
+    "agent_tokens": 1623160,
+    "output_tokens": 148390,
+    "basis": "range from two claude-opus-5 runs measured on 2026-09-13: the low end is a headless session on a problem naming no local files; the high end (agent_tokens) is the v0.2.0 self-run dispatched from an interactive session with many tools loaded, where agents inherited about 21k tokens of context and read files as evidence. The dispatching session's context drives the base cost. Each figure sums agents' reported totals; context re-read on every turn is billed on top, mostly as cache reads."
+  },
+  "attempts": {
+    "root": 1,
+    "1.1": 1
+  },
+  "root_model": "inherit",
+  "branch_model": "inherit",
+  "waves": [
+    {
+      "wave": 1,
+      "at": "2026-09-13T22:57:51-07:00",
+      "ids": [
+        "root"
+      ],
+      "max_parallel": 5
+    },
+    {
+      "wave": 2,
+      "at": "2026-09-13T22:59:25-07:00",
+      "ids": [
+        "1.1"
+      ],
+      "max_parallel": 5
+    }
+  ]
+}

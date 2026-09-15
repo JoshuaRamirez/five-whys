@@ -1,0 +1,756 @@
+{
+ "round": "round-2",
+ "seed": 11,
+ "stratified": true,
+ "filters": {
+  "code": null,
+  "via": null,
+  "level": null
+ },
+ "groups": {
+  "level 1 own": 5,
+  "level 2 own": 5,
+  "level 3 inherited": 4,
+  "level 3 own": 4,
+  "level 4 own": 4,
+  "level 5 inherited": 4,
+  "level 5 own": 4
+ },
+ "rules": [
+  "Precedence: an IMP code wins over an R code, and an R code wins over an X code. A reason naming an external fact that a v0.3.0 change mitigates gets that IMP code.",
+  "X-HIST and X-ENV notes cite the IMP or R code that handles any actionable part, when one exists.",
+  "X-FALSE covers premises untrue of v0.2.0 as well as causal links that do not hold.",
+  "Ongoing constraints of a solo, unfunded project are X-ENV when nothing in the plugin can change them."
+ ],
+ "codes": {
+  "IMP-32": {
+   "title": "Remeasured cost",
+   "detail": "Estimate constants and the README cost table come from the v0.2.0 full run (per-agent totals, 38 output tokens per reason); the basis names the version, model and what the totals count."
+  },
+  "IMP-33": {
+   "title": "Version stamps",
+   "detail": "run.json and the five-whys.json header record plugin_version read from plugin.json; init and status print it; a MEASURED constant labels the estimate and a docs test ties it to the README."
+  },
+  "IMP-34": {
+   "title": "Changelog with evidence",
+   "detail": "CHANGELOG.md holds a dated entry per version with its verification evidence; RELEASING.md points evidence there; a docs test requires an entry for the manifest version."
+  },
+  "IMP-35": {
+   "title": "Release gates by change kind",
+   "detail": "RELEASING.md: prompt, agent, dispatch or estimate changes need a model-invoked run through /five-whys (checkout loaded with --plugin-dir) or the eval; figures name their version; review a ledger sample; check option count."
+  },
+  "IMP-36": {
+   "title": "Test the checkout before publishing",
+   "detail": "README and RELEASING.md document `claude --plugin-dir .` so unpublished SKILL.md and agent text run in a real session before the marketplace entry changes."
+  },
+  "IMP-37": {
+   "title": "Invocation parsed in code",
+   "detail": "A parse subcommand reads the raw $ARGUMENTS on stdin and returns the problem, init flags, --yes, --resume and errors for unknown options, honoring a -- separator; SKILL.md Step 1 uses it."
+  },
+  "IMP-38": {
+   "title": "Confirmation decided in code",
+   "detail": "init returns confirm: true when agents exceed CONFIRM_AGENTS; SKILL.md obeys the flag; a docs test ties the constant to the prose."
+  },
+  "IMP-39": {
+   "title": "Settings recorded and shown",
+   "detail": "run.json stores the options given to init and the plugin version; index.md opens with the shape, model, wave size and version that produced the tree."
+  },
+  "IMP-40": {
+   "title": "Per-tier model flags removed",
+   "detail": "--root-model and --branch-model go: unmeasured, unreachable from /five-whys, and they multiplied configurations. plan still honors tier fields in older run.json files."
+  },
+  "IMP-41": {
+   "title": "Options with stated purpose and a count",
+   "detail": "The README options table says why each option exists; a docs test pins the number of skill options so additions and removals are deliberate."
+  },
+  "IMP-42": {
+   "title": "Later waves see finished branches",
+   "detail": "Branch prompts list the first-level reasons of branch fragments that already validate, beside the root's reasons, so staged waves reduce cross-branch repeats."
+  },
+  "IMP-43": {
+   "title": "Smaller default waves",
+   "detail": "max_parallel defaults to 5 instead of filling the 20-subagent cap, pairing with IMP-42 and lighter machine load; --max-parallel 20 remains for speed."
+  },
+  "IMP-44": {
+   "title": "Orchestration replay test",
+   "detail": "A unit test walks SKILL.md's loop with fake agents: parse, init, plan --record, fragments, check, status, assemble; plus a failing agent reaching stuck and assemble --partial."
+  },
+  "IMP-45": {
+   "title": "Stemmed and cross-branch hygiene",
+   "detail": "Tokens strip common suffixes; pairs in different level-1 branches at 0.45 or more are listed as cross_branch leads; flags carry both texts; filters and cutoffs appear in hygiene.json."
+  },
+  "IMP-46": {
+   "title": "Check sees the real ancestors",
+   "detail": "For a branch fragment inside a run, check loads the root's chain for that node so restatement warnings compare against real ancestors and the root's reasons."
+  },
+  "IMP-47": {
+   "title": "Paraphrase pairs from a real tree",
+   "detail": "tests/fixtures/pairs.json holds labeled convergent and distinct pairs from the v0.2.0 tree; a test records how many the heuristic catches and fails if detection regresses."
+  },
+  "IMP-48": {
+   "title": "Read plan sized by bytes",
+   "detail": "assemble lists Read offsets in index.md from line byte sizes under a budget, replacing the fixed 400-line rule in SKILL.md and README."
+  },
+  "IMP-49": {
+   "title": "Agent guidance beyond software problems",
+   "detail": "why-expander.md gains a non-software example, a rule for problems with nothing to read, leaves that keep a concrete tie to their chain, and assumptions for ungrounded reasons."
+  },
+  "IMP-50": {
+   "title": "Thin-problem eval case",
+   "detail": "A second eval case runs a one-line non-software problem through --smoke --yes; RELEASING.md cites graders/criteria.md instead of paraphrasing it."
+  },
+  "IMP-51": {
+   "title": "Auditable ledger tooling",
+   "detail": "ledger.py rounds: rule fragments with inheritance recorded as via, sample with ancestors and code detail, summary of X notes citing codes; catalog precedence rules."
+  },
+  "IMP-52": {
+   "title": "Hygiene in its own module",
+   "detail": "Similarity code moves to scripts/hygiene.py beside fivewhys.py, keeping one entry point for SKILL.md and agents while the largest self-contained concern gets its own file."
+  },
+  "IMP-53": {
+   "title": "Round-2 record",
+   "detail": "docs/self-improvement holds round 1 and round 2 side by side, with measured facts, a recorded sample audit and a review of the plugin made outside the tree."
+  },
+  "R-01": {
+   "title": "Declined: plugin-side ranking, synthesis, pruning or root-cause selection",
+   "detail": "Analysis stays with the user. Mechanical leads such as IMP-45 cross-branch pairs are the allowed aid."
+  },
+  "R-02": {
+   "title": "Declined: embeddings, third-party packages, API keys or network calls",
+   "detail": "Would break the zero-dependency offline install and send problem text off the machine."
+  },
+  "R-03": {
+   "title": "Declined: model judge inside the blocking fix loop",
+   "detail": "Flaky verdicts loop repair cycles and multiply cost."
+  },
+  "R-04": {
+   "title": "Declined: incomplete trees",
+   "detail": "Early stopping, variable breadth, not-applicable slots or pruning break the complete-tree requirement."
+  },
+  "R-06": {
+   "title": "Out of scope: social or organizational remedies",
+   "detail": "Recruiting reviewers or testers, announcements, curated-marketplace submission, paying for review. Not plugin changes."
+  },
+  "R-11": {
+   "title": "Declined: token usage relayed through the orchestrator",
+   "detail": "Usage reaches only the model's tool results; copying numbers through prose is unreliable. Measure from subagent logs per release instead (IMP-35)."
+  },
+  "R-12": {
+   "title": "Declined: prompt-length term in the estimate",
+   "detail": "Measured prompts are about 1.7k of 63k tokens per branch; generation and evidence reading dominate (IMP-32 remeasures those)."
+  },
+  "R-13": {
+   "title": "Declined: live evals, secrets or model runs in CI",
+   "detail": "Paid on every push, secrets exposed to Bash-capable agents, unavailable to forks, nondeterministic. Evals run locally per RELEASING.md."
+  },
+  "R-14": {
+   "title": "Declined: model-based convergence or quality review inside the plugin",
+   "detail": "Nondeterministic, costs a second full read and crosses into analysis. IMP-45 lists mechanical cross-branch leads instead."
+  },
+  "R-15": {
+   "title": "Declined: cross-links or graph structure in the tree schema",
+   "detail": "The deliverable is a complete strict tree; relationships stay in hygiene.json."
+  },
+  "R-16": {
+   "title": "Declined: persistent settings files or environment defaults",
+   "detail": "Shape and model are per-problem choices; a stale stored default could silently launch a costly run. Flags stay explicit and are recorded (IMP-39)."
+  },
+  "R-17": {
+   "title": "Declined: telemetry, phoning home or cross-run collection",
+   "detail": "Problem statements can be confidential and there is no backend; run.json records settings locally (IMP-39)."
+  },
+  "R-18": {
+   "title": "Deferred: studies needing many paid runs",
+   "detail": "Model-tier quality, same-model variance, multi-domain benchmarks, grader reliability and large labeled corpora. Recorded as known limitations."
+  },
+  "R-19": {
+   "title": "Declined: a headless runner owning the dispatch loop",
+   "detail": "claude -p subprocesses would spawn separate sessions, lose inline progress and need their own auth; the loop stays with the orchestrating model, helped by IMP-37, IMP-38 and IMP-44."
+  },
+  "R-20": {
+   "title": "Declined: developer tooling dependencies in CI",
+   "detail": "Linters, coverage and complexity tools add installs to a stdlib project; structure is handled by IMP-52 and review."
+  },
+  "R-21": {
+   "title": "Declined: fragment provenance markers",
+   "detail": "Any session can write identical bytes, so a marker proves nothing; authorship is checked in transcripts by the eval grader."
+  },
+  "R-22": {
+   "title": "Declined: fault injection or tunable attempt limits for rehearsal",
+   "detail": "IMP-44 drives the stuck and partial paths deterministically with fake agents, without new options."
+  },
+  "X-DONE": {
+   "title": "Already resolved",
+   "detail": "The note says what resolved it, usually a fact above or an existing v0.2.0 feature."
+  },
+  "X-FALSE": {
+   "title": "Premise untrue or causal link does not hold",
+   "detail": "The note names the contradicting fact."
+  },
+  "X-ENV": {
+   "title": "Outside the plugin's control",
+   "detail": "Platform, model, ecosystem or the project's standing circumstances. Cite a mitigating code when one exists."
+  },
+  "X-HIST": {
+   "title": "Past motivation or process, nothing further to change",
+   "detail": "Explains how v0.2.0 came to be. Cite the code that handles any actionable part."
+  }
+ },
+ "entries": [
+  {
+   "id": "4",
+   "level": 1,
+   "inherited_from": null,
+   "chain": [],
+   "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment.",
+   "code": "IMP-51",
+   "note": "Ledger tooling now samples entries and reports cited codes, and round 2 records a sample audit; one model family still wrote everything (X-ENV)."
+  },
+  {
+   "id": "5",
+   "level": 1,
+   "inherited_from": null,
+   "chain": [],
+   "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity.",
+   "code": "IMP-41",
+   "note": "Options now state their purpose and their count is pinned; IMP-40 removes two flags and IMP-52 splits out hygiene."
+  },
+  {
+   "id": "2",
+   "level": 1,
+   "inherited_from": null,
+   "chain": [],
+   "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys.",
+   "code": "IMP-44",
+   "note": "An orchestration replay test now walks SKILL.md's loop, and RELEASING.md requires a model-invoked run of the checkout (IMP-36)."
+  },
+  {
+   "id": "1",
+   "level": 1,
+   "inherited_from": null,
+   "chain": [],
+   "reason": "v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified.",
+   "code": "IMP-32",
+   "note": "The v0.2.0 full run has now happened; its measurements replace the v0.1.0 figures in the README and the estimate constants."
+  },
+  {
+   "id": "3",
+   "level": 1,
+   "inherited_from": null,
+   "chain": [],
+   "reason": "Hygiene flags rely on Jaccard word overlap, which misses paraphrases and deep cross-branch convergence.",
+   "code": "IMP-45",
+   "note": "Stemmed tokens and cross-branch leads catch 14 pairs in this tree that v0.2.0 missed; paraphrases in different words still escape (R-02)."
+  },
+  {
+   "id": "4.2",
+   "level": 2,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    }
+   ],
+   "reason": "1,298 reasons were dispositioned as outside the plugin's control or past history, possibly discarding actionable causes.",
+   "code": "IMP-51",
+   "note": "Precedence and citation rules keep actionable causes from hiding under X codes, and merge reports the share."
+  },
+  {
+   "id": "4.1",
+   "level": 2,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    }
+   ],
+   "reason": "Agents classified all 3,905 reasons against the catalog and no human sample checked their dispositions.",
+   "code": "IMP-51",
+   "note": "ledger.py sample prints entries with ancestors and code detail, and round 2 records an audit made with it."
+  },
+  {
+   "id": "5.1",
+   "level": 2,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    }
+   ],
+   "reason": "Many of the 31 catalog items were implemented as separate options or commands rather than consolidated behaviors.",
+   "code": "IMP-40",
+   "note": "Separate tier flags are removed, and IMP-37 routes all options through one definition."
+  },
+  {
+   "id": "4.5",
+   "level": 2,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    }
+   ],
+   "reason": "The same model family wrote, critiqued and classified the tree, so shared blind spots went unchallenged.",
+   "code": "X-ENV",
+   "note": "Claude Code subagents are one vendor's models; other vendors need network access (R-02)."
+  },
+  {
+   "id": "2.1",
+   "level": 2,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "2",
+     "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys."
+    }
+   ],
+   "reason": "The author drove fivewhys.py and why-expander by hand while building, bypassing SKILL.md flag parsing and confirmation.",
+   "code": "IMP-36",
+   "note": "The checkout can be loaded with --plugin-dir, so SKILL.md parsing and confirmation run in a real session before release."
+  },
+  {
+   "id": "2.3.2",
+   "level": 3,
+   "inherited_from": "2.3",
+   "chain": [
+    {
+     "id": "2",
+     "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys."
+    },
+    {
+     "id": "2.3",
+     "reason": "The eval needs `claude plugin eval` in a live authenticated session, which the tests.yml CI workflow cannot run."
+    }
+   ],
+   "reason": "The repository has no Anthropic API key or Claude login token stored as a GitHub Actions secret.",
+   "code": "R-13",
+   "note": "Live evals in CI are declined; the eval runs locally per RELEASING.md."
+  },
+  {
+   "id": "4.5.1",
+   "level": 3,
+   "inherited_from": "4.5",
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    },
+    {
+     "id": "4.5",
+     "reason": "The same model family wrote, critiqued and classified the tree, so shared blind spots went unchallenged."
+    }
+   ],
+   "reason": "`model: inherit` in why-expander.md ran every tree agent and classifier on the orchestrating session's Claude model.",
+   "code": "X-ENV",
+   "note": "Claude Code subagents are one vendor's models; other vendors need network access (R-02)."
+  },
+  {
+   "id": "2.3.3",
+   "level": 3,
+   "inherited_from": "2.3",
+   "chain": [
+    {
+     "id": "2",
+     "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys."
+    },
+    {
+     "id": "2.3",
+     "reason": "The eval needs `claude plugin eval` in a live authenticated session, which the tests.yml CI workflow cannot run."
+    }
+   ],
+   "reason": "tests.yml triggers on every push and pull request, with no manual or scheduled slot for slow paid checks.",
+   "code": "R-13",
+   "note": "Live evals in CI are declined; the eval runs locally per RELEASING.md."
+  },
+  {
+   "id": "5.4.1",
+   "level": 3,
+   "inherited_from": "5.4",
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.4",
+     "reason": "No usage telemetry exists, so rarely used options cannot be identified and removed."
+    }
+   ],
+   "reason": "run.json and check-log.jsonl stay inside each local run folder, and nothing collects them across runs.",
+   "code": "R-17",
+   "note": "Telemetry is declined; IMP-39 records settings locally in each run."
+  },
+  {
+   "id": "1.3.2",
+   "level": 3,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "1",
+     "reason": "v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified."
+    },
+    {
+     "id": "1.3",
+     "reason": "v0.2.0 shipped the same day as v0.1.0's self-run, leaving no window for a second full run."
+    }
+   ],
+   "reason": "RELEASING.md gates a version bump on six checks but sets no waiting period or soak time after changes land.",
+   "code": "IMP-35",
+   "note": "Gates scale with the kind of change instead of one equal bar; soak time is not added."
+  },
+  {
+   "id": "4.1.1",
+   "level": 3,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    },
+    {
+     "id": "4.1",
+     "reason": "Agents classified all 3,905 reasons against the catalog and no human sample checked their dispositions."
+    }
+   ],
+   "reason": "ledger.py check validates only structure: a known code, a note under 25 words, and full scope coverage.",
+   "code": "IMP-51",
+   "note": "merge reports X notes citing codes and inheritance, and sample supports the semantic check a script cannot make."
+  },
+  {
+   "id": "5.3.2",
+   "level": 3,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.3",
+     "reason": "Status, show and partial assembly were built for recovery before any failed v0.2.0 run showed they were needed."
+    }
+   ],
+   "reason": "Agent dispatch failures cannot be triggered on demand, so recovery paths were designed from imagined interruptions, not reproduced ones.",
+   "code": "X-DONE",
+   "note": "A real interruption exercised resume and status; IMP-44 adds deterministic stuck and partial tests."
+  },
+  {
+   "id": "5.5.3",
+   "level": 3,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.5",
+     "reason": "The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module."
+    }
+   ],
+   "reason": "v0.2.0 catalog items were appended to the existing v0.1.0 file one feature at a time, with no restructuring pass.",
+   "code": "IMP-52",
+   "note": "A restructuring pass lands with round 2."
+  },
+  {
+   "id": "1.2.4.3",
+   "level": 4,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "1",
+     "reason": "v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified."
+    },
+    {
+     "id": "1.2",
+     "reason": "RELEASING.md item 5 lets README cost and time figures stay dated to v0.1.0 instead of forcing remeasurement."
+    },
+    {
+     "id": "1.2.4",
+     "reason": "No test in test_docs.py ties README measurements to a version, so item 5 depends on unenforced human reading."
+    }
+   ],
+   "reason": "RELEASING.md is not executable, so every item relies on the releaser reading and judging it.",
+   "code": "IMP-35",
+   "note": "RELEASING.md items name commands where possible and evidence locations."
+  },
+  {
+   "id": "5.5.2.5",
+   "level": 4,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.5",
+     "reason": "The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module."
+    },
+    {
+     "id": "5.5.2",
+     "reason": "The goal \"installs anywhere python3 exists\" favored one self-contained file needing no packaging or path setup."
+    }
+   ],
+   "reason": "Keeping SCHEMA \"five-whys/2\" beside every reader and writer ensures fragments and validators never disagree.",
+   "code": "X-HIST",
+   "note": "Schema knowledge stays with its readers and writers."
+  },
+  {
+   "id": "4.2.2.1",
+   "level": 4,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    },
+    {
+     "id": "4.2",
+     "reason": "1,298 reasons were dispositioned as outside the plugin's control or past history, possibly discarding actionable causes."
+    },
+    {
+     "id": "4.2.2",
+     "reason": "1,162 of the 1,298 X codes sit on level-5 reasons, where v0.1.0 agents drifted into author psychology and industry trends."
+    }
+   ],
+   "reason": "v0.1.0's why-expander told agents to assume typical context, so deep reasons fell back on generic industry facts.",
+   "code": "X-DONE",
+   "note": "v0.2.0 dropped \"assume typical context\" and added evidence reading."
+  },
+  {
+   "id": "4.4.3.4",
+   "level": 4,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "4",
+     "reason": "The v0.2.0 changes rest on a single self-run whose ledger classification was unaudited agent judgment."
+    },
+    {
+     "id": "4.4",
+     "reason": "The plugin's own rating was the only problem analyzed, so failures on unrelated user problems stayed invisible."
+    },
+    {
+     "id": "4.4.3",
+     "reason": "No benchmark set of problems from varied domains was ever assembled to run each version against."
+    }
+   ],
+   "reason": "Tree generation is nondeterministic, so a corpus would need repeated runs per problem to separate failures from variance.",
+   "code": "R-18",
+   "note": "Replicate runs per problem are deferred."
+  },
+  {
+   "id": "5.5.4.1.3",
+   "level": 5,
+   "inherited_from": "5.5.4.1",
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.5",
+     "reason": "The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module."
+    },
+    {
+     "id": "5.5.4",
+     "reason": "Tests load fivewhys.py by its exact path and search its source text, so a module split would break them."
+    },
+    {
+     "id": "5.5.4.1",
+     "reason": "test_docs.py reads the script's raw text and asserts each flag documented in SKILL.md appears as a literal."
+    }
+   ],
+   "reason": "README and SKILL.md option tables are maintained by hand, so a test was needed to keep them honest.",
+   "code": "IMP-52",
+   "note": "Docs tests now read option definitions from the module, not raw script text."
+  },
+  {
+   "id": "5.4.2.4.5",
+   "level": 5,
+   "inherited_from": "5.4.2.4",
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.4",
+     "reason": "No usage telemetry exists, so rarely used options cannot be identified and removed."
+    },
+    {
+     "id": "5.4.2",
+     "reason": "The plugin ships as markdown and a stdlib script from a GitHub marketplace, with no server to receive usage reports."
+    },
+    {
+     "id": "5.4.2.4",
+     "reason": "Every run executes on the user's machine through Bash and subagents, so only the user's session observes it."
+    }
+   ],
+   "reason": "The design treats the assembled JSON tree as the finished product, so nothing is sent onward.",
+   "code": "X-ENV",
+   "note": "Runs happen only on the user's machine."
+  },
+  {
+   "id": "5.5.3.3.2",
+   "level": 5,
+   "inherited_from": "5.5.3.3",
+   "chain": [
+    {
+     "id": "5",
+     "reason": "Surface area grew to about 700 script lines and 14 options without evidence that each earns its complexity."
+    },
+    {
+     "id": "5.5",
+     "reason": "The single-file stdlib script concentrates prompts, validation, hygiene, logging and assembly into one 725-line module."
+    },
+    {
+     "id": "5.5.3",
+     "reason": "v0.2.0 catalog items were appended to the existing v0.1.0 file one feature at a time, with no restructuring pass."
+    },
+    {
+     "id": "5.5.3.3",
+     "reason": "Each addition was small, so no single change crossed a threshold that justified splitting the module."
+    }
+   ],
+   "reason": "v0.1.0's line count was never recorded, so no baseline existed against which growth could be noticed.",
+   "code": "IMP-52",
+   "note": "Cumulative growth now justifies the split."
+  },
+  {
+   "id": "2.3.3.5.4",
+   "level": 5,
+   "inherited_from": "2.3.3.5",
+   "chain": [
+    {
+     "id": "2",
+     "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys."
+    },
+    {
+     "id": "2.3",
+     "reason": "The eval needs `claude plugin eval` in a live authenticated session, which the tests.yml CI workflow cannot run."
+    },
+    {
+     "id": "2.3.3",
+     "reason": "tests.yml triggers on every push and pull request, with no manual or scheduled slot for slow paid checks."
+    },
+    {
+     "id": "2.3.3.5",
+     "reason": "No scheduled workflow exists to catch eval regressions caused by Claude Code or model updates."
+    }
+   ],
+   "reason": "Weeks without commits were assumed to mean no change, overlooking drift in the platform underneath.",
+   "code": "R-13",
+   "note": "Scheduled paid evals are declined; RELEASING.md reruns the eval each release."
+  },
+  {
+   "id": "2.4.4.1.5",
+   "level": 5,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "2",
+     "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys."
+    },
+    {
+     "id": "2.4",
+     "reason": "RELEASING.md item 3 accepts a smoke run done by hand, so the eval was never required to pass."
+    },
+    {
+     "id": "2.4.4",
+     "reason": "The author alone writes, verifies and approves releases, so the lenient either-or clause faced no challenge."
+    },
+    {
+     "id": "2.4.4.1",
+     "reason": "five-whys is a personal RedJay plugin with no other contributors or reviewers."
+    }
+   ],
+   "reason": "README names no issue tracker, so users have no obvious route to question release gates.",
+   "code": "R-06",
+   "note": "An issue route for users is outreach the author has not chosen."
+  },
+  {
+   "id": "1.1.1.5.3",
+   "level": 5,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "1",
+     "reason": "v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified."
+    },
+    {
+     "id": "1.1",
+     "reason": "A full 26-agent run costs hours and many tokens, so RELEASING.md requires only a smoke run before release."
+    },
+    {
+     "id": "1.1.1",
+     "reason": "Each full run spends about 1.2M subagent tokens from the author's own usage allowance, with no budget for release testing."
+    },
+    {
+     "id": "1.1.1.5",
+     "reason": "Each branch agent must emit about 5,000 output tokens for 155 full sentences, and output tokens are priced highest."
+    }
+   ],
+   "reason": "JSON nesting wraps every reason in keys and braces, inflating output beyond the sentence text itself.",
+   "code": "X-HIST",
+   "note": "JSON fragments were kept for exact validation (round-1 R-08); nesting overhead is included in the measured 38 tokens per reason."
+  },
+  {
+   "id": "2.2.1.5.2",
+   "level": 5,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "2",
+     "reason": "The SKILL.md orchestration and the smoke-run eval have never been executed by a model invoking /five-whys."
+    },
+    {
+     "id": "2.2",
+     "reason": "The 35 unit tests exercise fivewhys.py functions and docs, but prose instructions in SKILL.md cannot be unit-tested."
+    },
+    {
+     "id": "2.2.1",
+     "reason": "SKILL.md takes effect only inside Claude Code, which substitutes $ARGUMENTS and ${CLAUDE_PLUGIN_ROOT} and supplies the Agent tool."
+    },
+    {
+     "id": "2.2.1.5",
+     "reason": "Tool grants for the skill and why-expander are enforced by the harness from frontmatter, not by Python."
+    }
+   ],
+   "reason": "This session's registered why-expander lacks Edit, showing installed agent copies can lag the repo unnoticed.",
+   "code": "IMP-36",
+   "note": "A fresh --plugin-dir session registers the current agent definition."
+  },
+  {
+   "id": "1.1.4.1.1",
+   "level": 5,
+   "inherited_from": null,
+   "chain": [
+    {
+     "id": "1",
+     "reason": "v0.2.0 was published after only a 39-reason smoke run, so full-scale behavior, cost and duration are unverified."
+    },
+    {
+     "id": "1.1",
+     "reason": "A full 26-agent run costs hours and many tokens, so RELEASING.md requires only a smoke run before release."
+    },
+    {
+     "id": "1.1.4",
+     "reason": "A full run's 3,905 reasons cannot practically be read for quality, so paying for one seemed to buy only a shape check."
+    },
+    {
+     "id": "1.1.4.1",
+     "reason": "A 511 KB, 128k-token output exceeds what a person or one model context can review in a sitting."
+    }
+   ],
+   "reason": "The exhaustive five-by-five design fixes output size, leaving no configuration that is both full and readable.",
+   "code": "R-04",
+   "note": "A smaller default would break the complete 5x5 requirement."
+  }
+ ]
+}

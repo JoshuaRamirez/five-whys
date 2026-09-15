@@ -1,0 +1,27 @@
+{
+ "note": "Written in round 3. observed means the improvement's effect was seen in a run of the code: a model run for skill or agent behavior, or a test or run for deterministic script behavior. An artifact existing is not enough. ed42be1 is the commit the round-3 full run used.",
+ "improvements": {
+  "IMP-32": {"status": "observed", "commit": "ed42be1", "evidence": "The round-3 full run reported 0.97M agent tokens, inside the 0.60M-1.62M range (round-3/usage.json)."},
+  "IMP-33": {"status": "observed", "commit": "ed42be1", "evidence": "The round-3 run.json and tree header carry plugin_version 0.2.0 from the checkout's manifest."},
+  "IMP-34": {"status": "observed", "commit": "b61eb75", "evidence": "Gate results for model-invoked, interactive, measured-branch and eval checks were recorded in CHANGELOG.md."},
+  "IMP-35": {"status": "observed", "commit": "b61eb75", "evidence": "The by-kind table decided which gates ran for the round-2 changes; round 3 found it let the eval stay blocked, fixed by gate statuses."},
+  "IMP-36": {"status": "observed", "commit": "76dbd37", "evidence": "The model-invoked smoke run loaded the checkout with claude --plugin-dir and ran parse and init from it."},
+  "IMP-37": {"status": "observed", "commit": "76dbd37", "evidence": "Model-invoked and interactive runs called parse; the round-3 run's options came through it."},
+  "IMP-38": {"status": "observed", "commit": "76dbd37", "evidence": "The interactive full-size run showed 26 agents and the token range and asked before dispatching."},
+  "IMP-39": {"status": "observed", "commit": "ed42be1", "evidence": "The round-3 run.json records its options and estimate; index.md opens with the Settings line."},
+  "IMP-40": {"status": "observed", "commit": "ed42be1", "evidence": "init rejects --root-model in the unit tests; no live run needed it."},
+  "IMP-41": {"status": "observed", "commit": "ed42be1", "evidence": "The docs test pins 10 options and checks every README row has a purpose."},
+  "IMP-42": {"status": "observed", "commit": "ed42be1", "evidence": "Round-3 prompts for waves 2-5 list 25, 50, 75 and 100 first-level reasons of finished branches."},
+  "IMP-43": {"status": "observed", "commit": "ed42be1", "evidence": "The round-3 run dispatched 26 agents in waves of 5 with no retries."},
+  "IMP-44": {"status": "observed", "commit": "ed42be1", "evidence": "The replay tests pass locally and in CI. They use synthetic fragments, so they cover orchestration only."},
+  "IMP-45": {"status": "observed", "commit": "ed42be1", "evidence": "Round-3 hygiene.json lists 3 near-duplicates and 14 cross-branch leads; labeled pairs detect 7 of 16."},
+  "IMP-46": {"status": "observed", "commit": "ed42be1", "evidence": "The unit test sees a branch restating the root flagged. No live run has produced such a warning: round 3's 27 checks had 0 warnings."},
+  "IMP-47": {"status": "observed", "commit": "ed42be1", "evidence": "tests/test_hygiene.py scores the 24 labeled pairs on every run."},
+  "IMP-48": {"status": "not-run", "evidence": "The unit test keeps each window under 48 KB, but no recorded load of a tree read it through index.md's windows, so Read accepting them is unobserved."},
+  "IMP-49": {"status": "not-run", "evidence": "No model run on a non-software problem has happened since the guidance was added."},
+  "IMP-50": {"status": "blocked", "evidence": "claude plugin eval refused both cases on this machine because ~/.docker holds symbolic links; 0 turns."},
+  "IMP-51": {"status": "observed", "commit": "76dbd37", "evidence": "merge proved all 3,905 round-2 reasons covered once, and sample drove two audits that found 5 wrong codes."},
+  "IMP-52": {"status": "observed", "commit": "ed42be1", "evidence": "check and assemble imported scripts/hygiene.py in the round-3 run."},
+  "IMP-53": {"status": "observed", "commit": "ed42be1", "evidence": "Round-3 agents read the round-2 record; for example, reason 5.4.4.3.1 cites the branch-N-depth4.txt headers."}
+ }
+}

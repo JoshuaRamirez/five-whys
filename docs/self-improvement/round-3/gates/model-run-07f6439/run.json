@@ -1,0 +1,72 @@
+{
+  "schema": "five-ws/1",
+  "inputs": [
+    "Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed."
+  ],
+  "questions": [
+    "why"
+  ],
+  "created": "2026-09-14T18:26:46-07:00",
+  "plugin_version": "0.2.0",
+  "options": [
+    "--preset",
+    "smoke",
+    "--ask",
+    "why"
+  ],
+  "shape": {
+    "breadth": 3,
+    "depth": 3,
+    "split": 1
+  },
+  "model_level": null,
+  "models": null,
+  "max_parallel": 5,
+  "estimate": {
+    "trees": 1,
+    "agents": 4,
+    "answers": 39,
+    "agent_tokens_low": 37422,
+    "agent_tokens": 164328,
+    "output_tokens": 1482,
+    "basis": "range from two claude-opus-5 runs of why trees measured on 2026-09-13: the low end is a headless session on a problem naming no local files; the high end (agent_tokens) is the v0.2.0 self-run dispatched from an interactive session with many tools loaded, where agents inherited about 21k tokens of context and read files as evidence. The dispatching session's context drives the base cost. Other questions and model levels are unmeasured. Each figure sums agents' reported totals; context re-read on every turn is billed on top, mostly as cache reads."
+  },
+  "attempts": {
+    "roots-1": 1,
+    "1.why.1": 1,
+    "1.why.2": 1,
+    "1.why.3": 1
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "at": "2026-09-14T18:26:49-07:00",
+      "ids": [
+        "roots-1"
+      ],
+      "max_parallel": 5
+    },
+    {
+      "wave": 2,
+      "at": "2026-09-14T18:27:22-07:00",
+      "ids": [
+        "1.why.1",
+        "1.why.2",
+        "1.why.3"
+      ],
+      "max_parallel": 5
+    }
+  ],
+  "assembled": "2026-09-14T18:28:15-07:00",
+  "duration_seconds": 73,
+  "output": {
+    "bytes": 9486,
+    "approx_tokens": 2371,
+    "lines": 57,
+    "complete": true
+  },
+  "checks": {
+    "runs": 5,
+    "failed": 0
+  }
+}

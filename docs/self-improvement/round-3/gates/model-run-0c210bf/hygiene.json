@@ -1,0 +1,39 @@
+{
+ "note": "Mechanical flags only. Nothing was removed, rewritten, ranked or summarized; whether a flag matters is the reader's call.",
+ "method": "Word overlap (Jaccard) on lowercased, stemmed words minus stopwords; sibling pairs ignore their parent's words. Candidate pairs must share min_shared_tokens words that each appear in at most common_token_share of reasons. cross_branch lists pairs under different level-1 reasons, including pairs from different inputs (across_inputs) or questions (across_questions), scoring between cross_branch_similarity and similarity, as leads for convergence. Catches copies, close rewordings and word variants; misses paraphrases in different words.",
+ "thresholds": {
+  "similarity": 0.6,
+  "cross_branch_similarity": 0.45,
+  "long_reason_words": 25,
+  "min_shared_tokens": 2,
+  "common_token_share": 0.05
+ },
+ "counts": {
+  "exact_duplicates": 0,
+  "near_duplicates": 0,
+  "restates_parent": 0,
+  "restates_ancestor": 0,
+  "cross_branch": 0,
+  "over_length": 0,
+  "unverified_references": 0
+ },
+ "exact_duplicates": [],
+ "near_duplicates": [],
+ "restates_parent": [],
+ "restates_ancestor": [],
+ "cross_branch": [],
+ "over_length": [],
+ "references": {
+  "note": "File paths and commit hashes the answers cite, checked against the project at root. Not found means not there now, not necessarily wrong; concrete_by_tree counts answers citing a path, commit, option or number.",
+  "root": "/private/tmp/g4-model.uNBicb",
+  "checked": 0,
+  "not_found": [],
+  "unchecked": [],
+  "concrete_by_tree": {
+   "1.why": {
+    "answers": 39,
+    "concrete": 2
+   }
+  }
+ }
+}

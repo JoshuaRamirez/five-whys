@@ -1,0 +1,320 @@
+# Branch 1: v0.2.0 published after only a smoke run. A line covers its node and every descendant without its own line.
+1 IMP-32 The v0.2.0 full run has now happened; its measurements replace the v0.1.0 figures in the README and the estimate constants.
+1.1 IMP-35 Gates by change kind require a model-invoked or full-shape run when dispatch or prompts change, instead of a smoke run alone.
+1.1.1 X-ENV Full runs spend the author's own allowance; IMP-32 publishes the measured cost so each release can budget it.
+1.1.1.1 X-ENV A solo, unfunded MIT project has no sponsor; no plugin change alters that.
+1.1.1.2 IMP-32 Per-agent input costs are now measured (root 44.1k, branches about 63k) and the estimate uses them.
+1.1.1.2.1 R-12 Repeated context measured at roughly 1.7k of 63k tokens per branch; not worth a shared-copy mechanism.
+1.1.1.2.2 X-FALSE In v0.2.0 the list comes only from the root fragment and does not grow; IMP-42 adds a bounded five lines per finished branch.
+1.1.1.2.5 X-DONE --model already exists in v0.2.0; inheriting the session model is the default the user can override.
+1.1.1.3 X-ENV Plan usage windows are set by the platform; IMP-32 shows measured cost before dispatch.
+1.1.1.3.3 X-DONE The interrupted run resumed from disk after a machine restart, so a stopped run no longer strands its fragments.
+1.1.1.4 IMP-35 RELEASING.md now states when a full run is required, so full-run spend is no longer optional by default.
+1.1.1.4.2 X-HIST v0.1.0 shipped without a checklist; IMP-35 sets gates for later versions.
+1.1.1.4.3 X-HIST No prior cost-of-bug record exists; IMP-35 sets the rule instead of pricing it.
+1.1.1.4.4 R-11 Token accounting per improvement would need usage relayed through prose; measure from subagent logs per release.
+1.1.1.5 X-ENV Output size follows from the required 3,905 reasons (R-04); IMP-32 measures 38 tokens per reason.
+1.1.1.5.3 X-HIST JSON fragments were kept for exact validation (round-1 R-08); nesting overhead is included in the measured 38 tokens per reason.
+1.1.1.5.4 X-HIST Repairs use Edit on named ids; the full run logged 0 failed checks, so re-emission cost did not occur.
+1.1.1.5.5 IMP-35 Gates now require the full shape when scale-dependent code changes, because smoke tests a smaller product.
+1.1.2 X-HIST The releaser wrote the checklist; IMP-35 rewrites the gates and R-06 covers outside reviewers.
+1.1.2.1 R-06 A second maintainer or reviewer is a social remedy, not a plugin change.
+1.1.2.1.2 X-HIST The seconds between c768cb2 and b54d36d describe past process; IMP-35 now separates building from release.
+1.1.2.1.4 X-ENV plugin-validator and skill-reviewer are platform agents that check structure; IMP-35 holds the strictness decision.
+1.1.2.1.5 X-DONE A v0.2.0 full run has now been done and measured, so what a full run reveals is known.
+1.1.2.2 IMP-35 RELEASING.md is rewritten as gates by change kind rather than a deliverable ticked off in the batch.
+1.1.2.2.1 X-HIST IMP-21 counted as done when written; IMP-35 redesigns it.
+1.1.2.2.3 X-HIST Commit bundling is past process; IMP-35 applies to future releases.
+1.1.2.2.4 X-HIST The gate followed the code in v0.2.0; IMP-35 is written before v0.3.0 is bumped.
+1.1.2.2.5 X-HIST Completing the whole catalog in one pass was the v0.2.0 goal; IMP-35 gates v0.3.0.
+1.1.2.3 X-DONE The full run has now tested the author's belief about scale: it completed with 0 failed checks.
+1.1.2.3.2 IMP-44 An orchestration replay test now walks the dispatch loop, which the unit tests never did.
+1.1.2.3.4 X-HIST Designing the format framed the author's view of failures; the full run and IMP-44 now supply evidence.
+1.1.2.3.5 X-ENV No outside users exist to report failures.
+1.1.2.4 X-ENV The personal RedJay marketplace applies no review; IMP-35 is the gate.
+1.1.2.5 X-HIST The self-improvement story rewarded shipping; IMP-34 records verification evidence per version.
+1.1.2.5.1 IMP-51 The ledger now reports how many X notes cite a code and supports sampled audits, not only coverage.
+1.1.2.5.5 IMP-35 The rating came after release; gates now run before the version bump.
+1.1.3 IMP-35 Gates name which failure classes smoke covers and require full shape or --only for scale-dependent changes.
+1.1.3.1 X-DONE The full 5x5 run confirmed that the shape-parameterized code works at depth 5.
+1.1.3.1.5 X-FALSE test_full_5x5_assembles_every_reason_once already assembles a synthetic 3,905-reason tree.
+1.1.3.2 X-DONE The full run produced 25 fragments of 155 reasons with 0 failed checks, so long-output behavior was observed.
+1.1.3.2.2 X-FALSE Branch prompts carry only root reasons, never other branches'; IMP-42 adds a bounded set from finished branches.
+1.1.3.2.3 IMP-49 Agent guidance now asks leaves to keep a concrete tie to their chain.
+1.1.3.2.4 IMP-44 The replay test drives a failing agent through repair limits and the stuck path.
+1.1.3.3 X-DONE The full run dispatched 25 branches in capped waves and survived a restart mid-wave.
+1.1.3.3.3 X-FALSE Each agent writes its own fragment file, so concurrent writes cannot collide.
+1.1.3.3.4 IMP-43 Default waves drop to 5, which also lowers rate-limit pressure.
+1.1.3.4 X-DONE The orchestrator carried 26 replies and a resume without losing run state.
+1.1.3.4.5 IMP-38 init now returns the confirmation decision, unit-tested for the full shape.
+1.1.3.5 IMP-35 RELEASING.md now separates shape-independent checks from scale-dependent ones.
+1.1.3.5.3 IMP-50 RELEASING.md cites criteria.md, and a second eval case covers a different problem.
+1.1.3.5.4 X-HIST Round-1 catalog grouping is past; IMP-35 maps change kinds to required runs.
+1.1.3.5.5 IMP-44 The replay test applies failure-mode thinking to the pipeline itself.
+1.1.4 X-HIST Full-run value was judged as a shape check; show --sample exists and IMP-48 adds a read plan.
+1.1.4.1 X-ENV Tree size follows from the requirement; IMP-48 read plan and show --sample make reading tractable.
+1.1.4.1.1 R-04 A smaller default would break the complete 5x5 requirement.
+1.1.4.1.2 X-FALSE show --sample already prints random reasons with ancestors, a sampled view beyond index.md.
+1.1.4.1.5 X-FALSE show --sample N --seed S already exists in v0.2.0.
+1.1.4.2 R-01 The plugin stays generation-only and ships no quality evaluator.
+1.1.4.2.3 R-18 A graded quality rubric needs many paid runs to calibrate; deferred.
+1.1.4.2.4 R-14 Automated causal or specificity scoring would be model-based review inside the plugin.
+1.1.4.2.5 R-18 Rubric comparisons across versions are deferred studies.
+1.1.4.3 IMP-35 Gates now ask for a sampled read of a full tree after prompt or agent changes.
+1.1.4.3.3 IMP-34 Evidence goes to CHANGELOG.md, which can hold a sampled-read summary.
+1.1.4.3.4 R-06 A reviewer role beyond the author is a social remedy.
+1.1.4.4 X-HIST Structural checks were the visible result; the full run now adds scale evidence.
+1.1.4.4.4 IMP-45 Hygiene now stems words and lists cross-branch leads, so its counts say more.
+1.1.4.4.5 X-HIST Structural validation is shape-independent by design; IMP-35 adds scale-specific gates.
+1.1.4.5 IMP-51 ledger.py sample makes a lighter spot-check review possible instead of full re-classification.
+1.1.4.5.2 X-HIST Round 1 used agents; round 2 was done by one reader without them.
+1.1.4.5.5 X-HIST Ledger review served improvement; IMP-35 defines the lighter release read.
+1.1.5 IMP-35 RELEASING.md names a middle gate: one full-depth branch through plan --only.
+1.1.5.1 IMP-35 Middle sizes are documented through --breadth/--depth or --only rather than new presets, keeping the option count (IMP-41).
+1.1.5.1.2 IMP-32 Per-agent cost is now measured, so any shape can be priced from the estimate.
+1.1.5.1.3 IMP-50 A second eval case exists; other sizes are covered by the --only gate.
+1.1.5.1.4 X-FALSE init already prints agents and reasons for any shape before dispatch.
+1.1.5.2 IMP-35 RELEASING.md now names a single-branch --only run as the middle gate.
+1.1.5.2.5 IMP-32 One branch agent measured about 63k tokens, now documented.
+1.1.5.3 IMP-35 The checklist is reorganized around change kinds instead of a quick binary smoke check.
+1.1.5.3.4 X-ENV Claude Code tooling offers no tiered scale-test pattern.
+1.1.5.4 X-ENV Geometric growth is inherent to the shape; IMP-35 uses one branch for intermediate evidence.
+1.1.5.4.4 X-HIST The smoke preset's joint shrink is a past design choice; --breadth and --depth vary each alone.
+1.1.5.5 X-HIST No scale bug had been traced; the full run has now been done.
+1.1.5.5.3 X-DONE The v0.2.0 full run has now happened.
+1.1.5.5.4 R-17 Aggregating runs across directories is cross-run collection, declined.
+1.1.5.5.5 R-18 Comparing failure rates between sizes needs replicate paid runs.
+1.2 IMP-32 README cost figures are replaced with v0.2.0 measurements that name their version.
+1.2.1 IMP-35 Item 5 is rewritten: figures name their version and listed change kinds require remeasurement.
+1.2.1.1.3 X-HIST Modeling on v0.1.0's fresh figures was past context.
+1.2.1.1.5 X-HIST No release had failed an item before; the rewrite makes item 5 blocking.
+1.2.1.2.2 X-HIST 659fa44 passed the same list; release kinds are defined now.
+1.2.1.2.4 X-HIST Only one earlier version existed then.
+1.2.1.3 IMP-35 RELEASING.md defines what counts as a full run and where its evidence goes (IMP-34).
+1.2.1.3.1 R-06 A second person challenging the choice is a social remedy.
+1.2.1.3.3 IMP-34 CHANGELOG entries record each gate's evidence per version.
+1.2.1.3.4 IMP-34 Evidence moves to CHANGELOG.md, where an omitted run is visible.
+1.2.1.3.5 X-ENV The marketplace entry is the author's own; there is no external gate.
+1.2.1.4 IMP-33 Estimates and README figures name the measured version, so staleness is visible.
+1.2.1.4.1 X-HIST Approximate wording was a past framing; version labels now carry the claim.
+1.2.1.4.3 R-18 The sonnet quality statement stays unmeasured until paid comparisons run.
+1.2.1.4.4 X-ENV No users existed to complain.
+1.2.1.4.5 X-HIST The harm was weighed below blocking; IMP-32 now refreshes the figures.
+1.2.1.5 IMP-33 MEASURED_VERSION plus a docs test give figures a version identity that can lapse visibly.
+1.2.2 IMP-33 Measurements are now labeled by plugin version rather than date.
+1.2.2.1.1 X-HIST Only one version existed when the table was written.
+1.2.2.1.2 X-HIST The date-first convention came from run directory names.
+1.2.2.1.5 IMP-34 CHANGELOG.md maps versions to dates and commits; tags are not needed.
+1.2.2.2.1 X-HIST The commit times are history.
+1.2.2.2.2 X-HIST Same-session rebuilding is past process.
+1.2.2.2.4 IMP-34 CHANGELOG.md now gives release dates.
+1.2.2.2.5 X-HIST The date mark's design is superseded by IMP-33.
+1.2.2.3 IMP-32 The README cost section now names the version that ran.
+1.2.2.3.2 X-HIST Those commits left the paragraph untouched; IMP-32 rewrites it.
+1.2.2.3.4 X-HIST Collapsed diffs are past review conditions.
+1.2.2.4 IMP-34 CHANGELOG.md publishes release dates next to versions.
+1.2.2.4.5 X-ENV The personal marketplace has no release-page format.
+1.2.2.5 IMP-33 Staleness is now judged by version, not calendar age.
+1.2.2.5.1 X-HIST The imagined cadence is past.
+1.2.2.5.2 X-HIST The fast loop is how releases happen; IMP-33 makes figures version-bound under it.
+1.2.3 X-HIST The checklist was written mid-build by the releaser; IMP-35 rewrites it.
+1.2.3.2.2 R-06 A gate written by someone else needs another person.
+1.2.3.3 R-06 An independent reviewer is out of scope.
+1.2.3.3.2 X-HIST One session drafted and implemented v0.2.0.
+1.2.3.3.3 IMP-34 A docs test now requires a CHANGELOG entry for the manifest version, so process docs are checked.
+1.2.3.3.4 X-HIST Committed with features in v0.2.0.
+1.2.3.3.5 X-ENV No outside users existed.
+1.2.3.4.4 IMP-35 RELEASING.md now includes the measurement procedure from subagent logs.
+1.2.3.5.4 X-DONE New measurements now exist from the v0.2.0 full run.
+1.2.4 IMP-33 A docs test ties the README's measured version and figures to the script constants.
+1.2.4.1.1 X-HIST The docstring's scope was set in v0.2.0; IMP-33 extends the test.
+1.2.4.1.3 X-ENV CI has no live session; IMP-33 compares static version labels instead.
+1.2.4.2 IMP-33 MEASURED constants in fivewhys.py are the machine-readable source the README must match.
+1.2.4.2.2 X-ENV Session-only usage is platform behavior (R-11); measurement comes from subagent logs.
+1.2.4.2.4 X-HIST The README was the public place; it now mirrors constants.
+1.2.4.3 IMP-35 RELEASING.md items name commands where possible and evidence locations.
+1.2.4.3.1 X-ENV Judgment items such as reading a tree need a person or model.
+1.2.4.3.2 X-ENV Version edits stay manual; IMP-35 lists them.
+1.2.4.3.3 IMP-34 A docs test checks CHANGELOG.md against the manifest version.
+1.2.4.3.4 IMP-34 CHANGELOG.md gives item 5's status a structured home.
+1.2.4.3.5 X-HIST Trusting one's own reading was past practice.
+1.2.4.4 X-HIST Tests followed visible drift bugs; IMP-33 now covers figure staleness.
+1.2.4.4.2 X-DONE The full run has now happened and showed a gap from the old figures.
+1.2.4.4.4 IMP-33 The estimate now names its measured version where users see it.
+1.2.4.5 R-12 Prompt size is a minor share of cost, so no size-tracking job is added.
+1.2.4.5.4 X-ENV Runners cannot dispatch subagents (R-13).
+1.2.5 IMP-35 RELEASING.md names the change kinds that invalidate measured figures.
+1.2.5.1.1 IMP-32 The estimate basis explains what per-agent overhead includes.
+1.2.5.2 X-HIST Each change looked small; IMP-35 now lists prompt and dispatch edits as remeasure triggers.
+1.2.5.2.4 X-DONE Growth is now measured in the v0.2.0 per-agent totals.
+1.2.5.2.5 IMP-32 Evidence reading is sized: 2 Reads per agent inside the measured totals.
+1.2.5.3 IMP-35 Prompt changes now trigger remeasurement, not only a smoke read.
+1.2.5.3.1 R-11 Token totals are not recorded by the script; the RELEASING procedure reads subagent logs.
+1.2.5.3.2 IMP-32 Measured per-agent overhead now comes from a 26-agent run.
+1.2.5.3.3 X-HIST Item 4's quality focus stays; item 5 now covers cost.
+1.2.5.3.4 X-HIST v0.1.0 had no smoke preset.
+1.2.5.3.5 X-HIST Items 4 and 5 are redrafted together under IMP-35.
+1.2.5.4 IMP-33 Estimate constants carry MEASURED_VERSION and a docs test ties them to README figures.
+1.2.5.5 IMP-35 RELEASING.md defines the refresh procedure, including sampling one branch agent's log.
+1.2.5.5.2 X-ENV Session-only usage is platform behavior; IMP-35 reads the saved subagent logs.
+1.2.5.5.4 R-11 The check log will not carry tokens; usage is platform data.
+1.2.5.5.5 X-HIST --resume's recovery purpose is unchanged; --only covers measurement.
+1.3 X-HIST Same-day release left no window; the full run has since happened.
+1.3.1 X-HIST One afternoon session did everything; IMP-35 separates building from verifying.
+1.3.1.1.5 IMP-35 Gates now schedule verification before a version is published.
+1.3.1.2 IMP-35 Gates separate built from verified, so a merge no longer implies release.
+1.3.1.2.2 X-HIST All 31 improvements merged together in v0.2.0.
+1.3.1.2.5 X-HIST Task tracking closed on the ledger docs.
+1.3.1.3.4 X-DONE v0.2.0 per-agent timing and totals are now measured.
+1.3.1.4.2 IMP-35 A full run's pass criterion is now written: complete tree, nothing stuck, checks logged.
+1.3.1.5 IMP-35 The version is bumped only after gates pass, with a CHANGELOG entry (IMP-34).
+1.3.1.5.1 IMP-34 CHANGELOG.md marks what was released and when, separately from merges.
+1.3.1.5.2 IMP-36 --plugin-dir runs merged code before the marketplace changes, replacing the need for a release branch.
+1.3.1.5.4 X-HIST The commit-to-main habit is past practice.
+1.3.1.5.5 X-ENV The marketplace reads main's manifest; IMP-36 lets testing precede the bump.
+1.3.2 IMP-35 Gates scale with the kind of change instead of one equal bar; soak time is not added.
+1.3.2.1 X-HIST RELEASING.md's thin origin is superseded by IMP-35.
+1.3.2.2 X-HIST Quick items suited the author; IMP-35 adds full-run gates where they matter.
+1.3.2.3 IMP-36 With no prerelease channel, --plugin-dir tests the checkout in a real session before listing it.
+1.3.2.3.1 X-ENV The marketplace entry has one version field.
+1.3.2.3.2 X-ENV Installation resolves the listed version.
+1.3.2.3.3 X-ENV The author owns the marketplace; no curator policy exists.
+1.3.2.3.4 X-HIST The 0.x version was treated as the instability signal.
+1.3.2.3.5 X-ENV Few users exist to put at risk.
+1.3.2.4 IMP-34 CHANGELOG.md holds evidence produced after a merge.
+1.3.2.4.3 IMP-53 The round-2 record revisits the unfinished items and records the full run.
+1.3.2.4.4 X-HIST Commit conventions stay; evidence moves to CHANGELOG.md.
+1.3.2.5 IMP-35 Gates now depend on what changed, not on a flat six items.
+1.3.2.5.3 X-HIST The 0.x reasoning was past judgment.
+1.3.2.5.4 X-HIST v0.1.0 had no checklist.
+1.3.3 X-HIST Analyzing the v0.1.0 tree used the afternoon.
+1.3.3.1.4 IMP-51 Sampled audits via ledger.py sample replace a second full classification.
+1.3.3.2.2 X-ENV Rolling usage windows are platform limits.
+1.3.3.2.5 X-HIST No per-release budget existed; IMP-35 now states required runs.
+1.3.3.3.2 X-DONE index.md and show exist in v0.2.0.
+1.3.3.5.5 IMP-35 Gates separate building from releasing, acting as a freeze point.
+1.3.4 IMP-36 --plugin-dir lets a full run exercise unpublished code, so publishing no longer has to come first.
+1.3.4.1.1 X-ENV The cache is how installed plugins resolve; IMP-36 bypasses it for testing.
+1.3.4.1.4 X-ENV Cache directories are keyed by version.
+1.3.4.1.5 X-HIST Wanting packaging exercised was a past preference; RELEASING keeps an installed-copy check.
+1.3.4.2 X-HIST The rating problem needed a declared version.
+1.3.4.2.4 IMP-35 A neutral problem at full or --only shape is now a pre-release option.
+1.3.4.3.5 IMP-35 A separate pre-release validation step is now defined.
+1.3.4.4 IMP-35 Full-run acceptance thresholds are now written into RELEASING.md.
+1.3.4.4.1 X-HIST Treating runs as improvement input continues for self-runs.
+1.3.4.4.2 X-HIST A tree of ideas has no pass-fail outcome; thresholds apply to run mechanics.
+1.3.4.4.4 X-HIST The self-run's purpose is explanation.
+1.3.4.4.5 X-HIST Scheduling found defects for the next version is how round 2 worked.
+1.3.4.5 X-HIST Measuring the published build was a past preference.
+1.3.4.5.5 IMP-33 plugin_version is now recorded in run.json by the script that ran.
+1.3.5 R-06 Sole maintainer; outside review is out of scope.
+1.3.5.1 X-ENV RedJay is the author's own marketplace.
+1.3.5.1.4 R-06 Curated-marketplace submission is an organizational step.
+1.3.5.2.1 X-HIST The local merge and branch deletion are history.
+1.3.5.2.3 X-ENV Workflows run after push by GitHub design.
+1.3.5.2.4 X-HIST The solo repository habit is past process.
+1.3.5.2.5 IMP-53 The round-2 record includes a review of the plugin made outside the tree.
+1.3.5.3 IMP-36 A fresh session loading the checkout with --plugin-dir sees the plugin as a newcomer would.
+1.3.5.3.1 X-HIST The building session read untested behavior as designed.
+1.3.5.3.3 R-06 An independent verifier is a second person.
+1.3.5.3.4 X-HIST Cheap sign-off was past practice.
+1.3.5.3.5 X-DONE A full run has now been done.
+1.3.5.4 X-ENV No outside users had installed the plugin.
+1.3.5.4.2 R-06 Announcements are outreach, not plugin changes.
+1.3.5.5 X-ENV Ratings are self-assessed; external raters are R-06.
+1.3.5.5.1 X-HIST No rubric was written for the ratings.
+1.3.5.5.2 X-HIST No minimum release score existed.
+1.3.5.5.3 IMP-35 Gates now run before release rather than a rating after it.
+1.3.5.5.4 X-HIST The evidence list came from the same author.
+1.3.5.5.5 X-HIST The visible jump was rewarded; the full run now confirms behavior.
+1.4 IMP-32 Estimate constants are refit from the v0.2.0 agents, which carried sibling-aware prompts.
+1.4.1 R-12 Measured prompt text is about 1.7k of 63k tokens per branch, so a text-length term adds little.
+1.4.1.1.1 X-ENV Confirmation needs a number before any agent runs.
+1.4.1.1.5 X-HIST The single pre-dispatch gate is kept; the constants are refit.
+1.4.1.4 IMP-32 Subagent logs now break totals into root and branch, output tokens and reads.
+1.4.1.4.2 X-ENV The Agent tool reports one total; IMP-32 uses the saved logs for detail.
+1.4.1.4.5 R-18 Controlled one-variable runs are paid studies.
+1.4.1.5 X-HIST A shape-only estimate suited tests; R-12 keeps it after measurement.
+1.4.1.5.4 R-02 A tokenizer would be a third-party dependency.
+1.4.2 IMP-32 Constants are refit from v0.2.0 root and branch totals.
+1.4.2.1.1 X-HIST Measurement had to precede v0.2.0's design.
+1.4.2.1.2 X-HIST Token counting was a by-product of the first self-run.
+1.4.2.2 IMP-32 The fit uses the root (44.1k for 30 reasons) and branches (63.1k for 155) separately.
+1.4.2.2.4 X-HIST The distortion was never investigated in v0.2.0.
+1.4.2.2.5 X-HIST v0.1.0 prompts were nearly equal.
+1.4.2.3 IMP-32 The estimate basis now names the model the constants were measured on.
+1.4.2.3.3 R-18 Model-dependent reading habits need tier comparisons.
+1.4.2.3.5 R-18 Per-model constants need paid runs on each tier.
+1.4.2.4 IMP-35 The measurement procedure, reading subagent logs with a script, is written into RELEASING.md.
+1.4.2.4.3 IMP-53 Round-2 facts record the per-agent usage behind the constants.
+1.4.2.4.4 X-HIST Manual reading was past practice; logs give input and output separately now.
+1.4.2.5 IMP-35 Prompt changes now require a full-shape or --only branch measurement, not smoke.
+1.4.2.5.3 X-HIST Smoke totals were never compared; IMP-35 uses branch-scale runs instead.
+1.4.3 R-11 Usage stays outside the script; relaying it through prose is declined and logs are read per release.
+1.4.3.1 X-ENV The script only sees fragment files, by platform design (R-11).
+1.4.3.2.1 X-HIST The loop tracked the failures v0.1.0 hit.
+1.4.3.4.5 IMP-39 run.json now stores the estimate shown at init, giving drift a baseline.
+1.4.3.5 X-ENV Session totals mix work; IMP-35 measures per agent from subagent logs.
+1.4.3.5.3 IMP-32 The basis now says the figures are agent-reported totals and that cached context is billed differently.
+1.4.3.5.5 IMP-32 The README cost section recommends a dedicated session when measuring a run.
+1.4.4 IMP-33 A docs test ties README cost figures to estimate() and the measured constants.
+1.4.4.1.1 X-HIST Brittleness worries were past reasoning; figures now derive from the constants.
+1.4.4.1.3 R-18 Golden prompt fixtures with measured tokens need replicate runs.
+1.4.4.1.5 X-HIST A formula assertion restates the formula; the docs test checks README agreement instead.
+1.4.4.2 R-12 Prompt length is a minor cost driver, so no growth test is added.
+1.4.4.3 X-ENV Real usage needs a model run (R-13); IMP-35 measures per release.
+1.4.4.4 IMP-32 The v0.2.0 run is held-out data; constants are refit and the v0.1.0 fit retired.
+1.4.4.4.4 X-FALSE Output per reason rose from 33 to 38 tokens in v0.2.0, so prompts did change output.
+1.4.4.4.5 R-18 Confirming the fixed and per-reason split needs other shapes run at full cost.
+1.4.4.5 X-HIST Separate items were reviewed independently; IMP-35 checks cost after prompt changes.
+1.4.4.5.3 IMP-35 RELEASING.md now asks whether prompt changes invalidate the constants.
+1.4.4.5.5 R-06 A second reviewer is out of scope.
+1.4.5 R-12 The 28-line sibling list is a small share of cost; IMP-42 keeps additions bounded.
+1.4.5.1 X-HIST Passing every root reason was a deliberate distinctness choice.
+1.4.5.3 IMP-32 Measured cumulative context per branch (0.40M-0.97M, mostly cache reads) is now stated in the basis.
+1.4.5.5 X-HIST The split default stays; its trade-offs are unchanged by measurement.
+1.4.5.5.3 IMP-43 The default wave is now 5, so split is no longer tuned to a 20-wide cap.
+1.5 R-18 Tier comparisons stay deferred, and IMP-40 removes the per-tier flags that multiplied configurations.
+1.5.1 R-01 No quality score by requirement; comparisons are R-18.
+1.5.1.1.3 R-18 An offline evaluation harness means paid runs to be useful.
+1.5.1.2 X-ENV Causal validity and specificity are semantic and not computable by a stdlib script.
+1.5.1.2.5 IMP-47 Labeled pairs from the v0.2.0 tree start a small calibration set for hygiene.
+1.5.1.3 R-18 Grader reliability and quality grading are deferred studies.
+1.5.1.3.1 X-HIST criteria.md targeted orchestration by design.
+1.5.1.3.3 X-FALSE claude plugin eval accepts --model to override the model for all cases.
+1.5.1.3.5 R-14 Subjective quality grading would be model-based judging.
+1.5.1.4 R-18 Comparing trees by reading is a deferred study.
+1.5.1.4.4 R-06 Blind comparison needs a second reader.
+1.5.1.5 R-18 Node-aligned comparisons need purpose-built replicate runs.
+1.5.1.5.4 X-ENV Re-expanding a node with another model is possible by deleting its fragment; no feature is added.
+1.5.2 R-18 The limitation stays deferred under an explicit deferral code.
+1.5.2.1.4 IMP-51 The summary now reports how many X notes point at a code, separating limitations from fixes.
+1.5.2.2.3 IMP-35 RELEASING.md now asks to review Known limitations each release.
+1.5.2.2.5 X-HIST Limitations landed with features in v0.2.0.
+1.5.2.3.2 IMP-34 CHANGELOG.md carries a Deferred list for measurement work.
+1.5.2.3.5 X-ENV Subscription quota is the author's standing constraint.
+1.5.2.4 IMP-40 Separate root and branch model flags are removed.
+1.5.2.4.1 X-HIST v0.1.0 had no per-tier option.
+1.5.2.4.4 X-HIST IMP-04 concerned inheriting cost.
+1.5.2.5.1 X-HIST The ledger note is history.
+1.5.2.5.4 R-17 Surfacing other runs' models is cross-run collection.
+1.5.2.5.5 X-ENV Duplicate runs cost users; the plugin cannot change prices.
+1.5.3 IMP-40 Removing per-tier flags shrinks the configurations from 16 to 4.
+1.5.3.2 X-ENV The script cannot learn the session model behind inherit; IMP-39 records the options given.
+1.5.3.2.3 IMP-32 The README now names the model behind the measurements.
+1.5.3.3 R-18 Shape-by-model effects are deferred studies.
+1.5.3.4 R-19 A headless runner looping over configurations is declined.
+1.5.3.4.3 X-ENV The concurrency cap is platform behavior.
+1.5.3.4.5 X-ENV Quota is shared across the subscription.
+1.5.3.5 R-18 Scoped comparison designs wait for paid runs.
+1.5.3.5.1 X-ENV No users exist to show which configurations matter.
+1.5.4 R-18 Variance studies are deferred.
+1.5.4.2 X-ENV Subagents expose no temperature or seed controls.
+1.5.4.3 X-HIST Run-level statistics were not designed to show content variance (R-18).
+1.5.4.4.4 R-17 Storing many runs' metrics together is cross-run collection.
+1.5.5 IMP-40 The single-reason tier flags are removed.
+1.5.5.1 X-HIST NEW proposals became features without a threshold; IMP-41 now pins the option count.
+1.5.5.1.3 IMP-41 A docs test pins the option count, so new options need a deliberate change.
+1.5.5.2.4 IMP-41 The option count now makes the verification cost of configurations visible.
+1.5.5.4 IMP-51 The summary reports cited codes, and a sampled audit is recorded for round 2.
+1.5.5.4.5 IMP-35 Gates now require runs that exercise changed behavior.

@@ -1,0 +1,20 @@
+{
+ "note": "Mechanical flags only. Nothing was removed, rewritten, ranked or summarized; whether a flag matters is the reader's call.",
+ "method": "word-overlap (Jaccard) on lowercased words minus stopwords; sibling pairs ignore their parent's words. Catches copies and close rewordings, misses paraphrases.",
+ "thresholds": {
+  "similarity": 0.6,
+  "long_reason_words": 25
+ },
+ "counts": {
+  "exact_duplicates": 0,
+  "near_duplicates": 0,
+  "restates_parent": 0,
+  "restates_ancestor": 0,
+  "over_length": 0
+ },
+ "exact_duplicates": [],
+ "near_duplicates": [],
+ "restates_parent": [],
+ "restates_ancestor": [],
+ "over_length": []
+}

@@ -1,0 +1,180 @@
+{
+ "note": "Mechanical flags only. Nothing was removed, rewritten, ranked or summarized; whether a flag matters is the reader's call.",
+ "method": "Word overlap (Jaccard) on lowercased, stemmed words minus stopwords; sibling pairs ignore their parent's words. Candidate pairs must share min_shared_tokens words that each appear in at most common_token_share of reasons. cross_branch lists pairs under different level-1 reasons scoring between cross_branch_similarity and similarity, as leads for convergence. Catches copies, close rewordings and word variants; misses paraphrases in different words.",
+ "thresholds": {
+  "similarity": 0.6,
+  "cross_branch_similarity": 0.45,
+  "long_reason_words": 25,
+  "min_shared_tokens": 2,
+  "common_token_share": 0.05
+ },
+ "counts": {
+  "exact_duplicates": 0,
+  "near_duplicates": 3,
+  "restates_parent": 0,
+  "restates_ancestor": 0,
+  "cross_branch": 14,
+  "over_length": 0
+ },
+ "exact_duplicates": [],
+ "near_duplicates": [
+  {
+   "a": "4.3.5.5.5",
+   "b": "4.5.1.5.4",
+   "similarity": 0.75,
+   "texts": [
+    "The 9-10 path lists one outside user's run last, after the eval, timed run, quality study and non-software run.",
+    "The grade path lists one outside user's run last, after the eval, release, timed run and quality study."
+   ]
+  },
+  {
+   "a": "2.3.5.1.1",
+   "b": "2.4.3.1",
+   "similarity": 0.67,
+   "texts": [
+    "RELEASING.md says to record the date and result, without requiring that result to be a pass.",
+    "RELEASING.md says to record each gate's date and result, without requiring a pass before moving on."
+   ]
+  },
+  {
+   "a": "1.2.2.1",
+   "b": "5.1.1.1",
+   "similarity": 0.65,
+   "texts": [
+    "Round 1's 26 classification agents returned 28 NEW reasons needing reconciliation, so one consistent reader was wanted.",
+    "Round 1's 26 classification agents returned 28 NEW reasons that needed manual reconciliation into new codes."
+   ]
+  }
+ ],
+ "restates_parent": [],
+ "restates_ancestor": [],
+ "cross_branch": [
+  {
+   "a": "3.4.5.1",
+   "b": "4.5.2",
+   "similarity": 0.56,
+   "texts": [
+    "Each self-improvement round takes as input a full tree on the plugin's own current rating.",
+    "Each self-improvement round takes its input from a full run on the plugin's own rating, so outside feedback has no entry point."
+   ]
+  },
+  {
+   "a": "2.5.2.5.1",
+   "b": "3.4.5.2",
+   "similarity": 0.56,
+   "texts": [
+    "Grader reliability for the eval cases was filed under R-18, deferred as a study needing many paid runs.",
+    "R-18 deferred studies needing many paid runs, and a full non-software run was filed under it."
+   ]
+  },
+  {
+   "a": "3.2.1.5.4",
+   "b": "5.5.2.4.2",
+   "similarity": 0.53,
+   "texts": [
+    "Cost transparency already scores 6.5, and a second billed service would widen an unresolved range.",
+    "Cost transparency scored 6.5 with one provider, so a second bill would widen the uncertainty further."
+   ]
+  },
+  {
+   "a": "1.2.3.2.3",
+   "b": "4.2.5.3.1",
+   "similarity": 0.5,
+   "texts": [
+    "Per-agent token totals existed only in Claude Code's subagent logs, so usage.py had to be written to read them.",
+    "usage.py reads subagent logs for token totals, and those logs exist only after real dispatch."
+   ]
+  },
+  {
+   "a": "1.2.3.2.3",
+   "b": "5.5.2.4.1",
+   "similarity": 0.5,
+   "texts": [
+    "Per-agent token totals existed only in Claude Code's subagent logs, so usage.py had to be written to read them.",
+    "usage.py reads Claude Code subagent logs only, so no measurement exists for another vendor's tokens."
+   ]
+  },
+  {
+   "a": "1.2.2.1.2",
+   "b": "5.1.1.1.1",
+   "similarity": 0.5,
+   "texts": [
+    "The round-1 catalog was written before classification, so agents met actionable reasons it lacked and marked them NEW.",
+    "Round 1's catalog was written before classification, so agents met actionable reasons it had no code for."
+   ]
+  },
+  {
+   "a": "2.5.2.4.4",
+   "b": "4.1.2",
+   "similarity": 0.5,
+   "texts": [
+    "RELEASING.md bars any bump until every applicable gate holds, with no waiver clause for environment faults.",
+    "RELEASING.md makes the bump all-or-nothing: no version moves until every applicable gate holds, with no waiver."
+   ]
+  },
+  {
+   "a": "1.3.5.4.4",
+   "b": "4.4.3.2.2",
+   "similarity": 0.5,
+   "texts": [
+    "fivewhys.py already grew from 725 to 842 lines, making more script code feel like a liability.",
+    "fivewhys.py already grew from 725 to 842 lines, so a renderer looked like more maintenance burden."
+   ]
+  },
+  {
+   "a": "2.5.5.1.1",
+   "b": "4.2.3.3.1",
+   "similarity": 0.5,
+   "texts": [
+    "IMP-37 moved argument parsing from SKILL.md's table into fivewhys.py parse, rewriting Step 1.",
+    "IMP-37 replaced the model-read argument table with fivewhys.py parse, rewriting Step 1's instructions."
+   ]
+  },
+  {
+   "a": "3.1.5.1.5",
+   "b": "4.3.1.4.2",
+   "similarity": 0.5,
+   "texts": [
+    "fivewhys.py had already grown from 725 to 842 lines, so new tooling was weighed against maintainability.",
+    "The maintainability criterion counts line growth, and fivewhys.py had already grown from 725 lines."
+   ]
+  },
+  {
+   "a": "4.4.5.3.5",
+   "b": "5.2.5.2.3",
+   "similarity": 0.5,
+   "texts": [
+    "round-2 tree.json reached docs only by manual copying as round evidence, not through any export step.",
+    "Only curated trees reach docs/self-improvement, as round 2's tree.json did, through a manual copy."
+   ]
+  },
+  {
+   "a": "1.2.4.1.1",
+   "b": "5.4.1",
+   "similarity": 0.47,
+   "texts": [
+    "Rule lines cover every descendant lacking its own line, and ledger.py set no depth limit on inheritance.",
+    "ledger.py rule lines cover a node and every descendant lacking its own line, so an unread leaf still counts as classified."
+   ]
+  },
+  {
+   "a": "1.2.2.1.1",
+   "b": "5.1.1.1.3",
+   "similarity": 0.47,
+   "texts": [
+    "Each round-1 agent saw only its own scope, so similar reasons in different scopes could receive different codes.",
+    "Each round-1 agent saw only its own scope, so it could not tell whether a NEW reason repeated another scope's."
+   ]
+  },
+  {
+   "a": "1.2.1.1.5",
+   "b": "5.3.2.5",
+   "similarity": 0.46,
+   "texts": [
+    "Both rounds ran on 2026-09-13, leaving no pause between them to question the inherited method.",
+    "Rounds ran back to back on 2026-09-13, leaving no pause between rounds to set criteria."
+   ]
+  }
+ ],
+ "over_length": []
+}

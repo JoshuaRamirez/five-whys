@@ -1,0 +1,252 @@
+{
+ "problem": "Our nightly database backup job silently skips some nights; the cron entry and the backup script have not changed in months.",
+ "instructions": "Score each item with quality-rubric.md. chain lists the reasons above it, from the top; siblings are the other reasons answering the same why.",
+ "items": [
+  {
+   "n": 1,
+   "chain": [
+    "A slow prior run or stale lock file makes the script exit early without dumping the database.",
+    "The lock-found branch exits with status zero and no alert, so a skipped night looks like success."
+   ],
+   "reason": "Monitoring checks only the cron job's exit code, not the age of the newest backup file.",
+   "siblings": [
+    "The skip message goes to stdout, which the crontab redirects to /dev/null with no MAILTO set.",
+    "The skip path was written for rare overlaps and never tested, so nobody reviewed how it reports itself."
+   ]
+  },
+  {
+   "n": 2,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs."
+   ],
+   "reason": "The backup minute was set to 02:30 local time, inside the hour that clocks skip each spring.",
+   "siblings": [
+    "Cron evaluates the schedule in the host's DST-observing local timezone instead of UTC.",
+    "The cron daemon running the job has no catch-up logic for wall-clock minutes skipped by a DST jump."
+   ]
+  },
+  {
+   "n": 3,
+   "chain": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed.",
+    "Automatic OS updates are configured to reboot the host at a fixed early-morning time overlapping the backup's cron minute."
+   ],
+   "reason": "Kernel updates require a restart because no live-patching was adopted, so auto-reboot was enabled as the default fix.",
+   "siblings": [
+    "The auto-reboot time was left at the distro default and never compared against the backup entry in the crontab.",
+    "Patching and backups are owned by different people, with no shared schedule listing both jobs' times."
+   ]
+  },
+  {
+   "n": 4,
+   "chain": [
+    "A slow prior run or stale lock file makes the script exit early without dumping the database.",
+    "The dump and upload steps have no timeout, so a stalled run keeps holding the lock into the next night."
+   ],
+   "reason": "The database has grown for months while the unchanged script still dumps uncompressed in one pass, lengthening every run.",
+   "siblings": [
+    "The dump tool waits indefinitely for table locks held by long transactions or overnight maintenance jobs.",
+    "Uploads to the network storage mount block forever when the mount stalls, since no transfer timeout is configured."
+   ]
+  },
+  {
+   "n": 5,
+   "chain": [
+    "A slow prior run or stale lock file makes the script exit early without dumping the database."
+   ],
+   "reason": "The lock file is removed only on a normal exit, so a killed or crashed run leaves it behind.",
+   "siblings": [
+    "The lock-found branch exits with status zero and no alert, so a skipped night looks like success.",
+    "The dump and upload steps have no timeout, so a stalled run keeps holding the lock into the next night."
+   ]
+  },
+  {
+   "n": 6,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs.",
+    "The cron daemon running the job has no catch-up logic for wall-clock minutes skipped by a DST jump."
+   ],
+   "reason": "Busybox crond documentation never mentions DST behaviour, so the gap was invisible when the image was chosen.",
+   "siblings": [
+    "The backup moved into a minimal Alpine container, which ships busybox crond rather than cronie with DST compensation.",
+    "Staging runs in UTC, so no DST transition was ever exercised before the schedule reached production."
+   ]
+  },
+  {
+   "n": 7,
+   "chain": [
+    "A slow prior run or stale lock file makes the script exit early without dumping the database."
+   ],
+   "reason": "The dump and upload steps have no timeout, so a stalled run keeps holding the lock into the next night.",
+   "siblings": [
+    "The lock file is removed only on a normal exit, so a killed or crashed run leaves it behind.",
+    "The lock-found branch exits with status zero and no alert, so a skipped night looks like success."
+   ]
+  },
+  {
+   "n": 8,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs.",
+    "The cron daemon running the job has no catch-up logic for wall-clock minutes skipped by a DST jump."
+   ],
+   "reason": "The backup moved into a minimal Alpine container, which ships busybox crond rather than cronie with DST compensation.",
+   "siblings": [
+    "Busybox crond documentation never mentions DST behaviour, so the gap was invisible when the image was chosen.",
+    "Staging runs in UTC, so no DST transition was ever exercised before the schedule reached production."
+   ]
+  },
+  {
+   "n": 9,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs."
+   ],
+   "reason": "Cron evaluates the schedule in the host's DST-observing local timezone instead of UTC.",
+   "siblings": [
+    "The backup minute was set to 02:30 local time, inside the hour that clocks skip each spring.",
+    "The cron daemon running the job has no catch-up logic for wall-clock minutes skipped by a DST jump."
+   ]
+  },
+  {
+   "n": 10,
+   "chain": [
+    "A slow prior run or stale lock file makes the script exit early without dumping the database."
+   ],
+   "reason": "The lock-found branch exits with status zero and no alert, so a skipped night looks like success.",
+   "siblings": [
+    "The lock file is removed only on a normal exit, so a killed or crashed run leaves it behind.",
+    "The dump and upload steps have no timeout, so a stalled run keeps holding the lock into the next night."
+   ]
+  },
+  {
+   "n": 11,
+   "chain": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed."
+   ],
+   "reason": "The backup is scheduled through plain cron instead of anacron or a systemd timer with Persistent=true.",
+   "siblings": [
+    "Automatic OS updates are configured to reboot the host at a fixed early-morning time overlapping the backup's cron minute.",
+    "The VM is suspended or powered off overnight by policies outside the backup job's control."
+   ]
+  },
+  {
+   "n": 12,
+   "chain": [],
+   "reason": "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs.",
+   "siblings": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed.",
+    "A slow prior run or stale lock file makes the script exit early without dumping the database."
+   ]
+  },
+  {
+   "n": 13,
+   "chain": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed."
+   ],
+   "reason": "The VM is suspended or powered off overnight by policies outside the backup job's control.",
+   "siblings": [
+    "Automatic OS updates are configured to reboot the host at a fixed early-morning time overlapping the backup's cron minute.",
+    "The backup is scheduled through plain cron instead of anacron or a systemd timer with Persistent=true."
+   ]
+  },
+  {
+   "n": 14,
+   "chain": [],
+   "reason": "A slow prior run or stale lock file makes the script exit early without dumping the database.",
+   "siblings": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed.",
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs."
+   ]
+  },
+  {
+   "n": 15,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs.",
+    "Cron evaluates the schedule in the host's DST-observing local timezone instead of UTC."
+   ],
+   "reason": "The crontab has no CRON_TZ=UTC line, so the backup entry silently inherits the system zone.",
+   "siblings": [
+    "The server image sets the office's local zone so log timestamps match what on-call engineers read.",
+    "Provisioning accepted the installer's regional timezone default, and configuration management never enforces UTC on database hosts."
+   ]
+  },
+  {
+   "n": 16,
+   "chain": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed.",
+    "The VM is suspended or powered off overnight by policies outside the backup job's control."
+   ],
+   "reason": "The cloud provider schedules host maintenance and live-migration pauses in early-morning hours matching the backup time.",
+   "siblings": [
+    "An idle power policy suspends the VM when no sessions are active, and the backup takes no sleep inhibitor lock.",
+    "A cost-saving auto-stop schedule was added to shut down low-traffic VMs overnight without checking scheduled jobs."
+   ]
+  },
+  {
+   "n": 17,
+   "chain": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed.",
+    "Automatic OS updates are configured to reboot the host at a fixed early-morning time overlapping the backup's cron minute."
+   ],
+   "reason": "Patching and backups are owned by different people, with no shared schedule listing both jobs' times.",
+   "siblings": [
+    "The auto-reboot time was left at the distro default and never compared against the backup entry in the crontab.",
+    "Kernel updates require a restart because no live-patching was adopted, so auto-reboot was enabled as the default fix."
+   ]
+  },
+  {
+   "n": 18,
+   "chain": [],
+   "reason": "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed.",
+   "siblings": [
+    "A slow prior run or stale lock file makes the script exit early without dumping the database.",
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs."
+   ]
+  },
+  {
+   "n": 19,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs.",
+    "The cron daemon running the job has no catch-up logic for wall-clock minutes skipped by a DST jump."
+   ],
+   "reason": "Staging runs in UTC, so no DST transition was ever exercised before the schedule reached production.",
+   "siblings": [
+    "The backup moved into a minimal Alpine container, which ships busybox crond rather than cronie with DST compensation.",
+    "Busybox crond documentation never mentions DST behaviour, so the gap was invisible when the image was chosen."
+   ]
+  },
+  {
+   "n": 20,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs."
+   ],
+   "reason": "The cron daemon running the job has no catch-up logic for wall-clock minutes skipped by a DST jump.",
+   "siblings": [
+    "The backup minute was set to 02:30 local time, inside the hour that clocks skip each spring.",
+    "Cron evaluates the schedule in the host's DST-observing local timezone instead of UTC."
+   ]
+  },
+  {
+   "n": 21,
+   "chain": [
+    "The host is rebooted or suspended during the scheduled window, and cron never replays a run it missed."
+   ],
+   "reason": "Automatic OS updates are configured to reboot the host at a fixed early-morning time overlapping the backup's cron minute.",
+   "siblings": [
+    "The backup is scheduled through plain cron instead of anacron or a systemd timer with Persistent=true.",
+    "The VM is suspended or powered off overnight by policies outside the backup job's control."
+   ]
+  },
+  {
+   "n": 22,
+   "chain": [
+    "The cron time falls in the daylight-saving changeover hour, so that night's scheduled minute never occurs.",
+    "Cron evaluates the schedule in the host's DST-observing local timezone instead of UTC."
+   ],
+   "reason": "Provisioning accepted the installer's regional timezone default, and configuration management never enforces UTC on database hosts.",
+   "siblings": [
+    "The server image sets the office's local zone so log timestamps match what on-call engineers read.",
+    "The crontab has no CRON_TZ=UTC line, so the backup entry silently inherits the system zone."
+   ]
+  }
+ ]
+}
