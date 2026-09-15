@@ -128,8 +128,8 @@ From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 - `--model NAME`, replaced by `--model-level 1-5` (2026-09-14).
 - `init --root-model` and `--branch-model` (IMP-40). They were unmeasured and
-  unreachable from `/five-whys`. Runs created by v0.2.0 with separate tiers
-  still plan with them.
+  unreachable from `/five-whys`. Runs created by 0.2.0 or earlier can't be
+  resumed by 0.3.0 at all; `show` still reads their finished trees.
 
 ### Measurements
 
@@ -146,7 +146,7 @@ five-whys (efac61e) and a label fix. Gates recorded on 07f6439 before the
 rename back passed as well; their files stay under
 `docs/self-improvement/round-3/gates/`.
 
-- [passed] unit @07d016c 2026-09-14: 109 unit tests pass on the release commit, after the version bump, (Python 3.14 locally;
+- [passed] unit @07d016c 2026-09-14: 109 unit tests pass on the release commit, after the version bump (Python 3.14 locally;
   CI covers 3.9 and 3.12).
 - [passed] validate @07d016c 2026-09-14: `claude plugin validate .` passes on the release commit.
 - [passed] model-run @0c210bf 2026-09-14: headless `claude -p --plugin-dir` in
