@@ -1,0 +1,57 @@
+{"schema":"five-whys/4","created":"2026-09-14T18:59:28-07:00","assembled":"2026-09-14T19:00:54-07:00","duration_seconds":71,"waves":[{"wave":1,"fragments":1,"seconds":20},{"wave":2,"fragments":3,"seconds":46}],"plugin_version":"0.2.0","input_count":1,"questions":["why"],"breadth":3,"depth":3,"split":1,"model_level":null,"models":null,"total_answers":39,"present_answers":39,"complete":true,"missing_branches":[],"levels":[{"level":1,"answers":3,"avg_words":21.7},{"level":2,"answers":9,"avg_words":20.8},{"level":3,"answers":27,"avg_words":20.4}],"assumptions":{"roots-1":["The backup job is triggered by a cron-style scheduler on a single host rather than a managed backup service.","The job script uses a lock or overlap guard that exits early when a previous run appears active.","Existing alerting reacts to error exit codes or error logs, not to the absence of a completed backup.","No regular restore test or backup-inventory audit is currently scheduled."],"1.why.1":["The backup is a cron entry on the database host that runs a wrapper shell script; there is no job orchestrator tracking run state.","The existing alert is a failure hook that pages on-call when the wrapper exits nonzero.","Backups are written to a remote storage location such as an object-storage bucket or NFS mount."],"1.why.2":["The backup is a cron-launched shell wrapper on a single Linux host that runs a dump tool such as pg_dump or mysqldump.","Mutual exclusion uses a hand-rolled lockfile containing a PID rather than kernel-managed flock.","Dump output is written to a network-mounted backup share."],"1.why.3":["The backup job runs from cron on a single host and writes dump files to object storage.","The backup was set up by one engineer rather than delivered as a team-owned service.","At least one earlier restore already hit a missing backup before this analysis."]},"reading":"Each input holds one tree per question. A tree's level-1 answers answer its question about the input, and every answer's answers answer the same question about it. An id is the dotted path from the top: input number, question, then positions, so 2.how.4.1 is the 1st answer under 2.how.4. index.md lists the inputs, their trees' top levels and the Read windows for this file; hygiene.json holds mechanical flags only.","inputs":[
+{"id":"1","depth":0,"input":"Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.","trees":[
+ {"id":"1.why","question":"why","answers":[
+  {"id":"1.why.1","depth":1,"answer":"Alerting fires only on a failed exit code, so a run that never starts or exits early emits no signal at all.","answers":[
+   {"id":"1.why.1.1","depth":2,"answer":"The alert is an on-failure trap inside the backup wrapper script, so it only fires when that script runs and errors.","answers":[
+    {"id":"1.why.1.1.1","depth":3,"answer":"The backup was set up as a lone cron entry on the database host, with no orchestrator to own run state or alerting."},
+    {"id":"1.why.1.1.2","depth":3,"answer":"The monitoring stack collects host metrics only and offers no job-level check, so the script's own trap was the sole hook available."},
+    {"id":"1.why.1.1.3","depth":3,"answer":"Guard clauses for an unmounted backup target or full disk log a warning and exit 0, which the failure trap treats as success."}
+   ]},
+   {"id":"1.why.1.2","depth":2,"answer":"No heartbeat or dead-man's-switch expects a success signal each night, so an absent run looks identical to a quiet night.","answers":[
+    {"id":"1.why.1.2.1","depth":3,"answer":"The job predates the team's adoption of expected-by-time checks, and nobody retrofitted one when that tooling arrived."},
+    {"id":"1.why.1.2.2","depth":3,"answer":"The job writes no completion timestamp or backup size anywhere monitoring reads, so there is no value that could go stale."},
+    {"id":"1.why.1.2.3","depth":3,"answer":"The original author moved teams and no one now owns the backup job end to end, so its monitoring was never revisited."}
+   ]},
+   {"id":"1.why.1.3","depth":2,"answer":"After noisy night pages, the backup alert rules were trimmed to hard failures only, dropping warnings for late or skipped runs.","answers":[
+    {"id":"1.why.1.3.1","depth":3,"answer":"Transient network blips to the backup storage triggered retry warnings that paged at night, so on-call pushed for fewer backup alerts."},
+    {"id":"1.why.1.3.2","depth":3,"answer":"The rule changes were reviewed only for noise reduction, with no check that each failure mode of the job kept alert coverage."},
+    {"id":"1.why.1.3.3","depth":3,"answer":"On-call health is measured in pages per week, so deleting alerts looked like progress while missed-backup risk stayed invisible."}
+   ]}
+  ]},
+  {"id":"1.why.2","depth":1,"answer":"A stale lock from an overrunning or crashed previous run makes the next night's job exit cleanly with success, skipping the backup.","answers":[
+   {"id":"1.why.2.1","depth":2,"answer":"The wrapper deliberately treats \"lock already held\" as a harmless no-op and returns exit 0, to avoid overlapping runs.","answers":[
+    {"id":"1.why.2.1.1","depth":3,"answer":"The locking snippet was copied from a frequent every-few-minutes job, where skipping one overlapping run costs nothing, unlike a once-nightly backup."},
+    {"id":"1.why.2.1.2","depth":3,"answer":"Cron mailed every non-zero exit, so the author made expected overlaps return success to stop nuisance emails."},
+    {"id":"1.why.2.1.3","depth":3,"answer":"The scheduler contract offers only success or failure, with no distinct \"skipped\" status the wrapper could report instead."}
+   ]},
+   {"id":"1.why.2.2","depth":2,"answer":"The lockfile has no expiry or liveness check, so a crashed run's lock persists until someone deletes it by hand.","answers":[
+    {"id":"1.why.2.2.1","depth":3,"answer":"Lock removal lives in an EXIT trap, which never runs when the dump is SIGKILLed by the OOM killer or the host reboots."},
+    {"id":"1.why.2.2.2","depth":3,"answer":"The script tests only whether the lockfile exists, never whether the PID written inside it is still running."},
+    {"id":"1.why.2.2.3","depth":3,"answer":"The lockfile sits on persistent disk rather than tmpfs under /run, so even a reboot does not clear it."}
+   ]},
+   {"id":"1.why.2.3","depth":2,"answer":"The dump step has no timeout or watchdog, so a hung run keeps holding the lock into the next night's start.","answers":[
+    {"id":"1.why.2.3.1","depth":3,"answer":"The dump blocks waiting on a table lock held by a long-running transaction or migration left open overnight."},
+    {"id":"1.why.2.3.2","depth":3,"answer":"Writes to the backup share stall on an unresponsive hard-mounted NFS export, leaving the dump process blocked indefinitely."},
+    {"id":"1.why.2.3.3","depth":3,"answer":"The script dates from when dumps took minutes, and no upper bound was added as database growth stretched runtimes to hours."}
+   ]}
+  ]},
+  {"id":"1.why.3","depth":1,"answer":"No scheduled restore drill or check for tonight's backup file exists, so missing backups are first discovered during a real restore.","answers":[
+   {"id":"1.why.3.1","depth":2,"answer":"No team owns the backup's outcome; the cron script was added by one engineer and never assigned to an on-call rotation.","answers":[
+    {"id":"1.why.3.1.1","depth":3,"answer":"The engineer who wrote the script moved on, and the handover skipped it because it lived only in crontab, not the service catalog."},
+    {"id":"1.why.3.1.2","depth":3,"answer":"Backups sit between the DBA and platform teams, and each assumes the other watches the storage bucket for missing nightly files."},
+    {"id":"1.why.3.1.3","depth":3,"answer":"No audit or compliance requirement demands daily evidence of a backup, so management never had reason to name an owner."}
+   ]},
+   {"id":"1.why.3.2","depth":2,"answer":"Backup success was defined as the cron job completing, so nobody set a recovery objective requiring proof that tonight's file is restorable.","answers":[
+    {"id":"1.why.3.2.1","depth":3,"answer":"No recovery point or recovery time target was ever agreed with the business, leaving nothing measurable for a drill to check."},
+    {"id":"1.why.3.2.2","depth":3,"answer":"Real restores happen only a few times a year, so the missing-file gap stayed invisible between incidents and never gained priority."},
+    {"id":"1.why.3.2.3","depth":3,"answer":"The earlier restore postmortem closed its action item as a one-off fix instead of a recurring scheduled drill or file-presence check."}
+   ]},
+   {"id":"1.why.3.3","depth":2,"answer":"A full restore drill is costly, needing a spare database host and hours of runtime, so it was judged not worth automating.","answers":[
+    {"id":"1.why.3.3.1","depth":3,"answer":"No staging host has enough disk to hold a restored copy of the production database, so every drill needs provisioning first."},
+    {"id":"1.why.3.3.2","depth":3,"answer":"Dump files move to a cold storage tier with retrieval fees and delays, which discourages routinely pulling one back for testing."},
+    {"id":"1.why.3.3.3","depth":3,"answer":"The restore procedure is an undocumented manual sequence of commands, so there is no script a scheduler could run unattended."}
+   ]}
+  ]}
+ ]}
+]}
+]}

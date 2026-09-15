@@ -4,12 +4,12 @@ Codes such as IMP-37 refer to the self-improvement ledgers in
 `docs/self-improvement/`. Evidence for each release gate goes here; see
 [RELEASING.md](RELEASING.md).
 
-## Unreleased
+## 0.3.0 — 2026-09-14
 
-Changes derived from round 2, the v0.2.0 full run on its own 8/10 rating, and
-round 3, the full run of this checkout on its 7.4/10 rating
-(`docs/self-improvement/round-3/design.md`). The version stays 0.2.0 until
-every gate has a status that allows the bump (see Evidence).
+Changes derived from round 2, the v0.2.0 full run on its own 8/10 rating;
+round 3, the full run of the round-2 checkout on its 7.4/10 rating
+(`docs/self-improvement/round-3/design.md`); and the maintainer's requests of
+2026-09-14.
 
 ### Changed
 
@@ -139,58 +139,69 @@ From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 ### Evidence
 
-Statuses as defined in RELEASING.md, run against 07f6439, where behavior was
-frozen on 2026-09-14 (goal record: `docs/self-improvement/round-3/goal-2026-09-14.md`).
-Later commits change only docs and records, which no gate covers.
+Statuses as defined in RELEASING.md, run against 0c210bf, the last commit that
+changes a skill, agent or script. It follows the goal run
+(`docs/self-improvement/round-3/goal-2026-09-14.md`), the rename back to
+five-whys (efac61e) and a label fix. Gates recorded on 07f6439 before the
+rename back passed as well; their files stay under
+`docs/self-improvement/round-3/gates/`.
 
-- [passed] unit @07f6439 2026-09-14: 110 unit tests pass (Python 3.14 locally;
+- [passed] unit @0c210bf 2026-09-14: 109 unit tests pass (Python 3.14 locally;
   CI covers 3.9 and 3.12).
-- [passed] validate @07f6439 2026-09-14: `claude plugin validate .` passes.
-- [passed] model-run @07f6439 2026-09-14: headless `claude -p --plugin-dir` in
-  a fresh directory, claude-opus-5. `/five-ws --smoke --yes` on the
+- [passed] validate @0c210bf 2026-09-14: `claude plugin validate .` passes.
+- [passed] model-run @0c210bf 2026-09-14: headless `claude -p --plugin-dir` in
+  a fresh directory, claude-opus-5. `/five-whys --smoke --yes` on the
   nightly-backup problem ran `parse`, `init`, `plan`, `check`, `status` and
-  `assemble` through the absolute script path. Results: 39 of 39 answers, 5
-  checks with 0 failures, 0 hygiene flags, 0 unverified references and 13
-  stated assumptions. Waves took 21 and 41 seconds. The reply left analysis to
-  the user. Files: `docs/self-improvement/round-3/gates/model-run-07f6439/`.
-- [passed] interactive @07f6439 2026-09-14: without `--yes`, with the Agent
+  `assemble` through the absolute script path, with agents labeled
+  `five whys <task id>`. Results: 39 of 39 answers, 4 checks with 0 failures,
+  0 hygiene flags, 0 unverified references and 13 stated assumptions. Waves
+  took 20 and 46 seconds. The reply left analysis to the user. Files:
+  `docs/self-improvement/round-3/gates/model-run-0c210bf/`.
+- [passed] interactive @0c210bf 2026-09-14: without `--yes`, with the Agent
   tool blocked as a safeguard. "Deploys fail." got one question about the
   system, symptoms and attempts. A one-line numbered list got its three items
   back as a numbered question about which should get trees. Neither created a
   run. `--ask why,how` on the payments-deploy problem showed 51 agents, 7,810
-  answers and 1.19M-3.21M agent tokens, said how runs are unmeasured, and
-  asked before dispatching.
-- [passed] quality-sample @07f6439 2026-09-14: 22 answers from the model-run
+  answers and the token range, said how runs are unmeasured, and asked
+  before dispatching.
+- [passed] quality-sample @0c210bf 2026-09-14: 22 answers from the model-run
   tree, drawn with `quality.py draw --stratify level --seed 7`, were scored by
   a fresh-context agent that saw only the packet and `quality-rubric.md`.
-  Means: causal 1.68, specific 1.95, distinct 1.82 of 2, with no zeros (the
-  5ee0915 sample had one). Level 3 is lowest, at causal 1.60. The
-  maintainer's scores are pending. Files: `docs/self-improvement/round-3/quality/`.
-- [passed] measured-branch @07f6439 2026-09-14: headless `claude -p`, clean
-  directory, the payments-deploy problem. It ran the root, then
-  `plan --only 1.why.1.1`; the branch step ran at 3be2382, whose covered files
-  are identical. The root reported 12.3k tokens and the branch 25.4k, against
-  11.3k and 23.6k at the estimate's low end: 9% and 8% above, inside the 15%
-  band, so no full measurement is called for. The implied full run is 0.65M
-  against the 0.60M low end. First-turn context was 5.3k tokens and the branch
-  wrote 16.1k output tokens. Waves took 61 and 204 seconds, and both fragments
-  passed their first check. Files: `docs/self-improvement/round-3/gates/measured-branch-07f6439/`.
+  Means: causal 1.68, specific 1.95, distinct 1.68 of 2. Two answers scored 0
+  for restating their parent in other words: `1.why.1.2` and `1.why.2.2.2`.
+  Level 3 is lowest, at causal 1.50. The 07f6439 sample scored distinct 1.82
+  with no zeros. With 22 items, one scorer and no threshold yet, this is
+  recorded, not judged. The implementing session's second scores of the
+  round-3 baseline agree with the agent's on 79-97% of items; that session
+  isn't independent. Files: `docs/self-improvement/round-3/quality/`.
+- [passed] measured-branch @0c210bf 2026-09-14: headless `claude -p`, clean
+  directory, the payments-deploy problem, root then `plan --only 1.why.1.1`.
+  The root reported 12.3k tokens and the branch 27.8k, against 11.3k and
+  23.6k at the estimate's low end: 8% and 18% above. The implied full run is
+  0.71M, inside the 0.60M-1.62M range. The branch is past the 15% trigger for a
+  full measurement, which the maintainer excused for 0.3.0 on 2026-09-13 (see
+  Deferred). On 07f6439 the same agent text measured 8% and 6% above. Waves took
+  62 and 251 seconds, and both fragments passed their first check. Files:
+  `docs/self-improvement/round-3/gates/measured-branch-0c210bf/`.
 - [passed] ledger-audit @4044694 2026-09-13: the independent, stratified audit
   of the round-2 ledger found 19 fit, 9 adjacent and 2 wrong, and both wrong
-  codes were corrected. The ledger and catalog haven't changed since, so the
-  result is current.
-- [blocked] eval @07f6439 2026-09-14: the preflight still finds 32 symbolic
-  links under `~/.docker`, and the plugin-eval container has no saved token,
-  so no eval ran. Not waived: the maintainer chose to run the other gates and
-  record the eval as blocked until a token is saved.
+  codes were corrected. The implementing session's second review agrees on 27
+  of 30 verdicts. The ledger and catalog haven't changed since, so the result
+  is current.
+- [blocked] eval @0c210bf 2026-09-14: the preflight finds 32 symbolic links
+  under `~/.docker`, and the plugin-eval container has no saved token, so no
+  eval ran. [waived] by the maintainer on 2026-09-14 for 0.3.0: the eval
+  cases were covered by the model-run and interactive checks. The eval is
+  required for the next release.
 
 ### Deferred
 
-- Release of 0.3.0 is on hold until the eval runs (with `plugin-eval`, once a
-  token is saved, or on a machine without Docker Desktop) and the maintainer
-  has decided on reviewing the audit and quality packets. The full measurement
-  excused on 2026-09-13 is no longer called for: the 07f6439 measured branch
-  is within 15% of the low end.
+- The eval, waived for 0.3.0 and required for the next release. `plugin-eval`
+  runs it in a container once a token is saved.
+- A full measurement in the low-cost setting, excused for 0.3.0 by the
+  maintainer on 2026-09-13. Two measured branches of identical agent text
+  came in 6% and 18% above the low end, so the 15% trigger sits near run-to-run
+  noise; repeated measurements should back it before the next release.
 - Model-tier quality and same-model variance (R-18).
 - A multi-domain benchmark of problems (R-18).
 - Grader reliability for the eval cases (R-18).
