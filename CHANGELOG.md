@@ -128,68 +128,58 @@ From round 3 (sections of `docs/self-improvement/round-3/design.md`):
 
 ### Evidence
 
-Statuses as defined in RELEASING.md, run against 5ee0915. The depth and
-input-list change came later and touches the files every gate covers, so
-these results are stale. Every gate runs again before release.
+Statuses as defined in RELEASING.md, run against 07f6439, where behavior was
+frozen on 2026-09-14 (goal record: `docs/self-improvement/round-3/goal-2026-09-14.md`).
+Later commits change only docs and records, which no gate covers.
 
-- [passed] unit @5ee0915 2026-09-13: 84 unit tests pass, including the replay,
-  labeled-pair, rubric, ledger, quality and usage tests (Python 3.14 locally;
+- [passed] unit @07f6439 2026-09-14: 110 unit tests pass (Python 3.14 locally;
   CI covers 3.9 and 3.12).
-- [passed] validate @5ee0915 2026-09-13: `claude plugin validate .` passes.
-- [passed] model-run @5ee0915 2026-09-13: headless `claude -p --plugin-dir`
-  in a fresh directory, claude-opus-5. `/five-whys --smoke --yes` on the
-  nightly-backup problem ran `parse`, `init`, `plan`, `status` and `assemble`
-  through the absolute script path. 39 of 39 reasons assembled, and all 4
-  fragments passed their first check. There were 14 stated assumptions and 0
-  hygiene flags. Waves took 69 and 90 seconds, 210 seconds in total. The 4
-  agents ran 4 Bash commands, all checks, and none touched the network. The
-  reply left analysis to the user. Output and transcript:
-  `docs/self-improvement/round-3/gates/model-run-5ee0915/`.
-- [passed] quality-sample @5ee0915 2026-09-13: 22 reasons from the model-run
+- [passed] validate @07f6439 2026-09-14: `claude plugin validate .` passes.
+- [passed] model-run @07f6439 2026-09-14: headless `claude -p --plugin-dir` in
+  a fresh directory, claude-opus-5. `/five-ws --smoke --yes` on the
+  nightly-backup problem ran `parse`, `init`, `plan`, `check`, `status` and
+  `assemble` through the absolute script path. Results: 39 of 39 answers, 5
+  checks with 0 failures, 0 hygiene flags, 0 unverified references and 13
+  stated assumptions. Waves took 21 and 41 seconds. The reply left analysis to
+  the user. Files: `docs/self-improvement/round-3/gates/model-run-07f6439/`.
+- [passed] interactive @07f6439 2026-09-14: without `--yes`, with the Agent
+  tool blocked as a safeguard. "Deploys fail." got one question about the
+  system, symptoms and attempts. A one-line numbered list got its three items
+  back as a numbered question about which should get trees. Neither created a
+  run. `--ask why,how` on the payments-deploy problem showed 51 agents, 7,810
+  answers and 1.19M-3.21M agent tokens, said how runs are unmeasured, and
+  asked before dispatching.
+- [passed] quality-sample @07f6439 2026-09-14: 22 answers from the model-run
   tree, drawn with `quality.py draw --stratify level --seed 7`, were scored by
   a fresh-context agent that saw only the packet and `quality-rubric.md`.
-  Means: causal 1.68, specific 1.95, distinct 1.82 of 2. Only one item scored
-  0: it restated its parent. The round-3 baseline (29 reasons from the 5x5 tree
-  written before these fixes, same scorer setup) had causal 1.72, specific
-  2.00 and distinct 1.69. On the levels both trees have, the changes run in
-  both directions: level 2 causal 1.50 to 1.56 and distinct 1.83 to 1.67;
-  level 3 causal 2.00 to 1.70 and distinct 1.83 to 1.90. With 3-10 items per
-  level, different problems and one scorer, this shows no measurable
-  regression, and no improvement either. The maintainer's scores of both
-  packets are pending. Files are in `docs/self-improvement/round-3/quality/`.
-- [passed] interactive @5ee0915 2026-09-13: headless `claude -p --plugin-dir`
-  in fresh directories, without `--yes`, with the Agent tool blocked as a
-  safeguard. "Deploys fail." got one question about the system, the symptoms and
-  what has been tried, and no run was created. The payments-deploy problem ran
-  `parse` and `init` through the absolute script path. It showed 26 agents,
-  3,905 reasons and 601k-1.62M agent tokens, asked before dispatching, and
-  dispatched nothing.
-- [passed] measured-branch @7c8cd8f 2026-09-13: the covered files are identical
-  to 5ee0915. Headless `claude -p` in a clean directory, on the payments-deploy
-  problem, ran `plan --only 1.1`. The root reported 8.8k tokens and branch 1.1
-  reported 22.1k, against 11.3k and 23.6k at the estimate's low end: 22% and 6%
-  below. The implied full run is about 0.56M, 7% below the 0.60M low end.
-  First-turn context was 4.7k tokens, and the branch wrote 14.3k output tokens.
-  Waves took 73 and 224 seconds, and both fragments passed their first check.
-  RELEASING.md calls for a full measurement when either total is more than 15%
-  off, and the root is. The maintainer deferred that run for this version as a
-  one-time exception (2026-09-13); the rule is unchanged. Files:
-  `docs/self-improvement/round-3/gates/measured-branch-5ee0915/`.
-- [blocked] eval @5ee0915 2026-09-13: the only machine available has Docker
-  Desktop. The RELEASING.md preflight found 32 symbolic links under
-  `~/.docker`, which `claude plugin eval` refuses for Bash-granting cases; at
-  91b5637 both cases recorded 0 turns for that reason. Docker configuration was
-  not altered. Not waived: it needs a machine or account without Docker
-  Desktop, or the maintainer's written waiver.
+  Means: causal 1.68, specific 1.95, distinct 1.82 of 2, with no zeros (the
+  5ee0915 sample had one). Level 3 is lowest, at causal 1.60. The
+  maintainer's scores are pending. Files: `docs/self-improvement/round-3/quality/`.
+- [passed] measured-branch @07f6439 2026-09-14: headless `claude -p`, clean
+  directory, the payments-deploy problem. It ran the root, then
+  `plan --only 1.why.1.1`; the branch step ran at 3be2382, whose covered files
+  are identical. The root reported 12.3k tokens and the branch 25.4k, against
+  11.3k and 23.6k at the estimate's low end: 9% and 8% above, inside the 15%
+  band, so no full measurement is called for. The implied full run is 0.65M
+  against the 0.60M low end. First-turn context was 5.3k tokens and the branch
+  wrote 16.1k output tokens. Waves took 61 and 204 seconds, and both fragments
+  passed their first check. Files: `docs/self-improvement/round-3/gates/measured-branch-07f6439/`.
+- [passed] ledger-audit @4044694 2026-09-13: the independent, stratified audit
+  of the round-2 ledger found 19 fit, 9 adjacent and 2 wrong, and both wrong
+  codes were corrected. The ledger and catalog haven't changed since, so the
+  result is current.
+- [blocked] eval @07f6439 2026-09-14: the preflight still finds 32 symbolic
+  links under `~/.docker`, and the plugin-eval container has no saved token,
+  so no eval ran. Not waived: the maintainer chose to run the other gates and
+  record the eval as blocked until a token is saved.
 
 ### Deferred
 
-- A full measurement in the low-cost setting. The measured root came in 22%
-  below the estimate's low end, past RELEASING.md's 15% trigger, while the
-  implied full run was 7% below. The maintainer made a one-time exception for
-  this version; the rule stands for the next.
-- Release of 0.3.0 is on hold until the eval runs on a machine without Docker
-  Desktop and the maintainer has reviewed the audit and quality packets.
+- Release of 0.3.0 is on hold until the eval runs (with `plugin-eval`, once a
+  token is saved, or on a machine without Docker Desktop) and the maintainer
+  has decided on reviewing the audit and quality packets. The full measurement
+  excused on 2026-09-13 is no longer called for: the 07f6439 measured branch
+  is within 15% of the low end.
 - Model-tier quality and same-model variance (R-18).
 - A multi-domain benchmark of problems (R-18).
 - Grader reliability for the eval cases (R-18).

@@ -53,7 +53,8 @@ version's entry in [CHANGELOG.md](CHANGELOG.md).
   eval passes when every case passes. With no such environment available,
   record it as `blocked`.
 - **Measured single branch.** Create a full-shape run, dispatch the root and
-  one branch with `plan <run> --only 1.why.1`, then run
+  one branch with `plan <run> --only 1.why.1.1` (a level-2 id: at depth 5 root
+  agents write two levels, so branches start there), then run
   `python3 docs/self-improvement/usage.py <run>`. Compare the root's and the
   branch's reported totals with the low and high constants in
   `scripts/fivews.py`, using the end that matches the setting (a problem

@@ -1,0 +1,57 @@
+{"schema":"five-ws/1","created":"2026-09-14T18:26:46-07:00","assembled":"2026-09-14T18:28:15-07:00","duration_seconds":73,"waves":[{"wave":1,"fragments":1,"seconds":21},{"wave":2,"fragments":3,"seconds":41}],"plugin_version":"0.2.0","input_count":1,"questions":["why"],"breadth":3,"depth":3,"split":1,"model_level":null,"models":null,"total_answers":39,"present_answers":39,"complete":true,"missing_branches":[],"levels":[{"level":1,"answers":3,"avg_words":21.0},{"level":2,"answers":9,"avg_words":20.9},{"level":3,"answers":27,"avg_words":20.1}],"assumptions":{"roots-1":["The backup job is a cron-scheduled script on a single host that wraps a database dump tool.","Existing monitoring only reacts to errors the job itself reports, with no check for a missing run.","No team is formally assigned to own backups or run periodic restore drills."],"1.why.1":["The job is a shell wrapper launched by cron on a single Linux host, with its own lock file and a permitted start-time window.","Cron mails the ops inbox on non-zero exits or output, and the crontab entry redirects the wrapper's output.","The lock file is a plain file created by the script, not a kernel-held flock."],"1.why.2":["The backup job is a shell script scheduled from cron on the database host rather than from a central job scheduler.","Existing alerting matches error lines or non-zero exits in shipped logs and has no rule that evaluates missing events.","The database team owns the backup job while a separate platform or SRE team owns the monitoring stack and on-call paging."],"1.why.3":["The backup job is a cron entry on the database host, originally set up by one engineer rather than a team.","No staging or scratch environment large enough to hold a full production restore currently exists.","The organization has no compliance or audit requirement that demands evidence of successful restores.","Backup files are encrypted, with keys and production credentials controlled by a separate security team."]},"reading":"Each input holds one tree per question. A tree's level-1 answers answer its question about the input, and every answer's answers answer the same question about it. An id is the dotted path from the top: input number, question, then positions, so 2.how.4.1 is the 1st answer under 2.how.4. index.md lists the inputs, their trees' top levels and the Read windows for this file; hygiene.json holds mechanical flags only.","inputs":[
+{"id":"1","depth":0,"input":"Our nightly database backup job silently skips some runs, and nobody notices until a restore is needed.","trees":[
+ {"id":"1.why","question":"why","answers":[
+  {"id":"1.why.1","depth":1,"answer":"The wrapper script exits 0 on a stale lock file or missed cron window, so skipped runs look like successes.","answers":[
+   {"id":"1.why.1.1","depth":2,"answer":"The author coded the lock-held and outside-window branches as deliberate exit 0 no-ops to stop cron from mailing on expected overlaps.","answers":[
+    {"id":"1.why.1.1.1","depth":3,"answer":"Early versions exited non-zero when a long dump overran the next slot, flooding the ops inbox with cron mail until someone silenced it."},
+    {"id":"1.why.1.1.2","depth":3,"answer":"The start-window guard was added quickly to keep dumps off daytime production load and copied the lock branch's existing exit 0."},
+    {"id":"1.why.1.1.3","depth":3,"answer":"The wrapper was reviewed as a small shell utility, so no reviewer questioned what each guard branch's exit status told the scheduler."}
+   ]},
+   {"id":"1.why.1.2","depth":2,"answer":"The lock is a bare file with no PID or age check, so a crashed run's leftover lock looks identical to a live run.","answers":[
+    {"id":"1.why.1.2.1","depth":3,"answer":"The script creates the lock with touch instead of flock, so the kernel never releases it when the owning process dies."},
+    {"id":"1.why.1.2.2","depth":3,"answer":"OOM kills and host reboots during a dump bypass the script's trap cleanup, leaving the lock file behind for every later night."},
+    {"id":"1.why.1.2.3","depth":3,"answer":"The lock sits on persistent disk beside the backup directory rather than on tmpfs, so a reboot does not clear it."}
+   ]},
+   {"id":"1.why.1.3","depth":2,"answer":"The wrapper's exit contract has only success and failure, with no distinct skipped status that cron or a dashboard could recognise.","answers":[
+    {"id":"1.why.1.3.1","depth":3,"answer":"The script decides its exit code from guard branches alone and never checks whether a new, non-empty dump file was written tonight."},
+    {"id":"1.why.1.3.2","depth":3,"answer":"The crontab redirects the wrapper's output to /dev/null, so even its 'lock held, skipping' log line reaches nobody."},
+    {"id":"1.why.1.3.3","depth":3,"answer":"Cron's only signal is the exit status, and the wrapper was written for that binary view before any skip paths existed."}
+   ]}
+  ]},
+  {"id":"1.why.2","depth":1,"answer":"Alerting fires only on errors the job emits, so a run that never starts sends no signal and no expected-heartbeat check exists.","answers":[
+   {"id":"1.why.2.1","depth":2,"answer":"Backup monitoring was built as error-log scraping when the script was written, and no dead-man's-switch service was ever provisioned alongside it.","answers":[
+    {"id":"1.why.2.1.1","depth":3,"answer":"The script's only reporting path is cron mailing stderr to an ops alias, which feeds the error filter and nothing else."},
+    {"id":"1.why.2.1.2","depth":3,"answer":"The monitoring stack offers only pattern and threshold rules on arriving events, so an absence-of-run rule cannot even be expressed."},
+    {"id":"1.why.2.1.3","depth":3,"answer":"The job was added hastily during initial database provisioning and skipped the readiness review that would have demanded a success signal."}
+   ]},
+   {"id":"1.why.2.2","depth":2,"answer":"After noisy backup pages, the team deliberately narrowed alert rules to hard errors, and a heartbeat check was seen as reintroducing noise.","answers":[
+    {"id":"1.why.2.2.1","depth":3,"answer":"Planned maintenance windows repeatedly paged on-call for expected backup interruptions, prompting the rules to be trimmed to fatal errors only."},
+    {"id":"1.why.2.2.2","depth":3,"answer":"A heartbeat would need maintenance-window silences, and nobody wanted to keep a suppression calendar for the database host current."},
+    {"id":"1.why.2.2.3","depth":3,"answer":"On-call health is measured by page count, so any check that could add pages lacked a sponsor willing to propose it."}
+   ]},
+   {"id":"1.why.2.3","depth":2,"answer":"The schedule lives only in one host's crontab, so monitoring holds no record of which nightly runs are expected.","answers":[
+    {"id":"1.why.2.3.1","depth":3,"answer":"The job predates the team's adoption of a scheduler with run history, and migrating legacy cron jobs was deprioritized as already working."},
+    {"id":"1.why.2.3.2","depth":3,"answer":"The database team owns the crontab while the platform team owns alerting, and neither backlog includes wiring expected-run checks between them."},
+    {"id":"1.why.2.3.3","depth":3,"answer":"No inventory of scheduled jobs exists, so reviews of monitoring coverage never list the backup job as needing a heartbeat."}
+   ]}
+  ]},
+  {"id":"1.why.3","depth":1,"answer":"No one owns scheduled restore drills, so backup files are never opened or counted until an actual outage forces a restore.","answers":[
+   {"id":"1.why.3.1","depth":2,"answer":"The backup cron was set up by one engineer, and ownership never passed to a team when that engineer moved on.","answers":[
+    {"id":"1.why.3.1.1","depth":3,"answer":"The cron entry lives on the database host outside the service catalogue, so no owner field existed to reassign."},
+    {"id":"1.why.3.1.2","depth":3,"answer":"The offboarding checklist covers access revocation but not handing over scheduled jobs, so the backup cron was never reviewed."},
+    {"id":"1.why.3.1.3","depth":3,"answer":"DBA and platform teams each assume the other covers backups, since the job spans database dumps and host storage."}
+   ]},
+   {"id":"1.why.3.2","depth":2,"answer":"Restore drills appear in no team's sprint goals or on-call runbook, so they lose every scheduling contest against feature work.","answers":[
+    {"id":"1.why.3.2.1","depth":3,"answer":"Teams are measured on shipped features and uptime, and a passing drill produces no metric anyone reports upward."},
+    {"id":"1.why.3.2.2","depth":3,"answer":"No audit or customer contract demands proof of recoverability, so nobody outside engineering ever asks for drill results."},
+    {"id":"1.why.3.2.3","depth":3,"answer":"Past ad hoc restores happened to find a recent file, so the team treats drills as redundant rather than protective."}
+   ]},
+   {"id":"1.why.3.3","depth":2,"answer":"No environment exists that can hold a full restore, so each drill would first need infrastructure nobody has budgeted.","answers":[
+    {"id":"1.why.3.3.1","depth":3,"answer":"The database outgrew the old staging server's disk gradually, so no single moment prompted a request for a larger instance."},
+    {"id":"1.why.3.3.2","depth":3,"answer":"Per-team cloud spend caps mean a temporary full-size restore instance would breach the platform team's monthly budget."},
+    {"id":"1.why.3.3.3","depth":3,"answer":"Restoring needs encryption keys and production credentials held by security, whose access requests take days for each drill."}
+   ]}
+  ]}
+ ]}
+]}
+]}

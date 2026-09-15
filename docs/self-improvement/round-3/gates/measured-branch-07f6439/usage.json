@@ -1,0 +1,50 @@
+{
+  "run": "/private/tmp/g4-branch.Hoe3aN/.five-ws/20260914-182921-deploys-of-the-payments-service-fail-on",
+  "agent_logs": 2,
+  "completed_fragments": 2,
+  "interrupted_without_completed_retry": [],
+  "first_turn_context": {
+    "min": 5326,
+    "mean": 5328,
+    "max": 5329
+  },
+  "root_reported_total": 12318,
+  "branch_reported_total": {
+    "min": 25361,
+    "mean": 25361,
+    "max": 25361
+  },
+  "branch_output_tokens_mean": 16077,
+  "branch_cumulative_context": {
+    "min": 74161,
+    "max": 74161
+  },
+  "fit": {
+    "AGENT_OVERHEAD_TOKENS": 9200.0,
+    "TOKENS_PER_REASON": 104
+  },
+  "agents": [
+    {
+      "id": "roots-1",
+      "log": "agent-aaeef171c9761de8f.jsonl",
+      "started": "2026-09-15T01:29:29.041Z",
+      "completed": true,
+      "turns": 5,
+      "output_tokens": 4563,
+      "reported_total": 12318,
+      "cumulative_context": 40681,
+      "first_turn_context": 5326
+    },
+    {
+      "id": "1.why.1.1",
+      "log": "agent-af7eeaa6b981a99db.jsonl",
+      "started": "2026-09-15T01:31:28.118Z",
+      "completed": true,
+      "turns": 5,
+      "output_tokens": 16077,
+      "reported_total": 25361,
+      "cumulative_context": 74161,
+      "first_turn_context": 5329
+    }
+  ]
+}
