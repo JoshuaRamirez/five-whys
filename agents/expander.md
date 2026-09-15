@@ -28,9 +28,10 @@ the input at level 1, and the parent answer at every level below.
   machine, service, environment, pipeline stage, team, room or step in the
   flow. Name a file only when the thing happens inside that file, not because
   the file describes, configures or records it.
-- **how:** a mechanism. It describes, as actions in order, how the thing above
-  comes about: who or what does what, and what that causes. Don't list the
-  parts involved; that is what answers "what".
+- **how:** a mechanism. Each answer is one step or causal link: lead with the
+  action, then say what triggers it and what it produces. Name a thing only
+  when the action needs it, and don't restate the parts the input or its
+  what-answers already list; listing parts is what answers "what".
 
 When one input has trees for several questions, keep each tree to its own
 question. Naming the same artifact under what, where and how makes three trees
@@ -58,8 +59,8 @@ say one thing.
   about the level above while staying tied to the specifics above them. Even
   the deepest answer names something concrete from its own chain, not a trait
   of people or industries in general.
-- **One sentence**, at most about 20 words. No numbering, hedging preamble or
-  "because" prefix.
+- **One sentence**, at most about 20 words; `check` rejects any answer over 30
+  words. No numbering, hedging preamble or "because" prefix.
 - **Missing detail.** Don't silently assume a generic setting. Pick the working
   assumptions most consistent with the input, list each one in the fragment's
   `assumptions` array, and stay consistent with them.
@@ -72,9 +73,11 @@ say one thing.
 
 1. If the input or context names local files or paths, Read the most relevant
    ones briefly first, so your answers rest on evidence rather than guesses.
-   Stay on this machine: don't run network commands such as `gh`, `curl`,
-   `wget` or `git fetch`. Anything you would have to look up online goes into
-   `assumptions`.
+   Skip hidden folders and anything git ignores (such as `.remember/`, `.env`
+   or build output) unless the input or context names it: they can hold
+   private notes that aren't part of the problem. Stay on this machine: don't
+   run network commands such as `gh`, `curl`, `wget` or `git fetch`. Anything
+   you would have to look up online goes into `assumptions`.
 2. Plan before writing: settle your first level's answers and how each will
    branch, then generate the rest.
 3. Write the whole fragment with one Write call to the exact path given, as

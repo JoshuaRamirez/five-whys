@@ -45,6 +45,7 @@ DEFAULT_BASE = ".five-ws"
 PRESETS = {"full": (5, 5), "smoke": (3, 3)}
 SMOKE_SPLIT = 1  # the smoke preset keeps a root and branches, so it rehearses both kinds of dispatch
 MAX_DEPTH = 5
+MAX_ANSWER_WORDS = 30  # check rejects longer answers; hygiene warns above 25 (hygiene.LONG_REASON_WORDS)
 FRAGMENT_ANSWERS = 155  # the most answers one agent writes: a 5-wide, 3-deep branch, as measured
 MAX_PARALLEL = 5  # default wave size, well under Claude Code's cap
 PLATFORM_PARALLEL_CAP = 20  # Claude Code runs at most 20 subagents at once by default
@@ -69,8 +70,8 @@ QUESTIONS = {
                          "the thing above it actually happens, not a file that describes or configures it"},
     "how": {"top": "How does this happen: by what mechanism or sequence of steps?",
             "child": "How does this come about: {text}",
-            "answers": "mechanisms: each describes, as actions in order, how the thing above it comes about, "
-                       "not the parts involved"},
+            "answers": "mechanisms: each is one step or causal link, leading with the action, then what triggers "
+                       "it and what it produces, without restating the parts involved"},
 }
 DEFAULT_QUESTIONS = ["why"]
 
@@ -344,6 +345,8 @@ def validate(nodes, breadth: int, depth: int, label: str = "") -> list[str]:
         answer = node.get("answer")
         if not isinstance(answer, str) or not answer.strip():
             errors.append(f"item {here}: answer missing or empty")
+        elif len(answer.split()) > MAX_ANSWER_WORDS:
+            errors.append(f"item {here}: answer has {len(answer.split())} words; the limit is {MAX_ANSWER_WORDS}")
         children = node.get("answers")
         if depth > 1:
             errors.extend(validate(children, breadth, depth - 1, here))
@@ -509,7 +512,8 @@ def output_section(fragment: Path, breadth: int, levels: int, total: int, exampl
     return [
         "",
         f"That is {total} answers, roughly {total * OUTPUT_TOKENS_PER_ANSWER:,} "
-        "output tokens with the JSON. That size is expected: keep every answer a full, specific sentence.",
+        "output tokens with the JSON. That size is expected: keep every answer a full, specific sentence "
+        f"of about 20 words; check rejects any answer over {MAX_ANSWER_WORDS} words.",
         "Write them as JSON to:",
         str(fragment),
         "",
@@ -777,6 +781,7 @@ ERROR_KINDS = (
     ("tree_count", r"expected \d+ trees, got \d+"),
     ("count", r"expected \d+ answers, got \d+"),
     ("missing_answer", r"answer missing or empty"),
+    ("length", r"answer has \d+ words"),
     ("leaf_answers", r"deepest answers must not have answers"),
     ("json", r"invalid JSON"),
     ("assumptions", r"assumptions: must be"),

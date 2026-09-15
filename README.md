@@ -197,7 +197,7 @@ branch with its ancestors.
 ## What validation covers
 
 - **`check` (enforced):** every fragment is valid JSON with exactly the right
-  number of answers at every level. Agents repair and re-check, at most 3 times.
+  number of answers at every level, and no answer over 30 words. Agents repair and re-check, at most 3 times.
   After `OK`, `check` also prints non-blocking warnings (repeated text,
   restatements, over-long answers). For a branch fragment it compares against
   its tree's real top answers, so restating an ancestor is caught before assembly.
@@ -242,6 +242,9 @@ branch with its ancestors.
   much two runs of the same model differ.
 - The eval cases have not been run yet.
 - A full run spends a large share of subscription quota in a short burst.
+- Agents are told to skip hidden folders and anything git ignores unless the
+  input names it, because an earlier run read the session notes in `.remember/`.
+  Like the network rule below, this is an instruction, not enforced.
 - Agents are told not to run network commands such as `gh` or `curl`, but they
   have Bash, so nothing enforces it. In the v0.3.0 self-run, three of 25 branch
   agents ran `gh` before this instruction existed.

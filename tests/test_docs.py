@@ -137,6 +137,11 @@ class DocsConsistencyTests(unittest.TestCase):
         self.assertIn("don't run network commands", flat(AGENT))
         self.assertIn("`gh`", flat(AGENT))
 
+    def test_agent_skips_private_folders_and_knows_the_length_limit(self):
+        self.assertIn("anything git ignores", flat(AGENT))
+        self.assertIn(f"over {fivews.MAX_ANSWER_WORDS} words", flat(AGENT))
+        self.assertIn(f"no answer over {fivews.MAX_ANSWER_WORDS} words", flat(README))
+
     def test_skill_invokes_the_script_only_through_its_absolute_path(self):
         for text in (SKILL, SHORTCUT):
             self.assertIsNone(re.search(r"python3\s+\"?(?!\$)[^\s\"]*scripts/fivews\.py", text))

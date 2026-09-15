@@ -412,6 +412,15 @@ class CheckTests(RunCase):
         self.assertIn("item 1: deepest answers must not have answers", out)
         self.assertIn("assumptions: must be a list of strings", out)
 
+    def test_answers_over_thirty_words_are_rejected(self):
+        data = fragment(2, 1, "x")
+        data["answers"][1]["answer"] = " ".join(["word"] * 31) + "."
+        proc = self.check(data, 2, 1)
+        self.assertEqual(proc.returncode, 1)
+        self.assertIn("item 2: answer has 31 words; the limit is 30", proc.stdout)
+        data["answers"][1]["answer"] = " ".join(f"w{k}" for k in range(30)) + "."
+        self.assertEqual(self.check(data, 2, 1).returncode, 0)
+
     def test_warnings_do_not_block(self):
         data = fragment(3, 2, "x")
         data["answers"][0]["answers"][1]["answer"] = data["answers"][0]["answers"][0]["answer"]
@@ -673,6 +682,7 @@ class StatusAndShowTests(RunCase):
         cases = {"roots-1-2.json: trees: expected 2 trees, got 1": "tree_count",
                  "f.json: item 2's answers: expected 5 answers, got 4": "count",
                  "f.json: item 1.2: answer missing or empty": "missing_answer",
+                 "f.json: item 1.3: answer has 34 words; the limit is 30": "length",
                  "f.json: item 3: deepest answers must not have answers": "leaf_answers",
                  "f.json: invalid JSON (Expecting value)": "json",
                  'f.json: top level must be {"answers": [...]}': "structure",
